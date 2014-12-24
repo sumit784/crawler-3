@@ -14,7 +14,9 @@ public class HttpClientWrapperPerfTest {
         HttpClientWrapper client = new HttpClientWrapper();
         //String url = "www.baidu.com";
         String url = "http://s.etao.com/detail/40780735321.html?tbpm=20141215";
-        while (true) {
+
+        int runTimes = 1;
+        for (int i = 0; i < runTimes; i++) {
             HttpProxy proxy = pool.next();
             System.out.println("visit by proxy " + proxy.getHost() + ":" + proxy.getPort());
             client.setProxy(proxy);
