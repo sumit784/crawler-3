@@ -12,7 +12,7 @@ public class ConfigFileProxyPool implements HttpProxyPool {
     private int pointer;
 
     public ConfigFileProxyPool() {
-        proxies.add(new HttpProxy("124.42.127.221", 8086));
+        //proxies.add(new HttpProxy("124.42.127.221", 8086));
         //proxies.add(new HttpProxy("120.206.78.245", 8123));
         //proxies.add(new HttpProxy("218.207.172.236", 80));
         proxies.add(new HttpProxy("113.105.224.87", 80));
