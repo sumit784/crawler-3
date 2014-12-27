@@ -1,0 +1,124 @@
+本文件描述了从爬虫服务器中获取商品相关数据的各个接口，这些接口都是返回json格式的数据。
+
+获取所有商品分类：
+url: /commodity/category.json
+[{
+    "id": 1,
+    "name": "女人"
+    /* children元素表示这一类商品下面还有更细的分类，有一些商品分类是有子类的，而有一些则没有 */
+    "children": [{
+        "id": 2,
+        "name": "女士钱包"
+    }, {
+        "id": 3,
+        "name": "双肩包"
+    },
+    ...         /* 还可能有更多的子类，此处省略 */
+    ]
+}, {
+    "id": 21,
+    "name": "男人",
+    "children" : [...]
+},
+...
+]
+
+
+获取某个商品分类及其子类：
+url: /commodity/category.json?id=1
+/* 这里仅返回id为1的商品分类及其子类 */
+{
+    "id": 1,
+    "name": "女人"
+    /* children元素表示这一类商品下面还有更细的分类，有一些商品分类是有子类的，而有一些则没有 */
+    "children": [{
+        "id": 2,
+        "name": "女士钱包"
+    }, {
+        "id": 3,
+        "name": "双肩包"
+    },
+    ...         /* 还可能有更多的子类，此处省略 */
+    ]
+}
+
+
+获取所有品牌:
+url: /commodity/branch.json
+[{ 
+    "id": 1,
+    "name": "美特斯邦威",
+    "logoUrl": "/commodity/images/34719473892y.png"
+}, {
+    "id": 2,
+    "name": "欧莱雅",
+    "logoUrl": "/commodity/images/7941563782147-21.png"
+},
+...
+]
+
+
+获取某一类商品的基本信息(category参数指定商品类型的Id)：
+url: /commodity/commodityBasic.json?category=1
+[{
+    "id": 1,
+    "name": "原创春夏季女装 文艺田园清新宽松娃娃领纯绵双层纱T恤上衣常规",
+    "price": 89.80
+    "branch" : {
+        "id": 1,
+        "name": "美特斯邦威"
+        "logoUrl": "/commodity/images/34719473892y.png"
+    },
+    "category": 1
+}, {
+    "id": 2,
+    "name": "冬装特卖 真维斯女装舒适修身时尚波点棉衣外套"
+    "price": 189.70,
+    "branch" : {
+        "id": 112,
+        "name": "真维斯"
+        "logoUrl": "/commodity/images/34783194dfio1.png"
+    },
+    "category": 1
+},
+...
+]
+
+获取某一品牌下所有商品的基本信息(branch参数指定商品类型的Id)：
+url: /commodity/commodityBasic.json?branch=1
+/* 返回数据格式与前面的相同，这里省略 */
+
+获取商品基本信息时，只获取包含指定关键词的商品，则增加keyWord参数，如：
+url: /commodity/commodityBasic.json?category=1&keyWord=白色%20T恤
+
+获取商品基本信息时，按照特定时间排序，则增加orderField和orderType参数，orderField可以取time/price/sales三个值，分别表示按照上架时间、价格、销量排序。orderType可以取asc/desc，表示按照升序或降序排列。例如：
+url: /commodity/commodityBasic.json?category=1&orderField=time&orderType=desc  表示根据上架时间从近到远排序
+url: /commodity/commodityBasic.json?category=1&orderField=price&orderType=asc  表示根据价格从低到高排序
+
+
+
+获取某个商品的详细信息:
+url: /commodity/commodityDetail.json?id=1
+{
+    "id": 1,  /* 商品的Id */
+    "name": "原创春夏季女装 文艺田园清新宽松娃娃领纯绵双层纱T恤上衣常规",
+    "price": 89.80,
+    "branch" : {
+        "id": 1,
+        "name": "美特斯邦威"
+        "logoUrl": "/commodity/images/34719473892y.png"
+    },
+    "category": 1,  /* 所属商品类型 */
+    "pictures": ["/commodity/images/4738921.png", "/commodity/images/4738921.png"],     /* 商品展示图 */
+    "lowPrice": 88.00,  /* 历史最低价格 */
+    "onShelfTime": "2014.12.31",    /* 上架时间 */
+    "originalPrice": 180.00,        /* 原价 */
+    "lowestInThreeMonth": true,     /* 是否为最近三个月的最低价 */
+    "trend": {
+        "times": ["2014-10-01", "2014-10-02", "2014-10-03", ...],
+        "prices": [99.00, 99.00, 102.00, ...]
+    }
+}
+
+如果在获取商品的详细信息时，指定历史价格的时间范围，则增加StartTime和endTime参数，如：
+url: /commodity/commodityDetail.json?id=1&startTime=2014-10-01&endTime=2014-12-20
