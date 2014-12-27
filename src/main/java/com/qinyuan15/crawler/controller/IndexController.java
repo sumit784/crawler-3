@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/")
 public class IndexController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping("/index")
     public String printHello(ModelMap model) {
         model.addAttribute("message", "It Work!");
         return "index";

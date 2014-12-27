@@ -19,4 +19,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <!-- resources 下的为静态资源，使用静态资源handler处理 -->
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
 </beans>
