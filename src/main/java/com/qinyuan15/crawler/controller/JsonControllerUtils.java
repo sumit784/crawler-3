@@ -4,19 +4,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
- * Parent class of Controller return json
+ * Util class of Controller that return json
  * Created by qinyuan on 14-12-27.
  */
-abstract public class JsonController {
+public class JsonControllerUtils {
 
     public final static String emptyListJson = "[]";
     public final static String emptyMapJson = "{}";
 
-    protected String toJson(Object obj) {
+    private JsonControllerUtils() {
+    }
+
+    public static String toJson(Object obj) {
         return toJson(obj, false);
     }
 
-    protected String toJson(Object obj, boolean prettyFormat) {
+    public static String toJson(Object obj, boolean prettyFormat) {
         GsonBuilder builder = new GsonBuilder();
         if (prettyFormat) {
             builder.setPrettyPrinting();

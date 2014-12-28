@@ -1,25 +1,21 @@
 package com.qinyuan15.crawler.dao;
 
 /**
+ * Proxy Server
  * Created by qinyuan on 14-12-25.
  */
-public class Proxy {
+public class Proxy extends PersistObject {
 
-    private int id;
     private String host;
-    private int port;
+    private Integer port;
     private String type;
-    private int speed;
-
-    public int getId() {
-        return id;
-    }
+    private Integer speed;
 
     public String getHost() {
         return host;
     }
 
-    public int getPort() {
+    public Integer getPort() {
         return port;
     }
 
@@ -27,19 +23,15 @@ public class Proxy {
         return type;
     }
 
-    public int getSpeed() {
+    public Integer getSpeed() {
         return speed;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setHost(String host) {
         this.host = host;
     }
 
-    public void setPort(int port) {
+    public void setPort(Integer port) {
         this.port = port;
     }
 
@@ -47,7 +39,7 @@ public class Proxy {
         this.type = type;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(Integer speed) {
         this.speed = speed;
     }
 }

@@ -10,8 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.qinyuan15.crawler.controller.JsonControllerUtils.emptyListJson;
+import static com.qinyuan15.crawler.controller.JsonControllerUtils.toJson;
+
+/**
+ * Query commodity category
+ * Created by qinyuan on 14-12-27.
+ */
 @Controller
-public class CategoryController extends JsonController {
+public class CategoryController {
 
     private Map<Integer, Map> allMaps = new HashMap<Integer, Map>();
 

@@ -3,6 +3,7 @@ package com.qinyuan15.crawler.controller;
 import org.junit.Test;
 
 /**
+ * Test BranchController
  * Created by qinyuan on 14-12-27.
  */
 public class BranchControllerTest {

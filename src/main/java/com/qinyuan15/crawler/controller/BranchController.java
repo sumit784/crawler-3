@@ -1,48 +1,35 @@
 package com.qinyuan15.crawler.controller;
 
+import com.qinyuan15.crawler.dao.Branch;
+import com.qinyuan15.crawler.dao.BranchFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static com.qinyuan15.crawler.controller.JsonControllerUtils.emptyMapJson;
+import static com.qinyuan15.crawler.controller.JsonControllerUtils.toJson;
 
+/**
+ * Query branches
+ * Created by qinyuan on 14-12-27.
+ */
 @Controller
-public class BranchController extends JsonController {
-
-    private Map<Integer, Map> allMaps = new HashMap<Integer, Map>();
-
-    private Map getMap(int id, String name) {
-        Map map = new HashMap();
-        map.put("id", id);
-        map.put("name", name);
-        map.put("logoUrl", "resources/images/438179439.png");
-        allMaps.put(id, map);
-        return map;
-    }
+public class BranchController {
 
     @ResponseBody
     @RequestMapping("/branch")
     public String get(@RequestParam("pretty") String pretty, @RequestParam("id") int id) {
-        List list = new ArrayList();
-        list.add(getMap(1, "美特斯邦威"));
-        list.add(getMap(2, "欧莱雅"));
-        list.add(getMap(3, "路易威登"));
-        list.add(getMap(4, "XXXX"));
-        list.add(getMap(5, "YYYY"));
-        list.add(getMap(6, "ZZZZ"));
-
+        BranchFactory factory = new BranchFactory();
         if (id > 0) {
-            if (allMaps.containsKey(id)) {
-                return toJson(allMaps.get(id), pretty != null);
+            Branch branch = factory.getInstance(id);
+            if (branch == null) {
+                return emptyMapJson;
             } else {
-                return emptyListJson;
+                return toJson(factory.getInstance(id), pretty != null);
             }
         } else {
-            return toJson(list, pretty != null);
+            return toJson(factory.getInstances(), pretty != null);
         }
     }
 }
