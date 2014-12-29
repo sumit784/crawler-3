@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.core;
 
+import com.qinyuan15.crawler.core.http.HttpProxy;
+import com.qinyuan15.crawler.core.http.HttpProxyPool;
 import org.junit.Before;
 import org.junit.Test;
 

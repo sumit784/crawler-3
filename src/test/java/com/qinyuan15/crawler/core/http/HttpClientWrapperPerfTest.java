@@ -1,5 +1,9 @@
-package com.qinyuan15.crawler.core;
+package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.core.ConfigFileProxyPool;
+import com.qinyuan15.crawler.core.http.HttpClientWrapper;
+import com.qinyuan15.crawler.core.http.HttpProxy;
+import com.qinyuan15.crawler.core.http.HttpProxyPool;
 import org.junit.Test;
 
 /**

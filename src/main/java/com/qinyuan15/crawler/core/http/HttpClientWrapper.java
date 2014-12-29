@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core;
+package com.qinyuan15.crawler.core.http;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpHost;

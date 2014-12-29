@@ -1,5 +1,8 @@
 package com.qinyuan15.crawler.core;
 
+import com.qinyuan15.crawler.core.http.HttpProxy;
+import com.qinyuan15.crawler.core.http.HttpProxyPool;
+
 import java.util.ArrayList;
 import java.util.List;
 

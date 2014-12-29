@@ -9,11 +9,11 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 public class HtmlUnitExample {
     public static void main(String[] args) throws Exception{
         final WebClient webClient = new WebClient();
-        final HtmlPage htmlPage = webClient.getPage("http://www.baidu.com");
-        System.out.println(htmlPage.getTitleText());
+        //final HtmlPage htmlPage = webClient.getPage("http://www.baidu.com");
+        final HtmlPage htmlPage = webClient.getPage("http://pachong.org");
+        //System.out.println(htmlPage.getTitleText());
         System.out.println(htmlPage.getBody().getTextContent());
-        /*
-        System.out.println(htmlPage.getTextContent());
-        */
+        //System.out.println(htmlPage.getDocumentElement().getTextContent());
+        //System.out.println(htmlPage.getTextContent());
     }
 }

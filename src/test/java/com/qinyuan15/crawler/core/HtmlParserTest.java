@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core;
 
+import com.qinyuan15.crawler.core.html.HtmlParser;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
