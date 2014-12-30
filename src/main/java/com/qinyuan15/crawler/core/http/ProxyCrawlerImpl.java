@@ -1,7 +1,5 @@
 package com.qinyuan15.crawler.core.http;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.qinyuan15.crawler.core.html.ProxyPageParser;
 
 import java.util.ArrayList;
@@ -14,31 +12,47 @@ import java.util.List;
 public class ProxyCrawlerImpl implements ProxyCrawler {
 
     private ProxyPageParser pageParser;
-    private String url;
+    private String host;
+    private String path = "";
 
     public void setPageParser(ProxyPageParser pageParser) {
         this.pageParser = pageParser;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
     public List<HttpProxy> getProxies() {
-        final WebClient webClient = new WebClient();
-        //HttpClientWrapper client = new HttpClientWrapper();
-        List<HttpProxy> proxies =  new ArrayList<HttpProxy>();
+        return getProxies(this.host + "/" + this.path);
+    }
+
+    private List<HttpProxy> getProxies(String rootUrl) {
+        List<HttpProxy> proxies = new ArrayList<HttpProxy>();
+        HttpClientWrapper client = new HttpClientWrapper();
         try {
-            final HtmlPage htmlPage = webClient.getPage(url);
-            System.out.println(htmlPage.getDocumentElement().getTextContent());
-            //System.out.println(htmlPage.getTitleText());
-            //System.out.println(htmlPage.getBody().getTextContent());
-            /*
-            HttpResponse response = client.get(url);
-            System.out.println(response.getContent());
-            */
-        }catch (Exception e) {
+            HttpResponse response = client.get(rootUrl);
+
+            pageParser.setHTML(response.getContent());
+            proxies.addAll(pageParser.getProxies());
+
+            for (String subUrl : pageParser.getSubLinks()) {
+                String fullSubUrl;
+                if (subUrl.startsWith("http://") || subUrl.startsWith("wwww.")) {
+                    fullSubUrl = subUrl;
+                } else if (subUrl.startsWith("/")) {
+                    fullSubUrl = this.host + subUrl;
+                } else {
+                    fullSubUrl = rootUrl.replace("[^/]+$", "") + subUrl;
+                }
+                proxies.addAll(getProxies(fullSubUrl));
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return proxies;

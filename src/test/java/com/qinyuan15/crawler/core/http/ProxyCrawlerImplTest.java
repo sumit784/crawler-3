@@ -10,7 +10,7 @@ public class ProxyCrawlerImplTest {
     @Test
     public void testGetProxies() throws Exception {
         ProxyCrawlerImpl crawler = new ProxyCrawlerImpl();
-        crawler.setUrl("http://pachong.org");
+        crawler.setHost("http://pachong.org");
         crawler.setPageParser(new PachongPageParser());
         crawler.getProxies();
     }

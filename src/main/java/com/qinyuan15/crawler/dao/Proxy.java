@@ -6,9 +6,11 @@ package com.qinyuan15.crawler.dao;
  */
 public class Proxy extends PersistObject {
 
+    public static String DEFAULT_TYPE = "http";
+
     private String host;
     private Integer port;
-    private String type;
+    private String type = DEFAULT_TYPE;
     private Integer speed;
 
     public String getHost() {
