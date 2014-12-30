@@ -1,11 +1,11 @@
 package com.qinyuan15.crawler.core;
 
-import com.qinyuan15.crawler.core.http.HttpProxy;
 import com.qinyuan15.crawler.core.http.HttpProxyPool;
+import com.qinyuan15.crawler.dao.Proxy;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test Case of ConfigFileProxyPool
@@ -26,10 +26,10 @@ public class ConfigFileProxyPoolTest {
 
     @Test
     public void testNext() throws Exception {
-        HttpProxy first = pool.next();
+        Proxy first = pool.next();
         assertThat(first).isNotNull();
         for (int i = 0; i < pool.size() - 1; i++) {
-            HttpProxy proxy = pool.next();
+            Proxy proxy = pool.next();
             assertThat(proxy).isNotSameAs(first);
         }
         assertThat(pool.next()).isSameAs(first);

@@ -11,16 +11,11 @@ import java.util.List;
  */
 public class AbstractDaoTest {
 
-    private AbstractDao<Proxy> dao;
+    private CommonDao<Proxy> dao;
 
     @Before
     public void setUp() throws Exception {
-        dao = new AbstractDao<Proxy>() {
-            @Override
-            public List getInstances() {
-                return null;
-            }
-        };
+        dao = new CommonDao<Proxy>();
         testDelete();
     }
 

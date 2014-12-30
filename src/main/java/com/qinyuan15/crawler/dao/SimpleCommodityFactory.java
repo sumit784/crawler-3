@@ -9,7 +9,7 @@ import java.util.List;
  * Class to query/create SimpleCommodity
  * Created by qinyuan on 14-12-27.
  */
-public class SimpleCommodityFactory extends AbstractDao<SimpleCommodity> {
+public class SimpleCommodityFactory extends CommonDao<SimpleCommodity> {
 
     private int branchId;
     private int categoryId;

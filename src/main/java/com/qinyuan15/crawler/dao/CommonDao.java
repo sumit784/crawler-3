@@ -5,15 +5,13 @@ import org.hibernate.Session;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Implements some methods of Dao
  * Created by qinyuan on 14-12-27.
  */
-abstract public class AbstractDao<T extends PersistObject> implements Dao {
-
+public class CommonDao<T extends PersistObject> {
     /**
      * 记录范型表示符'T'所指代的具体类型
      */
@@ -40,40 +38,32 @@ abstract public class AbstractDao<T extends PersistObject> implements Dao {
         }
     }
 
-    @Override
     public T getInstance(int id) {
+        Session session = HibernateUtil.openSession();
         @SuppressWarnings("unchecked")
-        Iterator<T> iterator = getInstances().iterator();
-        while (iterator.hasNext()) {
-            T element = iterator.next();
-            if (element.getId() == id) {
-                return element;
-            }
-        }
-        return null;
+        T t = (T) session.get(classOfT, id);
+        return t;
     }
 
-    @Override
     public void add(PersistObject persistObject) {
         Session session = HibernateUtil.openSession();
         session.save(persistObject);
         HibernateUtil.commitAndClose(session);
     }
 
-    @Override
-    public void add(List list) {
+    public List<? extends T> getInstances() {
+        // TODO
+        return null;
+    }
+
+    public void add(List<? extends T> list) {
         Session session = HibernateUtil.openSession();
         for (Object obj : list) {
-            try {
-                session.save(obj);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            session.save(obj);
         }
         HibernateUtil.commitAndClose(session);
     }
 
-    @Override
     public void delete(int id) {
         Session session = HibernateUtil.openSession();
         Object obj = session.get(classOfT, id);
@@ -83,7 +73,6 @@ abstract public class AbstractDao<T extends PersistObject> implements Dao {
         HibernateUtil.commitAndClose(session);
     }
 
-    @Override
     public void edit(PersistObject persistObject) {
         Session session = HibernateUtil.openSession();
         session.update(persistObject);

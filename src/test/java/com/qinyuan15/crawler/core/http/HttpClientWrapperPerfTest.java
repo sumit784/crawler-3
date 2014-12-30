@@ -1,9 +1,7 @@
 package com.qinyuan15.crawler.core.http;
 
 import com.qinyuan15.crawler.core.ConfigFileProxyPool;
-import com.qinyuan15.crawler.core.http.HttpClientWrapper;
-import com.qinyuan15.crawler.core.http.HttpProxy;
-import com.qinyuan15.crawler.core.http.HttpProxyPool;
+import com.qinyuan15.crawler.dao.Proxy;
 import org.junit.Test;
 
 /**
@@ -19,8 +17,9 @@ public class HttpClientWrapperPerfTest {
         //String url = "www.baidu.com";
         String url = "http://s.etao.com/detail/40780735321.html?tbpm=20141215";
 
-        int runTimes = 1000 * 10000;
-        HttpProxy proxy = pool.next();
+        //int runTimes = 1000 * 10000;
+        int runTimes = 2;
+        Proxy proxy = pool.next();
         client.setProxy(proxy);
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < runTimes; i++) {

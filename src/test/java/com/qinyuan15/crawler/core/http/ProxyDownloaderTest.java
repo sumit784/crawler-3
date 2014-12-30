@@ -1,6 +1,5 @@
 package com.qinyuan15.crawler.core.http;
 
-import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.core.html.PachongPageParser;
 import org.junit.Test;
 
