@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -14,7 +16,8 @@ import org.hibernate.service.ServiceRegistry;
 public class HibernateUtil {
     public static String CONFIG_FILE = "hibernate.cfg.xml";
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private final static Logger LOGGER = LoggerFactory.getLogger(HibernateUtil.class);
+    private final static SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
         try {
@@ -23,8 +26,7 @@ public class HibernateUtil {
                     .applySettings(configuration.getProperties()).build();
             return configuration.buildSessionFactory(serviceRegistry);
         } catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
+            LOGGER.error("Initial SessionFactory creation failed.{}", ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
@@ -42,8 +44,5 @@ public class HibernateUtil {
     public static void commitAndClose(Session session) {
         session.getTransaction().commit();
         //getSessionFactory().close();
-    }
-
-    public static void main(String[] args) {
     }
 }

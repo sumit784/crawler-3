@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.dao.Proxy;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -8,6 +9,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +23,7 @@ public class HttpClientWrapper {
 
     public final static String DEFAULT_PROXY_TYPE = "http";
     public final static int DEFAULT_PROXY_PORT = 80;
+    private final static Logger LOGGER = LoggerFactory.getLogger(HttpClientWrapper.class);
 
     private CloseableHttpClient client;
     private String proxyHost;
@@ -38,7 +42,7 @@ public class HttpClientWrapper {
         this.proxyType = proxyType;
     }
 
-    public void setProxy(HttpProxy proxy) {
+    public void setProxy(Proxy proxy) {
         if (proxy != null) {
             setProxyHost(proxy.getHost());
             setProxyPort(proxy.getPort());
@@ -65,6 +69,8 @@ public class HttpClientWrapper {
             setProxy(get);
         }
         CloseableHttpResponse response = client.execute(get);
+        LOGGER.info("connected to {}", url);
+
         String content = EntityUtils.toString(response.getEntity());
         int status = response.getStatusLine().getStatusCode();
         return new HttpResponse(content, status);

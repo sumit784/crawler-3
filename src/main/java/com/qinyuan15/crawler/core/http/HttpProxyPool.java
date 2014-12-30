@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.dao.Proxy;
+
 import java.util.List;
 
 /**
@@ -8,9 +10,9 @@ import java.util.List;
  */
 public interface HttpProxyPool {
 
-    List<HttpProxy> getAll();
+    List<Proxy> getAll();
 
-    HttpProxy next();
+    Proxy next();
 
     int size();
 }

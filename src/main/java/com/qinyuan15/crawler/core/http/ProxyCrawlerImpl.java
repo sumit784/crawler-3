@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.http;
 
 import com.qinyuan15.crawler.core.html.ProxyPageParser;
+import com.qinyuan15.crawler.dao.Proxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,12 @@ public class ProxyCrawlerImpl implements ProxyCrawler {
     }
 
     @Override
-    public List<HttpProxy> getProxies() {
+    public List<Proxy> getProxies() {
         return getProxies(this.host + "/" + this.path);
     }
 
-    private List<HttpProxy> getProxies(String rootUrl) {
-        List<HttpProxy> proxies = new ArrayList<HttpProxy>();
+    private List<Proxy> getProxies(String rootUrl) {
+        List<Proxy> proxies = new ArrayList<Proxy>();
         HttpClientWrapper client = new HttpClientWrapper();
         try {
             HttpResponse response = client.get(rootUrl);

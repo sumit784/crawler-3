@@ -1,11 +1,13 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.dao.Proxy;
 import com.qinyuan15.crawler.dao.ProxyDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Grub Proxy information then save them to database
  * Created by qinyuan on 14-12-29.
  */
 public class ProxyDownloader {
@@ -16,7 +18,7 @@ public class ProxyDownloader {
     }
 
     public void save() {
-        List<HttpProxy> proxies = new ArrayList<HttpProxy>();
+        List<Proxy> proxies = new ArrayList<Proxy>();
         for (ProxyCrawler crawler : crawlers) {
             proxies.addAll(crawler.getProxies());
         }

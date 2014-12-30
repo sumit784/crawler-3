@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.html;
 
-import com.qinyuan15.crawler.core.http.HttpProxy;
+import com.qinyuan15.crawler.dao.Proxy;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -16,8 +16,8 @@ public class PachongPageParser extends AbstractProxyPageParser {
     private JavaScriptParser javaScriptParser = new JavaScriptParser();
 
     @Override
-    public List<HttpProxy> getProxies() {
-        List<HttpProxy> proxies = new ArrayList<HttpProxy>();
+    public List<Proxy> getProxies() {
+        List<Proxy> proxies = new ArrayList<Proxy>();
 
         HtmlParser parser = new HtmlParser(this.html);
 
@@ -30,7 +30,7 @@ public class PachongPageParser extends AbstractProxyPageParser {
         Element tableElement = elements.get(0);
         Elements trElements = tableElement.getElementsByTag("tr");
         for (Element element : trElements) {
-            HttpProxy proxy = parseProxyByTr(element, firstJavaScriptCode);
+            Proxy proxy = parseProxyByTr(element, firstJavaScriptCode);
             if (proxy != null) {
                 proxies.add(proxy);
             }
@@ -39,7 +39,7 @@ public class PachongPageParser extends AbstractProxyPageParser {
         return proxies;
     }
 
-    private HttpProxy parseProxyByTr(Element trElement, String firstJavaScriptCode) {
+    private Proxy parseProxyByTr(Element trElement, String firstJavaScriptCode) {
         Elements tdElements = trElement.getElementsByTag("td");
         String host = null;
         String port = null;
@@ -59,7 +59,10 @@ public class PachongPageParser extends AbstractProxyPageParser {
         }
 
         if (host != null && port != null) {
-            return new HttpProxy(host, Integer.parseInt(port));
+            Proxy proxy = new Proxy();
+            proxy.setHost(host);
+            proxy.setPort(Integer.parseInt(port));
+            return proxy;
         } else {
             return null;
         }

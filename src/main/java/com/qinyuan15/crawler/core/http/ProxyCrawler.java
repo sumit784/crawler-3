@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.dao.Proxy;
+
 import java.util.List;
 
 /**
@@ -7,5 +9,5 @@ import java.util.List;
  * Created by qinyuan on 14-12-29.
  */
 public interface ProxyCrawler {
-    List<HttpProxy> getProxies();
+    List<Proxy> getProxies();
 }

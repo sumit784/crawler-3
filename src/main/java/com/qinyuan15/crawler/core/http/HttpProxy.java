@@ -1,9 +1,10 @@
-package com.qinyuan15.crawler.core.http;
+//package com.qinyuan15.crawler.core.http;
 
 /**
  * Wrap Http Proxy
  * Created by qinyuan on 14-12-24.
  */
+/*
 public class HttpProxy {
 
     private String host;
@@ -22,3 +23,4 @@ public class HttpProxy {
         return port;
     }
 }
+*/

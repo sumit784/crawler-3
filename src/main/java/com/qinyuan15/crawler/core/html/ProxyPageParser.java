@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.html;
 
-import com.qinyuan15.crawler.core.http.HttpProxy;
+import com.qinyuan15.crawler.dao.Proxy;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface ProxyPageParser {
     void setHTML(String html);
-    List<HttpProxy> getProxies();
+    List<Proxy> getProxies();
     List<String> getSubLinks();
 }
