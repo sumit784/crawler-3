@@ -7,7 +7,7 @@ import java.util.List;
  * Get branches from database or by other way
  * Created by qinyuan on 14-12-27.
  */
-public class BranchFactory extends CommonDao<Branch> {
+public class BranchFactory extends AbstractDao<Branch> {
 
     private Branch mockInstance(int id, String name) {
         Branch branch = new Branch();

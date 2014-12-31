@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.lang.reflect.GenericArrayType;
@@ -11,7 +12,7 @@ import java.util.List;
  * Implements some methods of Dao
  * Created by qinyuan on 14-12-27.
  */
-public class CommonDao<T extends PersistObject> {
+abstract public class AbstractDao<T extends PersistObject> {
     /**
      * 记录范型表示符'T'所指代的具体类型
      */
@@ -48,12 +49,15 @@ public class CommonDao<T extends PersistObject> {
     public void add(PersistObject persistObject) {
         Session session = HibernateUtil.openSession();
         session.save(persistObject);
-        HibernateUtil.commitAndClose(session);
+        HibernateUtil.commitAndClose();
     }
 
     public List<? extends T> getInstances() {
-        // TODO
-        return null;
+        Session session = HibernateUtil.openSession();
+        Query query = session.createQuery("FROM " + classOfT.getSimpleName());
+        @SuppressWarnings("unchecked")
+        List<T> list = query.list();
+        return list;
     }
 
     public void add(List<? extends T> list) {
@@ -61,7 +65,7 @@ public class CommonDao<T extends PersistObject> {
         for (Object obj : list) {
             session.save(obj);
         }
-        HibernateUtil.commitAndClose(session);
+        HibernateUtil.commitAndClose();
     }
 
     public void delete(int id) {
@@ -70,12 +74,12 @@ public class CommonDao<T extends PersistObject> {
         if (obj != null) {
             session.delete(obj);
         }
-        HibernateUtil.commitAndClose(session);
+        HibernateUtil.commitAndClose();
     }
 
     public void edit(PersistObject persistObject) {
         Session session = HibernateUtil.openSession();
         session.update(persistObject);
-        HibernateUtil.commitAndClose(session);
+        HibernateUtil.commitAndClose();
     }
 }

@@ -18,6 +18,7 @@ public class HibernateUtil {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(HibernateUtil.class);
     private final static SessionFactory sessionFactory = buildSessionFactory();
+    private static Session session;
 
     private static SessionFactory buildSessionFactory() {
         try {
@@ -31,17 +32,13 @@ public class HibernateUtil {
         }
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
     public static Session openSession() {
-        Session session = getSessionFactory().getCurrentSession();
+        session = sessionFactory.openSession();
         session.beginTransaction();
         return session;
     }
 
-    public static void commitAndClose(Session session) {
+    public static void commitAndClose() {
         session.getTransaction().commit();
         //getSessionFactory().close();
     }

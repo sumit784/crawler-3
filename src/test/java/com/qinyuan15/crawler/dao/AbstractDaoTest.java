@@ -5,23 +5,24 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * Created by qinyuan on 14-12-29.
  */
 public class AbstractDaoTest {
 
-    private CommonDao<Proxy> dao;
+    private AbstractDao<Proxy> dao;
 
     @Before
     public void setUp() throws Exception {
-        dao = new CommonDao<Proxy>();
+        dao = new AbstractDao<Proxy>(){};
         testDelete();
     }
 
     @Test
     public void testGetInstance() throws Exception {
-        // TODO
+        assertThat(dao.getInstances()).isNotEmpty();
     }
 
     @Test
