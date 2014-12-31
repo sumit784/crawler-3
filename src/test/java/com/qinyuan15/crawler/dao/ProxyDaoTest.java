@@ -7,6 +7,7 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.*;
 
 /**
+ * Test ProxyDao
  * Created by qinyuan on 14-12-29.
  */
 public class ProxyDaoTest {

@@ -22,6 +22,12 @@ public class ProxyDownloader {
         for (ProxyCrawler crawler : crawlers) {
             proxies.addAll(crawler.getProxies());
         }
+
+        int largeInt = 10000000;
+        for (Proxy proxy : proxies) {
+            proxy.setSpeed(largeInt);
+        }
+
         ProxyDao dao = new ProxyDao();
         dao.add(proxies);
     }

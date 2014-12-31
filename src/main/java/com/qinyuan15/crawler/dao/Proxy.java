@@ -44,4 +44,9 @@ public class Proxy extends PersistObject {
     public void setSpeed(Integer speed) {
         this.speed = speed;
     }
+
+    @Override
+    public String toString() {
+        return this.type + "://" + this.host + ":" + this.port;
+    }
 }

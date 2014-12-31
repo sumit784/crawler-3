@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import java.util.List;
 
 /**
+ * Dao Of Proxy
  * Created by qinyuan on 14-12-27.
  */
 public class ProxyDao extends AbstractDao<Proxy> {
@@ -27,7 +28,7 @@ public class ProxyDao extends AbstractDao<Proxy> {
     public List<Proxy> getTop(int count) {
         Session session = HibernateUtil.openSession();
         Query query = session.createQuery("FROM Proxy ORDER BY speed").
-                setFirstResult(1).setMaxResults(count);
+                setFirstResult(0).setMaxResults(count);
         @SuppressWarnings("unchecked")
         List<Proxy> list = query.list();
         return list;
