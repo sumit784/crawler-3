@@ -5,10 +5,29 @@ create database crawler;
 use crawler;
 
 create table proxy (
-  id serial primary key,
+  id int primary key auto_increment,
   host char(50) not null,
   port int not null,
-  type char(20) default 'http',
-  speed int,
+  type char(20) not null,
+  speed int not null,
   unique(host, port)
+);
+
+create table commodity (
+  id bigint primary key auto_increment,
+  name char(100) not null,
+  url varchar(300) not null,
+  price double not null,
+  low_price double,
+  original_price double,
+  branch_id int,
+  category_id int,
+  on_shelf_time datetime
+);
+
+create table price_history (
+  id bigint primary key auto_increment,
+  commodity_id bigint,
+  record_time datetime,
+  price double
 );

@@ -22,4 +22,9 @@
     <!-- resources 下的为静态资源，使用静态资源handler处理 -->
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
+    <bean class="com.qinyuan15.crawler.core.http.CommodityCrawler" init-method="init">
+        <property name="interval" value="10" />
+        <property name="threadSize" value="5"/>
+    </bean>
+
 </beans>
