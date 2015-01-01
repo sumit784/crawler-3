@@ -12,7 +12,7 @@ public class HttpClientWrapperPerfTest {
 
     @Test
     public void test() throws Exception {
-        HttpProxyPool pool = new ConfigFileProxyPool();
+        ProxyPool pool = new ConfigFileProxyPool();
         HttpClientWrapper client = new HttpClientWrapper();
         //String url = "www.baidu.com";
         String url = "http://s.etao.com/detail/40780735321.html?tbpm=20141215";

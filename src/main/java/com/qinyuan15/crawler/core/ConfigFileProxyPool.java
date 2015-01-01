@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core;
 
-import com.qinyuan15.crawler.core.http.HttpProxyPool;
+import com.qinyuan15.crawler.core.http.ProxyPool;
 import com.qinyuan15.crawler.dao.Proxy;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
  * Read Proxies from configure file
  * Created by qinyuan on 14-12-24.
  */
-public class ConfigFileProxyPool implements HttpProxyPool {
+public class ConfigFileProxyPool implements ProxyPool {
     private List<Proxy> proxies = new ArrayList<Proxy>();
     private int pointer;
 

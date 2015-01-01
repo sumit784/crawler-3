@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core;
 
-import com.qinyuan15.crawler.core.http.HttpProxyPool;
+import com.qinyuan15.crawler.core.http.ProxyPool;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by qinyuan on 14-12-24.
  */
 public class ConfigFileProxyPoolTest {
-    private HttpProxyPool pool;
+    private ProxyPool pool;
 
     @Before
     public void setUp() throws Exception {
