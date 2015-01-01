@@ -10,7 +10,7 @@ import java.util.Random;
  * Class to query/create SimpleCommodity
  * Created by qinyuan on 14-12-27.
  */
-public class CommodityFactory extends AbstractDao<Commodity> {
+public class CommodityFactory {
 
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     private String startTime;
@@ -55,13 +55,22 @@ public class CommodityFactory extends AbstractDao<Commodity> {
     }
 
     private List<String> mockPictures() {
-        List<String> list =new ArrayList<String>();
+        List<String> list = new ArrayList<String>();
         list.add("resources/images/723489172.png");
         list.add("resources/images/25791837403.png");
         return list;
     }
 
-    @Override
+    public Commodity getInstance(int id) {
+        for (Commodity commodity : getInstances()) {
+            if (commodity.getId() == id) {
+                return commodity;
+            }
+        }
+        return null;
+    }
+
+    //@Override
     public List<Commodity> getInstances() {
         List<Commodity> list = new ArrayList<Commodity>();
         List<SimpleCommodity> simpleCommodities = new SimpleCommodityFactory().getInstances();

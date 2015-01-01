@@ -15,11 +15,12 @@ import static org.assertj.core.api.Assertions.*;
 public class ProxyPoolTest {
 
     private final static int POOL_SIZE = 10;
+    private final static int RELOAD_INTERVAL = 2000;
     private ProxyPool pool;
 
     @Before
     public void setUp() throws Exception {
-        pool = new ProxyPool(POOL_SIZE);
+        pool = new ProxyPool(POOL_SIZE, RELOAD_INTERVAL);
     }
 
     @Test

@@ -7,7 +7,7 @@ import java.util.List;
  * Get branches from database or by other way
  * Created by qinyuan on 14-12-27.
  */
-public class BranchFactory extends AbstractDao<Branch> {
+public class BranchFactory /*extends AbstractDao<Branch>*/ {
 
     private Branch mockInstance(int id, String name) {
         Branch branch = new Branch();
@@ -15,6 +15,15 @@ public class BranchFactory extends AbstractDao<Branch> {
         branch.setName(name);
         branch.setLogoUrl("resources/images/438179439.png");
         return branch;
+    }
+
+    public Branch getInstance(int id) {
+        for (Branch branch : getInstances()) {
+            if (branch.getId() == id) {
+                return branch;
+            }
+        }
+        return null;
     }
 
     public List<Branch> getInstances() {

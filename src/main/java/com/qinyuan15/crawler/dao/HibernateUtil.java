@@ -5,8 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -15,31 +13,23 @@ import org.slf4j.LoggerFactory;
  */
 public class HibernateUtil {
     public static String CONFIG_FILE = "hibernate.cfg.xml";
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(HibernateUtil.class);
     private final static SessionFactory sessionFactory = buildSessionFactory();
-    private static Session session;
 
     private static SessionFactory buildSessionFactory() {
-        try {
-            Configuration configuration = new Configuration().configure(CONFIG_FILE);
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                    .applySettings(configuration.getProperties()).build();
-            return configuration.buildSessionFactory(serviceRegistry);
-        } catch (Throwable ex) {
-            LOGGER.error("Initial SessionFactory creation failed.{}", ex);
-            throw new ExceptionInInitializerError(ex);
-        }
+        Configuration configuration = new Configuration().configure(CONFIG_FILE);
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties()).build();
+        return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    public static Session openSession() {
-        session = sessionFactory.openSession();
+    public static Session getSession() {
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         return session;
     }
 
-    public static void commitAndClose() {
+    public static void commit(Session session) {
         session.getTransaction().commit();
-        //getSessionFactory().close();
+        session.close();
     }
 }
