@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.html;
 
-import com.qinyuan15.crawler.dao.Commodity;
+import java.util.Map;
 
 /**
  * Created by qinyuan on 15-1-2.
@@ -8,5 +8,11 @@ import com.qinyuan15.crawler.dao.Commodity;
 public interface CommodityPageParser {
     void setHTML(String html);
 
-    Commodity getCommodity();
+    String getName();
+
+    Double getOriginalPrice();
+
+    Double getPrice();
+
+    Map<String, Double> getPriceHistory();
 }

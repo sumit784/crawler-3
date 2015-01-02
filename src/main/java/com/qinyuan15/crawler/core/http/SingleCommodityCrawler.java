@@ -37,11 +37,13 @@ class SingleCommodityCrawler {
         try {
             String html = client.getContent(url);
             commodityPageParser.setHTML(html);
+            /*
             Commodity commodity = commodityPageParser.getCommodity();
 
             Session session = HibernateUtil.getSession();
             session.save(commodity);
             HibernateUtil.commit(session);
+            */
         } catch (Exception e) {
             LOGGER.error("fail to fetch {} with proxy: {}", url, proxy, e.getMessage());
             if (proxy != null) {

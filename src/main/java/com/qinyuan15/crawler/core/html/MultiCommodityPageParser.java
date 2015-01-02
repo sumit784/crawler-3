@@ -1,7 +1,5 @@
 package com.qinyuan15.crawler.core.html;
 
-import com.qinyuan15.crawler.dao.Commodity;
-
 import java.util.Map;
 
 /**
@@ -15,8 +13,28 @@ public class MultiCommodityPageParser extends AbstractCommodityPageParser {
         this.parsers = parsers;
     }
 
+
     @Override
-    public Commodity getCommodity() {
+    public String getName() {
+        return getSuitableParser().getName();
+    }
+
+    @Override
+    public Double getOriginalPrice() {
+        return getSuitableParser().getOriginalPrice();
+    }
+
+    @Override
+    public Double getPrice() {
+        return getSuitableParser().getPrice();
+    }
+
+    @Override
+    public Map<String, Double> getPriceHistory() {
+        return getSuitableParser().getPriceHistory();
+    }
+
+    private CommodityPageParser getSuitableParser() {
         if (this.html == null) {
             return null;
         }
@@ -24,16 +42,11 @@ public class MultiCommodityPageParser extends AbstractCommodityPageParser {
         CommodityPageParser parser = null;
         for (Map.Entry<String, CommodityPageParser> entry : parsers.entrySet()) {
             parser = entry.getValue();
+            parser.setHTML(html);
             if (this.html.startsWith(entry.getKey())) {
-                break;
+                return parser;
             }
         }
-
-        if (parser != null) {
-            parser.setHTML(this.html);
-            return parser.getCommodity();
-        } else {
-            return null;
-        }
+        return parser;
     }
 }
