@@ -14,6 +14,6 @@ public class TestFileUtils {
 
     public static String read(String fileName) throws IOException {
         File file = new File("src/test/resources/" + fileName);
-        return FileUtils.readFileToString(file);
+        return FileUtils.readFileToString(file, "utf8");
     }
 }

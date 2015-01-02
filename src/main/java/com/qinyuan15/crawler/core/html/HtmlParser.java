@@ -31,8 +31,16 @@ public class HtmlParser {
         Elements filteredElements = new Elements();
 
         for (Element element : elements) {
-            if (element.hasAttr(CLASS_ATTR_KEY) && element.attr(CLASS_ATTR_KEY).equals(className)) {
-                filteredElements.add(element);
+            if (!element.hasAttr(CLASS_ATTR_KEY)) {
+                continue;
+            }
+
+            String[] classAttrValues = element.attr(CLASS_ATTR_KEY).split("\\s+");
+            for (String classAttrValue : classAttrValues) {
+                if (classAttrValue.equals(className)) {
+                    filteredElements.add(element);
+                    break;
+                }
             }
         }
 
