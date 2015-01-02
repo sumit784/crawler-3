@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.core.html.CommodityPageParser;
 import com.qinyuan15.crawler.dao.Commodity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ public class CommodityCrawler {
     private int interval = DEFAULT_INTERVAL;
     private ProxyPool proxyPool;
     private CommodityPool commodityPool;
+    private CommodityPageParser commodityPageParser;
 
     public void init() {
         for (int i = 0; i < this.threadSize; i++) {
@@ -26,6 +28,10 @@ public class CommodityCrawler {
 
     public void setProxyPool(ProxyPool proxyPool) {
         this.proxyPool = proxyPool;
+    }
+
+    public void setCommodityPageParser(CommodityPageParser commodityPageParser) {
+        this.commodityPageParser = commodityPageParser;
     }
 
     public void setCommodityPool(CommodityPool commodityPool) {
@@ -44,7 +50,7 @@ public class CommodityCrawler {
         private SingleCommodityCrawler singleCommodityCrawler;
 
         public CrawlThread() {
-            this.singleCommodityCrawler = new SingleCommodityCrawler();
+            this.singleCommodityCrawler = new SingleCommodityCrawler(commodityPageParser);
             this.singleCommodityCrawler.setProxyPool(proxyPool);
         }
 

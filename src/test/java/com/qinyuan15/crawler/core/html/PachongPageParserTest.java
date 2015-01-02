@@ -1,11 +1,10 @@
 package com.qinyuan15.crawler.core.html;
 
 import com.qinyuan15.crawler.dao.Proxy;
-import org.apache.commons.io.FileUtils;
+import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,8 +18,7 @@ public class PachongPageParserTest {
     @Before
     public void setUp() throws Exception {
         parser = new PachongPageParser();
-        String html = FileUtils.readFileToString(new File("src/test/resources/pachong.html"));
-        parser.setHTML(html);
+        parser.setHTML(TestFileUtils.read("pachong.html"));
     }
 
     @Test
