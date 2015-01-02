@@ -1,6 +1,5 @@
 package com.qinyuan15.crawler.core.http;
 
-import com.gargoylesoftware.htmlunit.HttpMethod;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpHost;
@@ -30,9 +29,23 @@ public class HttpClientWrapper {
     private CloseableHttpClient client;
     private Proxy proxy;
     private int timeout = DEFAULT_TIMEOUT;
+    private String userAgent = DEFAULT_USER_AGENT;
+    private int lastConnectTime;
 
     public void setProxy(Proxy proxy) {
         this.proxy = proxy;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    public int getLastConnectTime() {
+        return this.lastConnectTime;
     }
 
     public HttpClientWrapper() {
@@ -41,10 +54,12 @@ public class HttpClientWrapper {
     }
 
     public HttpResponse get(String url) throws IOException {
+        long startTime = System.currentTimeMillis();
         if (!url.contains("://")) {
             url = "http://" + url;
         }
         HttpGet get = new HttpGet(url);
+        get.setHeader("User-Agent", this.userAgent);
 
         // set config
         RequestConfig.Builder configBuilder = RequestConfig.custom().setConnectTimeout(this.timeout);
@@ -58,6 +73,8 @@ public class HttpClientWrapper {
 
         String content = EntityUtils.toString(response.getEntity());
         int status = response.getStatusLine().getStatusCode();
+
+        this.lastConnectTime = (int) (System.currentTimeMillis() - startTime);
         return new HttpResponse(content, status);
     }
 

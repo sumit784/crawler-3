@@ -1,9 +1,7 @@
 package com.qinyuan15.crawler.core.http;
 
-import com.qinyuan15.crawler.dao.HibernateUtil;
 import com.qinyuan15.crawler.dao.Proxy;
 import com.qinyuan15.crawler.dao.ProxyDao;
-import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +23,8 @@ public class ProxyDownloader {
             proxies.addAll(crawler.getProxies());
         }
 
-        int largeInt = 10000000;
         for (Proxy proxy : proxies) {
-            proxy.setSpeed(largeInt);
+            proxy.setSpeed(Integer.MAX_VALUE);
         }
 
         new ProxyDao().save(proxies);
