@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
-import com.qinyuan15.crawler.core.ConfigFileProxyPool;
+import com.qinyuan15.crawler.core.http.lib.TestProxyPool;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ public class HttpClientWrapperPerfTest {
 
     @Test
     public void test() throws Exception {
-        ProxyPool pool = new ConfigFileProxyPool();
+        ProxyPool pool = new TestProxyPool();
         HttpClientWrapper client = new HttpClientWrapper();
         //String url = "www.baidu.com";
         String url = "http://s.etao.com/detail/40780735321.html?tbpm=20141215";

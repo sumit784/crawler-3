@@ -26,7 +26,8 @@ public class DatabaseProxyPoolTest {
     @Test
     public void testUpdateSpeed() throws Exception {
         Proxy proxy = pool.next();
-        pool.updateSpeed(proxy, new Random().nextInt());
+        proxy.setSpeed(new Random().nextInt());
+        pool.updateSpeed(proxy);
     }
 
     @Test

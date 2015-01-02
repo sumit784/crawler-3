@@ -5,14 +5,14 @@ import com.qinyuan15.crawler.dao.Proxy;
 import java.util.List;
 
 /**
- * Wrap Http Proxy
+ * Pool of Http Proxy
  * Created by qinyuan on 14-12-24.
  */
 public interface ProxyPool {
 
-    List<Proxy> getAll();
-
     Proxy next();
+
+    void updateSpeed(Proxy proxy);
 
     int size();
 }

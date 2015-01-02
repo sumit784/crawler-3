@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -12,14 +14,21 @@ import org.hibernate.service.ServiceRegistry;
  * Created by qinyuan on 14-12-26.
  */
 public class HibernateUtil {
+    private final static Logger LOGGER = LoggerFactory.getLogger(HibernateUtil.class);
+
     public static String CONFIG_FILE = "hibernate.cfg.xml";
     private final static SessionFactory sessionFactory = buildSessionFactory();
 
     private static SessionFactory buildSessionFactory() {
-        Configuration configuration = new Configuration().configure(CONFIG_FILE);
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties()).build();
-        return configuration.buildSessionFactory(serviceRegistry);
+        try {
+            Configuration configuration = new Configuration().configure(CONFIG_FILE);
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
+            return configuration.buildSessionFactory(serviceRegistry);
+        } catch (Exception e) {
+            LOGGER.error("fail to connect database {}", e);
+            throw new RuntimeException(e);
+        }
     }
 
     public static Session getSession() {

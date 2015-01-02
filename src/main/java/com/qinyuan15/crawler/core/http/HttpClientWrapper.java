@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.gargoylesoftware.htmlunit.HttpMethod;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpHost;
@@ -21,32 +22,17 @@ import java.io.IOException;
  */
 public class HttpClientWrapper {
 
-    public final static String DEFAULT_PROXY_TYPE = "http";
-    public final static int DEFAULT_PROXY_PORT = 80;
     private final static Logger LOGGER = LoggerFactory.getLogger(HttpClientWrapper.class);
+    // default connection timeout is 10 seconds
+    public final static int DEFAULT_TIMEOUT = 10000;
+    public final static String DEFAULT_USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36";
 
     private CloseableHttpClient client;
-    private String proxyHost;
-    private int proxyPort = DEFAULT_PROXY_PORT;
-    private String proxyType = DEFAULT_PROXY_TYPE;
-
-    public void setProxyHost(String proxyHost) {
-        this.proxyHost = proxyHost;
-    }
-
-    public void setProxyPort(int proxyPort) {
-        this.proxyPort = proxyPort;
-    }
-
-    public void setProxyType(String proxyType) {
-        this.proxyType = proxyType;
-    }
+    private Proxy proxy;
+    private int timeout = DEFAULT_TIMEOUT;
 
     public void setProxy(Proxy proxy) {
-        if (proxy != null) {
-            setProxyHost(proxy.getHost());
-            setProxyPort(proxy.getPort());
-        }
+        this.proxy = proxy;
     }
 
     public HttpClientWrapper() {
@@ -54,22 +40,21 @@ public class HttpClientWrapper {
         client = httpClientBuilder.build();
     }
 
-    private void setProxy(HttpGet get) {
-        HttpHost proxy = new HttpHost(proxyHost, proxyPort, proxyType);
-        RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
-        get.setConfig(config);
-    }
-
     public HttpResponse get(String url) throws IOException {
         if (!url.contains("://")) {
             url = "http://" + url;
         }
         HttpGet get = new HttpGet(url);
-        if (proxyHost != null) {
-            setProxy(get);
+
+        // set config
+        RequestConfig.Builder configBuilder = RequestConfig.custom().setConnectTimeout(this.timeout);
+        if (proxy != null) {
+            configBuilder.setProxy(new HttpHost(proxy.getHost(), proxy.getPort(), proxy.getType()));
         }
+        get.setConfig(configBuilder.build());
+
         CloseableHttpResponse response = client.execute(get);
-        LOGGER.info("connected to {}", url);
+        LOGGER.info("connected to {} with proxy {}", url, proxy);
 
         String content = EntityUtils.toString(response.getEntity());
         int status = response.getStatusLine().getStatusCode();
