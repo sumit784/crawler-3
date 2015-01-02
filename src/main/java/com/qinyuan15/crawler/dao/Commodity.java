@@ -14,6 +14,15 @@ public class Commodity extends SimpleCommodity {
     private Double originalPrice;
     private Boolean lowestInThreeMonth;
     private PriceHistory trend;
+    private String url;
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
 
     public List<String> getPictures() {
         return pictures;

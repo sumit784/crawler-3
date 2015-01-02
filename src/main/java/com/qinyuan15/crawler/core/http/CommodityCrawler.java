@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.dao.Commodity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,12 +15,21 @@ public class CommodityCrawler {
 
     private int threadSize = DEFAULT_THREAD_SIZE;
     private int interval = DEFAULT_INTERVAL;
-    private int count = 0;
+    private ProxyPool proxyPool;
+    private CommodityPool commodityPool;
 
     public void init() {
         for (int i = 0; i < this.threadSize; i++) {
             new CrawlThread().start();
         }
+    }
+
+    public void setProxyPool(ProxyPool proxyPool) {
+        this.proxyPool = proxyPool;
+    }
+
+    public void setCommodityPool(CommodityPool commodityPool) {
+        this.commodityPool = commodityPool;
     }
 
     public void setThreadSize(int threadSize) {
@@ -31,12 +41,22 @@ public class CommodityCrawler {
     }
 
     private class CrawlThread extends Thread {
+        private SingleCommodityCrawler singleCommodityCrawler;
+
+        public CrawlThread() {
+            this.singleCommodityCrawler = new SingleCommodityCrawler();
+            this.singleCommodityCrawler.setProxyPool(proxyPool);
+        }
+
         @Override
         public void run() {
             try {
                 while (true) {
                     Thread.sleep(interval * 1000);
-                    LOGGER.info("save commodity {}", count++);
+                    if (commodityPool != null) {
+                        Commodity commodity = commodityPool.next();
+                        this.singleCommodityCrawler.save(commodity.getUrl());
+                    }
                 }
             } catch (Exception e) {
                 LOGGER.error(e.getMessage());
