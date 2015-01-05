@@ -17,5 +17,6 @@
         <property name="show_sql">false</property>
 
         <mapping resource="com/qinyuan15/crawler/dao/Proxy.hbm.xml"/>
+        <mapping resource="com/qinyuan15/crawler/dao/PriceRecord.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

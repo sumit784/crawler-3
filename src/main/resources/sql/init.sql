@@ -25,7 +25,7 @@ create table commodity (
   on_shelf_time datetime
 );
 
-create table price_history (
+create table price_record (
   id bigint primary key auto_increment,
   commodity_id bigint,
   record_time datetime,

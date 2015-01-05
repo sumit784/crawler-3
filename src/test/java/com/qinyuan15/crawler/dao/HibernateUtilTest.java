@@ -13,7 +13,7 @@ public class HibernateUtilTest {
 
     @Test
     public void test() {
-        int testTimes = 10;
+        int testTimes = 50;
         for (int i = 0; i < testTimes; i++) {
             Session session = HibernateUtil.getSession();
             assertThat(session).isNotNull();

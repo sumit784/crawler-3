@@ -2,11 +2,15 @@ package com.qinyuan15.crawler.core.html;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import sun.org.mozilla.javascript.internal.NativeArray;
 import sun.org.mozilla.javascript.internal.NativeObject;
 
-import java.util.HashMap;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,8 +19,8 @@ import java.util.TreeMap;
  * Created by qinyuan on 15-1-2.
  */
 public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
+    private final static Logger LOGGER = LoggerFactory.getLogger(EtaoCommodityPageParser.class);
 
-    @Override
     public String getName() {
         HtmlParser htmlParser = new HtmlParser(this.html);
         Elements nameElements = htmlParser.getElements("h1", "top-title");
@@ -29,6 +33,9 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Double getOriginalPrice() {
         HtmlParser htmlParser = new HtmlParser(this.html);
@@ -42,6 +49,9 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Double getPrice() {
         HtmlParser htmlParser = new HtmlParser(this.html);
@@ -55,8 +65,11 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Map<String, Double> getPriceHistory() {
+    public Map<Date, Double> getPriceHistory() {
         HtmlParser htmlParser = new HtmlParser(this.html);
         JavaScriptParser scriptParser = new JavaScriptParser();
         Elements productElements = htmlParser.getElements("div", "product");
@@ -79,8 +92,8 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         return null;
     }
 
-    private Map<String, Double> getPriceHistory(NativeArray array) {
-        Map<String, Double> map = new TreeMap<String, Double>();
+    private Map<Date, Double> getPriceHistory(NativeArray array) {
+        Map<Date, Double> map = new TreeMap<Date, Double>();
         for (Object element : array) {
             if (element instanceof NativeArray) {
                 NativeArray arrayElement = (NativeArray) element;
@@ -88,14 +101,24 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
                 Object price = arrayElement.get(1);
                 if (date instanceof String) {
                     if (price instanceof Double) {
-                        map.put((String) date, (Double) price);
+                        map.put(createDateByString((String) date), (Double) price);
                     } else if (price instanceof Integer) {
-                        map.put((String) date, ((Integer) price).doubleValue());
+                        map.put(createDateByString((String) date), ((Integer) price).doubleValue());
                     }
                 }
             }
         }
         return map;
+    }
+
+    private Date createDateByString(String dateStr) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return new Date(dateFormat.parse(dateStr).getTime());
+        } catch (ParseException e) {
+            LOGGER.error("error in parsing date String '{}': {}", dateStr, e);
+            throw new RuntimeException(e);
+        }
     }
 
     private Double parseDouble(String str) {

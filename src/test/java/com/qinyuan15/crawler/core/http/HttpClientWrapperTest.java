@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.http;
 
 import com.qinyuan15.crawler.core.http.lib.TestProxyPool;
+import com.qinyuan15.crawler.dao.Proxy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,6 +21,12 @@ public class HttpClientWrapperTest {
     public void setUp() throws Exception {
         client = new HttpClientWrapper();
         proxyPool = new TestProxyPool();
+        /*
+        Proxy proxy = new Proxy();
+        proxy.setHost("183.207.228.119");
+        proxy.setPort(84);
+        client.setProxy(proxy);
+        */
         //client.setProxy(proxyPool.next());
     }
 

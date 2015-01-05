@@ -4,6 +4,7 @@ import com.qinyuan15.crawler.core.html.CommodityPageParser;
 import com.qinyuan15.crawler.core.html.EtaoCommodityPageParser;
 import com.qinyuan15.crawler.core.http.lib.TestCommodityPool;
 import com.qinyuan15.crawler.core.http.lib.TestProxyPool;
+import com.qinyuan15.crawler.dao.Commodity;
 import org.junit.Test;
 
 /**
@@ -14,9 +15,9 @@ public class SingleCommodityCrawlerTest {
     public void testSave() throws Exception {
         ProxyPool proxyPool = new TestProxyPool();
         CommodityPageParser pageParser = new EtaoCommodityPageParser();
-        SingleCommodityCrawler crawler = new SingleCommodityCrawler(pageParser);
+        SinglePriceHistoryCrawler crawler = new SinglePriceHistoryCrawler(pageParser);
         //crawler.setProxyPool(proxyPool);
-        String url = new TestCommodityPool().next().getUrl();
-        crawler.save(url);
+        Commodity commodity = new TestCommodityPool().next();
+        crawler.save(commodity);
     }
 }

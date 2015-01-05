@@ -6,11 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Grub price of commodity
  * Created by qinyuan on 15-1-1.
  */
-public class CommodityCrawler {
+public class PriceHistoryCrawler {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CommodityCrawler.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(PriceHistoryCrawler.class);
     public final static int DEFAULT_THREAD_SIZE = 10;
     public final static int DEFAULT_INTERVAL = 10;
 
@@ -47,10 +48,10 @@ public class CommodityCrawler {
     }
 
     private class CrawlThread extends Thread {
-        private SingleCommodityCrawler singleCommodityCrawler;
+        private SinglePriceHistoryCrawler singleCommodityCrawler;
 
         public CrawlThread() {
-            this.singleCommodityCrawler = new SingleCommodityCrawler(commodityPageParser);
+            this.singleCommodityCrawler = new SinglePriceHistoryCrawler(commodityPageParser);
             this.singleCommodityCrawler.setProxyPool(proxyPool);
         }
 
@@ -61,7 +62,7 @@ public class CommodityCrawler {
                     Thread.sleep(interval * 1000);
                     if (commodityPool != null) {
                         Commodity commodity = commodityPool.next();
-                        this.singleCommodityCrawler.save(commodity.getUrl());
+                        this.singleCommodityCrawler.save(commodity);
                     }
                 }
             } catch (Exception e) {

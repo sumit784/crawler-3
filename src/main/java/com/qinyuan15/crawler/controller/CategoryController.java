@@ -17,6 +17,7 @@ import static com.qinyuan15.crawler.controller.JsonControllerUtils.toJson;
  * Query commodity category
  * Created by qinyuan on 14-12-27.
  */
+@SuppressWarnings("unchecked")
 @Controller
 public class CategoryController {
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 public class CommodityCrawlerTest {
     @Test
     public void testInit() throws Exception {
-        CommodityCrawler crawler = new CommodityCrawler();
+        PriceHistoryCrawler crawler = new PriceHistoryCrawler();
         crawler.setCommodityPool(new TestCommodityPool());
         crawler.setInterval(1);
         crawler.init();

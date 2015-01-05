@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.html;
 
+import java.sql.Date;
 import java.util.Map;
 
 /**
@@ -14,5 +15,9 @@ public interface CommodityPageParser {
 
     Double getPrice();
 
-    Map<String, Double> getPriceHistory();
+    /**
+     * @return A map that contains price history information,
+     * key of map is date and value of map is price of that date
+     */
+    Map<Date, Double> getPriceHistory();
 }

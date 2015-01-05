@@ -27,25 +27,21 @@ public class ProxyTester {
     public void run() {
         HttpClientWrapper client = new HttpClientWrapper();
         Session session = HibernateUtil.getSession();
-        int batchSize = 2, i = 0;
         @SuppressWarnings("unchecked")
         List<Proxy> proxies = session.createQuery("FROM Proxy ORDER BY speed asc, id desc").list();
         for (Proxy proxy : proxies) {
             client.setProxy(proxy);
             try {
                 client.getContent(this.testPage);
-                LOGGER.info("connect to {} with proxy in {} millisesonds", this.testPage, proxy, client.getLastConnectTime());
+                LOGGER.info("connect to {} with proxy {} in {} milliseconds", this.testPage, proxy, client.getLastConnectTime());
                 proxy.setSpeed(client.getLastConnectTime());
             } catch (Exception e) {
                 proxy.setSpeed(Integer.MAX_VALUE);
                 LOGGER.info("fail to connect {} with proxy {}: {}", this.testPage, proxy, e.getMessage());
             }
+            session = HibernateUtil.getSession();
             session.update(proxy);
-            if ((++i) % batchSize == 0) {
-                session.flush();
-                session.clear();
-            }
+            HibernateUtil.commit(session);
         }
-        HibernateUtil.commit(session);
     }
 }
