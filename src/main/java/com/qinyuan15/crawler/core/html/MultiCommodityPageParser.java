@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.html;
 
+import java.sql.Date;
 import java.util.Map;
 
 /**
@@ -12,7 +13,6 @@ public class MultiCommodityPageParser extends AbstractCommodityPageParser {
     public void setParsers(Map<String, CommodityPageParser> parsers) {
         this.parsers = parsers;
     }
-
 
     @Override
     public String getName() {
@@ -30,7 +30,7 @@ public class MultiCommodityPageParser extends AbstractCommodityPageParser {
     }
 
     @Override
-    public Map<String, Double> getPriceHistory() {
+    public Map<Date, Double> getPriceHistory() {
         return getSuitableParser().getPriceHistory();
     }
 

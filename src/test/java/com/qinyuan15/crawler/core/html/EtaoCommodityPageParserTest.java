@@ -1,9 +1,11 @@
 package com.qinyuan15.crawler.core.html;
 
+import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Date;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,19 +39,19 @@ public class EtaoCommodityPageParserTest {
 
     @Test
     public void testGetPriceHistory() throws Exception {
-        Map<String, Double> priceHistory = parser.getPriceHistory();
+        Map<Date, Double> priceHistory = parser.getPriceHistory();
         assertThat(priceHistory).hasSize(12);
-        assertThat(priceHistory).containsEntry("2014-08-24", 169.0);
-        assertThat(priceHistory).containsEntry("2014-09-09", 139.0);
-        assertThat(priceHistory).containsEntry("2014-09-12", 169.0);
-        assertThat(priceHistory).containsEntry("2014-11-09", 399.0);
-        assertThat(priceHistory).containsEntry("2014-11-11", 139.0);
-        assertThat(priceHistory).containsEntry("2014-11-12", 169.0);
-        assertThat(priceHistory).containsEntry("2014-11-27", 139.0);
-        assertThat(priceHistory).containsEntry("2014-12-01", 169.0);
-        assertThat(priceHistory).containsEntry("2014-12-12", 139.0);
-        assertThat(priceHistory).containsEntry("2014-12-13", 139.0);
-        assertThat(priceHistory).containsEntry("2014-12-15", 169.0);
-        assertThat(priceHistory).containsEntry("2015-01-02", 169.02);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-08-24"), 169.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-09-09"), 139.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-09-12"), 169.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-11-09"), 399.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-11-11"), 139.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-11-12"), 169.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-11-27"), 139.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-12-01"), 169.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-12-12"), 139.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-12-13"), 139.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-12-15"), 169.0);
+        assertThat(priceHistory).containsEntry(DateUtils.newDate("2015-01-02"), 169.02);
     }
 }

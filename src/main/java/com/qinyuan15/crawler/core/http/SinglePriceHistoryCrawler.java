@@ -47,16 +47,6 @@ class SinglePriceHistoryCrawler {
             for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                 savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
             }
-            commodityPageParser.getPriceHistory();
-            //PriceHistory priceHistory = new PriceHistory();
-
-            /*
-            Commodity commodity = commodityPageParser.getCommodity();
-
-            Session session = HibernateUtil.getSession();
-            session.save(commodity);
-            HibernateUtil.commit(session);
-            */
         } catch (Exception e) {
             LOGGER.error("fail to fetch {} with proxy: {}", url, proxy, e.getMessage());
             if (proxy != null) {

@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.html;
 
+import com.qinyuan15.crawler.core.DateUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
@@ -101,24 +102,14 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
                 Object price = arrayElement.get(1);
                 if (date instanceof String) {
                     if (price instanceof Double) {
-                        map.put(createDateByString((String) date), (Double) price);
+                        map.put(DateUtils.newDate((String) date), (Double) price);
                     } else if (price instanceof Integer) {
-                        map.put(createDateByString((String) date), ((Integer) price).doubleValue());
+                        map.put(DateUtils.newDate((String) date), ((Integer) price).doubleValue());
                     }
                 }
             }
         }
         return map;
-    }
-
-    private Date createDateByString(String dateStr) {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            return new Date(dateFormat.parse(dateStr).getTime());
-        } catch (ParseException e) {
-            LOGGER.error("error in parsing date String '{}': {}", dateStr, e);
-            throw new RuntimeException(e);
-        }
     }
 
     private Double parseDouble(String str) {
