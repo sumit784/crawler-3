@@ -21,12 +21,10 @@ public class HttpClientWrapperTest {
     public void setUp() throws Exception {
         client = new HttpClientWrapper();
         proxyPool = new TestProxyPool();
-        /*
         Proxy proxy = new Proxy();
         proxy.setHost("183.207.228.119");
         proxy.setPort(84);
         client.setProxy(proxy);
-        */
         //client.setProxy(proxyPool.next());
     }
 

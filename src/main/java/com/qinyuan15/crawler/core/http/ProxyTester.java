@@ -29,6 +29,26 @@ public class ProxyTester {
         Session session = HibernateUtil.getSession();
         @SuppressWarnings("unchecked")
         List<Proxy> proxies = session.createQuery("FROM Proxy ORDER BY speed asc, id desc").list();
+        session.close();
+        for (Proxy proxy : proxies) {
+            client.setProxy(proxy);
+            try {
+                client.getContent(this.testPage);
+                LOGGER.info("connect to {} with proxy {} in {} milliseconds", this.testPage, proxy, client.getLastConnectTime());
+                proxy.setSpeed(client.getLastConnectTime());
+            } catch (Exception e) {
+                proxy.setSpeed(Integer.MAX_VALUE);
+                LOGGER.info("fail to connect {} with proxy {}: {}", this.testPage, proxy, e.getMessage());
+            }
+        }
+    }
+
+    /*
+    public void run() {
+        HttpClientWrapper client = new HttpClientWrapper();
+        Session session = HibernateUtil.getSession();
+        @SuppressWarnings("unchecked")
+        List<Proxy> proxies = session.createQuery("FROM Proxy ORDER BY speed asc, id desc").list();
         for (Proxy proxy : proxies) {
             client.setProxy(proxy);
             try {
@@ -44,4 +64,5 @@ public class ProxyTester {
             HibernateUtil.commit(session);
         }
     }
+    */
 }
