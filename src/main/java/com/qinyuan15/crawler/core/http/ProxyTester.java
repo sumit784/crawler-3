@@ -25,6 +25,7 @@ public class ProxyTester {
     }
 
     public void run() {
+        LOGGER.info("proxy test start!");
         Session session = HibernateUtil.getSession();
         @SuppressWarnings("unchecked")
         List<Proxy> proxies = session.createQuery(
@@ -48,5 +49,6 @@ public class ProxyTester {
             session.update(proxy);
             HibernateUtil.commit(session);
         }
+        LOGGER.info("proxy test complete!");
     }
 }

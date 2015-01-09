@@ -20,7 +20,6 @@
     </bean>
     <!-- Spring MVC configuration end -->
 
-
     <!--
     <bean class="com.qinyuan15.crawler.core.http.PriceHistoryCrawler" init-method="init">
         <property name="interval" value="5" />
@@ -28,19 +27,36 @@
     </bean>
     -->
 
+    <!-- test cronTrigger -->
     <bean id="testJob" class="com.qinyuan15.crawler.core.TestBean"/>
-    <bean id="jobDetailBean" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <bean id="testJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="testJob"/>
         <property name="targetMethod" value="log"/>
     </bean>
-    <bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="jobDetailBean"/>
-        <property name="cronExpression" value="0/10 * * * * ?"/>
+    <bean id="testCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="testJobDetail"/>
+        <!-- execute in each 5 seconds -->
+        <property name="cronExpression" value="0/5 * * * * ?"/>
     </bean>
+    <!-- test cronTrigger end -->
+
+    <!-- proxy test cronTrigger -->
+    <bean id="proxyTestJob" class="com.qinyuan15.crawler.core.http.ProxyTester"/>
+    <bean id="proxyTestDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="proxyTestJob"/>
+        <property name="targetMethod" value="run"/>
+    </bean>
+    <bean id="proxyTestCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="proxyTestDetail"/>
+        <!-- run in 0 o'clock of each day -->
+        <property name="cronExpression" value="0 0 0 * * ?"/>
+    </bean>
+    <!-- proxy test cronTrigger end -->
+
     <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <ref bean="cronTriggerBean"/>
+                <ref bean="testCronTriggerBean"/>
             </list>
         </property>
     </bean>
