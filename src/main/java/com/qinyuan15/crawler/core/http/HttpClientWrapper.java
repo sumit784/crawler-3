@@ -29,6 +29,7 @@ public class HttpClientWrapper {
     private CloseableHttpClient client;
     private Proxy proxy;
     private int timeout = DEFAULT_TIMEOUT;
+    private int requestTimeout = DEFAULT_TIMEOUT;
     private String userAgent = DEFAULT_USER_AGENT;
     private int lastConnectTime;
 
@@ -38,6 +39,10 @@ public class HttpClientWrapper {
 
     public void setTimeout(int timeout) {
         this.timeout = timeout;
+    }
+
+    public void setRequestTimeout(int requestTimeout) {
+        this.requestTimeout = requestTimeout;
     }
 
     public void setUserAgent(String userAgent) {
@@ -62,7 +67,9 @@ public class HttpClientWrapper {
         get.setHeader("User-Agent", this.userAgent);
 
         // set config
-        RequestConfig.Builder configBuilder = RequestConfig.custom().setConnectTimeout(this.timeout);
+        RequestConfig.Builder configBuilder = RequestConfig.custom()
+                .setConnectTimeout(this.timeout)
+                .setConnectionRequestTimeout(this.requestTimeout);
         if (proxy != null) {
             configBuilder.setProxy(new HttpHost(proxy.getHost(), proxy.getPort(), proxy.getType()));
         }
