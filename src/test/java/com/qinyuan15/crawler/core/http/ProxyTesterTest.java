@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.core.http.proxy.ProxyTester;
 import org.junit.Test;
 
 /**

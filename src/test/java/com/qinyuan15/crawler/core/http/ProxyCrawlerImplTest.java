@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.core.crawler.ProxyCrawlerImpl;
 import com.qinyuan15.crawler.core.html.PachongPageParser;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.junit.Test;

@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.html;
 
 /**
+ * Implement some methods of ProxyPageParser
  * Created by qinyuan on 14-12-29.
  */
 abstract public class AbstractProxyPageParser implements ProxyPageParser {

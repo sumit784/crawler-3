@@ -1,6 +1,9 @@
-package com.qinyuan15.crawler.core.http;
+package com.qinyuan15.crawler.core.crawler;
 
+import com.qinyuan15.crawler.core.crawler.ProxyCrawler;
 import com.qinyuan15.crawler.core.html.ProxyPageParser;
+import com.qinyuan15.crawler.core.http.HttpClientWrapper;
+import com.qinyuan15.crawler.core.http.HttpResponse;
 import com.qinyuan15.crawler.dao.Proxy;
 
 import java.util.ArrayList;

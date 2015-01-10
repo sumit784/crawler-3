@@ -1,12 +1,13 @@
 package com.qinyuan15.crawler.core.http.lib;
 
-import com.qinyuan15.crawler.core.http.ProxyPool;
+import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.dao.Proxy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A ProxyPool for testing
  * Created by qinyuan on 15-1-2.
  */
 public class TestProxyPool implements ProxyPool {

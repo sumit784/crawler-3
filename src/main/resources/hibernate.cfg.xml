@@ -8,6 +8,8 @@
         <property name="connection.url">jdbc:mysql://localhost:3306/crawler</property>
         <property name="connection.username">root</property>
         <property name="connection.password">qinyuan</property>
+        <property name="connection.useUnicode">true</property>
+        <property name="connection.characterEncoding">UTF-8</property>
         <property name="hibernate.c3p0.max_size">20</property>
         <property name="hibernate.c3p0.min_size">1</property>
         <property name="hibernate.c3p0.timeout">5000</property>
@@ -18,5 +20,6 @@
 
         <mapping resource="com/qinyuan15/crawler/dao/Proxy.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/PriceRecord.hbm.xml"/>
+        <mapping resource="com/qinyuan15/crawler/dao/Commodity.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

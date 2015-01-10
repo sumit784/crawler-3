@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Map;
 
 /**
+ * Interface to parse commodity web page
  * Created by qinyuan on 15-1-2.
  */
 public interface CommodityPageParser {

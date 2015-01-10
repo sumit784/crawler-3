@@ -20,8 +20,6 @@ import java.util.TreeMap;
  * Created by qinyuan on 15-1-2.
  */
 public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
-    private final static Logger LOGGER = LoggerFactory.getLogger(EtaoCommodityPageParser.class);
-
     public String getName() {
         HtmlParser htmlParser = new HtmlParser(this.html);
         Elements nameElements = htmlParser.getElements("h1", "top-title");

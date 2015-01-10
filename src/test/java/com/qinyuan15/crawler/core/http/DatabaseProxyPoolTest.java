@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.core.http.proxy.DatabaseProxyPool;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +15,11 @@ import static org.assertj.core.api.Assertions.*;
  */
 public class DatabaseProxyPoolTest {
 
-    private final static int POOL_SIZE = 10;
-    private final static int RELOAD_INTERVAL = 2000;
     private DatabaseProxyPool pool;
 
     @Before
     public void setUp() throws Exception {
-        pool = new DatabaseProxyPool(POOL_SIZE, RELOAD_INTERVAL);
+        pool = new DatabaseProxyPool();
     }
 
     @Test

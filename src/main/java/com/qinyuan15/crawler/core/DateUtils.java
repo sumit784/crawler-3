@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
+ * Tool class about date
  * Created by qinyuan on 15-1-5.
  */
 public class DateUtils {
@@ -17,6 +18,11 @@ public class DateUtils {
     private DateUtils() {
     }
 
+    /**
+     * create Date Object by String such as '2000-12-01'
+     * @param dateStr date String such as '2000-12-01'
+     * @return a {@link java.sql.Date} instance
+     */
     public static Date newDate(String dateStr) {
        try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

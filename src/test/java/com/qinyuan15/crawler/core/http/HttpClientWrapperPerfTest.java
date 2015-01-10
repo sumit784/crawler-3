@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.http;
 
 import com.qinyuan15.crawler.core.http.lib.TestProxyPool;
+import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.junit.Test;
 

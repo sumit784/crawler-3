@@ -1,6 +1,8 @@
-package com.qinyuan15.crawler.core.http;
+package com.qinyuan15.crawler.core.crawler;
 
-import com.qinyuan15.crawler.core.html.CommodityPageParser;
+import com.qinyuan15.crawler.core.commodity.CommodityPool;
+import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
+import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.dao.Commodity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,7 @@ public class PriceHistoryCrawler {
     private int interval = DEFAULT_INTERVAL;
     private ProxyPool proxyPool;
     private CommodityPool commodityPool;
-    private CommodityPageParser commodityPageParser;
+    private ComposableCommodityPageParser commodityPageParser;
 
     public void init() {
         for (int i = 0; i < this.threadSize; i++) {
@@ -31,7 +33,7 @@ public class PriceHistoryCrawler {
         this.proxyPool = proxyPool;
     }
 
-    public void setCommodityPageParser(CommodityPageParser commodityPageParser) {
+    public void setCommodityPageParser(ComposableCommodityPageParser commodityPageParser) {
         this.commodityPageParser = commodityPageParser;
     }
 

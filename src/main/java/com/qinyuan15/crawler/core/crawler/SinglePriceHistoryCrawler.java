@@ -1,6 +1,8 @@
-package com.qinyuan15.crawler.core.http;
+package com.qinyuan15.crawler.core.crawler;
 
-import com.qinyuan15.crawler.core.html.CommodityPageParser;
+import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
+import com.qinyuan15.crawler.core.http.HttpClientWrapper;
+import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import com.qinyuan15.crawler.dao.PriceRecord;
@@ -13,7 +15,7 @@ import java.sql.Date;
 import java.util.Map;
 
 /**
- * Grub price of single commodity
+ * Grub price of single commodity, then save the price history of it to database
  * Created by qinyuan on 15-1-1.
  */
 class SinglePriceHistoryCrawler {
@@ -21,9 +23,9 @@ class SinglePriceHistoryCrawler {
     private final static Logger LOGGER = LoggerFactory.getLogger(SinglePriceHistoryCrawler.class);
 
     private ProxyPool proxyPool;
-    private CommodityPageParser commodityPageParser;
+    private ComposableCommodityPageParser commodityPageParser;
 
-    public SinglePriceHistoryCrawler(CommodityPageParser commodityPageParser) {
+    public SinglePriceHistoryCrawler(ComposableCommodityPageParser commodityPageParser) {
         this.commodityPageParser = commodityPageParser;
     }
 
@@ -31,6 +33,11 @@ class SinglePriceHistoryCrawler {
         this.proxyPool = proxyPool;
     }
 
+    /**
+     * Save price history of certain Commodity to database
+     *
+     * @param commodity Commodity object to save
+     */
     public void save(Commodity commodity) {
         String url = commodity.getUrl();
         Proxy proxy = null;
@@ -42,6 +49,7 @@ class SinglePriceHistoryCrawler {
         client.setProxy(proxy);
         try {
             String html = client.getContent(url);
+            commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
             Map<Date, Double> priceHistory = commodityPageParser.getPriceHistory();
             for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {

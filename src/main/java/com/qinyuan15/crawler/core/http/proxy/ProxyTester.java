@@ -1,5 +1,6 @@
-package com.qinyuan15.crawler.core.http;
+package com.qinyuan15.crawler.core.http.proxy;
 
+import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.hibernate.Session;

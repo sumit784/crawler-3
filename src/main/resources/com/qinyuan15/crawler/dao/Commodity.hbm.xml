@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.qinyuan15.crawler.dao">
+    <class name="Commodity" table="commodity">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="name"/>
+        <property name="url"/>
+        <property name="price"/>
+        <property name="lowPrice" column="low_price"/>
+        <property name="originalPrice" column="original_price"/>
+        <property name="onShelfTime" column="on_shelf_time"/>
+    </class>
+</hibernate-mapping>

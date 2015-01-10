@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.core.crawler.PriceHistoryCrawler;
 import com.qinyuan15.crawler.core.http.lib.TestCommodityPool;
 import org.junit.Test;
 

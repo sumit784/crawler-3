@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core.http;
+package com.qinyuan15.crawler.core.http.proxy;
 
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import com.qinyuan15.crawler.dao.Proxy;
@@ -10,20 +10,39 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Pool to store Proxy
+ * Pool to store Proxy that get from database
  * Created by qinyuan on 14-12-31.
  */
 public class DatabaseProxyPool implements ProxyPool {
 
+    /**
+     * default pool size is 10
+     */
+    public final static int DEFAULT_SIZE = 10;
+
+    /**
+     * default reload interval is 1 minute
+     */
+    public final static int DEFAULT_RELOAD_INTERVAL = 60000;
+
     private final static Logger LOGGER = LoggerFactory.getLogger(DatabaseProxyPool.class);
-    private int size;
+
+    private int size = DEFAULT_SIZE;
+    private int reloadInterval = DEFAULT_RELOAD_INTERVAL;
     private List<Proxy> proxies;
     private int pointer = 0;
 
-    public DatabaseProxyPool(int size, final int reloadInteval) {
+    public void setSize(int size) {
         this.size = size;
+    }
+
+    public void setReloadInterval(int reloadInterval) {
+        this.reloadInterval = reloadInterval;
+    }
+
+    public void init() {
         this.load();
-        new ReloadThread(reloadInteval).start();
+        new ReloadThread(this.reloadInterval).start();
     }
 
     @SuppressWarnings("unchecked")

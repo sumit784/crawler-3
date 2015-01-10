@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
 /**
- * Proxy Server
+ * Class to record Proxy Server information
  * Created by qinyuan on 14-12-25.
  */
 public class Proxy extends PersistObject {

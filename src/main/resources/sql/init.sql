@@ -11,7 +11,7 @@ create table proxy (
   type char(20) not null,
   speed int not null,
   unique(host, port)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table commodity (
   id bigint primary key auto_increment,
@@ -23,11 +23,11 @@ create table commodity (
   branch_id int,
   category_id int,
   on_shelf_time datetime
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table price_record (
   id bigint primary key auto_increment,
   commodity_id bigint,
   record_time datetime,
   price double
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

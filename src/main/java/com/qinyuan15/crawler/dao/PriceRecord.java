@@ -3,6 +3,7 @@ package com.qinyuan15.crawler.dao;
 import java.sql.Date;
 
 /**
+ * Class to record price information
  * Created by qinyuan on 15-1-4.
  */
 public class PriceRecord extends PersistObject {
