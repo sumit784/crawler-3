@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- PriceHistoryCrawler -->
+    <bean id="proxyPool" class="com.qinyuan15.crawler.core.http.proxy.DatabaseProxyPool" init-method="init">
+        <property name="size" value="10"/>
+        <!-- reload each minute -->
+        <property name="reloadInterval" value="60000"/>
+    </bean>
+    <bean id="commodityPool" class="com.qinyuan15.crawler.core.commodity.DatabaseCommodityPool"/>
+    <bean id="etaoPageParser" class="com.qinyuan15.crawler.core.html.EtaoCommodityPageParser"/>
+    <bean id="webPageParser" class="com.qinyuan15.crawler.core.html.ComposableCommodityPageParser">
+        <property name="parsers">
+            <map>
+                <entry key="http://s.etao.com" value-ref="etaoPageParser"/>
+            </map>
+        </property>
+    </bean>
+    <bean class="com.qinyuan15.crawler.core.crawler.PriceHistoryCrawler" init-method="init">
+        <!-- run each 10 second for each thread -->
+        <property name="interval" value="10000"/>
+        <property name="threadSize" value="5"/>
+        <!--<property name="proxyPool" ref="proxyPool"/> -->
+        <property name="commodityPool" ref="commodityPool"/>
+        <property name="commodityPageParser" ref="webPageParser"/>
+    </bean>
+    <!-- PriceHistoryCrawler end -->
+
+</beans>

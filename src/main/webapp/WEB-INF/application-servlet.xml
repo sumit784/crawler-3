@@ -13,75 +13,16 @@
     <!-- Spring MVC configuration start -->
     <context:component-scan base-package="com.qinyuan15.crawler.controller"/>
     <mvc:annotation-driven/>
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
     <!-- Spring MVC configuration end -->
 
-    <!-- test cronTrigger -->
-    <bean id="testJob" class="com.qinyuan15.crawler.core.TestBean"/>
-    <bean id="testJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="testJob"/>
-        <property name="targetMethod" value="log"/>
-    </bean>
-    <bean id="testCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="testJobDetail"/>
-        <!-- execute in each 5 seconds -->
-        <property name="cronExpression" value="0/5 * * * * ?"/>
-    </bean>
-    <!-- test cronTrigger end -->
-
-    <!-- proxy test cronTrigger -->
-    <bean id="proxyTestJob" class="com.qinyuan15.crawler.core.http.proxy.ProxyTester"/>
-    <bean id="proxyTestDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="proxyTestJob"/>
-        <property name="targetMethod" value="run"/>
-    </bean>
-    <bean id="proxyTestCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="proxyTestDetail"/>
-        <!-- run in 4 o'clock of each day -->
-        <property name="cronExpression" value="0 0 4 * * ?"/>
-        <!-- run in each 1 minute -->
-        <!--<property name="cronExpression" value="0 * * * * ?"/>-->
-    </bean>
-    <!-- proxy test cronTrigger end -->
-
-    <!-- schedulerFactoryBean -->
-    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <!--<ref bean="testCronTriggerBean"/>-->
-                <ref bean="proxyTestCronTriggerBean"/>
-            </list>
-        </property>
-    </bean>
-    <!-- schedulerFactoryBean end -->
-
-    <!-- PriceHistoryCrawler -->
-    <bean id="proxyPool" class="com.qinyuan15.crawler.core.http.proxy.DatabaseProxyPool" init-method="init">
-        <property name="size" value="10"/>
-        <!-- reload each minute -->
-        <property name="reloadInterval" value="60000"/>
-    </bean>
-    <bean id="commodityPool" class="com.qinyuan15.crawler.core.commodity.DatabaseCommodityPool"/>
-    <bean id="etaoPageParser" class="com.qinyuan15.crawler.core.html.EtaoCommodityPageParser"/>
-    <bean id="webPageParser" class="com.qinyuan15.crawler.core.html.ComposableCommodityPageParser">
-        <property name="parsers">
-            <map>
-                <entry key="http://s.etao.com" value-ref="etaoPageParser"/>
-            </map>
-        </property>
-    </bean>
-    <bean class="com.qinyuan15.crawler.core.crawler.PriceHistoryCrawler" init-method="init">
-        <!-- run each 10 second for each thread -->
-        <property name="interval" value="10000"/>
-        <property name="threadSize" value="5"/>
-        <!--<property name="proxyPool" ref="proxyPool"/> -->
-        <property name="commodityPool" ref="commodityPool"/>
-        <property name="commodityPageParser" ref="webPageParser"/>
-    </bean>
-    <!-- PriceHistoryCrawler end -->
+    <!--
+    <import resource="application-proxy.xml"/>
+    <import resource="application-price-crawler.xml"/>
+    -->
 
 </beans>
