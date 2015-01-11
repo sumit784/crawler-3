@@ -46,4 +46,9 @@ public class DatabaseCommodityPool implements CommodityPool {
         session.close();
         return commodityCount;
     }
+
+    @Override
+    public void reset() {
+        this.pointer = 0;
+    }
 }

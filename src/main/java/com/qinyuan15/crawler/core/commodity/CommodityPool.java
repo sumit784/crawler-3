@@ -8,4 +8,5 @@ import com.qinyuan15.crawler.dao.Commodity;
  */
 public interface CommodityPool {
     Commodity next();
+    void reset();
 }

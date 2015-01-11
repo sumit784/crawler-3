@@ -59,16 +59,23 @@ public class PriceHistoryCrawler {
 
         @Override
         public void run() {
-            try {
-                while (true) {
-                    Thread.sleep(interval * 1000);
-                    if (commodityPool != null) {
-                        Commodity commodity = commodityPool.next();
+            if (commodityPool == null) {
+                LOGGER.info("commodity pool is null, no commodity history to grub.");
+                return;
+            }
+
+            while (true) {
+                try {
+                    Thread.sleep(interval);
+                    Commodity commodity = commodityPool.next();
+                    if (commodity == null) {
+                        commodityPool.reset();
+                    } else {
                         this.singleCommodityCrawler.save(commodity);
                     }
+                } catch (Exception e) {
+                    LOGGER.error(e.getMessage());
                 }
-            } catch (Exception e) {
-                LOGGER.error(e.getMessage());
             }
         }
     }
