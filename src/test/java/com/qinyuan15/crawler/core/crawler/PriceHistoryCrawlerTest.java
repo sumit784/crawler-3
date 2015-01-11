@@ -17,6 +17,6 @@ public class PriceHistoryCrawlerTest {
         crawler.setCommodityPageParser(
                 ComposableCommodityPageParserTest.mockComposableCommodityPageParser());
         crawler.init();
-        Thread.sleep(10000); // run 10 minutes
+        Thread.sleep(20000); // run 10 minutes
     }
 }

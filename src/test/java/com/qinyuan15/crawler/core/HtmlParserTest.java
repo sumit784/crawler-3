@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core;
 
 import com.qinyuan15.crawler.core.html.HtmlParser;
+import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class HtmlParserTest {
 
     @Before
     public void setUp() throws Exception {
-        html = FileUtils.readFileToString(new File("/tmp/crawler/baidu.html"));
+        html = TestFileUtils.read("baidu.html");
     }
 
     @Test
