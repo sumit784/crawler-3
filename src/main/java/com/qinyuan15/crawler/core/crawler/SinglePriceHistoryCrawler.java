@@ -39,6 +39,12 @@ class SinglePriceHistoryCrawler {
      * @param commodity Commodity object to save
      */
     public void save(Commodity commodity) {
+        if (this.commodityPageParser ==null) {
+            LOGGER.info("commodityPageParser is null, nothing to save");
+            return;
+        }
+
+
         String url = commodity.getUrl();
         Proxy proxy = null;
         if (this.proxyPool != null) {
@@ -52,21 +58,26 @@ class SinglePriceHistoryCrawler {
             commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
             Map<Date, Double> priceHistory = commodityPageParser.getPriceHistory();
-            for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
-                savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
+            if (priceHistory == null) {
+                LOGGER.info("can not get priceHistory from url {}", url);
+            } else {
+                LOGGER.info("save price history of {}", url);
+                for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
+                    savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
+                }
             }
         } catch (Exception e) {
-            LOGGER.error("fail to fetch {} with proxy: {}", url, proxy, e.getMessage());
+            LOGGER.error("fail to fetch {} with proxy {}: {}", url, proxy, e);
             if (proxy != null) {
                 proxy.setSpeed(Integer.MAX_VALUE);
+                proxyPool.updateSpeed(proxy);
             }
-            proxyPool.updateSpeed(proxy);
         }
     }
 
     private void savePriceRecord(Date date, Double price, int commodityId) {
         Session session = HibernateUtil.getSession();
-        if (session.createQuery("FROM PriceRecord WHERE recordtime=? AND commodityId=?")
+        if (session.createQuery("FROM PriceRecord WHERE recordTime=? AND commodityId=?")
                 .setDate(0, date).setInteger(1, commodityId).list().size() == 0) {
             PriceRecord record = new PriceRecord();
             record.setRecordTime(date);

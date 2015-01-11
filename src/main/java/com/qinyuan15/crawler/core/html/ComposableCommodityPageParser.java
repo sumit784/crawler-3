@@ -1,5 +1,8 @@
 package com.qinyuan15.crawler.core.html;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Date;
 import java.util.Map;
 
@@ -10,6 +13,7 @@ import java.util.Map;
  * Created by qinyuan on 15-1-2.
  */
 public class ComposableCommodityPageParser extends AbstractCommodityPageParser {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ComposableCommodityPageParser.class);
     private String webUrl;
     private Map<String, CommodityPageParser> parsers;
 
@@ -77,6 +81,7 @@ public class ComposableCommodityPageParser extends AbstractCommodityPageParser {
             }
         }
 
+        LOGGER.warn("no suitable web page parser for url {}", this.webUrl);
         return null;
     }
 }

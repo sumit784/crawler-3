@@ -19,7 +19,7 @@ public class DatabaseCommodityPool implements CommodityPool {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Commodity next() {
+    public synchronized Commodity next() {
         Session session = HibernateUtil.getSession();
 
         long commodityCount = this.size();
@@ -34,7 +34,7 @@ public class DatabaseCommodityPool implements CommodityPool {
             this.commodities = query.list();
         }
 
-        Commodity commodity = this.commodities.get(pointer);
+        Commodity commodity = this.commodities.get(pointer % PAGE_SIZE);
         pointer++;
         return commodity;
     }
@@ -48,7 +48,7 @@ public class DatabaseCommodityPool implements CommodityPool {
     }
 
     @Override
-    public void reset() {
+    public synchronized void reset() {
         this.pointer = 0;
     }
 }

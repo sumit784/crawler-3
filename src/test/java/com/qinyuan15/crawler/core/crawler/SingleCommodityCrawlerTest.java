@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.core.crawler;
 
 import com.qinyuan15.crawler.core.html.CommodityPageParser;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
+import com.qinyuan15.crawler.core.html.ComposableCommodityPageParserTest;
 import com.qinyuan15.crawler.core.html.EtaoCommodityPageParser;
 import com.qinyuan15.crawler.core.http.lib.TestCommodityPool;
 import com.qinyuan15.crawler.core.http.lib.TestProxyPool;
@@ -21,20 +22,9 @@ public class SingleCommodityCrawlerTest {
     public void testSave() throws Exception {
         ProxyPool proxyPool = new TestProxyPool();
         SinglePriceHistoryCrawler crawler = new SinglePriceHistoryCrawler(
-                mockComposableCommodityPageParser());
+                ComposableCommodityPageParserTest.mockComposableCommodityPageParser());
         //crawler.setProxyPool(proxyPool);
         Commodity commodity = new TestCommodityPool().next();
         crawler.save(commodity);
-    }
-
-    private ComposableCommodityPageParser mockComposableCommodityPageParser() {
-        CommodityPageParser etaoCommodityPageParser = new EtaoCommodityPageParser();
-        ComposableCommodityPageParser composableCommodityPageParser =
-                new ComposableCommodityPageParser();
-
-        Map<String, CommodityPageParser> parserMap = new HashMap<String, CommodityPageParser>();
-        parserMap.put("etao", etaoCommodityPageParser);
-        composableCommodityPageParser.setParsers(parserMap);
-        return composableCommodityPageParser;
     }
 }

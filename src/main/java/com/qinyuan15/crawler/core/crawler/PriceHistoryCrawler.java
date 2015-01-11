@@ -25,6 +25,7 @@ public class PriceHistoryCrawler {
 
     public void init() {
         for (int i = 0; i < this.threadSize; i++) {
+            LOGGER.info("start PriceHistory crawl thread " + i);
             new CrawlThread().start();
         }
     }
@@ -65,16 +66,19 @@ public class PriceHistoryCrawler {
             }
 
             while (true) {
+                Commodity commodity = commodityPool.next();
                 try {
-                    Thread.sleep(interval);
-                    Commodity commodity = commodityPool.next();
                     if (commodity == null) {
                         commodityPool.reset();
                     } else {
                         this.singleCommodityCrawler.save(commodity);
                     }
+                    Thread.sleep(interval);
                 } catch (Exception e) {
-                    LOGGER.error(e.getMessage());
+                    String commodityInfo = commodity == null ?
+                            null : commodity.getName() + "(" + commodity.getUrl() + ")";
+                    LOGGER.error("fail to grub commodity '{}': {}",
+                            commodityInfo, e);
                 }
             }
         }
