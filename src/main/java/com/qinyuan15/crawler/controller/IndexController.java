@@ -24,10 +24,8 @@ public class IndexController {
     }
 
     @ResponseBody
-    @RequestMapping("/indexJson")
-    public Map<String, String> indexJson() {
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("key", "value");
-        return result;
+    @RequestMapping("/index.json")
+    public String indexJson() {
+        return "{hello:\"world\"}";
     }
 }

@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.controller;
 
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.BranchFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +20,10 @@ public class BranchController {
 
     @ResponseBody
     @RequestMapping("/branch")
-    public String get(@RequestParam("pretty") String pretty, @RequestParam("id") int id) {
+    public String get(@RequestParam(value = "pretty", required = false) String pretty,
+                      @RequestParam(value = "id", required = false) Integer id) {
         BranchFactory factory = new BranchFactory();
-        if (id > 0) {
+        if (id != null && id > 0) {
             Branch branch = factory.getInstance(id);
             if (branch == null) {
                 return emptyMapJson;
