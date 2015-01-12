@@ -1,6 +1,8 @@
 package com.qinyuan15.crawler.core.html;
 
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeArray;
+import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import java.lang.reflect.Method;
@@ -29,8 +31,7 @@ public class JavaScriptParser {
     }
 
     public boolean isObject(Object obj) {
-        String className = obj.getClass().getSimpleName();
-        return className.equals("NativeObject");
+        return obj instanceof NativeObject;
     }
 
     public Object parseObject(Object obj, String key) {
@@ -52,7 +53,6 @@ public class JavaScriptParser {
     }
 
     public boolean isArray(Object obj) {
-        String className = obj.getClass().getSimpleName();
-        return className.equals("NativeArray");
+        return obj instanceof NativeArray;
     }
 }

@@ -4,6 +4,8 @@ import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ import java.util.List;
  */
 public class DatabaseCommodityPool implements CommodityPool {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(DatabaseCommodityPool.class);
     private final static int PAGE_SIZE = 100;
     private int pointer = 0;
     private List<Commodity> commodities;
@@ -49,6 +52,7 @@ public class DatabaseCommodityPool implements CommodityPool {
 
     @Override
     public synchronized void reset() {
+        LOGGER.info("Commodity Pool reset");
         this.pointer = 0;
     }
 }

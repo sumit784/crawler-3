@@ -39,7 +39,7 @@ class SinglePriceHistoryCrawler {
      * @param commodity Commodity object to save
      */
     public void save(Commodity commodity) {
-        if (this.commodityPageParser ==null) {
+        if (this.commodityPageParser == null) {
             LOGGER.info("commodityPageParser is null, nothing to save");
             return;
         }
@@ -54,6 +54,7 @@ class SinglePriceHistoryCrawler {
         HttpClientWrapper client = new HttpClientWrapper();
         client.setProxy(proxy);
         try {
+            LOGGER.info("prepare to save price history of {} with proxy {}", url, proxy);
             String html = client.getContent(url);
             commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
