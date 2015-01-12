@@ -4,6 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Index page, just for testing
@@ -16,5 +21,13 @@ public class IndexController {
     public String printHello(ModelMap model) {
         model.addAttribute("message", "It Work!");
         return "index";
+    }
+
+    @ResponseBody
+    @RequestMapping("/indexJson")
+    public Map<String, String> indexJson() {
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("key", "value");
+        return result;
     }
 }
