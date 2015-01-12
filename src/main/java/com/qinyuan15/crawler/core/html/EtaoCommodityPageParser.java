@@ -3,15 +3,9 @@ package com.qinyuan15.crawler.core.html;
 import com.qinyuan15.crawler.core.DateUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
-import sun.org.mozilla.javascript.internal.NativeArray;
-import sun.org.mozilla.javascript.internal.NativeObject;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -20,6 +14,9 @@ import java.util.TreeMap;
  * Created by qinyuan on 15-1-2.
  */
 public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
+
+    private JavaScriptParser jsParser = new JavaScriptParser();
+
     public String getName() {
         HtmlParser htmlParser = new HtmlParser(this.html);
         Elements nameElements = htmlParser.getElements("h1", "top-title");
@@ -67,10 +64,10 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     public Map<Date, Double> getPriceHistory() {
         HtmlParser htmlParser = new HtmlParser(this.html);
-        JavaScriptParser scriptParser = new JavaScriptParser();
         Elements productElements = htmlParser.getElements("div", "product");
         for (Element productElement : productElements) {
             Elements jsElements = productElement.getElementsByTag("script");
@@ -79,25 +76,23 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
             }
 
             Element jsElement = jsElements.get(0);
-            Object priceTrend = scriptParser.eval(jsElement.html() + ";data_pricetrend");
-            if (priceTrend instanceof NativeObject) {
-                NativeObject priceTrendObj = (NativeObject) priceTrend;
-                Object points = priceTrendObj.get("points");
-                if (points instanceof NativeArray) {
-                    return getPriceHistory((NativeArray) points);
+            Object priceTrend = jsParser.eval(jsElement.html() + ";data_pricetrend");
+            if (jsParser.isObject(priceTrend)) {
+                Object points = jsParser.parseObject(priceTrend, "points");
+                if (jsParser.isArray(points)) {
+                    return getPriceHistory((Iterable<Object>) points);
                 }
             }
         }
         return null;
     }
 
-    private Map<Date, Double> getPriceHistory(NativeArray array) {
+    private Map<Date, Double> getPriceHistory(Iterable<Object> array) {
         Map<Date, Double> map = new TreeMap<Date, Double>();
         for (Object element : array) {
-            if (element instanceof NativeArray) {
-                NativeArray arrayElement = (NativeArray) element;
-                Object date = arrayElement.get(0);
-                Object price = arrayElement.get(1);
+            if (jsParser.isArray(element)) {
+                Object date = jsParser.parseArray(element, 0);
+                Object price = jsParser.parseArray(element, 1);
                 if (date instanceof String) {
                     if (price instanceof Double) {
                         map.put(DateUtils.newDate((String) date), (Double) price);
@@ -105,6 +100,7 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
                         map.put(DateUtils.newDate((String) date), ((Integer) price).doubleValue());
                     }
                 }
+
             }
         }
         return map;

@@ -1,7 +1,9 @@
 package com.qinyuan15.crawler.core.html;
 
-import sun.org.mozilla.javascript.internal.Context;
-import sun.org.mozilla.javascript.internal.Scriptable;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
+
+import java.lang.reflect.Method;
 
 /**
  * This class simulate the execution of JavaScript
@@ -24,5 +26,33 @@ public class JavaScriptParser {
      */
     public Object eval(String javaScriptString) {
         return this.context.evaluateString(scriptable, javaScriptString, null, 0, null);
+    }
+
+    public boolean isObject(Object obj) {
+        String className = obj.getClass().getSimpleName();
+        return className.equals("NativeObject");
+    }
+
+    public Object parseObject(Object obj, String key) {
+        try {
+            Method method = obj.getClass().getMethod("get", Object.class);
+            return method.invoke(obj, key);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Object parseArray(Object obj, int index) {
+        try {
+            Method method = obj.getClass().getMethod("get", int.class);
+            return method.invoke(obj, index);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isArray(Object obj) {
+        String className = obj.getClass().getSimpleName();
+        return className.equals("NativeArray");
     }
 }
