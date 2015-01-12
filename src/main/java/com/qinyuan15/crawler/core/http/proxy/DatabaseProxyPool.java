@@ -55,9 +55,19 @@ public class DatabaseProxyPool implements ProxyPool {
     }
 
     public void updateSpeed(Proxy proxy) {
-        Session session = HibernateUtil.getSession();
-        session.update(proxy);
-        HibernateUtil.commit(session);
+        if (proxy != null) {
+            Session session = HibernateUtil.getSession();
+            session.update(proxy);
+            HibernateUtil.commit(session);
+        }
+    }
+
+    @Override
+    public void updateSpeed(Proxy proxy, int speed) {
+        if (proxy != null && speed > 0) {
+            proxy.setSpeed(speed);
+            this.updateSpeed(proxy);
+        }
     }
 
     public Proxy next() {

@@ -63,4 +63,9 @@ public class TestProxyPool implements ProxyPool {
     public void updateSpeed(Proxy proxy) {
         // nothing to do
     }
+
+    @Override
+    public void updateSpeed(Proxy proxy, int speed) {
+        // nothing to do
+    }
 }

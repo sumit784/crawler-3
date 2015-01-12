@@ -1,46 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd">
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/task
+           http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <!-- test cronTrigger -->
     <bean id="testJob" class="com.qinyuan15.crawler.core.TestBean"/>
-    <bean id="testJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="testJob"/>
-        <property name="targetMethod" value="log"/>
-    </bean>
-    <bean id="testCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="testJobDetail"/>
-        <!-- execute in each 5 seconds -->
-        <property name="cronExpression" value="0/5 * * * * ?"/>
-    </bean>
-    <!-- test cronTrigger end -->
-
-    <!-- proxy tester cronTrigger -->
     <bean id="proxyTestJob" class="com.qinyuan15.crawler.core.http.proxy.ProxyTester"/>
-    <bean id="proxyTestDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="proxyTestJob"/>
-        <property name="targetMethod" value="run"/>
-    </bean>
-    <bean id="proxyTestCronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="proxyTestDetail"/>
+    <bean id="proxyDowloadJob" class="com.qinyuan15.crawler.core.crawler.ProxyDownloader"/>
+    <task:scheduled-tasks>
+        <!-- execute in each 5 seconds -->
+        <!--<task:scheduled ref="testJob" method="log" cron="1/5 * * * * ?" />-->
         <!-- run in 4 o'clock of each day -->
-        <property name="cronExpression" value="0 0 4 * * ?"/>
-        <!-- run in each 1 minute -->
-        <!--<property name="cronExpression" value="0 * * * * ?"/>-->
-    </bean>
-    <!-- proxy test cronTrigger end -->
-
-    <!-- schedulerFactoryBean -->
-    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <!--<ref bean="testCronTriggerBean"/>-->
-                <ref bean="proxyTestCronTriggerBean"/>
-            </list>
-        </property>
-    </bean>
-    <!-- schedulerFactoryBean end -->
+        <task:scheduled ref="proxyTestJob" method="run" cron="0 0 4 * * ?" />
+        <!-- run in 2 o'clock of each day -->
+        <task:scheduled ref="proxyDowloadJob" method="save" cron="0 0 2 * * ?" />
+    </task:scheduled-tasks>
 
 </beans>

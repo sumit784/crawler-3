@@ -14,5 +14,7 @@ public interface ProxyPool {
 
     void updateSpeed(Proxy proxy);
 
+    void updateSpeed(Proxy proxy, int speed);
+
     int size();
 }

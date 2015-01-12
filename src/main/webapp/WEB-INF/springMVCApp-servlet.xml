@@ -36,8 +36,8 @@
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <!-- Spring MVC configuration end -->
 
-    <!--
     <import resource="application-proxy.xml"/>
+    <!--
     <import resource="application-price-crawler.xml"/>
     -->
 </beans>
