@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
+ * Data Access Object of Proxy
  * Created by qinyuan on 15-1-1.
  */
 public class ProxyDao {
@@ -15,9 +16,10 @@ public class ProxyDao {
 
     public void save(List<Proxy> proxies) {
         Session session = HibernateUtil.getSession();
-        Query query = session.createQuery("FROM Proxy WHERE host=? and port=?");
+        Query query = session.createQuery("FROM Proxy WHERE host=:host and port=:port");
         for (Proxy proxy : proxies) {
-            if (query.setString(0, proxy.getHost()).setInteger(1, proxy.getPort()).list().size() == 0) {
+            if (query.setString("host", proxy.getHost()).setInteger("port", proxy.getPort())
+                    .list().size() == 0) {
                 session.save(proxy);
                 LOGGER.info("save proxy {}.", proxy);
             } else {
