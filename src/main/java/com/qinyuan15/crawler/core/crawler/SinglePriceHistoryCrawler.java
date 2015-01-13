@@ -80,8 +80,9 @@ class SinglePriceHistoryCrawler {
 
     private void savePriceRecord(Date date, Double price, int commodityId) {
         Session session = HibernateUtil.getSession();
-        if (session.createQuery("FROM PriceRecord WHERE recordTime=? AND commodityId=?")
-                .setDate(0, date).setInteger(1, commodityId).list().size() == 0) {
+        String query = "FROM PriceRecord WHERE recordTime=:recordTime AND commodityId=:commodityId";
+        if (session.createQuery(query).setDate("recordTime", date)
+                .setInteger("commodityId", commodityId).list().size() == 0) {
             PriceRecord record = new PriceRecord();
             record.setRecordTime(date);
             record.setPrice(price);
