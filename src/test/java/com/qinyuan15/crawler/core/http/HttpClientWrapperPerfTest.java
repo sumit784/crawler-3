@@ -3,6 +3,7 @@ package com.qinyuan15.crawler.core.http;
 import com.qinyuan15.crawler.core.http.lib.TestProxyPool;
 import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.dao.Proxy;
+import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Test;
 
 /**
@@ -39,7 +40,7 @@ public class HttpClientWrapperPerfTest {
                 System.out.println("status: " + response.getStatus() + ", title: " +
                         new HtmlParser(response.getContent()).getTitle());
                         */
-                client.download(url, "/tmp/crawler/etao.html");
+                client.download(url, TestFileUtils.tempDir + "/crawler/etao.html");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

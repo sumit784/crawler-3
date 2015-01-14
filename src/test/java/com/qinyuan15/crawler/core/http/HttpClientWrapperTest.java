@@ -3,6 +3,7 @@ package com.qinyuan15.crawler.core.http;
 import com.qinyuan15.crawler.core.http.lib.TestProxyPool;
 import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.dao.Proxy;
+import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,7 +40,7 @@ public class HttpClientWrapperTest {
 
     @Test
     public void testDownload() throws Exception {
-        String filePath = "/tmp/crawler/baidu.html";
+        String filePath = TestFileUtils.tempDir + "/crawler/baidu.html";
         client.download(url, filePath);
     }
 }

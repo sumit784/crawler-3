@@ -6,9 +6,12 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * Utils class about test file
  * Created by qinyuan on 15-1-2.
  */
 public class TestFileUtils {
+    public static String tempDir = System.getProperty("java.io.tmpdir");
+
     private TestFileUtils() {
     }
 

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+webinf="crawler-1.0-SNAPSHOT/WEB-INF"
+tomcat="/home/qinyuan/software/apache-tomcat-7.0.27"
+
+#./package
+scp -r target/$webinf/jsp target/$webinf/classes root@aliyun:/home/qinyuan/software/
