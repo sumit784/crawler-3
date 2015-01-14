@@ -20,10 +20,10 @@
         </property>
     </bean>
     <bean class="com.qinyuan15.crawler.core.crawler.PriceHistoryCrawler" init-method="init">
-        <!-- run each 10 second for each thread -->
-        <property name="interval" value="10000"/>
+        <!-- run each 30 second for each thread -->
+        <property name="interval" value="30000"/>
         <property name="threadSize" value="5"/>
-        <!--<property name="proxyPool" ref="proxyPool"/>-->
+        <property name="proxyPool" ref="proxyPool"/>
         <property name="commodityPool" ref="commodityPool"/>
         <property name="commodityPageParser" ref="webPageParser"/>
     </bean>

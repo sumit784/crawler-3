@@ -20,16 +20,26 @@ public class DateUtils {
 
     /**
      * create Date Object by String such as '2000-12-01'
+     *
      * @param dateStr date String such as '2000-12-01'
      * @return a {@link java.sql.Date} instance
      */
     public static Date newDate(String dateStr) {
-       try {
+        try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             return new Date(dateFormat.parse(dateStr).getTime());
         } catch (ParseException e) {
             LOGGER.error("error in parsing date String '{}': {}", dateStr, e);
             throw new RuntimeException(e);
         }
+    }
+
+    public static Date now() {
+        return new Date(System.currentTimeMillis());
+    }
+
+    public static Date threeMonthAgo() {
+        long seondOfThreeMonth = 90 * 3600 * 24;
+        return new Date(System.currentTimeMillis() - seondOfThreeMonth * 1000);
     }
 }

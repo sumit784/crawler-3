@@ -29,5 +29,6 @@ create table price_record (
   id bigint primary key auto_increment,
   commodity_id bigint,
   record_time datetime,
-  price double
+  price double,
+  grab_time datetime
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

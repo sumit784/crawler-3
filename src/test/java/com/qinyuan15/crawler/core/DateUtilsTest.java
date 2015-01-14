@@ -25,4 +25,15 @@ public class DateUtilsTest {
         date.setTime(date.getTime() + milliSecondsOfOneDay);
         assertThat(date.toString()).isEqualTo("2012-02-29");
     }
+
+    @Test
+    public void testNow() throws Exception {
+        assertThat(DateUtils.now().getTime() - System.currentTimeMillis()).isGreaterThan(-2);
+    }
+
+    @Test
+    public void testThreeMonthAgo() throws  Exception {
+        Date date = DateUtils.threeMonthAgo();
+        System.out.println(date);
+    }
 }

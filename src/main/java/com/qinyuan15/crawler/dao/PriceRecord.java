@@ -10,6 +10,7 @@ public class PriceRecord extends PersistObject {
     private int commodityId;
     private Date recordTime;
     private double price;
+    private Date grabTime;
 
     public int getCommodityId() {
         return commodityId;
@@ -23,6 +24,10 @@ public class PriceRecord extends PersistObject {
         return price;
     }
 
+    public Date getGrabTime() {
+        return grabTime;
+    }
+
     public void setCommodityId(int commodityId) {
         this.commodityId = commodityId;
     }
@@ -33,5 +38,9 @@ public class PriceRecord extends PersistObject {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setGrabTime(Date grabTime) {
+        this.grabTime = grabTime;
     }
 }

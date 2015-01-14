@@ -1,12 +1,10 @@
 package com.qinyuan15.crawler.core.crawler;
 
+import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
-import com.qinyuan15.crawler.dao.Commodity;
-import com.qinyuan15.crawler.dao.HibernateUtil;
-import com.qinyuan15.crawler.dao.PriceRecord;
-import com.qinyuan15.crawler.dao.Proxy;
+import com.qinyuan15.crawler.dao.*;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +42,6 @@ class SinglePriceHistoryCrawler {
             return;
         }
 
-
         String url = commodity.getUrl();
         Proxy proxy = null;
         if (this.proxyPool != null) {
@@ -79,16 +76,16 @@ class SinglePriceHistoryCrawler {
     }
 
     private void savePriceRecord(Date date, Double price, int commodityId) {
-        Session session = HibernateUtil.getSession();
-        String query = "FROM PriceRecord WHERE recordTime=:recordTime AND commodityId=:commodityId";
-        if (session.createQuery(query).setDate("recordTime", date)
-                .setInteger("commodityId", commodityId).list().size() == 0) {
+        if (PriceRecordDao.factory().setCommodityId(commodityId)
+                .setRecordTime(date).hasInstance()) {
+            Session session = HibernateUtil.getSession();
             PriceRecord record = new PriceRecord();
             record.setRecordTime(date);
             record.setPrice(price);
             record.setCommodityId(commodityId);
+            record.setGrabTime(DateUtils.now());
             session.save(record);
+            HibernateUtil.commit(session);
         }
-        HibernateUtil.commit(session);
     }
 }

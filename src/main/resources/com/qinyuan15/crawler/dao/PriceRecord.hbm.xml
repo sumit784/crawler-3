@@ -11,5 +11,6 @@
         <property name="commodityId" column="commodity_id"/>
         <property name="recordTime" column="record_time"/>
         <property name="price"/>
+        <property name="grabTime" column="grab_time"/>
     </class>
 </hibernate-mapping>
