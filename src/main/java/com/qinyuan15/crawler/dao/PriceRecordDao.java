@@ -1,7 +1,5 @@
 package com.qinyuan15.crawler.dao;
 
-import org.hibernate.Session;
-
 import java.sql.Date;
 import java.util.List;
 
@@ -66,6 +64,7 @@ public class PriceRecordDao {
             if (grabDate != null) {
                 query += " AND DATE(grab_time)='" + grabDate + "'";
             }
+            query += " GROUP BY commodityId,recordTime";
 
             return HibernateUtil.getList(query);
         }
