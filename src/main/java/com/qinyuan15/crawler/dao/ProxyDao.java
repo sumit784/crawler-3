@@ -16,16 +16,22 @@ public class ProxyDao {
 
     public void save(List<Proxy> proxies) {
         Session session = HibernateUtil.getSession();
-        Query query = session.createQuery("FROM Proxy WHERE host=:host and port=:port");
-        for (Proxy proxy : proxies) {
-            if (query.setString("host", proxy.getHost()).setInteger("port", proxy.getPort())
-                    .list().size() == 0) {
-                session.save(proxy);
-                LOGGER.info("save proxy {}.", proxy);
-            } else {
-                LOGGER.info("{} already exists, no need to save.", proxy);
+        try {
+            Query query = session.createQuery("FROM Proxy WHERE host=:host and port=:port");
+            for (Proxy proxy : proxies) {
+                if (query.setString("host", proxy.getHost()).setInteger("port", proxy.getPort())
+                        .list().size() == 0) {
+                    session.save(proxy);
+                    LOGGER.info("save proxy {}.", proxy);
+                } else {
+                    LOGGER.info("{} already exists, no need to save.", proxy);
+                }
             }
+        } catch (Exception e) {
+            LOGGER.error("fail to save: {}", e);
+            throw new RuntimeException(e);
+        } finally {
+            HibernateUtil.commit(session);
         }
-        HibernateUtil.commit(session);
     }
 }

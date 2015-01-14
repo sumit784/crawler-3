@@ -5,7 +5,6 @@ import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.dao.*;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,14 +77,12 @@ class SinglePriceHistoryCrawler {
     private void savePriceRecord(Date date, Double price, int commodityId) {
         if (PriceRecordDao.factory().setCommodityId(commodityId)
                 .setRecordTime(date).hasInstance()) {
-            Session session = HibernateUtil.getSession();
             PriceRecord record = new PriceRecord();
             record.setRecordTime(date);
             record.setPrice(price);
             record.setCommodityId(commodityId);
             record.setGrabTime(DateUtils.now());
-            session.save(record);
-            HibernateUtil.commit(session);
+            HibernateUtil.save(record);
         }
     }
 }

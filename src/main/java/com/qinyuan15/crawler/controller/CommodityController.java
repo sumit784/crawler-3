@@ -3,7 +3,6 @@ package com.qinyuan15.crawler.controller;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
-import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,14 +61,9 @@ public class CommodityController {
 
     @ResponseBody
     @RequestMapping("/deleteCommodity.json")
-    public Map<String, Object> addOrUpdate(@RequestParam(value = "id", required = true) Integer id) {
+    public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
         try {
-            Session session = HibernateUtil.getSession();
-            Commodity commodity = (Commodity) session.get(Commodity.class, id);
-            if (commodity != null) {
-                session.delete(commodity);
-            }
-            HibernateUtil.commit(session);
+            HibernateUtil.delete(Commodity.class, id);
             return createResultMap(true, null);
         } catch (Exception e) {
             return createResultMap(false, e.toString());

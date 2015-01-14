@@ -2,8 +2,6 @@ package com.qinyuan15.crawler.core.http.proxy;
 
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import com.qinyuan15.crawler.dao.Proxy;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,18 +45,13 @@ public class DatabaseProxyPool implements ProxyPool {
 
     @SuppressWarnings("unchecked")
     private void load() {
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery("FROM Proxy ORDER BY speed asc, id desc").
-                setFirstResult(0).setMaxResults(size);
-        this.proxies = query.list();
+        this.proxies = HibernateUtil.getList("FROM Proxy ORDER BY speed asc, id desc");
         this.pointer = 0;
     }
 
     public void updateSpeed(Proxy proxy) {
         if (proxy != null) {
-            Session session = HibernateUtil.getSession();
-            session.update(proxy);
-            HibernateUtil.commit(session);
+            HibernateUtil.update(proxy);
         }
     }
 

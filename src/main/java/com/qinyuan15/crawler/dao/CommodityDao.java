@@ -14,6 +14,7 @@ public class CommodityDao {
         return new Factory();
     }
 
+    @SuppressWarnings("unchecked")
     public static class Factory {
         private Integer id;
 
@@ -23,19 +24,12 @@ public class CommodityDao {
         }
 
         public List<Commodity> getInstances() {
-            // build SQL query command
             String query = "FROM Commodity WHERE 1=1";
-
             if (id != null && id > 0) {
                 query += " AND id=" + id;
             }
 
-            // execute query
-            Session session = HibernateUtil.getSession();
-            @SuppressWarnings("unchecked")
-            List<Commodity> commodities = session.createQuery(query).list();
-            session.close();
-            return commodities;
+            return HibernateUtil.getList(query);
         }
     }
 }

@@ -3,7 +3,6 @@ package com.qinyuan15.crawler.core.http.proxy;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import com.qinyuan15.crawler.dao.Proxy;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,11 +26,8 @@ public class ProxyTester {
 
     public void run() {
         LOGGER.info("proxy test start!");
-        Session session = HibernateUtil.getSession();
         @SuppressWarnings("unchecked")
-        List<Proxy> proxies = session.createQuery(
-                "FROM Proxy ORDER BY speed asc, id desc").list();
-        session.close();
+        List<Proxy> proxies = HibernateUtil.getList("FROM Proxy ORDER BY speed asc, id desc");
         for (Proxy proxy : proxies) {
             HttpClientWrapper client = new HttpClientWrapper();
             client.setProxy(proxy);
@@ -46,9 +42,7 @@ public class ProxyTester {
                 LOGGER.info("fail to connect {} with proxy {}: {}",
                         this.testPage, proxy, e.getMessage());
             }
-            session = HibernateUtil.getSession();
-            session.update(proxy);
-            HibernateUtil.commit(session);
+            HibernateUtil.update(proxy);
         }
         LOGGER.info("proxy test complete!");
     }

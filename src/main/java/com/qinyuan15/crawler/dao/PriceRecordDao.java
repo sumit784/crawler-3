@@ -47,6 +47,7 @@ public class PriceRecordDao {
             return this;
         }
 
+        @SuppressWarnings("unchecked")
         public List<PriceRecord> getInstances() {
             // build SQL query command
             String query = "FROM PriceRecord WHERE 1=1";
@@ -66,13 +67,7 @@ public class PriceRecordDao {
                 query += " AND DATE(grab_time)='" + grabDate + "'";
             }
 
-            // execute query
-            Session session = HibernateUtil.getSession();
-            @SuppressWarnings("unchecked")
-            List<PriceRecord> priceRecords = session.createQuery(query).list();
-            session.close();
-
-            return priceRecords;
+            return HibernateUtil.getList(query);
         }
 
         public boolean hasInstance() {

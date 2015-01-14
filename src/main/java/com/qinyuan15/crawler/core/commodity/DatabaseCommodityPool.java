@@ -2,8 +2,6 @@ package com.qinyuan15.crawler.core.commodity;
 
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.HibernateUtil;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +21,6 @@ public class DatabaseCommodityPool implements CommodityPool {
     @SuppressWarnings("unchecked")
     @Override
     public synchronized Commodity next() {
-        Session session = HibernateUtil.getSession();
-
         long commodityCount = this.size();
 
         if (pointer >= commodityCount) {
@@ -32,9 +28,7 @@ public class DatabaseCommodityPool implements CommodityPool {
         }
 
         if (pointer % PAGE_SIZE == 0) {
-            Query query = session.createQuery("FROM Commodity ORDER BY id")
-                    .setFirstResult(pointer).setMaxResults(PAGE_SIZE);
-            this.commodities = query.list();
+            this.commodities = HibernateUtil.getList("FROM Commodity ORDER BY id", pointer, PAGE_SIZE);
         }
 
         Commodity commodity = this.commodities.get(pointer % PAGE_SIZE);
@@ -43,11 +37,7 @@ public class DatabaseCommodityPool implements CommodityPool {
     }
 
     public long size() {
-        Session session = HibernateUtil.getSession();
-        Query query = session.createQuery("SELECT COUNT(*) FROM Commodity");
-        long commodityCount = (Long) query.list().get(0);
-        session.close();
-        return commodityCount;
+        return HibernateUtil.getCount("Commodity");
     }
 
     @Override
