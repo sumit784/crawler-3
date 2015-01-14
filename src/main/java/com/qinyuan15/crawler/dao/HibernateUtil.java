@@ -41,4 +41,16 @@ public class HibernateUtil {
         session.getTransaction().commit();
         session.close();
     }
+
+    public static void save(Object object) {
+        Session session = getSession();
+        session.save(object);
+        commit(session);
+    }
+
+    public static void saveOrUpdate(Object object) {
+        Session session = getSession();
+        session.saveOrUpdate(object);
+        commit(session);
+    }
 }
