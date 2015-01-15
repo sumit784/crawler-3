@@ -32,3 +32,9 @@ create table price_record (
   price double,
   grab_time datetime
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table commodity_picture (
+  id bigint primary key auto_increment,
+  commodity_id bigint not null,
+  url varchar(500) not null
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

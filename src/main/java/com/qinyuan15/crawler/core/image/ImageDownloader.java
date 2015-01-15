@@ -8,18 +8,24 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class to download image from certain url
  * Created by qinyuan on 15-1-14.
  */
-public class ImageDowloader {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ImageDowloader.class);
+public class ImageDownloader {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ImageDownloader.class);
 
     private String saveDir;
 
-    public ImageDowloader(String saveDir) {
+    public ImageDownloader(String saveDir) {
         this.saveDir = saveDir;
+    }
+
+    public String getSaveDir() {
+        return this.saveDir;
     }
 
     /**
@@ -33,7 +39,12 @@ public class ImageDowloader {
         try {
             // create input stream and output stream
             BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
-            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(savePath));
+            File saveFile = new File(savePath);
+            File parentDir = saveFile.getParentFile();
+            if (!parentDir.isDirectory() && !parentDir.mkdirs()) {
+                throw new RuntimeException("fail to create directory " + parentDir.getAbsolutePath());
+            }
+            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
 
             // save file
             byte[] buf = new byte[2048];
@@ -44,6 +55,8 @@ public class ImageDowloader {
             in.close();
             out.close();
 
+            LOGGER.info("save image {} to {}", url, savePath);
+
             return savePath;
         } catch (Exception e) {
             LOGGER.error("fail to save image {} to path {}: {}", url, savePath, e);
@@ -51,32 +64,20 @@ public class ImageDowloader {
         }
     }
 
-    private String getSavePath(String url) {
-        String fileName = url.substring(url.lastIndexOf("/"));
-        String savePath = this.saveDir + fileName;
-        if (!new File(savePath).exists()) {
-            return savePath;
-        }
-
-
-        // if savePath already exists, create a new one
-        int extesionNameIndex = fileName.lastIndexOf(".");
-        String fileNameWithoutExtension, extensionName;
-        if (extesionNameIndex > 0 && extesionNameIndex < fileName.length() - 1) {
-            fileNameWithoutExtension = this.saveDir + fileName.substring(0, extesionNameIndex);
-            extensionName = fileName.substring(extesionNameIndex);
-        } else {
-            fileNameWithoutExtension = this.saveDir + fileName;
-            extensionName = "";
-        }
-        int i = 1;
-        while (true) {
-            savePath = fileNameWithoutExtension + "_" + i + extensionName;
-            if (new File(savePath).exists()) {
-                i++;
-            } else {
-                return savePath;
+    public List<String> save(List<String> urls) {
+        List<String> savePaths = new ArrayList<String>();
+        for (String url : urls) {
+            try {
+                savePaths.add(this.save(url));
+            } catch (Exception e) {
+                LOGGER.error("fail to download {}: {}", url, e);
             }
         }
+        return savePaths;
+    }
+
+    private String getSavePath(String url) {
+        url = url.replaceAll("^.*\\://", "");
+        return this.saveDir + "/" + url;
     }
 }

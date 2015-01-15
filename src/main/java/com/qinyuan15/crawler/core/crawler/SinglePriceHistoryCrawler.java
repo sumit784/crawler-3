@@ -4,11 +4,13 @@ import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
+import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,9 +23,12 @@ class SinglePriceHistoryCrawler {
 
     private ProxyPool proxyPool;
     private ComposableCommodityPageParser commodityPageParser;
+    private ImageDownloader imageDownloader;
 
-    public SinglePriceHistoryCrawler(ComposableCommodityPageParser commodityPageParser) {
+    public SinglePriceHistoryCrawler(ComposableCommodityPageParser commodityPageParser,
+                                     ImageDownloader imageDownloader) {
         this.commodityPageParser = commodityPageParser;
+        this.imageDownloader = imageDownloader;
     }
 
     public void setProxyPool(ProxyPool proxyPool) {
@@ -65,6 +70,15 @@ class SinglePriceHistoryCrawler {
                 for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                     savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
                 }
+            }
+
+            CommodityPictureDao dao = new CommodityPictureDao();
+            if (dao.hasPicture(commodity.getId())) {
+                LOGGER.info("commodity {} already has picture, give up downloading picture",
+                        commodity.getId());
+            } else {
+                List<String> savePaths = imageDownloader.save(commodityPageParser.getImageUrls());
+                dao.save(commodity.getId(), savePaths);
             }
         } catch (Exception e) {
             LOGGER.error("fail to fetch {} with proxy {}: {}", url, proxy, e);

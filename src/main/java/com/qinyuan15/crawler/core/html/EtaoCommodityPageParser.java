@@ -1,11 +1,13 @@
 package com.qinyuan15.crawler.core.html;
 
+import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.core.DateUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.util.StringUtils;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -85,6 +87,23 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<String> getImageUrls() {
+        HtmlParser htmlParser = new HtmlParser(this.html);
+        Element productPictureDiv = htmlParser.getElement("J_product-pic");
+        if (productPictureDiv == null) {
+            return null;
+        }
+
+        String dataConfig = productPictureDiv.attr("data-config");
+        if (StringUtils.hasText(dataConfig)) {
+            String imageString = dataConfig.replaceAll("^[^\\[]*\\['", "").replaceAll("'\\][^\\]]*$", "");
+            return Lists.newArrayList(imageString.split("','"));
+        } else {
+            return null;
+        }
     }
 
     private Map<Date, Double> getPriceHistory(Iterable<Object> array) {

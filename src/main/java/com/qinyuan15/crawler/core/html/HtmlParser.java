@@ -22,6 +22,10 @@ public class HtmlParser {
         return getInnerHTML("title");
     }
 
+    public Element getElement(String id) {
+        return doc.getElementById(id);
+    }
+
     public Elements getElements(String tagName) {
         return doc.getElementsByTag(tagName);
     }

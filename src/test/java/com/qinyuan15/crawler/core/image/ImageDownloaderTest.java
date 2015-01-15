@@ -12,19 +12,23 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Test ImageDownloader
  * Created by qinyuan on 15-1-14.
  */
-public class ImageDowloaderTest {
-    private ImageDowloader dowloader;
+public class ImageDownloaderTest {
+    private ImageDownloader dowloader;
 
     @Before
     public void setUp() throws Exception {
-        this.dowloader = new ImageDowloader(TestFileUtils.tempDir);
+        this.dowloader = mockImageDownloader();
     }
-
 
     @Test
     public void testDownload() throws Exception {
         String url = "http://www.baidu.com/img/bdlogo.png";
         String savePath = this.dowloader.save(url);
+        System.out.println(savePath);
         assertThat(new File(savePath)).isFile();
+    }
+
+    public static ImageDownloader mockImageDownloader() {
+        return new ImageDownloader(TestFileUtils.tempDir);
     }
 }

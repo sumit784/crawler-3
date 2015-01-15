@@ -1,12 +1,10 @@
 package com.qinyuan15.crawler.dao;
 
-import org.hibernate.Session;
-
 import java.util.List;
 
 /**
- * Dao of PriceRecord
- * Created by qinyuan on 15-1-13.
+ * Dao of Commodity
+ * Created by qinyuan on 15-1-14.
  */
 public class CommodityDao {
 

@@ -127,6 +127,9 @@ public class HibernateUtil {
     }
 
     public static long getCount(String persistObjectName, String whereCondition) {
+        if (!whereCondition.trim().toUpperCase().startsWith("WHERE")) {
+            whereCondition = " WHERE " + whereCondition;
+        }
         List list = getList("SELECT COUNT(*) FROM " + persistObjectName + " " + whereCondition);
         return (Long) list.get(0);
     }

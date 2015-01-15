@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,5 +55,17 @@ public class EtaoCommodityPageParserTest {
         assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-12-13"), 139.0);
         assertThat(priceHistory).containsEntry(DateUtils.newDate("2014-12-15"), 169.0);
         assertThat(priceHistory).containsEntry(DateUtils.newDate("2015-01-02"), 169.02);
+    }
+
+    @Test
+    public void testGetImageUrls() throws Exception {
+        List<String> imageUrls = parser.getImageUrls();
+        assertThat(imageUrls).containsExactly(
+                "http://img05.taobaocdn.com/bao/uploaded/i1/TB1aUBgGXXXXXX7XVXXXXXXXXXX_!!0-item_pic.jpg",
+                "http://img04.taobaocdn.com/bao/uploaded/i4/479940663/TB2mjoCaXXXXXaVXXXXXXXXXXXX-479940663.jpg",
+                "http://img02.taobaocdn.com/bao/uploaded/i2/479940663/TB2ps3zaXXXXXcOXXXXXXXXXXXX-479940663.jpg",
+                "http://img06.taobaocdn.com/bao/uploaded/i2/479940663/TB2.uTcaFXXXXaBXXXXXXXXXXXX_!!479940663.jpg",
+                "http://img05.taobaocdn.com/bao/uploaded/i4/479940663/TB2gegzaXXXXXbCXpXXXXXXXXXX-479940663.jpg"
+        );
     }
 }
