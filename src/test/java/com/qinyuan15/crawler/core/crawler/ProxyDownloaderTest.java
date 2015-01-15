@@ -1,9 +1,6 @@
 package com.qinyuan15.crawler.core.crawler;
 
-import com.qinyuan15.crawler.core.crawler.ProxyCrawler;
-import com.qinyuan15.crawler.core.crawler.ProxyCrawlerImpl;
 import com.qinyuan15.crawler.core.html.PachongPageParser;
-import com.qinyuan15.crawler.core.crawler.ProxyDownloader;
 import org.junit.Test;
 
 import java.util.ArrayList;

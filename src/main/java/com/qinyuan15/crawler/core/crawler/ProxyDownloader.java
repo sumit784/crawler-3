@@ -1,6 +1,5 @@
 package com.qinyuan15.crawler.core.crawler;
 
-import com.qinyuan15.crawler.core.crawler.ProxyCrawler;
 import com.qinyuan15.crawler.dao.Proxy;
 import com.qinyuan15.crawler.dao.ProxyDao;
 

@@ -75,7 +75,7 @@ class SinglePriceHistoryCrawler {
     }
 
     private void savePriceRecord(Date date, Double price, int commodityId) {
-        if (PriceRecordDao.factory().setCommodityId(commodityId)
+        if (!PriceRecordDao.factory().setCommodityId(commodityId)
                 .setRecordTime(date).hasInstance()) {
             PriceRecord record = new PriceRecord();
             record.setRecordTime(date);

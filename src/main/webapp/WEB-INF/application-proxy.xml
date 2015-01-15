@@ -9,14 +9,26 @@
 
     <bean id="testJob" class="com.qinyuan15.crawler.core.TestBean"/>
     <bean id="proxyTestJob" class="com.qinyuan15.crawler.core.http.proxy.ProxyTester"/>
-    <bean id="proxyDowloadJob" class="com.qinyuan15.crawler.core.crawler.ProxyDownloader"/>
+
+    <bean id="pachongPageParser" class="com.qinyuan15.crawler.core.html.PachongPageParser"/>
+    <bean id="pachongCralwer" class="com.qinyuan15.crawler.core.crawler.ProxyCrawlerImpl">
+        <property name="host" value="http://pachong.org"/>
+        <property name="pageParser" ref="pachongPageParser"/>
+    </bean>
+    <bean id="proxyDowloadJob" class="com.qinyuan15.crawler.core.crawler.ProxyDownloader">
+        <property name="crawlers">
+            <list>
+                <ref bean="pachongCralwer"/>
+            </list>
+        </property>
+    </bean>
     <task:scheduled-tasks>
         <!-- execute in each 5 seconds -->
         <!--<task:scheduled ref="testJob" method="log" cron="1/5 * * * * ?" />-->
         <!-- run in 4 o'clock of each day -->
-        <task:scheduled ref="proxyTestJob" method="run" cron="0 0 4 * * ?" />
+        <task:scheduled ref="proxyTestJob" method="run" cron="0 0 4 * * ?"/>
         <!-- run in 2 o'clock of each day -->
-        <task:scheduled ref="proxyDowloadJob" method="save" cron="0 0 2 * * ?" />
+        <task:scheduled ref="proxyDowloadJob" method="save" cron="0 0 2 * * ?"/>
     </task:scheduled-tasks>
 
 </beans>
