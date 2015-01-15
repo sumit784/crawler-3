@@ -15,7 +15,7 @@ public class CommodityPictureDao {
     public void save(Integer commodityId, List<String> urls) {
         for (String url : urls) {
             if (HibernateUtil.getCount("CommodityPicture",
-                    "commodityId=" + commodityId + " AND url='" + url + "'") > 0) {
+                    "WHERE commodityId=" + commodityId + " AND url='" + url + "'") > 0) {
                 LOGGER.warn("picture {} of commodityId {} already exists, give up saving it to database",
                         url, commodityId);
                 continue;   // If picture already exists, skip it
@@ -48,6 +48,6 @@ public class CommodityPictureDao {
      */
     @SuppressWarnings("unchecked")
     public boolean hasPicture(Integer commodityId) {
-        return HibernateUtil.getCount("CommodityPicture", "commodityId=" + commodityId) > 0;
+        return HibernateUtil.getCount("CommodityPicture", "WHERE commodityId=" + commodityId) > 0;
     }
 }

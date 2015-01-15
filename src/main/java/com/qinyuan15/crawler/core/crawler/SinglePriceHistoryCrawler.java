@@ -72,6 +72,7 @@ class SinglePriceHistoryCrawler {
                 }
             }
 
+            // TODO find better way to avoid repeated pictures
             CommodityPictureDao dao = new CommodityPictureDao();
             if (dao.hasPicture(commodity.getId())) {
                 LOGGER.info("commodity {} already has picture, give up downloading picture",

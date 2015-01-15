@@ -8,6 +8,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -127,9 +128,6 @@ public class HibernateUtil {
     }
 
     public static long getCount(String persistObjectName, String whereCondition) {
-        if (!whereCondition.trim().toUpperCase().startsWith("WHERE")) {
-            whereCondition = " WHERE " + whereCondition;
-        }
         List list = getList("SELECT COUNT(*) FROM " + persistObjectName + " " + whereCondition);
         return (Long) list.get(0);
     }

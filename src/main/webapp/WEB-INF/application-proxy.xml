@@ -7,7 +7,6 @@
            http://www.springframework.org/schema/task
            http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <bean id="testJob" class="com.qinyuan15.crawler.core.TestBean"/>
     <bean id="proxyTestJob" class="com.qinyuan15.crawler.core.http.proxy.ProxyTester"/>
 
     <bean id="pachongPageParser" class="com.qinyuan15.crawler.core.html.PachongPageParser"/>
@@ -23,8 +22,6 @@
         </property>
     </bean>
     <task:scheduled-tasks>
-        <!-- execute in each 5 seconds -->
-        <!--<task:scheduled ref="testJob" method="log" cron="1/5 * * * * ?" />-->
         <!-- run in 4 o'clock of each day -->
         <task:scheduled ref="proxyTestJob" method="run" cron="0 0 4 * * ?"/>
         <!-- run in 2 o'clock of each day -->

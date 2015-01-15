@@ -1,14 +1,15 @@
 package com.qinyuan15.crawler.controller;
 
-import com.qinyuan15.crawler.dao.Commodity;
-import com.qinyuan15.crawler.dao.CommodityDao;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.core.image.ImageDownloader;
+import com.qinyuan15.crawler.dao.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,12 @@ import static com.qinyuan15.crawler.controller.JsonControllerUtils.toJson;
  */
 @Controller
 public class CommodityController {
+    @Autowired
+    private ImageDownloader imageDownloader;
+
+    @Autowired
+    private HttpServletRequest request;
+
     @ResponseBody
     @RequestMapping("/commodity.json")
     public String get(@RequestParam(value = "pretty", required = false) String pretty,
@@ -83,11 +90,25 @@ public class CommodityController {
             CommodityJson commodityJson = new CommodityJson();
             commodityJson.name = commodity.getName();
             commodityJson.url = commodity.getUrl();
-            commodityJson.pictures = new ArrayList<String>();
+            commodityJson.pictures = getPictures(id);
             commodityJsonMap.put(id, commodityJson);
         }
         return commodityJsonMap;
     }
+
+    private List<String> getPictures(Integer commodityId) {
+        List<String> pictures = new ArrayList<String>();
+        List<CommodityPicture> commodityPictures = new CommodityPictureDao().getInstances(commodityId);
+        for (CommodityPicture commodityPicture : commodityPictures) {
+            String url = commodityPicture.getUrl();
+            if (url.startsWith(imageDownloader.getSaveDir())) {
+                url = url.replace(imageDownloader.getSaveDir(), "ftp://" + request.getLocalAddr());
+            }
+            pictures.add(url);
+        }
+        return pictures;
+    }
+
 
     public static class CommodityJson {
         public String name;
