@@ -37,6 +37,9 @@
     <!-- Spring MVC configuration end -->
 
     <import resource="application-proxy.xml"/>
+    <!--
     <import resource="application-price-crawler.xml"/>
+    -->
+    <import resource="application-image-download.xml"/>
 
 </beans>

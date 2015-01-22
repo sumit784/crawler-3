@@ -41,32 +41,6 @@ public class CommodityController {
         return toJson(convert(commodities), pretty != null);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/addOrUpdateCommodity.json", method = RequestMethod.POST)
-    public Map<String, Object> addOrUpdate(@RequestParam(value = "name", required = true) String name,
-                                           @RequestParam(value = "url", required = true) String url,
-                                           @RequestParam(value = "price", required = true) Double price,
-                                           @RequestParam(value = "onShelfTime", required = false) String onShelfTime,
-                                           @RequestParam(value = "id", required = false) Integer id) {
-
-        try {
-            Commodity commodity = new Commodity();
-            commodity.setName(name);
-            commodity.setUrl(url);
-            commodity.setPrice(price);
-            commodity.setOnShelfTime(onShelfTime);
-            if (id != null && id > 0) {
-                commodity.setId(id);
-                HibernateUtil.saveOrUpdate(commodity);
-            } else {
-                HibernateUtil.save(commodity);
-            }
-            return createResultMap(true, null);
-        } catch (Exception e) {
-            return createResultMap(false, e.toString());
-        }
-    }
-
     /**
      * Convert Commodity to CommodityJson
      *
