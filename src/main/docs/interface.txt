@@ -196,3 +196,32 @@ success表示操作是否成功，detail表示详细信息，如果success为tru
 2) 删除多个商品：
 地址：115.29.109.85:8080/crawler/deleteCommodities.json
 访问该链接使用POST方法，需要一个ids参数，该参数是一个数组列出需要删除的商品的id，例如：[1, 2, 3, 4]
+
+
+
+
+
+
+七、爬虫定期发送的数据
+发送的url: 待定，可在发布根据实际情况配置
+方法：POST
+参数格式：
+{
+    "offShelfIds": [1, 2, ...],
+    "onShelfIds": [111, 2321, ...],
+    "OffShelfUrls": ["http://s.etao.com/detail/40780eioaa.html", "http://s.etao.com/detail/aap37189.html", ...],
+    "onShelfUrls": ["http://s.etao.com/detail/32789170adfaf.html", "http://s.etao.com/detail/sie-1389gjdk.html", ...],
+    "inLowIds": [11, 12, ...],
+    "inLowUrls": ["http://s.etao.com/detail/dfio32781.html", "http://s.etao.com/detail/siadja-1389gjdk.html", ...],
+}
+参数说明：
+offShelfId 表示已经失效的商品的ID（也就是爬虫抓不到的商品）
+onShelfId 表示曾经失效，但后来又变成有效的商品的ID（可能会出现一些商品下架之后又上架，但可能不多）
+offShelfUrls 表示已经失效的商品的url
+onShelfUrls  表示曾经失效，但后来又变成有效的商品的url
+inLowIds 表示处于最近3个月最低价格的商品的ID
+inLowUrls 表示处于最近3个月最低价格的商品的url
+
+补充说明：
+爬虫同时发送商品的ID和URL，网站端可以自身情况来决定是使用Id还是url
+如果要定期发送处于上架状态的商品，则数据量比较大。因此只定期发送失效的商品和失效后又变为有效的商品
