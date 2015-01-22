@@ -6,7 +6,6 @@ import com.qinyuan15.crawler.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.qinyuan15.crawler.controller.JsonControllerUtils.createResultMap;
 import static com.qinyuan15.crawler.controller.JsonControllerUtils.toJson;
 
 /**
@@ -34,9 +32,16 @@ public class CommodityController {
     @ResponseBody
     @RequestMapping("/commodity.json")
     public String get(@RequestParam(value = "pretty", required = false) String pretty,
-                      @RequestParam(value = "id", required = false) Integer id) {
+                      @RequestParam(value = "id", required = false) Integer id,
+                      @RequestParam(value = "inLowPrice", required = false) String inLowPriceString) {
+        boolean inLowPrice = false;
 
-        List<Commodity> commodities = CommodityDao.factory().setId(id).getInstances();
+        if (inLowPriceString != null && !inLowPriceString.toLowerCase().equals("false")) {
+            inLowPrice = true;
+        }
+
+        List<Commodity> commodities = CommodityDao.factory().setInLowPrice(inLowPrice)
+                .setId(id).getInstances();
 
         return toJson(convert(commodities), pretty != null);
     }

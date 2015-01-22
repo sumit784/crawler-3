@@ -1,5 +1,8 @@
 package com.qinyuan15.crawler.dao;
 
+import com.qinyuan15.crawler.core.DateUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,13 +17,24 @@ public class CommodityDao {
 
     public static class Factory {
         private Integer id;
+        private boolean inLowPrice = false;
 
         public Factory setId(Integer id) {
             this.id = id;
             return this;
         }
 
-        @SuppressWarnings("unchecked")
+        /**
+         * if inLowPrice is set to true, getInstances() only return
+         * commodities that in lowest price during three month
+         *
+         * @param inLowPrice whether get commodities only in lowest price of three month
+         */
+        public Factory setInLowPrice(boolean inLowPrice) {
+            this.inLowPrice = inLowPrice;
+            return this;
+        }
+
         public List<Commodity> getInstances() {
             // build SQL query command
             String query = "FROM Commodity WHERE 1=1";
@@ -30,7 +44,26 @@ public class CommodityDao {
             }
 
             // execute query
-            return HibernateUtil.getList(query);
+            @SuppressWarnings("unchecked")
+            List<Commodity> commodities = HibernateUtil.getList(query);
+
+            if (!inLowPrice) {
+                return commodities;
+            } else {
+                List<Commodity> commoditiesInLowPrice = new ArrayList<Commodity>();
+                String startTime = DateUtils.threeMonthAgo().toString();
+                String endTime = DateUtils.now().toString();
+                for (Commodity commodity : commodities) {
+                    Integer commodityId = commodity.getId();
+                    Double lowPrice = CommodityPriceDao.range(commodityId)
+                            .setStartTime(startTime).setEndTime(endTime).getMin();
+                    Double currentPrice = new CommodityPriceDao().getCurrentPrice(commodityId);
+                    if (currentPrice - lowPrice <= 0.01) {
+                        commoditiesInLowPrice.add(commodity);
+                    }
+                }
+                return commoditiesInLowPrice;
+            }
         }
     }
 }

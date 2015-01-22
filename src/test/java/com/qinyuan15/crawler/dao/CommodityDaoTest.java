@@ -16,4 +16,10 @@ public class CommodityDaoTest {
         List<Commodity> commodities = CommodityDao.factory().getInstances();
         assertThat(commodities).isNotEmpty();
     }
+
+    @Test
+    public void testInLowPrice() throws Exception {
+        List<Commodity> commodities = CommodityDao.factory().setInLowPrice(true).getInstances();
+        System.out.println(commodities.size());
+    }
 }
