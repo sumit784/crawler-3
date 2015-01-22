@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller;
 
+import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,17 +67,6 @@ public class CommodityController {
         }
     }
 
-    @ResponseBody
-    @RequestMapping("/deleteCommodity.json")
-    public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
-        try {
-            HibernateUtil.delete(Commodity.class, id);
-            return createResultMap(true, null);
-        } catch (Exception e) {
-            return createResultMap(false, e.toString());
-        }
-    }
-
     /**
      * Convert Commodity to CommodityJson
      *
@@ -90,6 +80,8 @@ public class CommodityController {
             CommodityJson commodityJson = new CommodityJson();
             commodityJson.name = commodity.getName();
             commodityJson.url = commodity.getUrl();
+            commodityJson.onShelfTime = commodity.getOnShelfTime();
+            commodityJson.onShelf = isOnShelf(commodity);
             commodityJson.pictures = getPictures(id);
             commodityJsonMap.put(id, commodityJson);
         }
@@ -110,9 +102,23 @@ public class CommodityController {
     }
 
 
+    /**
+     * check whether a commodity is on shelf
+     *
+     * @return true if on shelf
+     */
+    // TODO This way to check whether commodity on shelf is religious
+    private boolean isOnShelf(Commodity commodity) {
+        PriceRecord priceRecord = PriceRecordDao.factory()
+                .setCommodityId(commodity.getId()).getLastInstance();
+        return DateUtils.getDayDiff(priceRecord.getRecordTime(), DateUtils.now()) <= 2;
+    }
+
     public static class CommodityJson {
         public String name;
         public String url;
         public List<String> pictures;
+        public String onShelfTime;
+        public boolean onShelf;
     }
 }

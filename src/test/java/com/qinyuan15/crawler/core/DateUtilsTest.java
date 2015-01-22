@@ -32,8 +32,18 @@ public class DateUtilsTest {
     }
 
     @Test
-    public void testThreeMonthAgo() throws  Exception {
+    public void testThreeMonthAgo() throws Exception {
         Date date = DateUtils.threeMonthAgo();
         System.out.println(date);
+    }
+
+    @Test
+    public void getDayDiff() throws Exception {
+        Date date1 = DateUtils.newDate("2012-02-28");
+        Date date2 = DateUtils.newDate("2012-03-26");
+        assertThat(DateUtils.getDayDiff(date1, date2)).isEqualTo(27);
+
+        Date date3 = DateUtils.newDate("2013-02-28");
+        assertThat(DateUtils.getDayDiff(date1, date3)).isEqualTo(366);
     }
 }

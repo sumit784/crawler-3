@@ -45,28 +45,40 @@ public class PriceRecordDao {
             return this;
         }
 
-        @SuppressWarnings("unchecked")
-        public List<PriceRecord> getInstances() {
+        // TODO this method should be revised to avoid SQL inject
+        private String getHQL() {
             // build SQL query command
-            String query = "FROM PriceRecord WHERE 1=1";
+            String hql = "FROM PriceRecord WHERE 1=1";
             if (recordTime != null) {
-                query += " AND recordTime='" + recordTime + "'";
+                hql += " AND recordTime='" + recordTime + "'";
             }
             if (commodityId != null && commodityId > 0) {
-                query += " AND commodityId=" + commodityId;
+                hql += " AND commodityId=" + commodityId;
             }
             if (startTime != null) {
-                query += " AND recordTime>='" + startTime + "'";
+                hql += " AND recordTime>='" + startTime + "'";
             }
             if (endTime != null) {
-                query += " AND recordTime<='" + endTime + "'";
+                hql += " AND recordTime<='" + endTime + "'";
             }
             if (grabDate != null) {
-                query += " AND DATE(grab_time)='" + grabDate + "'";
+                hql += " AND DATE(grab_time)='" + grabDate + "'";
             }
-            query += " GROUP BY commodityId,recordTime";
+            hql += " GROUP BY commodityId,recordTime";
+            return hql;
+        }
 
-            return HibernateUtil.getList(query);
+        @SuppressWarnings("unchecked")
+        public List<PriceRecord> getInstances() {
+            return HibernateUtil.getList(getHQL());
+        }
+
+        @SuppressWarnings("unchecked")
+        public PriceRecord getLastInstance() {
+            String hql = getHQL();
+            hql += " ORDER BY recordTime DESC";
+            List<PriceRecord> priceRecords = HibernateUtil.getList(hql, 0, 1);
+            return priceRecords.size() == 0 ? null : priceRecords.get(0);
         }
 
         public boolean hasInstance() {

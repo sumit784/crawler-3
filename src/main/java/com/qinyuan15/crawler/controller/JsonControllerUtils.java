@@ -14,6 +14,7 @@ public class JsonControllerUtils {
 
     public final static String emptyListJson = "[]";
     public final static String emptyMapJson = "{}";
+    public final static Map<String, Object> SUCCESS = createResultMap(true, null);
 
     private JsonControllerUtils() {
     }
@@ -32,10 +33,14 @@ public class JsonControllerUtils {
         return gson.toJson(obj);
     }
 
-    public static Map<String, Object> createResultMap(boolean success, String detail) {
+    public static Map<String, Object> createResultMap(boolean success, Object detail) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", success);
         map.put("detail", detail);
         return map;
+    }
+
+    public static Map<String, Object> createFailResult(Object detail) {
+        return createResultMap(false, detail);
     }
 }

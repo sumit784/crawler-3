@@ -24,7 +24,7 @@
     </bean>
     <bean class="com.qinyuan15.crawler.core.crawler.PriceHistoryCrawler" init-method="init">
         <!-- run each 30 second for each thread -->
-        <property name="interval" value="30000"/>
+        <property name="interval" value="3000000"/>
         <property name="threadSize" value="5"/>
         <property name="proxyPool" ref="proxyPool"/>
         <property name="commodityPool" ref="commodityPool"/>

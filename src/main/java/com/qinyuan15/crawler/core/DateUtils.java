@@ -38,6 +38,18 @@ public class DateUtils {
         return new Date(System.currentTimeMillis());
     }
 
+    /**
+     * calculate the days between first date and second date
+     *
+     * @param date1 first date
+     * @param date2 second date
+     * @return a number greater than zero if date1 and is earlier than date2
+     */
+    public static int getDayDiff(Date date1, Date date2) {
+        long timeStampDiff = date2.getTime() - date1.getTime();
+        return (int) Math.round(timeStampDiff * 1.0 / (24 * 3600 * 1000));
+    }
+
     public static Date threeMonthAgo() {
         long seondOfThreeMonth = 90 * 3600 * 24;
         return new Date(System.currentTimeMillis() - seondOfThreeMonth * 1000);

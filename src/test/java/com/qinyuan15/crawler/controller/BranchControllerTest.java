@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * Test BranchController
  * Created by qinyuan on 14-12-27.
- */
+ *//*
 public class BranchControllerTest {
     @Test
     public void testGet() throws Exception {
@@ -16,4 +16,4 @@ public class BranchControllerTest {
         System.out.println("=====================");
         System.out.println(controller.get("true", 10));
     }
-}
+}*/

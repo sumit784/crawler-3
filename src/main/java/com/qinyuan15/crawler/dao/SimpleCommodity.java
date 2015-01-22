@@ -7,7 +7,6 @@ package com.qinyuan15.crawler.dao;
 public class SimpleCommodity extends PersistObject {
     private String name;
     private Double price;
-    private Branch branch;
     private Integer categoryId;
 
     public String getName() {
@@ -16,10 +15,6 @@ public class SimpleCommodity extends PersistObject {
 
     public Double getPrice() {
         return price;
-    }
-
-    public Branch getBranch() {
-        return branch;
     }
 
     public Integer getCategoryId() {
@@ -32,10 +27,6 @@ public class SimpleCommodity extends PersistObject {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public void setBranch(Branch branch) {
-        this.branch = branch;
     }
 
     public void setCategoryId(Integer categoryId) {

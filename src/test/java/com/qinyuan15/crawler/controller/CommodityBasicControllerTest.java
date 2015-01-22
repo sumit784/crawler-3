@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * Test CommodityBasicController
  * Created by qinyuan on 14-12-27.
- */
+ *//*
 public class CommodityBasicControllerTest {
     @Test
     public void testGet() throws Exception {
@@ -18,4 +18,4 @@ public class CommodityBasicControllerTest {
         System.out.println("=====================");
         System.out.println(controller.get("true", 0, 0, "ZZ YY"));
     }
-}
+}*/
