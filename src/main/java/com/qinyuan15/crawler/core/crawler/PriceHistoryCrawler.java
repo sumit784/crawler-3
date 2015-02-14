@@ -29,6 +29,12 @@ public class PriceHistoryCrawler {
         for (int i = 0; i < this.threadSize; i++) {
             LOGGER.info("start PriceHistory crawl thread " + i);
             new CrawlThread().start();
+            try {
+                // wait two seconds before starting next single crawler
+                Thread.sleep(2000);
+            } catch (Exception e) {
+                LOGGER.warn("exception in init(): {}", e);
+            }
         }
     }
 

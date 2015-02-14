@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-ch">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>品牌大全</title>
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../resources/css/common.css">
+    <link rel="stylesheet" href="../../resources/css/branch.css">
+</head>
+<body class="grayBack">
+<div class="header">
+    <div><img src="css/images/header.gif"/></div>
+</div>
+<div class="navigationBack">
+    <div class="navigation">
+        <div class="logo">
+            <a href="javascript:void(0)"><img src="css/images/logo.png"/></a>
+        </div>
+        <div class="navigationLinks">
+            <a class="darkFont noLineAnchor" href="javascript:void(0)">女人</a>
+            <a class="darkFont noLineAnchor" href="javascript:void(0)">男人</a>
+            <a class="darkFont noLineAnchor" href="javascript:void(0)">小孩</a>
+            <a class="darkFont noLineAnchor" href="javascript:void(0)">数码家电</a>
+            <a class="darkFont noLineAnchor" href="javascript:void(0)">居家</a>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div id="branchGroups"></div>
+    <div class="loading">
+        <span>加载中，请稍候...</span>
+    </div>
+    <div class="footer">
+        <div class="darkFont">
+            @ 2005-2014 douban.com, all rights reserved<br>
+            京ICP证090015号 京ICP备11027288号<br>
+            <img src="css/images/filing.gif"/>京公安备11010500728<br>
+            违法和不良信息举报电话：4006910007
+        </div>
+        <div class="links">
+            <a href="javascript:void(0)" class="blueFont">关于我们</a>
+            <a href="javascript:void(0)" class="blueFont">联系我们</a>
+            <a href="javascript:void(0)" class="blueFont">免责声明</a>
+            <a href="javascript:void(0)" class="blueFont">友情链接</a>
+            <a href="javascript:void(0)" class="blueFont">品牌大全</a>
+        </div>
+    </div>
+    <div class="rightFloat">
+        <table>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">A</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">B</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">C</a></td>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">D</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">E</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">F</a></td>
+            </tr>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">G</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">H</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">I</a></td>
+            </tr>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">J</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">K</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">L</a></td>
+            </tr>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">M</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">N</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">O</a></td>
+            </tr>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">P</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">Q</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">R</a></td>
+            </tr>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">S</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">T</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">U</a></td>
+            </tr>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">V</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">W</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">X</a></td>
+            </tr>
+            <tr>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">Y</a></td>
+                <td><a class="darkFont branchGroupLink sameWidthFont" href="javascript:void(0)">Z</a></td>
+                <td><a class="darkFont branchGroupLink" href="javascript:void(0)">0-9</a></td>
+            </tr>
+            <tr>
+                <td colspan="3"><a class="darkFont toTop" href="javascript:void(0)">返回顶部</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+<script id="branchGroupTpl" type="text/x-handlebars-template">
+    <div class="branchGroup">
+        <div class="title"><span>{{title}}</span></div>
+        <table>
+            <tr>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+            </tr>
+            <tr>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch2.png"/><br>OLAY</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch2.png"/><br>OLAY</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch2.png"/><br>OLAY</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch2.png"/><br>OLAY</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch2.png"/><br>OLAY</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch2.png"/><br>OLAY</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch2.png"/><br>OLAY</a></td>
+            </tr>
+            <tr>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+            </tr>
+            <tr>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+                <td><a class="noLineAnchor" href="javascript:void(0)"><img src="css/images/branchs/branch1.png"/><br>BRACCIALINI</a></td>
+            </tr>
+        </table>
+    </div>
+</script>
+<script src="../../resources/js/lib/jquery-1.11.1.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../resources/js/lib/handlebars.min-v1.3.0.js"></script>
+<script src="../../resources/js/common.js"></script>
+<script src="../../resources/js/branch.js"></script>
+</html>

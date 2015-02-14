@@ -1,0 +1,194 @@
+div.content > div {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+div.content > div.boxShadow > div {
+    padding-left: 80px;
+    background-color: #ffffff;
+}
+
+div.content div.branch {
+    height: 70px;
+    padding-top: 20px;
+}
+
+div.content div.branch div.serial {
+    padding-top: 5px;
+}
+
+div.content div.branch > div.input-group-btn {
+    top: 20px;
+    position: absolute;
+}
+
+#branchSelect {
+    left: 285px;
+}
+
+#firstLevelBranchSelect {
+    left: 475px;
+}
+
+#secondLevelBranchSelect {
+    left: 665px;
+}
+
+#serial {
+    margin-right: 70px;
+}
+
+div.content div.branch button {
+    background: no-repeat url("images/edit-commodity/select.png") right #ffffff;
+    width: 180px;
+    text-align: left;
+}
+
+div.content div.link {
+    margin-top: 17px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+div.content div.link td {
+    padding-right: 15px;
+    height: 55px;
+}
+
+#commodityId {
+    width: 470px;
+}
+
+div.content div.link td a.crawlerLink {
+    text-decoration: underline;
+    color: #000000;
+}
+
+div.content div.link td a.keyWordLink {
+    color: #1A1AA6;
+}
+
+div.content div.link div.image {
+    margin-top: 20px;
+}
+
+div.content div.link div.image > div {
+    vertical-align: top;
+}
+
+div.content div.link div.image > div > div {
+    color: #000000;
+    float: left;
+    margin-right: 20px;
+}
+
+div.content div.link div.image table {
+    display: inline;
+}
+
+div.content div.link div.image a {
+    color: #808080;
+    font-size: 9pt;
+}
+
+div.content div.link div.image td {
+    text-align: center;
+    height: auto;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+div.content div.link div.image div.commodityDescImage {
+    position: absolute;
+    top: 0;
+    left: 390px;
+}
+
+div.content div.detail {
+    margin-top: 17px;
+    padding-top: 40px;
+}
+
+div.content div.detail td {
+    vertical-align: top;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+div.content div.detail textarea {
+    padding: 10px;
+    font-size: 11pt;
+}
+
+div.content div.detail td input.form-control {
+    width: 180px;
+    display: inline;
+    margin-right: 6px;
+    text-align: center;
+}
+
+#commodityDescriptionEffect {
+    padding: 20px 0 20px 50px;
+    min-height: 100px;
+    width: 680px;
+    background-color: #F6F6F1;
+    border-radius: 5px;
+}
+
+#commodityDescriptionEffect td {
+    padding: 0;
+    color: #666666;
+    font-size: 10pt;
+    height: 27px;
+}
+
+#commodityDescriptionEffect td > div {
+    padding: 0;
+    margin: 0;
+    height: 20px;
+    width: 200px;
+    overflow: hidden;
+}
+
+div.content div.boxShadow > div.button {
+    background-color: transparent;
+    margin: 30px 0;
+    padding-left: 265px;
+}
+
+div.content div.boxShadow > div.button button {
+    margin-right: 95px;
+    color: #ffffff;
+    padding: 5px 20px;
+    border: 0;
+}
+
+#deleteCommodity {
+    background-color: #387EEE;
+}
+
+#publishCommodity {
+    background-color: #EB4542;
+}
+
+div.content div.price {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+div.content div.price div.recommend {
+    color: #800000;
+}
+
+div.content div.price td {
+    padding: 5px;
+}
+
+div.content div.price td.title {
+    text-align: right;
+    width: 78px;
+}
+
+div.content div.price td.text {
+    width: 170px;
+}

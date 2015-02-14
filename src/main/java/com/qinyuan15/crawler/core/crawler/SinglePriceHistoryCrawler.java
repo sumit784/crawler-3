@@ -57,16 +57,15 @@ class SinglePriceHistoryCrawler {
         try {
             LOGGER.info("prepare to save price history of {} with proxy {}", url, proxy);
             String html = client.getContent(url);
-            if (proxyPool != null) {
-                proxyPool.updateSpeed(proxy, client.getLastConnectTime());
-            }
             commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
             Map<Date, Double> priceHistory = commodityPageParser.getPriceHistory();
             if (priceHistory == null) {
-                LOGGER.info("can not get priceHistory from url {}", url);
+                LOGGER.info("can not get priceHistory from url {}, html contents: {}", url, html);
+                proxyPool.updateSpeed(proxy, Integer.MAX_VALUE);
             } else {
                 LOGGER.info("save price history of {}", url);
+                proxyPool.updateSpeed(proxy, client.getLastConnectTime());
                 for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                     savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
                 }
@@ -83,9 +82,13 @@ class SinglePriceHistoryCrawler {
             }
         } catch (Exception e) {
             LOGGER.error("fail to fetch {} with proxy {}: {}", url, proxy, e);
-            if (proxyPool != null) {
-                proxyPool.updateSpeed(proxy, Integer.MAX_VALUE);
-            }
+            updateSpeed(proxy, Integer.MAX_VALUE);
+        }
+    }
+
+    private void updateSpeed(Proxy proxy, int time) {
+        if (proxyPool != null) {
+            proxyPool.updateSpeed(proxy, time);
         }
     }
 

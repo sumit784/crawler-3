@@ -1,0 +1,68 @@
+body {
+    background-color: #EEEEEE;
+}
+
+div.content {
+    margin-top: 37px;
+}
+
+div.content div.left {
+    padding-top: 8px;
+    width: 140px;
+    height: 100px;
+    float: left;
+}
+
+div.content div.left > div {
+    text-align: center;
+    padding: 10px 0;
+}
+
+div.content div.left > div.split {
+    width: 100px;
+    margin: 0 auto;
+    padding: 0;
+    border-top: 1px solid #DCE7EC;
+}
+
+div.content div.left > div.split > div.boldSplit {
+    width: 78px;
+    top: -2px;
+    margin: 0 auto;
+    padding: 0;
+    border: 1px solid #99A9B3;
+}
+
+div.content div.left div.user {
+    color: #800000;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+div.content div.left div.commodity, div.content div.left div.log {
+    font-size: 9pt;
+}
+
+div.content div.right {
+    width: 500px;
+    float: left;
+}
+
+div.content div.right td {
+    padding: 0 11px 20px 0;
+}
+
+div.content div.right td > div {
+    background-color: #ffffff;
+}
+
+div.content div.right table div.description {
+    width: 192px;
+    padding: 10px 8px;
+    height: 70px;
+}
+
+div.content div.right table div.description a {
+    font-size: 10pt;
+    color: #7F4B2F;
+}

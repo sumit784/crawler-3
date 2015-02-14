@@ -1,0 +1,70 @@
+div.poster {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+div.content > div.copy {
+    position: absolute;
+    width: 950px;
+    display: none;
+    background-color: #ffffff;
+    z-index: 8;
+}
+
+div.content div.logo {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background-color: #ffffff;
+}
+
+div.content div.logo div.logoImage, div.content div.logo div.description {
+    padding-top: 11px;
+    padding-bottom: 11px;
+}
+
+div.content div.logo div.logoImage {
+    padding-left: 25px;
+}
+
+div.content div.logo div.description {
+    padding-left: 20px;
+    position: absolute;
+    top: 0;
+    left: 100px;
+    font-size: 10pt;
+    line-height: 24px;
+}
+
+div.content div.logo div.links {
+    position: absolute;
+    padding: 20px 60px;
+    top: 0;
+    right: 0;
+    width: 510px;
+    background: url("images/shoppe/linksBack.png") no-repeat;
+    line-height: 25px;
+}
+
+div.content div.logo div.links a {
+    font-size: 9pt;
+    margin: 0 20px;
+    color: #3377aa;
+}
+
+div.content div.goods div.sort div.title div {
+    font-size: 11pt;
+    display: inline;
+    margin: 10px;
+    border-bottom: #a16b4e solid 2px;
+    padding-bottom: 11px;
+}
+
+div.content div.goods div.sort div.title div.all {
+    border-bottom-width: 0;
+}
+
+div.content div.goods div.sort div.title a {
+    color: #a16b4e;
+}

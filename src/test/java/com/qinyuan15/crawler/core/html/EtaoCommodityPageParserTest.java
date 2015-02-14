@@ -58,6 +58,14 @@ public class EtaoCommodityPageParserTest {
     }
 
     @Test
+    public void testGetPriceHistory2() throws Exception {
+        parser = new EtaoCommodityPageParser();
+        parser.setHTML(TestFileUtils.read("etao2.html"));
+        Map<Date, Double> priceHistory = parser.getPriceHistory();
+        System.out.println(priceHistory);
+    }
+
+    @Test
     public void testGetImageUrls() throws Exception {
         List<String> imageUrls = parser.getImageUrls();
         assertThat(imageUrls).containsExactly(
