@@ -29,6 +29,7 @@ a.noLineAnchor {
 body {
     margin: 0;
     font-size: 12pt;
+    background-color: rgb(238, 238, 238);
 }
 
 .grayBack {

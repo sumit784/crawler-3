@@ -27,9 +27,22 @@ function getParent($element, parentTagName) {
     }
 }
 
+function splitArray(array, groupSize) {
+    var result = [], group;
+    for (var i = 0, len = array.length; i < len; i++) {
+        if (i % groupSize == 0) {
+            group = [];
+            result.push(group);
+        }
+        group.push(array[i]);
+    }
+    return result;
+}
+
 var transparentBackground = {
     _getDiv: function () {
-        if ($('#transparentBackground').size() == 0) {
+        var $transparentBackground = $('#transparentBackground');
+        if ($transparentBackground.size() == 0) {
             $('body').append("<div id='transparentBackground'></div>");
             $('#transparentBackground').css({
                 'position': 'fixed',
@@ -41,7 +54,7 @@ var transparentBackground = {
                 'background-color': '#000000'
             }).addClass('deepTransparent');
         }
-        return $('#transparentBackground');
+        return $transparentBackground;
     },
     show: function () {
         this._getDiv().show();
@@ -63,9 +76,9 @@ function setHoverColor($element, color) {
 }
 
 var images = {
-    unSort: 'css/images/unSort.gif',
-    arrowUp: 'css/images/arrow_up.gif',
-    arrowDown: 'css/images/arrow_down.gif',
+    unSort: 'resources/css/images/unSort.gif',
+    arrowUp: 'resources/css/images/arrow_up.gif',
+    arrowDown: 'resources/css/images/arrow_down.gif',
     getHeight: function ($img) {
         var img = new Image();
         img.src = $img.attr('src');
@@ -78,7 +91,41 @@ var images = {
     }
 };
 
+var angularUtils = {
+    _module: null,
+    /**
+     * Usage:
+     * controller(controllerName, func)
+     * or
+     * controller(func)
+     */
+    controller: function () {
+        if (!this._module) {
+            this._module = angular.module('main', []);
+        }
+        var argSize = arguments.length;
+        if (argSize == 1) {
+            this._module.controller('ContentController', ['$scope', arguments[0]]);
+        } else if (argSize >= 2) {
+            this._module.controller(arguments[0], ['$scope', arguments[1]]);
+        }
+    }
+};
+
 (function () {
+    angularUtils.controller('NavigationController', function ($scope) {
+        var categories = getCategories(), selectedCategory;
+        $scope.categories = [];
+        for (var i= 0, len = categories.length;i<len;i++){
+
+        }
+        $scope.categories = ['女人' , '男人', '小孩', '数码家电', '居家'];
+
+        function getCategories() {
+            return ['女人' , '男人', '小孩', '数码家电', '居家'];
+        }
+    });
+
     var toTopLink = {
         enable: function () {
             $elements.toTopLink.removeClass('lightTransparent');
@@ -118,6 +165,7 @@ var images = {
     });
     toTopLink.update();
     adjustRightFloatPosition();
+    setTimeout(adjustRightFloatPosition, 500);
 
     setTimeout(function () {
         $('.orangeButton').hover(function () {

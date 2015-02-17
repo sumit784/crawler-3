@@ -68,10 +68,14 @@ div.search > div.searchForm div.hotWords a.red {
     color: #C40000;
 }
 
-div.search > div.searchForm div.hotWords span.split {
-    border-left: 1px solid #E4E4E4;
-    border-right: 1px solid #E4E4E4;
-    margin: 0 3px;
+div.search > div.searchForm div.hotWords > span {
+    border-right: 2px solid #E4E4E4;
+    margin: 0;
+    padding: 0 4px 0 3px;
+}
+
+div.search > div.searchForm div.hotWords > span:last-child {
+    border-right: none;
 }
 
 div.searchForm input, div.searchForm button {
@@ -86,9 +90,7 @@ div.searchForm div.searchType button {
 
 #searchInput {
     margin-top: 1px;
-    background-image: url("images/search.gif");
-    background-repeat: no-repeat;
-    background-position: 98% 50%;
+    background: #ffffff url("images/search.gif") no-repeat 98% 50%;
     width: 368px;
     border-radius: 0;
 }
@@ -169,10 +171,6 @@ div.search > div.branch > div.logos div.border div.verticalBorder {
 }
 
 div.search > div.branch > div.logos div.hideBranch {
-    /*
-    height: 0;
-    overflow: hidden;
-    */
     display: none;
 }
 
@@ -180,6 +178,10 @@ div.search > div.branch > div.logos div.moreBranch {
     padding: 4px 6px 4px 12px;
     font-size: 9pt;
     background-color: rgb(245, 245, 245);
+}
+
+div.search > div.branch > div.logos div.moreBranch + div {
+    display: none;
 }
 
 div.search > div.branch > div.logos div.moreBranch a {
@@ -239,6 +241,17 @@ div.goods > div.images td div.description a {
     color: rgb(152, 93, 62);
     font-size: 10pt;
     font-family: STHeiti;
+}
+
+div.goods > div.images td div.description a:hover {
+    color: rgb(126, 71, 52);
+    text-decoration: none;
+    text-shadow: 2px 2px 5px rgb(238, 238, 238);
+}
+
+div.goods > div.images td div.image img:hover {
+    opacity: 0.7;
+    filter: alpha(opacity=70);
 }
 
 div.goods > div.images td div.price {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.qinyuan15.crawler.controller.JsonControllerUtils.toJson;
+import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.toJson;
 
 /**
  * Query price information

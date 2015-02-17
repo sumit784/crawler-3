@@ -1,3 +1,4 @@
+;
 (function () {
     function switchNavigationLinks($link) {
         $elements.navigationLinks.filter('.selected').removeClass('selected').addClass('darkFont');
@@ -59,43 +60,33 @@
 
     var branchLinks = {
         searchDivInitHeight: null,
+        _initSearchDivInitHeight: function () {
+            this.searchDivInitHeight = $elements.searchDiv.height();
+        },
         getHideBranchHeight: function () {
             return $elements.hideBranch.height();
         },
-        getMoreBranchSpan: function () {
-            return $elements.moreBranch.find('span');
-        },
-        getMoreBranchSpanText: function () {
-            return this.getMoreBranchSpan().text();
-        },
         hideMore: function () {
-            if (!this.searchDivInitHeight)  {
-                this.searchDivInitHeight = $elements.searchDiv.height();
+            if (!this.searchDivInitHeight) {
+                this._initSearchDivInitHeight();
             }
-            if (this.getMoreBranchSpanText() == '更多品牌') {
-                return;
-            }
-            $elements.moreBranch.show().find('span').text('更多品牌');
-            $elements.moreBranch.parent().children('div.logoImage').hide();
+            $elements.getMoreBranch().show().next().hide();
             var self = this;
             $elements.hideBranch.stop(true, true).slideUp(function () {
                 $elements.searchDiv.height(self.searchDivInitHeight);
             });
         },
         showMore: function () {
-            if (!this.searchDivInitHeight)  {
-                this.searchDivInitHeight = $elements.searchDiv.height();
+            if (!this.searchDivInitHeight) {
+                this._initSearchDivInitHeight();
             }
-            if (this.getMoreBranchSpanText() == '隐藏') {
-                return;
-            }
-            $elements.moreBranch.parent().children('div.logoImage').show();
-            $elements.moreBranch.hide().find('span').text('隐藏');
-            $elements.searchDiv.height(this.searchDivInitHeight + this.getHideBranchHeight());
+            var newHeight = this.searchDivInitHeight + this.getHideBranchHeight();
+            $elements.searchDiv.height(newHeight);
             var self = this;
-            $elements.hideBranch.stop(true, true).slideDown(function() {
+            $elements.hideBranch.stop(true, true).slideDown(function () {
                 $elements.searchDiv.height(self.searchDivInitHeight + self.getHideBranchHeight());
             });
+            $elements.getMoreBranch().hide().next().show();
         }
     };
 
@@ -127,13 +118,14 @@
         branchLogo: $('div.branch div.logos'),
         branchTitle: $('div.branch div.title'),
         branchLogoTable: $('div.branch div.logos table'),
-        branchLogoLinks: $('div.branch div.logos img'),
         goodsImages: $('div.goods div.images div.image img'),
         goodsDescriptions: $('div.goods div.images div.description a'),
         hideBranch: $('div.search > div.branch > div.logos div.hideBranch'),
-        moreBranch: $('div.search > div.branch > div.logos div.moreBranch'),
         hotWords: $('div.search > div.searchForm div.hotWords'),
-        branchPoster: $('div.search > div.branch > div.poster')
+        branchPoster: $('div.search > div.branch > div.poster'),
+        getMoreBranch: function () {
+            return $('div.search > div.branch > div.logos div.moreBranch');
+        }
     };
 
     $elements.collectButton.click(function () {
@@ -155,35 +147,10 @@
     $elements.sortLinks.click(function () {
         switchSortLinks($(this));
     });
-    $elements.branchLogoLinks.hover(function () {
-        getParent($(this), 'div').prev().show();
-    }, function () {
-        getParent($(this), 'div').prev().hide();
-    });
     $elements.goodsImages.hover(function () {
         $(this).addClass('deepTransparent');
     }, function () {
         $(this).removeClass('deepTransparent');
-    });
-    $elements.goodsDescriptions.hover(function () {
-        $(this).css({
-            'color': 'rgb(126, 71, 52)',
-            'text-decoration': 'none',
-            'text-shadow': '2px 2px 5px rgb(238, 238, 238)'
-        });
-    }, function () {
-        $(this).css({
-            'color': 'rgb(152, 93, 62)',
-            'text-shadow': 'none'
-        });
-    });
-    $elements.branchDiv.find('td').hover(function () {
-        var text = $elements.moreBranch.text();
-        if (text == '隐藏') {
-            branchLinks.hideMore();
-        } else {
-            branchLinks.showMore();
-        }
     });
     $elements.branchDiv.hover(function (event) {
     }, function (event) {
@@ -192,4 +159,73 @@
             branchLinks.hideMore();
         }
     });
+
+    angularUtils.controller(function ($scope) {
+        $scope.snapshots = splitArray(getSnapshots(), 3);
+        $scope.hotWords = getHotWords();
+        $scope.showMore = function () {
+            branchLinks.showMore();
+        };
+        $scope.hideMore = function () {
+            console.log('afdkslafj');
+            //branchLinks.hideMore();
+        };
+
+        var branches = getBranches();
+        if (branches.length > 14) {
+            branches[13]['more'] = true;
+            $scope.hideBranches = splitArray(branches.slice(14), 7);
+            branches = branches.slice(0, 14);
+            $scope.branches = splitArray(branches, 7);
+        } else {
+            $scope.hideBranches = [];
+            $scope.branches = splitArray(branches, 7);
+        }
+    });
+
+    function getBranches() {
+        var branches = [];
+        for (var i = 0; i < 35; i++) {
+            branches.push({
+                "id": i,
+                "src": "resources/css/images/branchs/branch1.png"
+            });
+        }
+        return branches;
+    }
+
+    function getHotWords() {
+        var words = [];
+        words.push({'text': '加湿器', color: 'red'});
+        words.push({'text': '羽绒服 男'});
+        words.push({'text': '小米4'});
+        words.push({'text': '冲锋衣', color: 'red'});
+        words.push({'text': '棉拖鞋'});
+        words.push({'text': '丝棉被'});
+        words.push({'text': '护手霜'});
+        words.push({'text': '男 棉衣', color: 'red'});
+        return words;
+    }
+
+    function getSnapshots() {
+        var snapshots = [];
+        for (var i = 0; i < 9; i++) {
+            var snapshot = {
+                src: "resources/css/images/goods/clothes4.gif",
+                description: "原创春夏季女装 文艺田园清新宽松娃娃领纯绵双层纱T恤上衣常规",
+                price: 19.80,
+                branchSrc: "resources/css/images/branchs/branch3.gif"
+            };
+            snapshots.push(snapshot);
+        }
+        return snapshots;
+    }
 })();
+
+function showBranchBorder(element) {
+    getParent($(element), 'div').prev().show();
+}
+
+function hideBranchBorder(element) {
+    getParent($(element), 'div').prev().hide();
+}

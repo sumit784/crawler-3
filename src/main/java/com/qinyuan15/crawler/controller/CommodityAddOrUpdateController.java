@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import static com.qinyuan15.crawler.controller.JsonControllerUtils.SUCCESS;
-import static com.qinyuan15.crawler.controller.JsonControllerUtils.createFailResult;
+import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.SUCCESS;
+import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.createFailResult;
 
 /**
  * Add or update Commodity

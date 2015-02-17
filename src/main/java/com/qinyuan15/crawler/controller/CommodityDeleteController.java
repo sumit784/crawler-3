@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Map;
 
-import static com.qinyuan15.crawler.controller.JsonControllerUtils.SUCCESS;
-import static com.qinyuan15.crawler.controller.JsonControllerUtils.createFailResult;
+import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.SUCCESS;
+import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.createFailResult;
 
 /**
  * Controller to delete Commodity
