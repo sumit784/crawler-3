@@ -114,13 +114,16 @@ var angularUtils = {
 
 (function () {
     angularUtils.controller('NavigationController', function ($scope) {
-        var categories = getCategories(), selectedCategory;
+        var categories = getCategories();
+        $scope.selectedCategory = $.url.param('keyWord');
         $scope.categories = [];
-        for (var i= 0, len = categories.length;i<len;i++){
-
+        for (var i = 0, len = categories.length; i < len; i++) {
+            var category = categories[i];
+            $scope.categories.push({
+                'text': category,
+                'selected': category == $scope.selectedCategory
+            });
         }
-        $scope.categories = ['女人' , '男人', '小孩', '数码家电', '居家'];
-
         function getCategories() {
             return ['女人' , '男人', '小孩', '数码家电', '居家'];
         }

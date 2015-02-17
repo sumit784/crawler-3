@@ -26,7 +26,7 @@
         </div>
         <div class="navigationLinks">
             <a ng-repeat="category in categories" class="darkFont noLineAnchor"
-               href="list?keyWord={{category}}">{{category}}</a>
+               href="list?keyWord={{category.text}}">{{category.text}}</a>
         </div>
     </div>
 </div>
