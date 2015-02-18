@@ -15,6 +15,12 @@ public class Commodity extends SimpleCommodity {
     private Boolean lowestInThreeMonth;
     private PriceHistory trend;
     private String url;
+    private Boolean active;
+    private Integer branchId;
+
+    public void setBranchId(Integer branchId) {
+        this.branchId = branchId;
+    }
 
     public void setUrl(String url) {
         this.url = url;
@@ -48,8 +54,16 @@ public class Commodity extends SimpleCommodity {
         return trend;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
     public void setPictures(List<String> pictures) {
         this.pictures = pictures;
+    }
+
+    public Integer getBranchId() {
+        return branchId;
     }
 
     public void setLowPrice(Double lowPrice) {
@@ -70,5 +84,9 @@ public class Commodity extends SimpleCommodity {
 
     public void setTrend(PriceHistory trend) {
         this.trend = trend;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

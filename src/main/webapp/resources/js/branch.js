@@ -38,13 +38,13 @@
         for (var i = 0; i < 18; i++) {
             if (i > 5 && i < 12) {
                 branches.push({
-                    "href": "javascript:void(0)",
+                    "href": "shoppe",
                     "src": "resources/css/images/branchs/branch2.png",
                     "text": "BRACCIALINI"
                 });
             } else {
                 branches.push({
-                    "href": "javascript:void(0)",
+                    "href": "shoppe",
                     "src": "resources/css/images/branchs/branch1.png",
                     "text": "OLAY"
                 });

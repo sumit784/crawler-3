@@ -31,4 +31,9 @@ public class PriceRecordDaoTest {
                 .setCommodityId(commodityId).getInstances();
         assertThat(priceRecords).isNotEmpty();
     }
+
+    @Test
+    public void testHasInstanceToday() throws Exception {
+        new PriceRecordDao().hasInstanceToday(1);
+    }
 }

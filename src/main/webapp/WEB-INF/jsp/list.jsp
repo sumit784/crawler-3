@@ -9,7 +9,7 @@
         </c:forEach>
     </div>
     <div class="navigationName boxShadow orangeBack">
-        <span class="selectedNavigation">女人</span>
+        <span class="selectedNavigation">{{keyWord}}</span>
     </div>
     <div class="split"></div>
     <div class="searchForm">
@@ -24,8 +24,9 @@
                     </c:forEach>
                 </ul>
             </div>
-            <form action="search-no-result.jsp" target="_blank">
-                <input type="text" id="searchInput" class="form-control" placeholder="请输入您想查询的关键字"/>
+            <form action="search" target="_blank">
+                <input type="text" name="keyWord" id="searchInput"
+                       class="form-control" placeholder="请输入您想查询的关键字"/>
                     <span class="input-group-addon searchCommit">
                         <img class="link" id="searchCommmit" src="resources/css/images/searchButton.png"/>
                     </span>
@@ -55,7 +56,7 @@
                             </a>
                         </div>
                         <div>
-                            <a href="shoppe.html?id={{branch.id}}" target="_blank">
+                            <a href="shoppe?id={{branch.id}}" target="_blank">
                                 <img class="link" ng-src="{{branch.src}}"
                                      onmouseover="showBranchBorder(this)"
                                      onmouseout="hideBranchBorder(this)"/>
@@ -74,7 +75,7 @@
                                 <div class="verticalBorder"></div>
                             </div>
                             <div>
-                                <a href="shoppe.html?id={{branch.id}}" target="_blank">
+                                <a href="shoppe?id={{branch.id}}" target="_blank">
                                     <img class="link" ng-src="{{branch.src}}"
                                          onmouseover="showBranchBorder(this)"
                                          onmouseout="hideBranchBorder(this)"/>
@@ -92,55 +93,9 @@
         <div class="title blueFont">
             今日<span class="selectedNavigation">女人</span>最低价
         </div>
-        <div class="links">
-            <a href="javascript:void(0)" class="noLineAnchor">上架时间 <img src="resources/css/images/arrow_up.gif"/></a>
-            <a href="javascript:void(0)" class="noLineAnchor">价格 <img src="resources/css/images/unSort.gif"/></a>
-            <a href="javascript:void(0)" class="noLineAnchor">销量 <img src="resources/css/images/unSort.gif"/></a>
-        </div>
+        <%@include file="list-sort-links.jsp" %>
     </div>
-    <div class="images">
-        <table>
-            <tr ng-repeat="snapshotGroup in snapshots">
-                <td ng-repeat="snapshot in snapshotGroup">
-                    <div class="boxShadow">
-                        <div class="image">
-                            <a href="detail.html" target="_blank">
-                                <img class="link" ng-src="{{snapshot.src}}"/>
-                            </a>
-                        </div>
-                        <div class="description">
-                            <a href="detail.html" class="noLineAnchor" target="_blank">
-                                {{snapshot.description}}
-                            </a>
-                        </div>
-                        <div class="price">
-                            ￥{{snapshot.price}}
-                        </div>
-                        <div class="branch">
-                            <a href="shoppe.html" target="_blank">
-                                <img class="link" ng-src="{{snapshot.branchSrc}}"/>
-                            </a>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="loading">
-        <span>加载中，请稍候...</span>
-    </div>
+    <%@include file="list-shapshots.jsp" %>
 </div>
-<div class="rightFloat">
-    <div>
-        <img class="link" id="collectButton" src="resources/css/images/collect.gif"/>
-    </div>
-    <div class="split"></div>
-    <div>
-        <img class="link" id="refreshButton" src="resources/css/images/refresh.gif"/>
-    </div>
-    <div class="split"></div>
-    <div>
-        <img class="link toTop" src="resources/css/images/toTop.gif"/>
-    </div>
-</div>
+<%@include file="list-right-panel.jsp" %>
 <%@include file="footer.jsp" %>

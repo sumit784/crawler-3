@@ -28,7 +28,8 @@ public class DatabaseCommodityPool implements CommodityPool {
         }
 
         if (pointer % PAGE_SIZE == 0) {
-            this.commodities = HibernateUtil.getList("FROM Commodity ORDER BY id", pointer, PAGE_SIZE);
+            this.commodities = HibernateUtil.getList("FROM Commodity WHERE active=true ORDER BY id",
+                    pointer, PAGE_SIZE);
         }
 
         Commodity commodity = this.commodities.get(pointer % PAGE_SIZE);
@@ -37,7 +38,7 @@ public class DatabaseCommodityPool implements CommodityPool {
     }
 
     public long size() {
-        return HibernateUtil.getCount("Commodity");
+        return HibernateUtil.getCount("Commodity WHERE active=true");
     }
 
     @Override

@@ -14,7 +14,7 @@ import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle
 
 /**
  * Index page controller
- * Created by qinyuan on 15-2-14.
+ * Created by qinyuan on 15-2-16.
  */
 @Controller
 public class SearchController {

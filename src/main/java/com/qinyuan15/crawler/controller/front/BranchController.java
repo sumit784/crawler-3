@@ -13,7 +13,6 @@ import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle
 @Controller
 public class BranchController {
 
-
     @RequestMapping("/branch")
     public String index(ModelMap model) {
         setTitle(model, "品牌大全");

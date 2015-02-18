@@ -5,6 +5,7 @@ import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.Commodity;
+import com.qinyuan15.crawler.dao.PriceRecordDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,13 +78,20 @@ public class PriceHistoryCrawler {
                 return;
             }
 
+            PriceRecordDao dao = new PriceRecordDao();
+
             while (true) {
                 Commodity commodity = commodityPool.next();
                 try {
                     if (commodity == null) {
                         commodityPool.reset();
                     } else {
-                        this.singleCommodityCrawler.save(commodity);
+                        if (dao.hasInstanceToday(commodity.getId())){
+                            LOGGER.error("Today's price of commodity {} already save, just skip it",
+                                    commodity.getName());
+                        }else {
+                            this.singleCommodityCrawler.save(commodity);
+                        }
                     }
                     Thread.sleep(interval);
                 } catch (Exception e) {

@@ -16,11 +16,13 @@
 </div>
 </div>
 </body>
-<script src="resources/lib/angularjs/angular.min.js"></script>
-<script src="resources/lib/jquery-1.11.1.min.js"></script>
-<script src="resources/lib/jquery.url.js"></script>
-<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="resources/lib/handlebars.min-v1.3.0.js"></script>
+<script src="resources/js/lib/jquery-1.11.1.min.js"></script>
+<script src="resources/js/lib/jquery.url.js"></script>
+<script src="resources/js/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/js/lib/handlebars.min-v1.3.0.js"></script>
+<script src="resources/js/lib/angular/html5shiv.js"></script>
+<script src="resources/js/lib/angular/json2.js"></script>
+<script src="resources/js/lib/angular/angular.min.js"></script>
 <script src="resources/js/common.js"></script>
 <c:forEach var="js" items="${moreJs}">
     <script src="resources/js/${js}.js"></script>

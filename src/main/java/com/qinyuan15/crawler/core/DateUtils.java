@@ -38,6 +38,27 @@ public class DateUtils {
         return new Date(System.currentTimeMillis());
     }
 
+    public static String todayStartTime() {
+        return now().toString() + " 00:00:00";
+    }
+
+    public static String todayEndTime() {
+        return now().toString() + " 23:59:59";
+    }
+
+    public static boolean isDate(String date) {
+        return date != null && date.matches("^\\d{4}-\\d{1,2}-\\d{1,2}$");
+    }
+
+    public static boolean isDateTime(String dateTime) {
+        return dateTime != null &&
+                dateTime.matches("^\\d{4}-\\d{1,2}-\\d{1,2} \\d{1,2}:\\d{1,2}:\\d{1,2}$");
+    }
+
+    public static boolean isDateOrDateTime(String value) {
+        return isDate(value) || isDateTime(value);
+    }
+
     /**
      * calculate the days between first date and second date
      *

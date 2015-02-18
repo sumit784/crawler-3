@@ -12,6 +12,8 @@ public class JspControllerUtils {
 
     public final static String TITLE = "title";
 
+    public final static String BLANK = "blank";
+
     public static void setTitle(ModelMap model, String title) {
         model.addAttribute(TITLE, title);
     }

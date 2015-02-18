@@ -14,5 +14,6 @@
         <property name="lowPrice" column="low_price"/>
         <property name="originalPrice" column="original_price"/>
         <property name="onShelfTime" column="on_shelf_time"/>
+        <property name="active"/>
     </class>
 </hibernate-mapping>

@@ -1,7 +1,5 @@
 package com.qinyuan15.crawler.dao;
 
-import com.qinyuan15.crawler.controller.PriceHistoryController;
-
 /**
  * Query price of Commodity
  * Created by qinyuan on 15-1-22.

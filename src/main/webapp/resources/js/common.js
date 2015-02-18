@@ -112,16 +112,20 @@ var angularUtils = {
     }
 };
 
+function getKeyWord() {
+    return $.url.param('keyWord');
+}
+
 (function () {
     angularUtils.controller('NavigationController', function ($scope) {
         var categories = getCategories();
-        $scope.selectedCategory = $.url.param('keyWord');
+        $scope.selectedCategory = getKeyWord();
         $scope.categories = [];
         for (var i = 0, len = categories.length; i < len; i++) {
             var category = categories[i];
             $scope.categories.push({
                 'text': category,
-                'selected': category == $scope.selectedCategory
+                'class': category == $scope.selectedCategory ? 'selected' : 'darkFont'
             });
         }
         function getCategories() {

@@ -6,7 +6,7 @@
         <table>
             <tr ng-repeat="branchRow in branchGroup.branches">
                 <td ng-repeat="branch in branchRow">
-                    <a class="noLineAnchor" ng-href="{{branch.href}}">
+                    <a class="noLineAnchor" ng-href="{{branch.href}}" target="_blank">
                         <img ng-src="{{branch.src}}"/><br>{{branch.text}}
                     </a>
                 </td>

@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
+import com.qinyuan15.crawler.core.DateUtils;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -31,21 +33,26 @@ public class PriceRecordDao {
         }
 
         public Factory setStartTime(String startTime) {
-            this.startTime = startTime;
+            if (DateUtils.isDateOrDateTime(startTime)) {
+                this.startTime = startTime;
+            }
             return this;
         }
 
         public Factory setEndTime(String endTime) {
-            this.endTime = endTime;
+            if (DateUtils.isDateOrDateTime(endTime)) {
+                this.endTime = endTime;
+            }
             return this;
         }
 
         public Factory setGrabDate(String grabDate) {
-            this.grabDate = grabDate;
+            if (DateUtils.isDateOrDateTime(grabDate)) {
+                this.grabDate = grabDate;
+            }
             return this;
         }
 
-        // TODO this method should be revised to avoid SQL inject
         private String getHQL() {
             // build SQL query command
             String hql = "FROM PriceRecord WHERE 1=1";
@@ -84,5 +91,18 @@ public class PriceRecordDao {
         public boolean hasInstance() {
             return getInstances().size() > 0;
         }
+    }
+
+    /**
+     * Check whether today's price of a commodity is recorded
+     *
+     * @param commodityId id to commodity
+     * @return if today's price of commodity is record, then return true
+     */
+    public boolean hasInstanceToday(int commodityId) {
+        return factory().setCommodityId(commodityId)
+                .setStartTime(DateUtils.todayStartTime())
+                .setEndTime(DateUtils.todayEndTime())
+                .hasInstance();
     }
 }

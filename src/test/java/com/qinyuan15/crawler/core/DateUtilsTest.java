@@ -38,12 +38,24 @@ public class DateUtilsTest {
     }
 
     @Test
-    public void getDayDiff() throws Exception {
+    public void testGetDayDiff() throws Exception {
         Date date1 = DateUtils.newDate("2012-02-28");
         Date date2 = DateUtils.newDate("2012-03-26");
         assertThat(DateUtils.getDayDiff(date1, date2)).isEqualTo(27);
 
         Date date3 = DateUtils.newDate("2013-02-28");
         assertThat(DateUtils.getDayDiff(date1, date3)).isEqualTo(366);
+    }
+
+    @Test
+    public void testIsDate() throws Exception {
+        assertThat(DateUtils.isDate("1022-12-12")).isTrue();
+        assertThat(DateUtils.isDate("1012-1212")).isFalse();
+    }
+
+    @Test
+    public void testIsDateTime() throws Exception {
+        assertThat(DateUtils.isDateTime("1012-01-01 12:13:40")).isTrue();
+        assertThat(DateUtils.isDateTime("1012-01-01 12:13:404")).isFalse();
     }
 }

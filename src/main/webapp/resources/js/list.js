@@ -163,12 +163,9 @@
     angularUtils.controller(function ($scope) {
         $scope.snapshots = splitArray(getSnapshots(), 3);
         $scope.hotWords = getHotWords();
+        $scope.keyWord = getKeyWord();
         $scope.showMore = function () {
             branchLinks.showMore();
-        };
-        $scope.hideMore = function () {
-            console.log('afdkslafj');
-            //branchLinks.hideMore();
         };
 
         var branches = getBranches();
@@ -211,10 +208,14 @@
         var snapshots = [];
         for (var i = 0; i < 9; i++) {
             var snapshot = {
+                id: 1,
                 src: "resources/css/images/goods/clothes4.gif",
                 description: "原创春夏季女装 文艺田园清新宽松娃娃领纯绵双层纱T恤上衣常规",
                 price: 19.80,
-                branchSrc: "resources/css/images/branchs/branch3.gif"
+                branch: {
+                    id: 1,
+                    url: "resources/css/images/branchs/branch3.gif"
+                }
             };
             snapshots.push(snapshot);
         }
