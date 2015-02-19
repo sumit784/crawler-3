@@ -12,7 +12,7 @@ import java.util.List;
 import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle;
 
 /**
- * Detail page
+ * Admin page
  * Created by qinyuan on 15-2-19.
  */
 @Controller

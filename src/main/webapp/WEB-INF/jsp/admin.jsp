@@ -17,22 +17,24 @@
             <td>
                 <div class="boxShadow">
                     <div class="image">
-                        <a href="admin-edit-commodity?${commodity.id}" target="_blank">
+                        <a href="admin-edit-commodity?id=${commodity.id}" target="_blank">
                             <img class="link" src="${commodity.picture}"/>
                         </a>
                     </div>
                     <div class="description">
-                        <a href="edit-commodity.html" class="noLineAnchor" target="_blank">${commodity.name}</a>
+                        <a href="admin-edit-commodity?id=${commodity.id}"
+                           class="noLineAnchor" target="_blank">${commodity.name}</a>
                     </div>
                 </div>
             </td>
             <c:if test="${status.index%4==3}"></tr></c:if>
         </c:forEach>
-        <c:if test="${fn:length(commodities)%4==0}"><tr></c:if>
+        <c:if test="${fn:length(commodities)%4==0}">
+        <tr></c:if>
             <td>
                 <div>
                     <div class="image">
-                        <a href="edit-commodity.html?new=true" target="_blank">
+                        <a href="admin-edit-commodity" target="_blank">
                             <img class="link" src="resources/css/images/manage-commodity/add_c.png"/>
                         </a>
                     </div>
