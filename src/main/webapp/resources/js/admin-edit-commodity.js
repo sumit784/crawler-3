@@ -34,7 +34,7 @@ CommodityDescription.prototype.text = function (text) {
     $elements.selectButtons.click(function () {
         $(this).css({
             'background-color': '#ffffff',
-            'background-image': 'url("css/images/edit-commodity/select.png")'
+            'background-image': 'url("resources/css/images/edit-commodity/select.png")'
         });
     });
     var commdityDescriptionEffect = new CommodityDescription($elements.commodityDescriptionEffect.attr('id'));
@@ -42,4 +42,7 @@ CommodityDescription.prototype.text = function (text) {
         var text = $(this).val();
         commdityDescriptionEffect.text(text);
     }).trigger('keyup');
+
+    angularUtils.controller(function ($scope) {
+    });
 })();
