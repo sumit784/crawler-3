@@ -1,0 +1,14 @@
+#!/bin/bash
+
+parentDir=/media/DEEPBBS_GHO
+
+if [ -d $parentDir ]; then
+    targetDir=$parentDir/mall
+    if [ -d $targetDir ]; then
+        rm -rf $targetDir
+    fi
+    mkdir $targetDir
+    rm -rf ./target
+    cp -r * $targetDir
+fi
+

@@ -104,6 +104,7 @@ div.footer {
     border-top: 1px dashed rgb(220, 220, 220);
     padding-top: 20px;
     font-size: 9pt;
+    clear: both;
 }
 
 div.footer > div.links {

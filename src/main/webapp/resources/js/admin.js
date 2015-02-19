@@ -1,4 +1,4 @@
-(function() {
+(function () {
     var $elements = {
         commodityImages: $('div.content div.right div.image img'),
         commodityDescription: $('div.content div.right div.description a')
@@ -19,5 +19,8 @@
             'color': '#7F4B2F',
             'text-shadow': 'none'
         });
+    });
+
+    angularUtils.controller(function ($scope) {
     });
 })();

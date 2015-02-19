@@ -1,14 +1,10 @@
-body {
-    background-color: #EEEEEE;
-}
-
 div.content {
     margin-top: 37px;
 }
 
 div.content div.left {
     padding-top: 8px;
-    width: 140px;
+    width: 120px;
     height: 100px;
     float: left;
 }
@@ -44,8 +40,7 @@ div.content div.left div.commodity, div.content div.left div.log {
 }
 
 div.content div.right {
-    width: 500px;
-    float: left;
+    float: right;
 }
 
 div.content div.right td {
@@ -54,6 +49,15 @@ div.content div.right td {
 
 div.content div.right td > div {
     background-color: #ffffff;
+}
+
+div.content div.right td div.image img {
+    height: 194px;
+    width: 194px;
+}
+
+div.content div.right tr:last-child td:last-child div.image img {
+    height: 260px;
 }
 
 div.content div.right table div.description {
