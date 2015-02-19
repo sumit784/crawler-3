@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.controller.front;
+package com.qinyuan15.crawler.controller.back;
 
 import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.dao.Branch;

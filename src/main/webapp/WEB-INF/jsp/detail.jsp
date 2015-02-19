@@ -10,19 +10,21 @@
                 </a>
             </div>
             <div class="largeImage">
-                <img class="boxShadow" src="resources/css/images/detail/large.png"/>
-                <%--<img class="boxShadow" src="${pictures()0].url}"/>--%>
+                <c:if test="${fn:length(pictures)>0}">
+                    <img class="boxShadow" src="${pictures[0].url}"/>
 
-                <div class="enlarge"></div>
-                <div class="enlargeImage">
-                    <img src="resources/css/images/detail/detail-large2.png" width="450" height="450"/>
+                    <div class="enlarge"></div>
+                    <div class="enlargeImage">
+                        <img src="${pictures[0].url}"/>
 
-                    <div class="closeLargeImage"></div>
-                </div>
+                        <div class="closeLargeImage"></div>
+                    </div>
+                </c:if>
             </div>
             <div class="smallImage">
-                <img class="link selected" src="resources/css/images/detail/small1.png"/>
-                <img class="link" src="resources/css/images/detail/small2.png"/>
+                <c:forEach var="picture" items="${pictures}" varStatus="status">
+                    <img class="link<c:if test='${status.index==0}'> selected</c:if>" src="${picture.url}"/>
+                </c:forEach>
             </div>
         </div>
         <div class="right">

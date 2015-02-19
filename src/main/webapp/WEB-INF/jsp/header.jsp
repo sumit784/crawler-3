@@ -12,8 +12,7 @@
     <c:forEach var="css" items="${moreCss}">
         <link rel="stylesheet" href="resources/css/${css}.css">
     </c:forEach>
-    <link rel="stylesheet"
-          href="resources/css/<%=request.getRequestURI().replaceAll("^.*/","").replace(".jsp",".css")%>">
+    <link rel="stylesheet" href="resources/css/<%=request.getRequestURI().replaceAll("^.*/","").replace(".jsp",".css")%>">
 </head>
 <body class="ng-app:main" ng-app="main" id="ng-app">
 <div class="header">
