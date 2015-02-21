@@ -44,5 +44,16 @@ CommodityDescription.prototype.text = function (text) {
     }).trigger('keyup');
 
     angularUtils.controller(function ($scope) {
+        $scope.commodityDescription = "产品名称：Nike/耐克 473284\n"
+            + "颜色分类：444动力蓝/蓝黑/白\n"
+            + "款号：473284\n"
+            + "品牌：Nike/耐克\n"
+            + "上市时间：2015春季\n"
+            + "吊牌价：699\n"
+            + "性别：男子\n"
+            + "鞋帮高度：中帮\n"
+            + "鞋码：39 40 40.5 41 42 42.5 43 44 44.5 45 46\n"
+            + "闭合方式：系带\n"
+            + "是否瑕疵：否";
     });
 })();

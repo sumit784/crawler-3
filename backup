@@ -10,5 +10,8 @@ if [ -d $parentDir ]; then
     mkdir $targetDir
     rm -rf ./target
     cp -r * $targetDir
+    echo "backup to $targetDir successfully"
+else
+    echo "$parentDir not found"
 fi
 

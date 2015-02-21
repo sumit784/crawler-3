@@ -1,34 +1,3 @@
-<!--<!DOCTYPE html>
-<html>
-<head lang="zh-ch">
-<meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<title>添加/编辑商品</title>
-<link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="../../resources/css/common.css">
-<link rel="stylesheet" href="../../resources/css/index.css">
-<link rel="stylesheet" href="../../resources/css/admin-edit-commodity.css">
-</head>
-<body>
-<div class="header">
-<div><img src="resources/css/images/header.gif"/></div>
-</div>
-<div class="navigationBack">
-<div class="navigation">
-<div class="logo">
-<a href="javascript:void(0)"><img src="resources/css/images/logo.png"/></a>
-</div>
-<div class="navigationLinks">
-<a class="darkFont noLineAnchor" href="javascript:void(0)">女人</a>
-<a class="darkFont noLineAnchor" href="javascript:void(0)">男人</a>
-<a class="darkFont noLineAnchor" href="javascript:void(0)">小孩</a>
-<a class="darkFont noLineAnchor" href="javascript:void(0)">数码家电</a>
-<a class="darkFont noLineAnchor" href="javascript:void(0)">居家</a>
-</div>
-</div>
-</div>
-<div class="content">
--->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
 <div class="boxShadow">
@@ -139,19 +108,7 @@
             <tr>
                 <td>商品参数</td>
                 <td>
-                    <textarea id="commodityDescription" cols="45" rows="12">
-                        产品名称：Nike/耐克 473284
-                        颜色分类：444动力蓝/蓝黑/白
-                        款号：473284
-                        品牌：Nike/耐克
-                        上市时间：2015春季
-                        吊牌价：699
-                        性别：男子
-                        鞋帮高度：中帮
-                        鞋码：39 40 40.5 41 42 42.5 43 44 44.5 45 46
-                        闭合方式：系带
-                        是否瑕疵：否
-                    </textarea>
+                    <textarea id="commodityDescription" cols="45" rows="12">{{commodityDescription}}</textarea>
                 </td>
             </tr>
             <tr>
@@ -213,13 +170,3 @@
     </div>
 </div>
 <%@include file="footer.jsp" %>
-<!--
-</div>
-</body>
-<script src="../../resources/js/lib/jquery-1.11.1.min.js"></script>
-<script src="lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="../../resources/js/common.js"></script>
-<script src="../../resources/js/index.js"></script>
-<script src="../../resources/js/admin-edit-commodity.js"></script>
-</html>
--->
