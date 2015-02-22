@@ -73,7 +73,7 @@ public class DetailController {
     private Branch getBranch(int id) {
         Branch branch = new Branch();
         branch.setId(id);
-        branch.setLogoPath("resources/css/images/branchs/branch4.png");
+        branch.setLogo("resources/css/images/branchs/branch4.png");
         branch.setName("Adidas");
         return branch;
     }

@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.controller.front;
+package com.qinyuan15.crawler.controller.json;
 
 import com.qinyuan15.crawler.controller.json.PriceHistoryController;
 import org.junit.Test;

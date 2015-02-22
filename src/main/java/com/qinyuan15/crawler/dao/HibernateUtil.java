@@ -8,8 +8,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -103,6 +103,14 @@ public class HibernateUtil {
         }
     }
 
+    public static <T> T get(Class<T> clazz, Serializable id) {
+        Session session = HibernateUtil.getSession();
+        @SuppressWarnings("unchecked")
+        T object = (T) session.get(clazz, id);
+        session.close();
+        return object;
+    }
+
     public static List getList(String hql) {
         return getList(hql, -1, -1);
     }
@@ -110,6 +118,10 @@ public class HibernateUtil {
     public static List getList(String hql, int firstResult, int maxResults) {
         Session session = HibernateUtil.getSession();
         try {
+            hql = hql.trim();
+            if (!hql.toLowerCase().startsWith("from")) {
+                hql = "FROM " + hql;
+            }
             Query query = session.createQuery(hql);
             if (firstResult >= 0 && maxResults > 0) {
                 query.setFirstResult(firstResult).setMaxResults(maxResults);
@@ -119,7 +131,8 @@ public class HibernateUtil {
             LOGGER.error("fail to get list: {}", e);
             throw new RuntimeException(e);
         } finally {
-            session.close();    // ensure session is closed
+            commit(session);
+            //session.close();    // ensure session is closed
         }
     }
 

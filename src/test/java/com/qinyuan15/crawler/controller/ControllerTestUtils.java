@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.controller.front;
+package com.qinyuan15.crawler.controller;
 
 import org.powermock.reflect.Whitebox;
 import org.springframework.ui.ModelMap;

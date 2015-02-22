@@ -6,7 +6,7 @@
             <div class="branch">
                 所属品牌：
                 <a href="shoppe?id=${branch.id}" target="_blank">
-                    <img src="${branch.logoPath}"/>
+                    <img src="${branch.logo}"/>
                 </a>
             </div>
             <div class="largeImage">

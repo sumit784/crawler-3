@@ -1,0 +1,20 @@
+div.content > div:first-child {
+    padding: 50px;
+    background-color: #ffffff;
+    position: relative;
+    min-height: 500px;
+}
+
+div.content table {
+    float: left;
+    width: 500px;
+}
+
+div.content form {
+    float: right;
+    width: 250px;
+}
+
+div.content form > div {
+    padding: 10px;
+}

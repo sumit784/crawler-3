@@ -22,7 +22,6 @@ public class AdminEditCommodityController {
 
     @RequestMapping("/admin-edit-commodity")
     public String index(ModelMap model) {
-        //model.addAttribute("commodities", getCommodities(1));
         String idString = request.getParameter("id");
         if (StringUtils.hasText(idString)) {
             setTitle(model, "编辑商品");

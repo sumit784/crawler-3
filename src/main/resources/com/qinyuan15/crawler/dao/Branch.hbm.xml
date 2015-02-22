@@ -9,6 +9,7 @@
             <generator class="identity"/>
         </id>
         <property name="name"/>
-        <property name="logoPath" column="logo_path"/>
+        <property name="logo"/>
+        <property name="parentId" column="parent_id"/>
     </class>
 </hibernate-mapping>

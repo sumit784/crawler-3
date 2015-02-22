@@ -146,3 +146,21 @@ button.orangeButton, input.orangeButton {
     border: 0;
     border-radius: 5px;
 }
+
+table.normal {
+    border-top: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+}
+
+table.normal thead {
+    border-bottom: 1px solid #000000;
+}
+
+table.normal tbody tr {
+    border-bottom: 1px dashed #cccccc;
+}
+
+table.normal th, table.normal td {
+    padding: 5px;
+    font-size: 10pt;
+}

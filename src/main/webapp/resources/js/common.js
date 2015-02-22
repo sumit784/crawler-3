@@ -116,6 +116,25 @@ function getKeyWord() {
     return $.url.param('keyWord');
 }
 
+/*
+ * query plugins
+ */
+jQuery.fn.dataOptions = function () {
+    var dataOptionsString = this.attr('data-options');
+    var dataOptions = null;
+    eval('dataOptions = {' + dataOptionsString + "}");
+    return dataOptions;
+};
+
+jQuery.fn.focusOrSelect = function () {
+    var value = this.val();
+    if (value != null && value != '') {
+        this.select();
+    } else {
+        this.focus();
+    }
+};
+
 (function () {
     angularUtils.controller('NavigationController', function ($scope) {
         var categories = getCategories();
@@ -184,4 +203,20 @@ function getKeyWord() {
             }
         });
     }, 500);
+
+    $('table.normal .limit-size').each(function () {
+        var limitSize = 20; // default limit size
+
+        var $this = $(this);
+        var dataOptions = $this.dataOptions();
+        if (dataOptions && dataOptions['limit']) {
+            limitSize = dataOptions['limit'];
+        }
+
+        var text = $this.text();
+        $this.attr('title', text);
+        if (text.length > limitSize) {
+            $this.text(text.substr(0, limitSize) + '...');
+        }
+    });
 })();

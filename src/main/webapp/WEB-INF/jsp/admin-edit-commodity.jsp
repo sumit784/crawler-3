@@ -36,6 +36,9 @@
             </ul>
         </div>
         <div style="position: absolute; right: 40px;top: 25px;">(必填)</div>
+        <div style="float:right;clear:both;right:30px;font-size:9pt;top:8px;">
+            <a target="_blank" href="admin-branch">品牌管理&gt;&gt;</a>
+        </div>
     </div>
     <div class="link">
         <table>

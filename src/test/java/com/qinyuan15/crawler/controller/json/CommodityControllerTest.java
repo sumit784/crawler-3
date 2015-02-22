@@ -1,5 +1,6 @@
-package com.qinyuan15.crawler.controller.front;
+package com.qinyuan15.crawler.controller.json;
 
+import com.qinyuan15.crawler.controller.ControllerTestUtils;
 import com.qinyuan15.crawler.controller.json.CommodityController;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import org.junit.Before;
