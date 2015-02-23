@@ -23,7 +23,7 @@ public class EtaoCommodityPageParserTest {
 
     @Before
     public void setUp() throws Exception {
-        parser = new EtaoCommodityPageParser(new HttpClientPool());
+        parser = new EtaoCommodityPageParser();
         parser.setHTML(TestFileUtils.read("etao.html"));
     }
 
