@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import org.springframework.util.StringUtils;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -118,8 +119,22 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         HtmlParser htmlParser = new HtmlParser(this.html);
         Element productDetailDiv = htmlParser.getElements("div", "product-detail").first();
         String dataUrl = productDetailDiv.attr("data-url");
-        System.out.println(dataUrl);
-        return null;
+
+        HttpClientWrapper client = this.httpClientPool.next();
+        String dataUrlContent = client.getContent(dataUrl);
+        return this.parseDetailImageUrls(dataUrlContent);
+    }
+
+    private List<String> parseDetailImageUrls(String content) {
+        content = content.trim().replaceFirst("var desc='", "").replace("';", "");
+        HtmlParser parser = new HtmlParser(content);
+        List<String> urls = new ArrayList<String>();
+        for (Element element : parser.getElements("img")) {
+            if (!element.hasClass("desc_anchor")) {
+                urls.add(element.attr("src"));
+            }
+        }
+        return urls;
     }
 
     private Map<Date, Double> getPriceHistory(Iterable<Object> array) {

@@ -2,11 +2,12 @@ package com.qinyuan15.crawler.core.html;
 
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
-import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.powermock.reflect.Whitebox;
 
+import java.lang.reflect.Method;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -81,6 +82,17 @@ public class EtaoCommodityPageParserTest {
     @Test
     public void testGetDetailImageUrls() throws Exception {
         List<String> imageUrls = parser.getDetailImagesUrls();
-        System.out.println(imageUrls);
+        assertThat(imageUrls).hasSize(21);
+    }
+
+    @Test
+    public void testParseDetailImageUrls() throws Exception {
+        Method method = Whitebox.getMethod(parser.getClass(), "parseDetailImageUrls", String.class);
+        @SuppressWarnings("unchecked")
+        List<String> urls = (List) method.invoke(parser, TestFileUtils.read("etao-detail.html"));
+        for (String url : urls) {
+            assertThat(url).contains(".jpg").contains("http://")
+                    .contains("taobaocdn.com/imgextra");
+        }
     }
 }
