@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.http;
 
+import com.qinyuan15.crawler.core.http.proxy.ProxySpeedRecorder;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpHost;
@@ -31,10 +32,15 @@ public class HttpClientWrapper {
     private int timeout = DEFAULT_TIMEOUT;
     private int requestTimeout = DEFAULT_TIMEOUT;
     private String userAgent = DEFAULT_USER_AGENT;
-    private int lastConnectTime = -1;
+    private int lastConnectTime = Integer.MAX_VALUE;
+    private ProxySpeedRecorder proxySpeedRecorder;
 
     public void setProxy(Proxy proxy) {
         this.proxy = proxy;
+    }
+
+    public void setProxySpeedRecorder(ProxySpeedRecorder proxySpeedRecorder) {
+        this.proxySpeedRecorder = proxySpeedRecorder;
     }
 
     public void setTimeout(int timeout) {
@@ -76,6 +82,7 @@ public class HttpClientWrapper {
         get.setConfig(configBuilder.build());
 
         try {
+            LOGGER.info("connecting {} with proxy {}", url, proxy);
             CloseableHttpResponse response = client.execute(get);
             LOGGER.info("connected to {} with proxy {}", url, proxy);
             String content = EntityUtils.toString(response.getEntity());
@@ -86,9 +93,25 @@ public class HttpClientWrapper {
             return new HttpResponse(content, status);
         } catch (Exception e) {
             LOGGER.error("fail to connect or parse {} with proxy {}", url, proxy);
-            this.lastConnectTime = -1;
+            this.lastConnectTime = Integer.MAX_VALUE;
             throw new RuntimeException(e);
+        } finally {
+            this.recordSpeed();
         }
+    }
+
+    private void recordSpeed() {
+        if (this.proxySpeedRecorder != null) {
+            this.proxySpeedRecorder.recordSpeed(proxy, this.lastConnectTime);
+        }
+    }
+
+    /**
+     * After request, feed back that the request is rejected by validating the result
+     */
+    public void feedbackRejection() {
+        this.lastConnectTime = Integer.MAX_VALUE;
+        this.recordSpeed();
     }
 
     public String getContent(String url) {

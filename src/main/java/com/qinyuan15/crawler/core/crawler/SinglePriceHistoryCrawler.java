@@ -4,7 +4,6 @@ import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
-import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
 import org.slf4j.Logger;
@@ -54,28 +53,18 @@ class SinglePriceHistoryCrawler {
         }
 
         String url = commodity.getUrl();
-        /*
-        Proxy proxy = null;
-        if (this.proxyPool != null) {
-            proxy = proxyPool.next();
-        }
-        */
-
-        //HttpClientWrapper client = new HttpClientWrapper();
-        //client.setProxy(proxy);
         HttpClientWrapper client = this.httpClientPool.next();
         try {
-            //LOGGER.info("prepare to save price history of {} with proxy {}", url, proxy);
+            LOGGER.info("prepare to save price history of {}", url);
             String html = client.getContent(url);
             commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
             Map<Date, Double> priceHistory = commodityPageParser.getPriceHistory();
             if (priceHistory == null) {
                 LOGGER.info("can not get priceHistory from url {}, html contents: {}", url, html);
-                //proxyPool.updateSpeed(proxy, Integer.MAX_VALUE);
+                client.feedbackRejection();
             } else {
                 LOGGER.info("save price history of {}", url);
-                //proxyPool.updateSpeed(proxy, client.getLastConnectTime());
                 for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                     savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
                 }
@@ -91,18 +80,9 @@ class SinglePriceHistoryCrawler {
                 dao.save(commodity.getId(), savePaths);
             }
         } catch (Exception e) {
-            //LOGGER.error("fail to fetch {} with proxy {}: {}", url, proxy, e);
-            //updateSpeed(proxy, Integer.MAX_VALUE);
+            LOGGER.error("fail to fetch price history of {}: {}", url, e);
         }
     }
-
-    /*
-    private void updateSpeed(Proxy proxy, int time) {
-        if (proxyPool != null) {
-            proxyPool.updateSpeed(proxy, time);
-        }
-    }
-    */
 
     private void savePriceRecord(Date date, Double price, int commodityId) {
         if (!PriceRecordDao.factory().setCommodityId(commodityId)

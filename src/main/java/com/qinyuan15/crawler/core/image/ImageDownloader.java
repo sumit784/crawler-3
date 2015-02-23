@@ -15,6 +15,7 @@ import java.util.List;
  * Class to download image from certain url
  * Created by qinyuan on 15-1-14.
  */
+// TODO this class doesn't use proxy
 public class ImageDownloader {
     private final static Logger LOGGER = LoggerFactory.getLogger(ImageDownloader.class);
 
