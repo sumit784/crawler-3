@@ -21,23 +21,14 @@ class SinglePriceHistoryCrawler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SinglePriceHistoryCrawler.class);
 
-    //private ProxyPool proxyPool;
     private HttpClientPool httpClientPool;
     private ComposableCommodityPageParser commodityPageParser;
     private ImageDownloader imageDownloader;
 
     public SinglePriceHistoryCrawler(ComposableCommodityPageParser commodityPageParser,
-                                     ImageDownloader imageDownloader) {
+                                     ImageDownloader imageDownloader, HttpClientPool httpClientPool) {
         this.commodityPageParser = commodityPageParser;
         this.imageDownloader = imageDownloader;
-    }
-
-    /*
-    public void setProxyPool(ProxyPool proxyPool) {
-        this.proxyPool = proxyPool;
-    }
-    */
-    public void setHttpClientPool(HttpClientPool httpClientPool) {
         this.httpClientPool = httpClientPool;
     }
 

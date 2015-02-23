@@ -10,8 +10,15 @@
         <!-- reload each minute -->
         <property name="reloadInterval" value="60000"/>
     </bean>
+    <bean id="proxySpeedRecorder" class="com.qinyuan15.crawler.core.http.proxy.DatabaseProxySpeedRecorder"/>
+    <bean id="httpClientPool" class="com.qinyuan15.crawler.core.http.HttpClientPool">
+        <property name="proxyPool" ref="proxyPool"/>
+        <property name="proxySpeedRecorder" ref="proxySpeedRecorder"/>
+    </bean>
     <bean id="commodityPool" class="com.qinyuan15.crawler.core.commodity.DatabaseCommodityPool"/>
-    <bean id="etaoPageParser" class="com.qinyuan15.crawler.core.html.EtaoCommodityPageParser"/>
+    <bean id="etaoPageParser" class="com.qinyuan15.crawler.core.html.EtaoCommodityPageParser">
+        <constructor-arg ref="httpClientPool"/>
+    </bean>
     <bean id="webPageParser" class="com.qinyuan15.crawler.core.html.ComposableCommodityPageParser">
         <property name="parsers">
             <map>
@@ -24,7 +31,7 @@
         <!-- run each 30 second for each thread -->
         <property name="interval" value="30000"/>
         <property name="threadSize" value="5"/>
-        <property name="proxyPool" ref="proxyPool"/>
+        <property name="httpClientPool" ref="httpClientPool"/>
         <property name="commodityPool" ref="commodityPool"/>
         <property name="commodityPageParser" ref="webPageParser"/>
         <property name="imageDownloader" ref="imageDownloader"/>

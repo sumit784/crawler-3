@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.html;
 
 import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class ComposableCommodityPageParserTest {
     }
 
     public static ComposableCommodityPageParser mockComposableCommodityPageParser() {
-        CommodityPageParser etaoCommodityPageParser = new EtaoCommodityPageParser(new HttpClientWrapper());
+        CommodityPageParser etaoCommodityPageParser = new EtaoCommodityPageParser(new HttpClientPool());
         ComposableCommodityPageParser composableCommodityPageParser =
                 new ComposableCommodityPageParser();
 

@@ -67,8 +67,8 @@ public class PriceHistoryCrawler {
         private SinglePriceHistoryCrawler singleCommodityCrawler;
 
         public CrawlThread() {
-            this.singleCommodityCrawler = new SinglePriceHistoryCrawler(commodityPageParser, imageDownloader);
-            this.singleCommodityCrawler.setHttpClientPool(httpClientPool);
+            this.singleCommodityCrawler = new SinglePriceHistoryCrawler(
+                    commodityPageParser, imageDownloader, httpClientPool);
         }
 
         @Override

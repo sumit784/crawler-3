@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.html;
 
 import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
@@ -21,7 +22,7 @@ public class EtaoCommodityPageParserTest {
 
     @Before
     public void setUp() throws Exception {
-        parser = new EtaoCommodityPageParser(new HttpClientWrapper());
+        parser = new EtaoCommodityPageParser(new HttpClientPool());
         parser.setHTML(TestFileUtils.read("etao.html"));
     }
 

@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.core.html;
 
 import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -19,10 +20,10 @@ import java.util.TreeMap;
 public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
 
     private JavaScriptParser jsParser = new JavaScriptParser();
-    private HttpClientWrapper httpClient;
+    private HttpClientPool httpClientPool;
 
-    public EtaoCommodityPageParser(HttpClientWrapper httpClient) {
-        this.httpClient = httpClient;
+    public EtaoCommodityPageParser(HttpClientPool httpClientPool) {
+        this.httpClientPool = httpClientPool;
     }
 
     public String getName() {

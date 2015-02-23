@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.crawler;
 
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParserTest;
+import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.lib.TestCommodityPool;
 import com.qinyuan15.crawler.core.image.ImageDownloaderTest;
 import com.qinyuan15.crawler.dao.Commodity;
@@ -15,7 +16,8 @@ public class SinglePriceHistoryCrawlerTest {
     public void test() throws Exception {
         SinglePriceHistoryCrawler crawler = new SinglePriceHistoryCrawler(
                 ComposableCommodityPageParserTest.mockComposableCommodityPageParser(),
-                ImageDownloaderTest.mockImageDownloader()
+                ImageDownloaderTest.mockImageDownloader(),
+                new HttpClientPool()
         );
         Commodity commodity = new TestCommodityPool().next();
         crawler.save(commodity);
