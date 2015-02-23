@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="proxyPool" class="com.qinyuan15.crawler.core.http.proxy.DatabaseProxyPool" init-method="init">
+        <property name="size" value="10"/>
+        <!-- reload each minute -->
+        <property name="reloadInterval" value="60000"/>
+    </bean>
+    <bean id="proxySpeedRecorder" class="com.qinyuan15.crawler.core.http.proxy.DatabaseProxySpeedRecorder"/>
+    <bean id="httpClientPool" class="com.qinyuan15.crawler.core.http.HttpClientPool">
+        <property name="proxyPool" ref="proxyPool"/>
+        <property name="proxySpeedRecorder" ref="proxySpeedRecorder"/>
+    </bean>
+    <bean id="commodityPool" class="com.qinyuan15.crawler.core.commodity.DatabaseCommodityPool"/>
+    <bean id="etaoPageParser" class="com.qinyuan15.crawler.core.html.EtaoCommodityPageParser"/>
+    <bean id="webPageParser" class="com.qinyuan15.crawler.core.html.ComposableCommodityPageParser">
+        <property name="parsers">
+            <map>
+                <entry key="http://s.etao.com" value-ref="etaoPageParser"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

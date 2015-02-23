@@ -17,6 +17,7 @@ public class ControllerTestUtils {
         HttpServletRequest request = mock(HttpServletRequest.class);
 
         when(request.getLocalAddr()).thenReturn("192.168.8.1");
+        when(request.getParameter("pretty")).thenReturn("true");
 
         Whitebox.getField(controller.getClass(), "request").set(controller, request);
     }

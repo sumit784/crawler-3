@@ -4,28 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- PriceHistoryCrawler -->
-    <bean id="proxyPool" class="com.qinyuan15.crawler.core.http.proxy.DatabaseProxyPool" init-method="init">
-        <property name="size" value="10"/>
-        <!-- reload each minute -->
-        <property name="reloadInterval" value="60000"/>
-    </bean>
-    <bean id="proxySpeedRecorder" class="com.qinyuan15.crawler.core.http.proxy.DatabaseProxySpeedRecorder"/>
-    <bean id="httpClientPool" class="com.qinyuan15.crawler.core.http.HttpClientPool">
-        <property name="proxyPool" ref="proxyPool"/>
-        <property name="proxySpeedRecorder" ref="proxySpeedRecorder"/>
-    </bean>
-    <bean id="commodityPool" class="com.qinyuan15.crawler.core.commodity.DatabaseCommodityPool"/>
-    <bean id="etaoPageParser" class="com.qinyuan15.crawler.core.html.EtaoCommodityPageParser">
-        <constructor-arg ref="httpClientPool"/>
-    </bean>
-    <bean id="webPageParser" class="com.qinyuan15.crawler.core.html.ComposableCommodityPageParser">
-        <property name="parsers">
-            <map>
-                <entry key="http://s.etao.com" value-ref="etaoPageParser"/>
-            </map>
-        </property>
-    </bean>
+    <import resource="application-page-parser.xml"/>
     <import resource="application-image-download.xml"/>
     <bean class="com.qinyuan15.crawler.core.crawler.PriceHistoryCrawler" init-method="init">
         <!-- run each 30 second for each thread -->
@@ -36,6 +15,5 @@
         <property name="commodityPageParser" ref="webPageParser"/>
         <property name="imageDownloader" ref="imageDownloader"/>
     </bean>
-    <!-- PriceHistoryCrawler end -->
 
 </beans>

@@ -25,7 +25,7 @@ public class CommodityControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        System.out.println(controller.get("true", null, null));
+        System.out.println(controller.get(null, null));
     }
 
     @Test

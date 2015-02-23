@@ -23,7 +23,7 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
     private JavaScriptParser jsParser = new JavaScriptParser();
     private HttpClientPool httpClientPool;
 
-    public EtaoCommodityPageParser(HttpClientPool httpClientPool) {
+    public void setHttpClientPool(HttpClientPool httpClientPool) {
         this.httpClientPool = httpClientPool;
     }
 
@@ -120,7 +120,8 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         Element productDetailDiv = htmlParser.getElements("div", "product-detail").first();
         String dataUrl = productDetailDiv.attr("data-url");
 
-        HttpClientWrapper client = this.httpClientPool.next();
+        HttpClientWrapper client = this.httpClientPool == null ?
+                new HttpClientWrapper() : this.httpClientPool.next();
         String dataUrlContent = client.getContent(dataUrl);
         return this.parseDetailImageUrls(dataUrlContent);
     }

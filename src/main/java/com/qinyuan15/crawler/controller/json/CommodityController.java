@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller.json;
 
+import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
@@ -9,30 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.toJson;
 
 /**
  * Query detail information of certain commodity
  * Created by qinyuan on 14-12-27.
  */
 @Controller
-public class CommodityController {
+public class CommodityController extends BaseController {
     @Autowired
     private ImageDownloader imageDownloader;
 
-    @Autowired
-    private HttpServletRequest request;
-
     @ResponseBody
     @RequestMapping("/commodity.json")
-    public String get(@RequestParam(value = "pretty", required = false) String pretty,
-                      @RequestParam(value = "id", required = false) Integer id,
+    public String get(@RequestParam(value = "id", required = false) Integer id,
                       @RequestParam(value = "inLowPrice", required = false) String inLowPriceString) {
         boolean inLowPrice = false;
 
@@ -43,7 +37,7 @@ public class CommodityController {
         List<Commodity> commodities = CommodityDao.factory().setInLowPrice(inLowPrice)
                 .setId(id).getInstances();
 
-        return toJson(convert(commodities), pretty != null);
+        return toJson(convert(commodities));
     }
 
     /**
