@@ -4,13 +4,16 @@ import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.dao.Commodity;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.omg.PortableInterceptor.SUCCESSFUL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Page to edit commodity
@@ -34,6 +37,12 @@ public class AdminEditCommodityController extends BaseController {
         }
 
         return "admin-edit-commodity";
+    }
+
+    @RequestMapping("/admin-commodity-add-update")
+    @ResponseBody
+    public Map<String, Object> addUpdate() {
+        return SUCCESS;
     }
 
     private Commodity getCommodity(int id) {

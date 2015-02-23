@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller.front;
 
+import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.ApplicationConfig;
 import com.qinyuan15.crawler.core.commodity.CategoryUtils;
 import org.slf4j.Logger;
@@ -13,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
 
-import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle;
-
 /**
  * Commodity list page controller
  * Created by qinyuan on 15-2-15.
  */
 @Controller
-public class ListController {
+public class ListController extends BaseController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ListController.class);
 
@@ -40,7 +39,7 @@ public class ListController {
             }
         }
 
-        setTitle(model, keyWord + " 相关商品");
+        setTitle(keyWord + " 相关商品");
         model.addAttribute("classifications", CategoryUtils.getSubCategories(keyWord));
         return "list";
     }

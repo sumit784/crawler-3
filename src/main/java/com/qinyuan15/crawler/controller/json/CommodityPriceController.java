@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller.json;
 
+import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
@@ -12,18 +13,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.toJson;
-
 /**
  * Query price information
  * Created by qinyuan on 15-1-22.
  */
 @Controller
-public class CommodityPriceController {
+public class CommodityPriceController extends BaseController {
     @ResponseBody
     @RequestMapping("/commodityLowPrice.json")
-    public String getLow(@RequestParam(value = "pretty", required = false) String pretty,
-                         @RequestParam(value = "id", required = false) Integer id,
+    public String getLow(@RequestParam(value = "id", required = false) Integer id,
                          @RequestParam(value = "startTime", required = false) String startTime,
                          @RequestParam(value = "endTime", required = false) String endTime) {
 
@@ -40,13 +38,12 @@ public class CommodityPriceController {
             commodityPriceJsonMap.put(commodityId, CommodityPriceDao.range(commodityId)
                     .setStartTime(startTime).setEndTime(endTime).getMin());
         }
-        return toJson(commodityPriceJsonMap, pretty != null);
+        return toJson(commodityPriceJsonMap);
     }
 
     @ResponseBody
     @RequestMapping("/commodityHighPrice.json")
-    public String getHigh(@RequestParam(value = "pretty", required = false) String pretty,
-                          @RequestParam(value = "id", required = false) Integer id,
+    public String getHigh(@RequestParam(value = "id", required = false) Integer id,
                           @RequestParam(value = "startTime", required = false) String startTime,
                           @RequestParam(value = "endTime", required = false) String endTime) {
         Map<Integer, Double> commodityPriceJsonMap = new TreeMap<Integer, Double>();
@@ -55,7 +52,7 @@ public class CommodityPriceController {
             commodityPriceJsonMap.put(commodityId, CommodityPriceDao.range(commodityId)
                     .setStartTime(startTime).setEndTime(endTime).getMax());
         }
-        return toJson(commodityPriceJsonMap, pretty != null);
+        return toJson(commodityPriceJsonMap);
     }
 }
 

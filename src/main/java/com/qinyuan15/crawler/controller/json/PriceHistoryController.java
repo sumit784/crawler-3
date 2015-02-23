@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller.json;
 
+import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.price.PriceRecordUtils;
 import com.qinyuan15.crawler.dao.PriceRecord;
@@ -10,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
-import java.util.*;
-
-import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.toJson;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Query detail information of certain commodity
  * Created by qinyuan on 14-12-27.
  */
 @Controller
-public class PriceHistoryController {
+public class PriceHistoryController extends BaseController{
     @ResponseBody
     @RequestMapping("/priceHistory.json")
-    public String get(@RequestParam(value = "pretty", required = false) String pretty,
-                      @RequestParam(value = "commodityId", required = false) Integer commodityId,
+    public String get(@RequestParam(value = "commodityId", required = false) Integer commodityId,
                       @RequestParam(value = "grabDate", required = false) String grabDate,
                       @RequestParam(value = "startTime", required = false) String startTime,
                       @RequestParam(value = "endTime", required = false) String endTime) {
@@ -42,7 +43,7 @@ public class PriceHistoryController {
                 .getInstances();
 
         Map<Integer, List<PriceRecord>> groupedRecords = PriceRecordUtils.groupByCommodityId(priceRecords);
-        return toJson(convert(groupedRecords), pretty != null);
+        return toJson(convert(groupedRecords));
     }
 
     /**

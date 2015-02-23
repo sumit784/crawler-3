@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.google.common.collect.Lists;
+import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityPicture;
@@ -14,15 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.BLANK;
-import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle;
-
 /**
  * Detail page
  * Created by qinyuan on 15-2-17.
  */
 @Controller
-public class DetailController {
+public class DetailController extends BaseController {
 
     @Autowired
     private HttpServletRequest request;
@@ -46,7 +44,7 @@ public class DetailController {
         moreJs.add("lib/linecharts/linecharts");
         model.addAttribute("moreJs", moreJs);
 
-        setTitle(model, "商品明细");
+        setTitle("商品明细");
 
         return "detail";
     }

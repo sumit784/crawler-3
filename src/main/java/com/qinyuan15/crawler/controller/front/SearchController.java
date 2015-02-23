@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.google.common.collect.Lists;
+import com.qinyuan15.crawler.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,14 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle;
-
 /**
  * Index page controller
  * Created by qinyuan on 15-2-16.
  */
 @Controller
-public class SearchController {
+public class SearchController extends BaseController{
 
     @Autowired
     private HttpServletRequest request;
@@ -33,11 +32,11 @@ public class SearchController {
 
         if (hasResult(keyWord)) {
             moreCss.add("shoppe");
-            setTitle(model, keyWord + " 相关商品");
+            setTitle(keyWord + " 相关商品");
             model.addAttribute("keyWord", keyWord);
             return "search";
         } else {
-            setTitle(model, "找不到相关商品");
+            setTitle("找不到相关商品");
             return "search-no-result";
         }
     }

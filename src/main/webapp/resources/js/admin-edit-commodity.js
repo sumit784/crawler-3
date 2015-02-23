@@ -101,15 +101,30 @@ CommodityDescription.prototype.text = function (text) {
                 }
             });
         };
-        $scope.onShowIdChange = function () {
+        $scope.runCrawler = function () {
             var showId = $.trim($scope['showId']);
-            var crawlerLink = "", buyLink = "";
+            //var crawlerLink = "", buyLink = "", commodityName = "";
+            var $crawlerLink = $('#crawlerLink');
+            var $buyLink = $('#buyLink');
+            var $commodityName = $('#commodityName');
             if (showId != "") {
-                crawlerLink = "http://s.etao.com/detail/" + showId + ".html";
-                buyLink = "http://detail.tmall.com/item.htm?id=" + showId;
+                var crawlerLink = "http://s.etao.com/detail/" + showId + ".html";
+                $scope.runningCrawler = true;
+                $http.get("commodity-crawler.json?url=" + crawlerLink).success(function (data) {
+                    $crawlerLink.text(crawlerLink).attr('href', crawlerLink).prev().val(crawlerLink);
+                    var buyLink = data['buyUrl'];
+                    $buyLink.text(buyLink).attr('href', buyLink).prev().val(buyLink);
+                    var name = data['name'];
+                    $commodityName.text(name).attr('href', crawlerLink).prev().val(name);
+                    console.log(data);
+
+                    $scope.runningCrawler = false;
+                });
+            } else {
+                $crawlerLink.text("").attr('href', "").prev().val("");
+                $buyLink.text("").attr('href', "").prev().val("");
+                $commodityName.text("").attr('href', "").prev().val("");
             }
-            $('#crawlerLink').text(crawlerLink).attr('href', crawlerLink).prev().val(crawlerLink);
-            $('#buyLink').text(buyLink).attr('href', buyLink).prev().val(buyLink);
         };
 
         function loadBranches(url, branchObj) {

@@ -3,7 +3,7 @@ div.content > div {
     margin-bottom: 20px;
 }
 
-div.content > div.boxShadow > div {
+div.content > div.boxShadow form > div {
     padding-left: 80px;
     background-color: #ffffff;
 }
@@ -53,6 +53,12 @@ div.content div.link {
 div.content div.link td {
     padding-right: 15px;
     height: 55px;
+}
+
+div.content div.link td span.runCrawlerInfo {
+    font-size: 10pt;
+    margin-left: 10px;
+    color: #ff0000;
 }
 
 #showId {
@@ -151,13 +157,13 @@ div.content div.detail td input.form-control {
     overflow: hidden;
 }
 
-div.content div.boxShadow > div.button {
+div.content div.boxShadow form > div.button {
     background-color: transparent;
     margin: 30px 0;
     padding-left: 265px;
 }
 
-div.content div.boxShadow > div.button button {
+div.content div.boxShadow form > div.button button {
     margin-right: 95px;
     color: #ffffff;
     padding: 5px 20px;

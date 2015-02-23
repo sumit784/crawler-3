@@ -21,9 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.SUCCESS;
-import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.createFailResult;
-
 /**
  * Page to edit commodity
  * Created by qinyuan on 15-2-19.

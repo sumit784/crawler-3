@@ -27,9 +27,9 @@
             <form action="search" target="_blank">
                 <input type="text" name="keyWord" id="searchInput"
                        class="form-control" placeholder="请输入您想查询的关键字"/>
-                    <span class="input-group-addon searchCommit">
-                        <img class="link" id="searchCommmit" src="resources/css/images/searchButton.png"/>
-                    </span>
+                <span class="input-group-addon searchCommit">
+                    <img class="link" id="searchCommmit" src="resources/css/images/searchButton.png"/>
+                </span>
             </form>
         </div>
         <div class="hotWords">

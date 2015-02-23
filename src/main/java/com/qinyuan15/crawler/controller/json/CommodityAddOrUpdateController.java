@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller.json;
 
+import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.springframework.stereotype.Controller;
@@ -8,15 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.SUCCESS;
-import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.createFailResult;
-
 /**
  * Add or update Commodity
  * Created by qinyuan on 15-1-22.
  */
 @Controller
-public class CommodityAddOrUpdateController {
+public class CommodityAddOrUpdateController extends BaseController{
     @ResponseBody
     @RequestMapping(value = "/addOrUpdateCommodity.json", method = RequestMethod.POST)
     public Map<String, Object> addOrUpdate(@RequestParam(value = "name", required = true) String name,

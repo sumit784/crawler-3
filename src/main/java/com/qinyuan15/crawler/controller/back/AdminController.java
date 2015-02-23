@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller.back;
 
+import com.qinyuan15.crawler.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,14 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle;
-
 /**
  * Admin page
  * Created by qinyuan on 15-2-19.
  */
 @Controller
-public class AdminController {
+public class AdminController extends BaseController{
 
     @Autowired
     private HttpServletRequest request;
@@ -24,7 +23,7 @@ public class AdminController {
     @RequestMapping("/admin")
     public String index(ModelMap model) {
         model.addAttribute("commodities", getCommodities(1));
-        setTitle(model, "商品管理");
+        setTitle("商品管理");
 
         return "admin";
     }

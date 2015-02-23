@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller.front;
 
+import com.qinyuan15.crawler.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,18 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle;
-
 /**
  * Index page controller
  * Created by qinyuan on 15-2-14.
  */
 @Controller
-public class IndexController {
+public class IndexController extends BaseController{
 
     @RequestMapping("/index")
     public String index(ModelMap model) {
-        setTitle(model, "果壳科技-首页");
+        setTitle("果壳科技-首页");
         model.addAttribute("images", getIndexImages());
         return "index";
     }

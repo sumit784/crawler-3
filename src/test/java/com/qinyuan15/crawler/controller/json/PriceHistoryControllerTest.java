@@ -11,6 +11,6 @@ public class PriceHistoryControllerTest {
     @Test
     public void testGet() throws Exception {
         PriceHistoryController controller = new PriceHistoryController();
-        System.out.println(controller.get("true", null, null, null, null));
+        System.out.println(controller.get(null, null, null, null));
     }
 }

@@ -12,11 +12,11 @@ public class CommodityPriceControllerTest {
 
     @Test
     public void testGetLow() throws Exception {
-        System.out.println(controller.getLow(null, null, null, null));
+        System.out.println(controller.getLow(null, null, null));
     }
 
     @Test
     public void testGetHigh() throws Exception {
-        System.out.println(controller.getHigh(null, null, null, null));
+        System.out.println(controller.getHigh(null, null, null));
     }
 }
