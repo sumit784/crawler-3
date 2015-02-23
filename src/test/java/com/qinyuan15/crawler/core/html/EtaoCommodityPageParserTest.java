@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.html;
 
 import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class EtaoCommodityPageParserTest {
 
     @Before
     public void setUp() throws Exception {
-        parser = new EtaoCommodityPageParser();
+        parser = new EtaoCommodityPageParser(new HttpClientWrapper());
         parser.setHTML(TestFileUtils.read("etao.html"));
     }
 
@@ -59,7 +60,6 @@ public class EtaoCommodityPageParserTest {
 
     @Test
     public void testGetPriceHistory2() throws Exception {
-        parser = new EtaoCommodityPageParser();
         parser.setHTML(TestFileUtils.read("etao2.html"));
         Map<Date, Double> priceHistory = parser.getPriceHistory();
         System.out.println(priceHistory);
@@ -75,5 +75,11 @@ public class EtaoCommodityPageParserTest {
                 "http://img06.taobaocdn.com/bao/uploaded/i2/479940663/TB2.uTcaFXXXXaBXXXXXXXXXXXX_!!479940663.jpg",
                 "http://img05.taobaocdn.com/bao/uploaded/i4/479940663/TB2gegzaXXXXXbCXpXXXXXXXXXX-479940663.jpg"
         );
+    }
+
+    @Test
+    public void testGetDetailImageUrls() throws Exception {
+        List<String> imageUrls = parser.getDetailImagesUrls();
+        System.out.println(imageUrls);
     }
 }

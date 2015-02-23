@@ -2,7 +2,7 @@ package com.qinyuan15.crawler.core.crawler;
 
 import com.qinyuan15.crawler.core.commodity.CommodityPool;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
-import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
+import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.PriceRecordDao;
@@ -21,7 +21,7 @@ public class PriceHistoryCrawler {
 
     private int threadSize = DEFAULT_THREAD_SIZE;
     private int interval = DEFAULT_INTERVAL;
-    private ProxyPool proxyPool;
+    private HttpClientPool httpClientPool;
     private CommodityPool commodityPool;
     private ComposableCommodityPageParser commodityPageParser;
     private ImageDownloader imageDownloader;
@@ -39,8 +39,8 @@ public class PriceHistoryCrawler {
         }
     }
 
-    public void setProxyPool(ProxyPool proxyPool) {
-        this.proxyPool = proxyPool;
+    public void setHttpClientPool(HttpClientPool httpClientPool) {
+        this.httpClientPool = httpClientPool;
     }
 
     public void setCommodityPageParser(ComposableCommodityPageParser commodityPageParser) {
@@ -68,7 +68,7 @@ public class PriceHistoryCrawler {
 
         public CrawlThread() {
             this.singleCommodityCrawler = new SinglePriceHistoryCrawler(commodityPageParser, imageDownloader);
-            this.singleCommodityCrawler.setProxyPool(proxyPool);
+            this.singleCommodityCrawler.setHttpClientPool(httpClientPool);
         }
 
         @Override
@@ -86,10 +86,10 @@ public class PriceHistoryCrawler {
                     if (commodity == null) {
                         commodityPool.reset();
                     } else {
-                        if (dao.hasInstanceToday(commodity.getId())){
+                        if (dao.hasInstanceToday(commodity.getId())) {
                             LOGGER.error("Today's price of commodity {} already save, just skip it",
                                     commodity.getName());
-                        }else {
+                        } else {
                             this.singleCommodityCrawler.save(commodity);
                         }
                     }

@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.core.html;
 
 import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.util.StringUtils;
@@ -18,6 +19,11 @@ import java.util.TreeMap;
 public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
 
     private JavaScriptParser jsParser = new JavaScriptParser();
+    private HttpClientWrapper httpClient;
+
+    public EtaoCommodityPageParser(HttpClientWrapper httpClient) {
+        this.httpClient = httpClient;
+    }
 
     public String getName() {
         HtmlParser htmlParser = new HtmlParser(this.html);
@@ -104,6 +110,15 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<String> getDetailImagesUrls() {
+        HtmlParser htmlParser = new HtmlParser(this.html);
+        Element productDetailDiv = htmlParser.getElements("div", "product-detail").first();
+        String dataUrl = productDetailDiv.attr("data-url");
+        System.out.println(dataUrl);
+        return null;
     }
 
     private Map<Date, Double> getPriceHistory(Iterable<Object> array) {

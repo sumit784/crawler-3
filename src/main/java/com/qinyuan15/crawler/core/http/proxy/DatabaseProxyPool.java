@@ -49,20 +49,6 @@ public class DatabaseProxyPool implements ProxyPool {
         this.pointer = 0;
     }
 
-    public void updateSpeed(Proxy proxy) {
-        if (proxy != null) {
-            HibernateUtil.update(proxy);
-        }
-    }
-
-    @Override
-    public void updateSpeed(Proxy proxy, int speed) {
-        if (proxy != null && speed > 0) {
-            proxy.setSpeed(speed);
-            this.updateSpeed(proxy);
-        }
-    }
-
     public Proxy next() {
         if (pointer >= proxies.size()) {
             pointer = 0;

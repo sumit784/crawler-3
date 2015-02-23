@@ -57,6 +57,11 @@ public class ComposableCommodityPageParser extends AbstractCommodityPageParser {
         return getSuitableParser().getImageUrls();
     }
 
+    @Override
+    public List<String> getDetailImagesUrls() {
+        return getSuitableParser().getDetailImagesUrls();
+    }
+
     private CommodityPageParser getSuitableParser() {
         if (this.html == null) {
             return null;

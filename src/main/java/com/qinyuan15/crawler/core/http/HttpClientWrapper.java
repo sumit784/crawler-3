@@ -31,7 +31,7 @@ public class HttpClientWrapper {
     private int timeout = DEFAULT_TIMEOUT;
     private int requestTimeout = DEFAULT_TIMEOUT;
     private String userAgent = DEFAULT_USER_AGENT;
-    private int lastConnectTime;
+    private int lastConnectTime = -1;
 
     public void setProxy(Proxy proxy) {
         this.proxy = proxy;
@@ -58,7 +58,7 @@ public class HttpClientWrapper {
         client = httpClientBuilder.build();
     }
 
-    public HttpResponse get(String url) throws IOException {
+    public HttpResponse get(String url) {
         long startTime = System.currentTimeMillis();
         if (!url.contains("://")) {
             url = "http://" + url;
@@ -75,17 +75,23 @@ public class HttpClientWrapper {
         }
         get.setConfig(configBuilder.build());
 
-        CloseableHttpResponse response = client.execute(get);
-        LOGGER.info("connected to {} with proxy {}", url, proxy);
+        try {
+            CloseableHttpResponse response = client.execute(get);
+            LOGGER.info("connected to {} with proxy {}", url, proxy);
+            String content = EntityUtils.toString(response.getEntity());
+            LOGGER.info("parse content of {}", url);
 
-        String content = EntityUtils.toString(response.getEntity());
-        int status = response.getStatusLine().getStatusCode();
-
-        this.lastConnectTime = (int) (System.currentTimeMillis() - startTime);
-        return new HttpResponse(content, status);
+            int status = response.getStatusLine().getStatusCode();
+            this.lastConnectTime = (int) (System.currentTimeMillis() - startTime);
+            return new HttpResponse(content, status);
+        } catch (Exception e) {
+            LOGGER.error("fail to connect or parse {} with proxy {}", url, proxy);
+            this.lastConnectTime = -1;
+            throw new RuntimeException(e);
+        }
     }
 
-    public String getContent(String url) throws IOException {
+    public String getContent(String url) {
         return get(url).getContent();
     }
 

@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.core.crawler;
 
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
+import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.core.http.proxy.ProxyPool;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
@@ -21,7 +22,8 @@ class SinglePriceHistoryCrawler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SinglePriceHistoryCrawler.class);
 
-    private ProxyPool proxyPool;
+    //private ProxyPool proxyPool;
+    private HttpClientPool httpClientPool;
     private ComposableCommodityPageParser commodityPageParser;
     private ImageDownloader imageDownloader;
 
@@ -31,8 +33,13 @@ class SinglePriceHistoryCrawler {
         this.imageDownloader = imageDownloader;
     }
 
+    /*
     public void setProxyPool(ProxyPool proxyPool) {
         this.proxyPool = proxyPool;
+    }
+    */
+    public void setHttpClientPool(HttpClientPool httpClientPool) {
+        this.httpClientPool = httpClientPool;
     }
 
     /**
@@ -47,25 +54,28 @@ class SinglePriceHistoryCrawler {
         }
 
         String url = commodity.getUrl();
+        /*
         Proxy proxy = null;
         if (this.proxyPool != null) {
             proxy = proxyPool.next();
         }
+        */
 
-        HttpClientWrapper client = new HttpClientWrapper();
-        client.setProxy(proxy);
+        //HttpClientWrapper client = new HttpClientWrapper();
+        //client.setProxy(proxy);
+        HttpClientWrapper client = this.httpClientPool.next();
         try {
-            LOGGER.info("prepare to save price history of {} with proxy {}", url, proxy);
+            //LOGGER.info("prepare to save price history of {} with proxy {}", url, proxy);
             String html = client.getContent(url);
             commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
             Map<Date, Double> priceHistory = commodityPageParser.getPriceHistory();
             if (priceHistory == null) {
                 LOGGER.info("can not get priceHistory from url {}, html contents: {}", url, html);
-                proxyPool.updateSpeed(proxy, Integer.MAX_VALUE);
+                //proxyPool.updateSpeed(proxy, Integer.MAX_VALUE);
             } else {
                 LOGGER.info("save price history of {}", url);
-                proxyPool.updateSpeed(proxy, client.getLastConnectTime());
+                //proxyPool.updateSpeed(proxy, client.getLastConnectTime());
                 for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                     savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
                 }
@@ -81,16 +91,18 @@ class SinglePriceHistoryCrawler {
                 dao.save(commodity.getId(), savePaths);
             }
         } catch (Exception e) {
-            LOGGER.error("fail to fetch {} with proxy {}: {}", url, proxy, e);
-            updateSpeed(proxy, Integer.MAX_VALUE);
+            //LOGGER.error("fail to fetch {} with proxy {}: {}", url, proxy, e);
+            //updateSpeed(proxy, Integer.MAX_VALUE);
         }
     }
 
+    /*
     private void updateSpeed(Proxy proxy, int time) {
         if (proxyPool != null) {
             proxyPool.updateSpeed(proxy, time);
         }
     }
+    */
 
     private void savePriceRecord(Date date, Double price, int commodityId) {
         if (!PriceRecordDao.factory().setCommodityId(commodityId)

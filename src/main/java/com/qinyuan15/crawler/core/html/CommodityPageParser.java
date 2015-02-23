@@ -24,4 +24,6 @@ public interface CommodityPageParser {
     Map<Date, Double> getPriceHistory();
 
     List<String> getImageUrls();
+
+    List<String> getDetailImagesUrls();
 }
