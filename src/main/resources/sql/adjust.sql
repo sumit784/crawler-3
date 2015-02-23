@@ -1,6 +1,3 @@
-create table branch (
-  id int primary key auto_increment,
-  name char(50),
-  logo char(200),
-  parent_id int
-);
+alter table commodity add column buy_url varchar(300);
+alter table commodity add column serial_number char(50);
+alter table commodity add column show_id char(50);

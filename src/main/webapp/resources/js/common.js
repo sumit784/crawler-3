@@ -105,10 +105,19 @@ var angularUtils = {
         }
         var argSize = arguments.length;
         if (argSize == 1) {
-            this._module.controller('ContentController', ['$scope', arguments[0]]);
+            this._module.controller('ContentController', ['$scope', '$http', arguments[0]]);
         } else if (argSize >= 2) {
-            this._module.controller(arguments[0], ['$scope', arguments[1]]);
+            this._module.controller(arguments[0], ['$scope', '$http', arguments[1]]);
         }
+        return this;
+    },
+    ajaxGet: function (url, callback) {
+        this._module.run(function ($http) {
+            $http.get(url).success(function (data) {
+                callback(data);
+            });
+        });
+        return this;
     }
 };
 

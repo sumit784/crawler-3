@@ -23,7 +23,8 @@
             <tr id="branch_${branch.id}">
                 <td class="name">${branch.name}</td>
                 <td class="logo">
-                    <a class="limit-size" data-options="limit:40" href="${logoUrl}">${branch.logo}</a>
+                    <a class="limit-size" data-options="limit:40" href="${logoUrl}"
+                       target="_blank">${branch.logo}</a>
                 </td>
                 <td class="parent" data-options="parentId: ${branch.parentId}">${branch.parentName}</td>
                 <td>

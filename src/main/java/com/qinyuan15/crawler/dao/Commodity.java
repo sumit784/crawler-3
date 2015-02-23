@@ -9,14 +9,41 @@ import java.util.List;
 public class Commodity extends SimpleCommodity {
 
     private List<String> pictures;
+    private String serialNumber;
+    private String showId;
     private Double lowPrice;
     private String onShelfTime;
     private Double originalPrice;
     private Boolean lowestInThreeMonth;
     private PriceHistory trend;
     private String url;
+    private String buyUrl;
     private Boolean active;
     private Integer branchId;
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public String getShowId() {
+        return showId;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public void setShowId(String showId) {
+        this.showId = showId;
+    }
+
+    public void setBuyUrl(String buyUrl) {
+        this.buyUrl = buyUrl;
+    }
+
+    public String getBuyUrl() {
+        return buyUrl;
+    }
 
     public void setBranchId(Integer branchId) {
         this.branchId = branchId;

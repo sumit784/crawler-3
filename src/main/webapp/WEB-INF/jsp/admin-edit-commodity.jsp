@@ -3,36 +3,41 @@
 <div class="boxShadow">
     <div class="branch">
         <div class="serial">
-            商品编号：<span id="serial">XXXXXX</span>
+            商品编号：<span id="serial">${commodity.serialNumber}</span>
         </div>
         <div id="branchSelect" class="input-group-btn">
+            <input type="hidden" name="branchId" value="{{branch.selected.id}}">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                品牌
+                {{branch.selected.name}}
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">品牌1</a></li>
-                <li><a href="#">品牌2</a></li>
-                <li><a href="#">...</a></li>
+                <li ng-repeat="item in branch.items">
+                    <a href="javascript:void(0)" ng-click="selectBranch(item.id)">{{item.name}}</a>
+                </li>
             </ul>
         </div>
         <div id="firstLevelBranchSelect" class="input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                一级菜单选择框
+            <input type="hidden" name="subbranch1Id" value="{{subBranch1.selected.id}}">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                    ng-disabled="subBranch1.disabled">
+                {{subBranch1.selected.name}}
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">品牌1</a></li>
-                <li><a href="#">品牌2</a></li>
-                <li><a href="#">...</a></li>
+                <li ng-repeat="item in subBranch1.items">
+                    <a href="javascript:void(0)" ng-click="selectSubBranch1(item.id)">{{item.name}}</a>
+                </li>
             </ul>
         </div>
         <div id="secondLevelBranchSelect" class="input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                二级菜单选择框
+            <input type="hidden" name="subbranch1Id" value="{{subBranch2.selected.id}}">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                   ng-disabled="subBranch2.disabled">
+                {{subBranch2.selected.name}}
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">品牌1</a></li>
-                <li><a href="#">品牌2</a></li>
-                <li><a href="#">...</a></li>
+                <li ng-repeat="item in subBranch2.items">
+                    <a href="javascript:void(0)" ng-click="selectSubBranch2(item.id)">{{item.name}}</a>
+                </li>
             </ul>
         </div>
         <div style="position: absolute; right: 40px;top: 25px;">(必填)</div>
@@ -44,27 +49,30 @@
         <table>
             <tr>
                 <td>商品ID号</td>
-                <td><input type="text" id="commodityId" class="form-control" placeholder="在此输入商品ID号"/></td>
+                <td>
+                    <input type="text" id="showId" class="form-control"
+                           value="${commodity.showId}" placeholder="在此输入商品ID号"
+                            ng-model="showId" ng-change="onShowIdChange()"/>
+                </td>
             </tr>
             <tr>
                 <td>爬虫链接</td>
                 <td>
-                    <a class="crawlerLink" href="http://s.etao.com/detail/43199293347.html">
-                        http://s.etao.com/detail/43199293347.html
-                    </a>
+                    <input type="hidden" name="url" value="${commodity.url}"/>
+                    <a id="crawlerLink" href="${commodity.url}" target="_blank">${commodity.url}</a>
                 </td>
             </tr>
             <tr>
                 <td>购买链接</td>
                 <td>
-                    <a class="crawlerLink" href="http://detail.tmall.com/item.html?id=43199293347">
-                        http://detail.tmall.com/item.html?id=43199293347
-                    </a>
+                    <input type="hidden" name="buyUrl" value="${commodity.buyUrl}"/>
+                    <a id="buyLink" href="${commodity.buyUrl}" target="_blank">${commodity.buyUrl}</a>
                 </td>
             </tr>
             <tr>
                 <td>商品名称</td>
                 <td>
+                    <!--
                     <a class="noLineAnchor keyWordLink" href="javascript:void(0)">Nike</a>
                     <a class="noLineAnchor keyWordLink" href="javascript:void(0)">耐克官方</a>
                     <a class="noLineAnchor keyWordLink" href="javascript:void(0)">ZOOM</a>
@@ -74,6 +82,8 @@
                     <a class="noLineAnchor keyWordLink" href="javascript:void(0)">SE</a>
                     <a class="noLineAnchor keyWordLink" href="javascript:void(0)">男子滑板鞋</a>
                     <a class="noLineAnchor keyWordLink" href="javascript:void(0)">473284</a>
+                    -->
+                    <a class="noLineAnchor keyWordLink" href="${commodity.name}">${commodity.name}</a>
                 </td>
             </tr>
         </table>

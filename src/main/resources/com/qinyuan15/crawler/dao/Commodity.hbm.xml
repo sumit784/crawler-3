@@ -10,6 +10,7 @@
         </id>
         <property name="name"/>
         <property name="url"/>
+        <property name="buyUrl" column="buy_url"/>
         <property name="price"/>
         <property name="lowPrice" column="low_price"/>
         <property name="originalPrice" column="original_price"/>

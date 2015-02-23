@@ -119,7 +119,8 @@ public class HibernateUtil {
         Session session = HibernateUtil.getSession();
         try {
             hql = hql.trim();
-            if (!hql.toLowerCase().startsWith("from")) {
+            if (!hql.toLowerCase().startsWith("from") &&
+                    !hql.toLowerCase().startsWith("select")) {
                 hql = "FROM " + hql;
             }
             Query query = session.createQuery(hql);

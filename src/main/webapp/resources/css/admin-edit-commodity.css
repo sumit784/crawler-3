@@ -55,11 +55,11 @@ div.content div.link td {
     height: 55px;
 }
 
-#commodityId {
+#showId {
     width: 470px;
 }
 
-div.content div.link td a.crawlerLink {
+#crawlerLink, #buyLink {
     text-decoration: underline;
     color: #000000;
 }

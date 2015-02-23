@@ -23,7 +23,6 @@ import java.util.Map;
 
 import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.SUCCESS;
 import static com.qinyuan15.crawler.controller.utils.JsonControllerUtils.createFailResult;
-import static com.qinyuan15.crawler.controller.utils.JspControllerUtils.setTitle;
 
 /**
  * Page to edit commodity
@@ -41,7 +40,7 @@ public class AdminBranchController extends BaseController {
     public String index(ModelMap model) {
         model.addAttribute("branches", HibernateUtil.getList("Branch"));
         model.addAttribute("host", request.getLocalAddr());
-        setTitle(model, "编辑品牌");
+        setTitle("编辑品牌");
         return "admin-branch";
     }
 
