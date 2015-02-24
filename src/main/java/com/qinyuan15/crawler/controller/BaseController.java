@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,10 @@ public class BaseController {
 
     protected boolean isPositive(Integer intValue) {
         return intValue != null && intValue > 0;
+    }
+
+    protected boolean isPositive(String strValue) {
+        return NumberUtils.isNumber(strValue) && NumberUtils.toInt(strValue) > 0;
     }
 
     protected void debugParameters() {

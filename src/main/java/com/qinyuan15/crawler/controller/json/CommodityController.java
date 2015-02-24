@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.controller.json;
 
 import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.core.commodity.CommodityPictureUrlConverter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -62,16 +62,10 @@ public class CommodityController extends BaseController {
     }
 
     private List<String> getPictures(Integer commodityId) {
-        List<String> pictures = new ArrayList<String>();
+        CommodityPictureUrlConverter urlConverter = new CommodityPictureUrlConverter(
+                imageDownloader, request.getLocalAddr());
         List<CommodityPicture> commodityPictures = new CommodityPictureDao().getInstances(commodityId);
-        for (CommodityPicture commodityPicture : commodityPictures) {
-            String url = commodityPicture.getUrl();
-            if (url.startsWith(imageDownloader.getSaveDir())) {
-                url = url.replace(imageDownloader.getSaveDir(), "ftp://" + request.getLocalAddr());
-            }
-            pictures.add(url);
-        }
-        return pictures;
+        return urlConverter.pathsToUrls(commodityPictures);
     }
 
 

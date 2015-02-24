@@ -66,4 +66,9 @@ public class CommodityDao {
             }
         }
     }
+
+    public Commodity getInstance(int id) {
+        List<Commodity> commodities = factory().setId(id).getInstances();
+        return commodities.size() == 0 ? null : commodities.get(0);
+    }
 }

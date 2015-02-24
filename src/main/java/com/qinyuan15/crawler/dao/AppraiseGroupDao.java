@@ -20,6 +20,16 @@ public class AppraiseGroupDao {
                 " AND positive=" + positive);
     }
 
+    public void clear(int commodityId, boolean positive) {
+        HibernateUtil.delete(AppraiseGroup.class,
+                "commodityId=" + commodityId + " AND positive=" + positive);
+    }
+
+    public void clearAndSave(int commodityId, String[] contents, boolean positive) {
+        this.clear(commodityId, positive);
+        this.save(commodityId, contents, positive);
+    }
+
     public void save(int commodityId, String[] contents, boolean positive) {
         if (contents == null || commodityId <= 0) {
             return;

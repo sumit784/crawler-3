@@ -22,4 +22,14 @@ public class CommodityDaoTest {
         List<Commodity> commodities = CommodityDao.factory().setInLowPrice(true).getInstances();
         System.out.println(commodities.size());
     }
+
+    @Test
+    public void testGetInstance() throws Exception {
+        CommodityDao dao = new CommodityDao();
+        Commodity commodity =  dao.getInstance(10);
+        if (commodity!=null) {
+            System.out.println(commodity.getShowId());
+            System.out.println(commodity.getSerialNumber());
+        }
+    }
 }

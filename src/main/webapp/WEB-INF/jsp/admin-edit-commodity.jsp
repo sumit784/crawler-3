@@ -56,8 +56,10 @@
                     <td>
                         <div class="input-group" role="group">
                             <input type="text" id="showId" name="showId" class="form-control"
-                                   value="${commodity.showId}" placeholder="在此输入商品ID号"
+                                   value="${commodity.showId}" placeholder="在此输入商品ID号"/>
+                                   <!--
                                    ng-model="showId"/>
+                                   -->
                             <button type="button" ng-click="runCrawler()" class="btn btn-success">
                                 OK
                             </button>
@@ -139,7 +141,7 @@
                     <td>
                         <c:forEach var="appraiseGroup" items="${positiveAppraiseGroups}">
                             <input type="text" class="form-control" name="positiveAppraiseGroups"
-                                   value="${appraiseGroup}"/>
+                                   value="${appraiseGroup.content}"/>
                         </c:forEach>
                         <img class="link" title="添加" ng-click="addAppraiseGroup($event, 'positiveAppraiseGroups')"
                              src="resources/css/images/edit-commodity/add.png"/>
@@ -150,7 +152,7 @@
                     <td>
                         <c:forEach var="appraiseGroup" items="${negativeAppraiseGroups}">
                             <input type="text" class="form-control" name="negativeAppraiseGroups"
-                                   value="${appraiseGroup}"/>
+                                   value="${appraiseGroup.content}"/>
                         </c:forEach>
                         <img class="link" title="添加" ng-click="addAppraiseGroup($event, 'negativeAppraiseGroups')"
                              src="resources/css/images/edit-commodity/add.png"/>

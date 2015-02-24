@@ -13,13 +13,15 @@ import static org.mockito.Mockito.when;
  * Created by qinyuan on 15-2-17.
  */
 public class ControllerTestUtils {
-    public final static void injectRequest(Object controller) throws Exception {
+    public static void injectRequest(BaseController controller) throws Exception {
         HttpServletRequest request = mock(HttpServletRequest.class);
-
         when(request.getLocalAddr()).thenReturn("192.168.8.1");
         when(request.getParameter("pretty")).thenReturn("true");
+        inject(controller, "request", request);
+    }
 
-        Whitebox.getField(controller.getClass(), "request").set(controller, request);
+    public static void inject(BaseController controller, String fieldName, Object value) throws Exception {
+        Whitebox.getField(controller.getClass(), fieldName).set(controller, value);
     }
 
     public static ModelMap mockModelMap() {

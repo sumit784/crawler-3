@@ -1,12 +1,17 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.core.commodity.CommodityPictureUrlConverter;
+import com.qinyuan15.crawler.core.image.ImageDownloader;
+import com.qinyuan15.crawler.dao.Commodity;
+import com.qinyuan15.crawler.dao.CommodityDao;
+import com.qinyuan15.crawler.dao.CommodityPicture;
+import com.qinyuan15.crawler.dao.CommodityPictureDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +20,10 @@ import java.util.List;
  * Created by qinyuan on 15-2-19.
  */
 @Controller
-public class AdminController extends BaseController{
+public class AdminController extends BaseController {
 
     @Autowired
-    private HttpServletRequest request;
+    private ImageDownloader imageDownloader;
 
     @RequestMapping("/admin")
     public String index(ModelMap model) {
@@ -29,14 +34,24 @@ public class AdminController extends BaseController{
     }
 
     private List<SimpleCommodity> getCommodities(int adminId) {
-        List<SimpleCommodity> commodities = new ArrayList<SimpleCommodity>();
-        for (int i = 0; i < 6; i++) {
-            SimpleCommodity commodity = new SimpleCommodity();
-            commodity.name = "麂皮磨砂真皮款小包 单肩包手提包复古包潮款包包";
-            commodity.picture = "resources/css/images/manage-commodity/c1.png";
-            commodities.add(commodity);
+        List<Commodity> commodities = CommodityDao.factory().getInstances();
+        List<SimpleCommodity> simpleCommodities = new ArrayList<SimpleCommodity>();
+        CommodityPictureDao commodityPictureDao = new CommodityPictureDao();
+        CommodityPictureUrlConverter urlConverter = new CommodityPictureUrlConverter(
+                imageDownloader, request.getLocalAddr());
+        for (Commodity commodity : commodities) {
+            SimpleCommodity simpleCommodity = new SimpleCommodity();
+
+            simpleCommodity.id = commodity.getId();
+            simpleCommodity.name = commodity.getName();
+            CommodityPicture commodityPicture = commodityPictureDao.getFirstInstance(commodity.getId());
+            if (commodityPicture != null) {
+                simpleCommodity.picture = urlConverter.pathToUrl(commodityPicture.getUrl());
+            }
+
+            simpleCommodities.add(simpleCommodity);
         }
-        return commodities;
+        return simpleCommodities;
     }
 
     public static class SimpleCommodity {

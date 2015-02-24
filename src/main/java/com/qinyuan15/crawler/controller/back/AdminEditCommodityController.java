@@ -5,9 +5,12 @@ import com.qinyuan15.crawler.core.commodity.CommodityPictureDownloader;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.AppraiseGroupDao;
 import com.qinyuan15.crawler.dao.Commodity;
+import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,6 +30,8 @@ import java.util.Map;
 @Controller
 public class AdminEditCommodityController extends BaseController {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(AdminEditCommodityController.class);
+
     @Autowired
     private HttpServletRequest request;
 
@@ -36,7 +41,7 @@ public class AdminEditCommodityController extends BaseController {
     @RequestMapping("/admin-edit-commodity")
     public String index(ModelMap model) {
         String idString = request.getParameter("id");
-        if (StringUtils.hasText(idString)) {
+        if (isPositive(idString)) {
             setTitle("编辑商品");
             Integer id = NumberUtils.toInt(idString);
             model.addAttribute("commodity", getCommodity(id));
@@ -122,13 +127,15 @@ public class AdminEditCommodityController extends BaseController {
 
         if (isPositive(id)) {
             HibernateUtil.update(commodity);
+            LOGGER.info("Update Commodity {}", commodity.getId());
         } else {
             id = (Integer) HibernateUtil.save(commodity);
+            LOGGER.info("Insert new Commodity {}", id);
         }
 
         AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
-        appraiseGroupDao.save(id, positiveAppraiseGroups, true);
-        appraiseGroupDao.save(id, negativeAppraiseGroups, false);
+        appraiseGroupDao.clearAndSave(id, positiveAppraiseGroups, true);
+        appraiseGroupDao.clearAndSave(id, negativeAppraiseGroups, false);
 
         CommodityPictureDownloader pictureDownloader = new CommodityPictureDownloader(imageDownloader);
         pictureDownloader.clearAndSave(id, Arrays.asList(imageUrls));
@@ -148,7 +155,7 @@ public class AdminEditCommodityController extends BaseController {
     }
 
     private Commodity getCommodity(int id) {
-        return newCommodity();
+        return new CommodityDao().getInstance(id);
     }
 
     private Commodity newCommodity() {

@@ -21,4 +21,13 @@ public class BranchTest {
             }
         }
     }
+
+    @Test
+    public void testSave() throws Exception {
+        /*
+        Branch branch = new Branch();
+        branch.setName("人人");
+        HibernateUtil.save(branch);
+        */
+    }
 }

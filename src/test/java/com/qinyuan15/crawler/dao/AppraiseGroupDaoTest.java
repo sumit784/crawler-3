@@ -18,8 +18,9 @@ public class AppraiseGroupDaoTest {
 
     @Test
     public void testGetInstancesByCommodityId1() throws Exception {
-        assertThat(dao.getInstancesByCommodityId(1, true)).isNotNull();
-        assertThat(dao.getInstancesByCommodityId(1, false)).isNotNull();
+        assertThat(dao.getInstancesByCommodityId(10, true)).isNotNull();
+        assertThat(dao.getInstancesByCommodityId(10, false)).isNotNull();
+        System.out.println(dao.getInstancesByCommodityId(10, true));
     }
 
     @Test

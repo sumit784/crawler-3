@@ -213,7 +213,7 @@ jQuery.fn.focusOrSelect = function () {
         });
     }, 500);
 
-    $('table.normal .limit-size').each(function () {
+    $('.limit-size').each(function () {
         var limitSize = 20; // default limit size
 
         var $this = $(this);

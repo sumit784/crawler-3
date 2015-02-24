@@ -88,6 +88,16 @@ public class HibernateUtil {
         }
     }
 
+    public static void delete(Class<?> clazz, String whereClause) {
+        Session session = HibernateUtil.getSession();
+        if (!whereClause.trim().toLowerCase().startsWith("where")) {
+            whereClause = "WHERE " + whereClause;
+        }
+        String hql = "DELETE FROM " + clazz.getSimpleName() + " " + whereClause;
+        session.createQuery(hql).executeUpdate();
+        HibernateUtil.commit(session);
+    }
+
     public static void delete(Class clazz, Integer id) {
         Session session = HibernateUtil.getSession();
         try {

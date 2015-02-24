@@ -16,6 +16,15 @@ public class CommodityPictureDaoTest {
 
     @Test
     public void testDeleteInstances() throws Exception {
-        //dao.deleteInstances(1);
+        //dao.deleteDetailInstances(10);
+    }
+
+    @Test
+    public void testGetFirstInstance() throws Exception {
+        CommodityPicture result = dao.getFirstInstance(11);
+        System.out.println(result);
+        if (result !=null) {
+            System.out.println(result.getUrl());
+        }
     }
 }

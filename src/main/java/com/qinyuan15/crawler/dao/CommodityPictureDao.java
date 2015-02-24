@@ -1,6 +1,5 @@
 package com.qinyuan15.crawler.dao;
 
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,24 +62,38 @@ public class CommodityPictureDao {
         }
     }
 
+    public List<CommodityPicture> getDetailInstances(Integer commodityId) {
+        return getInstances(commodityId, true);
+    }
+
     @SuppressWarnings("unchecked")
-    public List<CommodityPicture> getInstances(Integer commodityId) {
-        String hql = "FROM CommodityPicture WHERE commodityId=" + commodityId;
+    private List<CommodityPicture> getInstances(Integer commodityId, boolean detail) {
+        String hql = "FROM CommodityPicture WHERE commodityId=" + commodityId + " AND detail=" + detail;
         return HibernateUtil.getList(hql);
     }
 
+    public List<CommodityPicture> getInstances(Integer commodityId) {
+        return getInstances(commodityId, false);
+    }
+
+    public CommodityPicture getFirstInstance(Integer commodityId) {
+        String hql = "FROM CommodityPicture WHERE commodityId=" + commodityId + " ORDER BY id ASC";
+        @SuppressWarnings("unchecked")
+        List<CommodityPicture> pictures = HibernateUtil.getList(hql, 0, 1);
+        return pictures.size() == 0 ? null : pictures.get(0);
+    }
+
     public void deleteInstances(Integer commodityId) {
-        Session session = HibernateUtil.getSession();
-        session.createQuery("DELETE FROM CommodityPicture WHERE commodityId=:commodityId AND detail=false")
-                .setInteger("commodityId", commodityId).executeUpdate();
-        HibernateUtil.commit(session);
+        deleteInstances(commodityId, false);
+    }
+
+    public void deleteInstances(Integer commodityId, boolean detail) {
+        HibernateUtil.delete(CommodityPicture.class,
+                "commodityId=" + commodityId + " AND detail=" + detail);
     }
 
     public void deleteDetailInstances(Integer commodityId) {
-        Session session = HibernateUtil.getSession();
-        session.createQuery("DELETE FROM CommodityPicture WHERE commodityId=:commodityId AND detail=true")
-                .setInteger("commodityId", commodityId).executeUpdate();
-        HibernateUtil.commit(session);
+        deleteInstances(commodityId, true);
     }
 
     /**

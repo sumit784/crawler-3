@@ -33,6 +33,7 @@ CommodityDescription.prototype.text = function (text) {
     var $branchId = $('input[name=branchId]');
     var $commodityName = $('input[name=commodityName]');
     var $submitInfo = $('#submitInfo');
+    var $showId = $('input[name=showId]');
 
     $selectButtons.click(function () {
         $(this).css({
@@ -113,8 +114,10 @@ CommodityDescription.prototype.text = function (text) {
                 }
             });
         };
-        $scope.imageUrls = [];
-        $scope.detailImageUrls = [];
+        $http.get("commodityPicture.json?commodityId=" + $.url.param("id")).success(function (data) {
+            $scope.imageUrls = data['pictures'];
+            $scope.detailImageUrls = data['detailPictures'];
+        });
         $scope.deleteImage = function (index) {
             $scope.imageUrls.splice(index, 1);
         };
@@ -122,7 +125,7 @@ CommodityDescription.prototype.text = function (text) {
             $scope.detailImageUrls.splice(index, 1);
         };
         $scope.runCrawler = function () {
-            var showId = $.trim($scope['showId']);
+            var showId = $.trim($showId.val());
             var $crawlerLink = $('#crawlerLink');
             var $buyLink = $('#buyLink');
             var $commodityName = $('#commodityName');

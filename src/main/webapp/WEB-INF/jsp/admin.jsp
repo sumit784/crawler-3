@@ -3,7 +3,7 @@
 <div class="left">
     <div class="user">XXX账号名</div>
     <div class="split"></div>
-    <div class="commodity">发布和商品<span id="commdityCount">(12230)</span></div>
+    <div class="commodity">发布的商品<span id="commodityCount">(${fn:length(commodities)})</span></div>
     <div class="split">
         <div class="boldSplit"></div>
     </div>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="description">
                         <a href="admin-edit-commodity?id=${commodity.id}"
-                           class="noLineAnchor" target="_blank">${commodity.name}</a>
+                           class="noLineAnchor limit-size" data-options="limit:28" target="_blank">${commodity.name}</a>
                     </div>
                 </div>
             </td>
