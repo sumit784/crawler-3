@@ -117,6 +117,13 @@ div.content div.detail {
     padding-top: 40px;
 }
 
+div.content div.detail col.title {
+    width: 100px;
+}
+
+div.content div.detail col.content {
+    width: 670px;
+}
 div.content div.detail td {
     vertical-align: top;
     padding-right: 20px;
@@ -133,6 +140,7 @@ div.content div.detail td input.form-control {
     display: inline;
     margin-right: 6px;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 #commodityDescriptionEffect {
@@ -200,3 +208,4 @@ div.content div.price td.title {
 div.content div.price td.text {
     width: 170px;
 }
+

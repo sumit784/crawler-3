@@ -1,7 +1,8 @@
 package com.qinyuan15.crawler.dao;
 
 import org.junit.Test;
-import static org.assertj.core.api.Assertions.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test AppraiseGroupDao
@@ -19,5 +20,10 @@ public class AppraiseGroupDaoTest {
     public void testGetInstancesByCommodityId1() throws Exception {
         assertThat(dao.getInstancesByCommodityId(1, true)).isNotNull();
         assertThat(dao.getInstancesByCommodityId(1, false)).isNotNull();
+    }
+
+    @Test
+    public void testSave() throws Exception {
+        //dao.save(1, new String[]{"aaaaaa"}, false);
     }
 }

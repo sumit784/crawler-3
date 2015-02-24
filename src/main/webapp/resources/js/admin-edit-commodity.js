@@ -53,18 +53,18 @@ CommodityDescription.prototype.text = function (text) {
 
     angularUtils.controller(function ($scope, $http) {
         /*
-        $scope.commodityDescription = "产品名称：Nike/耐克 473284\n"
-            + "颜色分类：444动力蓝/蓝黑/白\n"
-            + "款号：473284\n"
-            + "品牌：Nike/耐克\n"
-            + "上市时间：2015春季\n"
-            + "吊牌价：699\n"
-            + "性别：男子\n"
-            + "鞋帮高度：中帮\n"
-            + "鞋码：39 40 40.5 41 42 42.5 43 44 44.5 45 46\n"
-            + "闭合方式：系带\n"
-            + "是否瑕疵：否";
-            */
+         $scope.commodityDescription = "产品名称：Nike/耐克 473284\n"
+         + "颜色分类：444动力蓝/蓝黑/白\n"
+         + "款号：473284\n"
+         + "品牌：Nike/耐克\n"
+         + "上市时间：2015春季\n"
+         + "吊牌价：699\n"
+         + "性别：男子\n"
+         + "鞋帮高度：中帮\n"
+         + "鞋码：39 40 40.5 41 42 42.5 43 44 44.5 45 46\n"
+         + "闭合方式：系带\n"
+         + "是否瑕疵：否";
+         */
         $scope.branch = {
             default: { id: 0, name: '(品牌选择)' },
             selected: { id: 0, name: '(品牌选择)' },
@@ -133,6 +133,10 @@ CommodityDescription.prototype.text = function (text) {
                 $buyLink.text("").attr('href', "").prev().val("");
                 $commodityName.text("").attr('href', "").prev().val("");
             }
+        };
+        $scope.addAppraiseGroup = function (event, name) {
+            var input = '<input type="text" class="form-control" name="' + name + '"/>';
+            $(event.target).before(input).prev().focus();
         };
 
         function loadBranches(url, branchObj) {

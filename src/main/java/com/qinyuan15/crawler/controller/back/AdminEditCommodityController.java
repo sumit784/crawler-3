@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -62,8 +63,8 @@ public class AdminEditCommodityController extends BaseController {
             @RequestParam(value = "parameters", required = true) String parameters,
             @RequestParam(value = "deleteSubmit", required = false) String deleteSubmit,
             @RequestParam(value = "publishSubmit", required = false) String publishSubmit,
-            @RequestParam(value = "positiveAppraiseGroups", required = false) String[] positiveAppraiseGroup,
-            @RequestParam(value = "negativeAppraiseGroups", required = false) String[] negativeAppraiseGroup) {
+            @RequestParam(value = "positiveAppraiseGroups", required = false) String[] positiveAppraiseGroups,
+            @RequestParam(value = "negativeAppraiseGroups", required = false) String[] negativeAppraiseGroups) {
         //debugParameters();
 
         if (deleteSubmit != null) {
@@ -115,8 +116,13 @@ public class AdminEditCommodityController extends BaseController {
         if (isPositive(id)) {
             HibernateUtil.update(commodity);
         } else {
-            HibernateUtil.save(commodity);
+            id = (Integer) HibernateUtil.save(commodity);
         }
+
+        AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
+        appraiseGroupDao.save(id, positiveAppraiseGroups, true);
+        appraiseGroupDao.save(id, negativeAppraiseGroups, false);
+
         return SUCCESS;
     }
 
