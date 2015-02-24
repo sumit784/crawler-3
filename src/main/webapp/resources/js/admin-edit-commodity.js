@@ -26,24 +26,33 @@ CommodityDescription.prototype.text = function (text) {
     this._div.empty().html(html);
 };
 (function () {
-    var $elements = {
-        selectButtons: $('div.content div.branch button'),
-        commodityDescription: $('#commodityDescription'),
-        commodityDescriptionEffect: $('#commodityDescriptionEffect')
-    };
-    $elements.selectButtons.click(function () {
+    var $commodityDescription = $('#commodityDescription');
+    var $selectButtons = $('div.content div.branch button');
+    var $commodityDescriptionEffect = $('#commodityDescriptionEffect');
+    var $form = $('#mainForm');
+
+    $selectButtons.click(function () {
         $(this).css({
             'background-color': '#ffffff',
             'background-image': 'url("resources/css/images/edit-commodity/select.png")'
         });
     });
-    var commdityDescriptionEffect = new CommodityDescription($elements.commodityDescriptionEffect.attr('id'));
-    $elements.commodityDescription.keyup(function () {
+    var commodityDescriptionEffect = new CommodityDescription($commodityDescriptionEffect.attr('id'));
+    $commodityDescription.keyup(function () {
         var text = $(this).val();
-        commdityDescriptionEffect.text(text);
+        commodityDescriptionEffect.text(text);
     }).trigger('keyup');
 
+    $form.ajaxForm(function (data) {
+        if (data.success) {
+            alert("操作成功");
+        } else {
+            alert(data.detail);
+        }
+    });
+
     angularUtils.controller(function ($scope, $http) {
+        /*
         $scope.commodityDescription = "产品名称：Nike/耐克 473284\n"
             + "颜色分类：444动力蓝/蓝黑/白\n"
             + "款号：473284\n"
@@ -55,6 +64,7 @@ CommodityDescription.prototype.text = function (text) {
             + "鞋码：39 40 40.5 41 42 42.5 43 44 44.5 45 46\n"
             + "闭合方式：系带\n"
             + "是否瑕疵：否";
+            */
         $scope.branch = {
             default: { id: 0, name: '(品牌选择)' },
             selected: { id: 0, name: '(品牌选择)' },
@@ -103,7 +113,6 @@ CommodityDescription.prototype.text = function (text) {
         };
         $scope.runCrawler = function () {
             var showId = $.trim($scope['showId']);
-            //var crawlerLink = "", buyLink = "", commodityName = "";
             var $crawlerLink = $('#crawlerLink');
             var $buyLink = $('#buyLink');
             var $commodityName = $('#commodityName');
@@ -116,7 +125,6 @@ CommodityDescription.prototype.text = function (text) {
                     $buyLink.text(buyLink).attr('href', buyLink).prev().val(buyLink);
                     var name = data['name'];
                     $commodityName.text(name).attr('href', crawlerLink).prev().val(name);
-                    console.log(data);
 
                     $scope.runningCrawler = false;
                 });
@@ -139,7 +147,5 @@ CommodityDescription.prototype.text = function (text) {
                 });
             });
         }
-    })
-    ;
-})
-();
+    });
+})();

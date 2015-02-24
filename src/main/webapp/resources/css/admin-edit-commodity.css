@@ -71,6 +71,7 @@ div.content div.link td span.runCrawlerInfo {
 }
 
 div.content div.link td a.keyWordLink {
+    font-size: 10pt;
     color: #1A1AA6;
 }
 

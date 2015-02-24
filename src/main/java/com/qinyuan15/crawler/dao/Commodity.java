@@ -20,6 +20,15 @@ public class Commodity extends SimpleCommodity {
     private String buyUrl;
     private Boolean active;
     private Integer branchId;
+    private String parameters;
+
+    public void setParameters(String parameters) {
+        this.parameters = parameters;
+    }
+
+    public String getParameters() {
+        return parameters;
+    }
 
     public String getSerialNumber() {
         return serialNumber;

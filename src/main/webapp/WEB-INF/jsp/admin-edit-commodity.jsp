@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
-
 <div class="boxShadow">
-    <form action="admin-commodity-add-update" method="post">
+    <form action="admin-commodity-add-update" method="post" id="mainForm">
+        <input type="hidden" name="id" value="${commodity.id}">
+
         <div class="branch">
             <div class="serial">
+                <input type="hidden" name="serialNumber" value="${commodity.serialNumber}"/>
                 商品编号：<span id="serial">${commodity.serialNumber}</span>
             </div>
             <div id="branchSelect" class="input-group-btn">
@@ -19,7 +21,7 @@
                 </ul>
             </div>
             <div id="firstLevelBranchSelect" class="input-group-btn">
-                <input type="hidden" name="subbranch1Id" value="{{subBranch1.selected.id}}">
+                <input type="hidden" name="subBranch1Id" value="{{subBranch1.selected.id}}">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                         ng-disabled="subBranch1.disabled">
                     {{subBranch1.selected.name}}
@@ -31,7 +33,7 @@
                 </ul>
             </div>
             <div id="secondLevelBranchSelect" class="input-group-btn">
-                <input type="hidden" name="subbranch1Id" value="{{subBranch2.selected.id}}">
+                <input type="hidden" name="subBranch2Id" value="{{subBranch2.selected.id}}">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                         ng-disabled="subBranch2.disabled">
                     {{subBranch2.selected.name}}
@@ -56,7 +58,9 @@
                             <input type="text" id="showId" name="showId" class="form-control"
                                    value="${commodity.showId}" placeholder="在此输入商品ID号"
                                    ng-model="showId"/>
-                            <button ng-click="runCrawler()" class="btn btn-success">OK</button>
+                            <button type="button" ng-click="runCrawler()" class="btn btn-success">
+                                OK
+                            </button>
                         <span class="runCrawlerInfo" ng-show="runningCrawler">
                             (正在抓取网页...)
                         </span>
@@ -80,17 +84,6 @@
                 <tr>
                     <td>商品名称</td>
                     <td>
-                        <!--
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">Nike</a>
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">耐克官方</a>
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">ZOOM</a>
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">SB</a>
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">STEFAN</a>
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">JANOSKI</a>
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">SE</a>
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">男子滑板鞋</a>
-                        <a class="noLineAnchor keyWordLink" href="javascript:void(0)">473284</a>
-                        -->
                         <input type="hidden" name="commodityName" value="${commodity.name}"/>
                         <a id="commodityName" class="noLineAnchor keyWordLink"
                            href="${commodity.url}">${commodity.name}</a>
@@ -131,7 +124,8 @@
                 <tr>
                     <td>商品参数</td>
                     <td>
-                        <textarea id="commodityDescription" cols="45" rows="12">{{commodityDescription}}</textarea>
+                        <textarea id="commodityDescription" name="parameters" cols="45"
+                                  rows="12">${commodity.parameters}</textarea>
                     </td>
                 </tr>
                 <tr>
@@ -158,8 +152,8 @@
             </table>
         </div>
         <div class="button">
-            <button id="deleteCommodity" type="button">删除商品</button>
-            <button id="publishCommodity" type="button">发布商品</button>
+            <button id="deleteCommodity" name="deleteSubmit" type="submit">删除商品</button>
+            <button id="publishCommodity" name="publishSubmit" type="submit">发布商品</button>
         </div>
         <div class="price">
             <div class="recommend">(建议不写)</div>
