@@ -138,8 +138,12 @@ public class AdminEditCommodityController extends BaseController {
         appraiseGroupDao.clearAndSave(id, negativeAppraiseGroups, false);
 
         CommodityPictureDownloader pictureDownloader = new CommodityPictureDownloader(imageDownloader);
-        pictureDownloader.clearAndSave(id, Arrays.asList(imageUrls));
-        pictureDownloader.clearAndSaveDetail(id, Arrays.asList(detailImageUrls));
+        if (imageUrls != null) {
+            pictureDownloader.clearAndSave(id, Arrays.asList(imageUrls));
+        }
+        if (detailImageUrls != null) {
+            pictureDownloader.clearAndSaveDetail(id, Arrays.asList(detailImageUrls));
+        }
 
         return SUCCESS;
     }

@@ -9,6 +9,7 @@
                 <input type="hidden" name="serialNumber" value="${commodity.serialNumber}"/>
                 商品编号：<span id="serial">${commodity.serialNumber}</span>
             </div>
+            <input type="hidden" id="initBranchId" value="${commodity.branchId}"/>
             <div id="branchSelect" class="input-group-btn">
                 <input type="hidden" name="branchId" value="{{branch.selected.id}}">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -57,9 +58,6 @@
                         <div class="input-group" role="group">
                             <input type="text" id="showId" name="showId" class="form-control"
                                    value="${commodity.showId}" placeholder="在此输入商品ID号"/>
-                                   <!--
-                                   ng-model="showId"/>
-                                   -->
                             <button type="button" ng-click="runCrawler()" class="btn btn-success">
                                 OK
                             </button>

@@ -114,6 +114,10 @@ public class HibernateUtil {
     }
 
     public static <T> T get(Class<T> clazz, Serializable id) {
+        if (id == null) {
+            return null;
+        }
+
         Session session = HibernateUtil.getSession();
         @SuppressWarnings("unchecked")
         T object = (T) session.get(clazz, id);

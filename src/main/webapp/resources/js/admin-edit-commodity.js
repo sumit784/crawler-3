@@ -34,6 +34,7 @@ CommodityDescription.prototype.text = function (text) {
     var $commodityName = $('input[name=commodityName]');
     var $submitInfo = $('#submitInfo');
     var $showId = $('input[name=showId]');
+    var $initBranchId = $('#initBranchId');
 
     $selectButtons.click(function () {
         $(this).css({
@@ -88,31 +89,14 @@ CommodityDescription.prototype.text = function (text) {
             items: []
         };
         $scope.selectBranch = function (id) {
-            $.each($scope.branch.items, function () {
-                if (this.id == id) {
-                    $scope.branch.selected.id = this.id;
-                    $scope.branch.selected.name = this.name;
-                    loadBranches(branchJsonUrl + "?parentId=" + this.id, $scope.subBranch1);
-                    $scope.subBranch2.disabled = true;
-                }
-            });
+            selectBranch($scope.branch, id, $scope.subBranch1);
+            $scope.subBranch2.disabled = true;
         };
         $scope.selectSubBranch1 = function (id) {
-            $.each($scope.subBranch1.items, function () {
-                if (this.id == id) {
-                    $scope.subBranch1.selected.id = this.id;
-                    $scope.subBranch1.selected.name = this.name;
-                    loadBranches(branchJsonUrl + "?parentId=" + this.id, $scope.subBranch2);
-                }
-            });
+            selectBranch($scope.subBranch1, id, $scope.subBranch2);
         };
         $scope.selectSubBranch2 = function (id) {
-            $.each($scope.subBranch2.items, function () {
-                if (this.id == id) {
-                    $scope.subBranch2.selected.id = this.id;
-                    $scope.subBranch2.selected.name = this.name;
-                }
-            });
+            selectBranch($scope.subBranch2, id);
         };
         $scope.imageUrls = [];
         $scope.detailImageUrls = [];
@@ -122,6 +106,24 @@ CommodityDescription.prototype.text = function (text) {
                 $scope.imageUrls = data['pictures'];
                 $scope.detailImageUrls = data['detailPictures'];
             });
+            if ($initBranchId.val() != '') {
+                $http.get('json/parentBranch.json?branchId=' + $initBranchId.val()).success(function (data) {
+                    var branchId = data['branchId'];
+                    if (branchId) {
+                        selectBranch($scope.branch, branchId, $scope.subBranch1, function () {
+                            var subBranch1Id = data["subBranch1Id"];
+                            if (subBranch1Id) {
+                                selectBranch($scope.subBranch1, subBranch1Id, $scope.subBranch2, function () {
+                                    var subBranch2Id = data["subBranch2Id"];
+                                    if (subBranch2Id) {
+                                        selectBranch($scope.subBranch2, subBranch2Id);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
         }
         $scope.deleteImage = function (index) {
             $scope.imageUrls.splice(index, 1);
@@ -160,7 +162,19 @@ CommodityDescription.prototype.text = function (text) {
             $(event.target).before(input).prev().focus();
         };
 
-        function loadBranches(url, branchObj) {
+        function selectBranch(branchObj, idToSelect, subBranchObj, callBack) {
+            $.each(branchObj.items, function () {
+                if (this.id == idToSelect) {
+                    branchObj.selected.id = this.id;
+                    branchObj.selected.name = this.name;
+                    if (subBranchObj) {
+                        loadBranches(branchJsonUrl + "?parentId=" + this.id, subBranchObj, callBack);
+                    }
+                }
+            });
+        }
+
+        function loadBranches(url, branchObj, callBack) {
             var items = branchObj.items;
             $http.get(url).success(function (data) {
                 items.splice(0, items.length);
@@ -170,6 +184,9 @@ CommodityDescription.prototype.text = function (text) {
                 $.each(data, function () {
                     items.push({id: this.id, name: this.name});
                 });
+                if (callBack) {
+                    callBack();
+                }
             });
         }
     });
