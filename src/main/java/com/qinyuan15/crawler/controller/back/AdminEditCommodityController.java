@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.dao.AppraiseGroupDao;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -31,7 +32,13 @@ public class AdminEditCommodityController extends BaseController {
         String idString = request.getParameter("id");
         if (StringUtils.hasText(idString)) {
             setTitle("编辑商品");
-            model.addAttribute("commodity", getCommodity(NumberUtils.toInt(idString)));
+            Integer id = NumberUtils.toInt(idString);
+            model.addAttribute("commodity", getCommodity(id));
+            AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
+            model.addAttribute("positiveAppraiseGroups",
+                    appraiseGroupDao.getInstancesByCommodityId(id, true));
+            model.addAttribute("negativeAppraiseGroups",
+                    appraiseGroupDao.getInstancesByCommodityId(id, false));
         } else {
             setTitle("添加商品");
             model.addAttribute("commodity", newCommodity());
@@ -54,7 +61,9 @@ public class AdminEditCommodityController extends BaseController {
             @RequestParam(value = "url", required = true) String url,
             @RequestParam(value = "parameters", required = true) String parameters,
             @RequestParam(value = "deleteSubmit", required = false) String deleteSubmit,
-            @RequestParam(value = "publishSubmit", required = false) String publishSubmit) {
+            @RequestParam(value = "publishSubmit", required = false) String publishSubmit,
+            @RequestParam(value = "positiveAppraiseGroups", required = false) String[] positiveAppraiseGroup,
+            @RequestParam(value = "negativeAppraiseGroups", required = false) String[] negativeAppraiseGroup) {
         //debugParameters();
 
         if (deleteSubmit != null) {

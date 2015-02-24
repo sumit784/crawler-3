@@ -52,10 +52,10 @@ public class HibernateUtil {
         }
     }
 
-    public static void save(Object object) {
+    public static Serializable save(Object object) {
         Session session = getSession();
         try {
-            session.save(object);
+            return session.save(object);
         } catch (Throwable e) {
             LOGGER.error("fail to save: {}", e);
             throw new RuntimeException(e);
