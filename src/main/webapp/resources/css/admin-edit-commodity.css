@@ -48,6 +48,7 @@ div.content div.link {
     margin-top: 17px;
     padding-top: 20px;
     padding-bottom: 20px;
+    overflow: auto;
 }
 
 div.content div.link td {
@@ -75,41 +76,50 @@ div.content div.link td a.keyWordLink {
     color: #1A1AA6;
 }
 
-div.content div.link div.image {
-    margin-top: 20px;
-}
-
-div.content div.link div.image > div {
+div.content div.link div.images > div {
     vertical-align: top;
 }
 
-div.content div.link div.image > div > div {
+div.content div.link div.images div.title {
     color: #000000;
     float: left;
     margin-right: 20px;
 }
 
-div.content div.link div.image table {
-    display: inline;
+div.content div.link div.images div.imageGroup {
+    width: 310px;
+    float: right;
 }
 
-div.content div.link div.image a {
-    color: #808080;
-    font-size: 9pt;
+div.content div.link div.images > div {
+    float: left;
 }
 
-div.content div.link div.image td {
+div.content div.link div.images div.image {
+    float: left;
     text-align: center;
-    height: auto;
     padding-right: 10px;
     padding-bottom: 5px;
 }
 
-div.content div.link div.image div.commodityDescImage {
-    position: absolute;
-    top: 0;
-    left: 390px;
+div.content div.link div.images div.image a {
+    color: #808080;
+    font-size: 9pt;
+}
+
+div.content div.link div.images div.image a {
+    color: #808080;
+    font-size: 9pt;
+}
+
+div.content div.link div.images div.image img {
+    height: 40px;
+    width: 40px;
+}
+
+div.content div.link div.images div.commodityImage {
     width: 400px;
+    margin-right: 20px;
 }
 
 div.content div.detail {
@@ -124,6 +134,7 @@ div.content div.detail col.title {
 div.content div.detail col.content {
     width: 670px;
 }
+
 div.content div.detail td {
     vertical-align: top;
     padding-right: 20px;

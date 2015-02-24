@@ -1,16 +1,19 @@
 package com.qinyuan15.crawler.core.crawler;
 
 import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.core.commodity.CommodityPictureDownloader;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
-import com.qinyuan15.crawler.dao.*;
+import com.qinyuan15.crawler.dao.Commodity;
+import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.PriceRecord;
+import com.qinyuan15.crawler.dao.PriceRecordDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,15 +64,8 @@ class SinglePriceHistoryCrawler {
                 }
             }
 
-            // TODO find better way to avoid repeated pictures
-            CommodityPictureDao dao = new CommodityPictureDao();
-            if (dao.hasPicture(commodity.getId())) {
-                LOGGER.info("commodity {} already has picture, give up downloading picture",
-                        commodity.getId());
-            } else {
-                List<String> savePaths = imageDownloader.save(commodityPageParser.getImageUrls());
-                dao.save(commodity.getId(), savePaths);
-            }
+            CommodityPictureDownloader downloader = new CommodityPictureDownloader(imageDownloader);
+            downloader.saveIfNotExist(commodity.getId(), commodityPageParser.getImageUrls());
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
         }

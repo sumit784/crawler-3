@@ -7,6 +7,7 @@ package com.qinyuan15.crawler.dao;
 public class CommodityPicture extends PersistObject {
     private Integer commodityId;
     private String url;
+    private Boolean detail;
 
     public Integer getCommodityId() {
         return commodityId;
@@ -22,5 +23,13 @@ public class CommodityPicture extends PersistObject {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Boolean getDetail() {
+        return detail;
+    }
+
+    public void setDetail(Boolean detail) {
+        this.detail = detail;
     }
 }

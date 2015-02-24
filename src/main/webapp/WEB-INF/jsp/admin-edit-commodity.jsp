@@ -90,32 +90,28 @@
             </td>
         </tr>
     </table>
-    <div class="image">
+    <div class="images">
         <div class="commodityImage">
-            <div>商品图片</div>
-            <table>
-                <tr>
-                    <td><img src="resources/css/images/edit-commodity/desc1.png"/></td>
-                    <td><img src="resources/css/images/edit-commodity/desc2.png"/></td>
-                </tr>
-                <tr>
-                    <td><a class="noLineAnchor" href="javascript:void(0)">删除</a></td>
-                    <td><a class="noLineAnchor" href="javascript:void(0)">删除</a></td>
-                </tr>
-            </table>
+            <div class="title">商品图片</div>
+            <div class="imageGroup">
+                <div class="image" ng-repeat="imageUrl in imageUrls">
+                    <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
+                    <img ng-src="{{imageUrl}}"/><br/>
+                    <a class="noLineAnchor" href="javascript:void(0)"
+                       ng-click="deleteImage($index)">删除</a>
+                </div>
+            </div>
         </div>
         <div class="commodityDescImage">
-            <div>商品描述图片</div>
-            <table>
-                <tr>
-                    <td><img src="resources/css/images/edit-commodity/desc1.png"/></td>
-                    <td><img src="resources/css/images/edit-commodity/desc2.png"/></td>
-                </tr>
-                <tr>
-                    <td><a class="noLineAnchor" href="javascript:void(0)">删除</a></td>
-                    <td><a class="noLineAnchor" href="javascript:void(0)">删除</a></td>
-                </tr>
-            </table>
+            <div class="title">商品描述图片</div>
+            <div class="imageGroup">
+                <div class="image" ng-repeat="detailImageUrl in detailImageUrls">
+                    <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
+                    <img ng-src="{{detailImageUrl}}"/><br/>
+                    <a class="noLineAnchor" href="javascript:void(0)"
+                       ng-click="deleteDetailImage($index)">删除</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -147,11 +143,6 @@
                 </c:forEach>
                 <img class="link" title="添加" ng-click="addAppraiseGroup($event, 'positiveAppraiseGroups')"
                      src="resources/css/images/edit-commodity/add.png"/>
-                <!--
-                <input type="text" class="form-control" value="无色差"/>
-                <input type="text" class="form-control" value=""/>
-                <input type="text" class="form-control" value=""/>
-                -->
             </td>
         </tr>
         <tr>
@@ -163,11 +154,6 @@
                 </c:forEach>
                 <img class="link" title="添加" ng-click="addAppraiseGroup($event, 'negativeAppraiseGroups')"
                      src="resources/css/images/edit-commodity/add.png"/>
-                <!--
-                <input type="text" class="form-control" value="起球"/>
-                <input type="text" class="form-control" value="跟描述不符"/>
-                <input type="text" class="form-control" value=""/>
-                -->
             </td>
         </tr>
         </tbody>

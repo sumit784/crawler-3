@@ -13,4 +13,9 @@ public class CommodityPictureDaoTest {
     public void testGetInstances() throws Exception {
         System.out.println(dao.getInstances(1));
     }
+
+    @Test
+    public void testDeleteInstances() throws Exception {
+        //dao.deleteInstances(1);
+    }
 }

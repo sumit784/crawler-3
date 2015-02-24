@@ -111,6 +111,14 @@ CommodityDescription.prototype.text = function (text) {
                 }
             });
         };
+        $scope.imageUrls = [];
+        $scope.detailImageUrls = [];
+        $scope.deleteImage = function (index) {
+            $scope.imageUrls.splice(index, 1);
+        };
+        $scope.deleteDetailImage = function (index) {
+            $scope.detailImageUrls.splice(index, 1);
+        };
         $scope.runCrawler = function () {
             var showId = $.trim($scope['showId']);
             var $crawlerLink = $('#crawlerLink');
@@ -125,6 +133,9 @@ CommodityDescription.prototype.text = function (text) {
                     $buyLink.text(buyLink).attr('href', buyLink).prev().val(buyLink);
                     var name = data['name'];
                     $commodityName.text(name).attr('href', crawlerLink).prev().val(name);
+
+                    $scope.imageUrls = data['imageUrls'];
+                    $scope.detailImageUrls = data['detailImageUrls'];
 
                     $scope.runningCrawler = false;
                 });

@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,34 @@ import java.util.List;
 public class CommodityPictureDao {
     private final static Logger LOGGER = LoggerFactory.getLogger(CommodityPictureDao.class);
 
+    /**
+     * Save normal commodity picture to database
+     *
+     * @param commodityId id of commodity
+     * @param urls        url of commodities
+     */
     public void save(Integer commodityId, List<String> urls) {
+        save(commodityId, urls, false);
+    }
+
+    /**
+     * Save detail commodity picture to database
+     *
+     * @param commodityId id of commodity
+     * @param urls        url of commodities
+     */
+    public void saveDetail(Integer commodityId, List<String> urls) {
+        save(commodityId, urls, true);
+    }
+
+    /**
+     * Save normal/detail commodity picture to database
+     *
+     * @param commodityId id of commodity
+     * @param urls        url of commodities
+     * @param detail      detail picture or normal picture
+     */
+    public void save(Integer commodityId, List<String> urls, boolean detail) {
         for (String url : urls) {
             if (HibernateUtil.getCount("CommodityPicture",
                     "WHERE commodityId=" + commodityId + " AND url='" + url + "'") > 0) {
@@ -23,6 +51,7 @@ public class CommodityPictureDao {
             CommodityPicture picture = new CommodityPicture();
             picture.setCommodityId(commodityId);
             picture.setUrl(url);
+            picture.setDetail(detail);
             try {
                 HibernateUtil.save(picture);
                 LOGGER.info("save picture {} of commodityId {} to database",
@@ -38,6 +67,20 @@ public class CommodityPictureDao {
     public List<CommodityPicture> getInstances(Integer commodityId) {
         String hql = "FROM CommodityPicture WHERE commodityId=" + commodityId;
         return HibernateUtil.getList(hql);
+    }
+
+    public void deleteInstances(Integer commodityId) {
+        Session session = HibernateUtil.getSession();
+        session.createQuery("DELETE FROM CommodityPicture WHERE commodityId=:commodityId AND detail=false")
+                .setInteger("commodityId", commodityId).executeUpdate();
+        HibernateUtil.commit(session);
+    }
+
+    public void deleteDetailInstances(Integer commodityId) {
+        Session session = HibernateUtil.getSession();
+        session.createQuery("DELETE FROM CommodityPicture WHERE commodityId=:commodityId AND detail=true")
+                .setInteger("commodityId", commodityId).executeUpdate();
+        HibernateUtil.commit(session);
     }
 
     /**

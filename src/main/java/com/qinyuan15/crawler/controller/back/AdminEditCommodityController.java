@@ -1,6 +1,8 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.core.commodity.CommodityPictureDownloader;
+import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.AppraiseGroupDao;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.HibernateUtil;
@@ -27,6 +29,9 @@ public class AdminEditCommodityController extends BaseController {
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private ImageDownloader imageDownloader;
 
     @RequestMapping("/admin-edit-commodity")
     public String index(ModelMap model) {
@@ -64,7 +69,9 @@ public class AdminEditCommodityController extends BaseController {
             @RequestParam(value = "deleteSubmit", required = false) String deleteSubmit,
             @RequestParam(value = "publishSubmit", required = false) String publishSubmit,
             @RequestParam(value = "positiveAppraiseGroups", required = false) String[] positiveAppraiseGroups,
-            @RequestParam(value = "negativeAppraiseGroups", required = false) String[] negativeAppraiseGroups) {
+            @RequestParam(value = "negativeAppraiseGroups", required = false) String[] negativeAppraiseGroups,
+            @RequestParam(value = "imageUrls", required = false) String[] imageUrls,
+            @RequestParam(value = "detailImageUrls", required = false) String[] detailImageUrls) {
         //debugParameters();
 
         if (deleteSubmit != null) {
@@ -122,6 +129,10 @@ public class AdminEditCommodityController extends BaseController {
         AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
         appraiseGroupDao.save(id, positiveAppraiseGroups, true);
         appraiseGroupDao.save(id, negativeAppraiseGroups, false);
+
+        CommodityPictureDownloader pictureDownloader = new CommodityPictureDownloader(imageDownloader);
+        pictureDownloader.clearAndSave(id, Arrays.asList(imageUrls));
+        pictureDownloader.clearAndSaveDetail(id, Arrays.asList(detailImageUrls));
 
         return SUCCESS;
     }

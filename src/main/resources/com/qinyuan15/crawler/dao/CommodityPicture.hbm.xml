@@ -10,5 +10,6 @@
         </id>
         <property name="commodityId" column="commodity_id"/>
         <property name="url"/>
+        <property name="detail"/>
     </class>
 </hibernate-mapping>

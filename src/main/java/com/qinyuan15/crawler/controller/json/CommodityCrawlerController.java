@@ -2,7 +2,6 @@ package com.qinyuan15.crawler.controller.json;
 
 import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
-import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +21,6 @@ public class CommodityCrawlerController extends BaseController {
     @Autowired
     private ComposableCommodityPageParser pageParser;
 
-    //@Autowired
-    //private HttpClientPool httpClientPool;
-
     @ResponseBody
     @RequestMapping("/commodity-crawler.json")
     public String index(@RequestParam(value = "url", required = true) String url) {
@@ -34,6 +30,8 @@ public class CommodityCrawlerController extends BaseController {
 
         CommodityJson json = new CommodityJson();
         json.name = pageParser.getName();
+
+        // TODO method to calculate buy url should be improved
         json.buyUrl = url.replace(".html", "").replaceFirst("http://s.etao.com/detail/",
                 "http://detail.tmall.com/item.htm?id=");
         json.imageUrls = pageParser.getImageUrls();
