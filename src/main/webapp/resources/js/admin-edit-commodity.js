@@ -114,10 +114,15 @@ CommodityDescription.prototype.text = function (text) {
                 }
             });
         };
-        $http.get("commodityPicture.json?commodityId=" + $.url.param("id")).success(function (data) {
-            $scope.imageUrls = data['pictures'];
-            $scope.detailImageUrls = data['detailPictures'];
-        });
+        $scope.imageUrls = [];
+        $scope.detailImageUrls = [];
+        var commodityId = $.url.param("id");
+        if (commodityId) {
+            $http.get("commodityPicture.json?commodityId=" + commodityId).success(function (data) {
+                $scope.imageUrls = data['pictures'];
+                $scope.detailImageUrls = data['detailPictures'];
+            });
+        }
         $scope.deleteImage = function (index) {
             $scope.imageUrls.splice(index, 1);
         };
