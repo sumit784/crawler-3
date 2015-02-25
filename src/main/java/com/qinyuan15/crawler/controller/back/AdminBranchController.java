@@ -1,8 +1,11 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.Branch;
+import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.Session;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +40,12 @@ public class AdminBranchController extends BaseController {
     @RequestMapping("/admin-branch")
     @SuppressWarnings("unchecked")
     public String index(ModelMap model) {
-        model.addAttribute("branches", HibernateUtil.getList("Branch"));
+        List<Branch> branches = new BranchDao().getInstances();
+        PictureUrlConverter pictureUrlConverter = new PictureUrlConverter(imageDownloader, request.getLocalAddr());
+        BranchUrlAdapter branchUrlAdapter = new BranchUrlAdapter(pictureUrlConverter);
+        branchUrlAdapter.adjust(branches);
+
+        model.addAttribute("branches", branches);
         model.addAttribute("host", request.getLocalAddr());
         setTitle("编辑品牌");
         return "admin-branch";
@@ -46,7 +55,7 @@ public class AdminBranchController extends BaseController {
         if (logoFile == null) {
             String filePath = imageDownloader.save(logoUrl);
             LOGGER.info("save upload image to {}", filePath);
-            return filePath.replaceFirst(imageDownloader.getSaveDir(), "").replaceFirst("/", "");
+            return filePath;
         } else {
             String relativePath = "mall/branch/logo/" + RandomStringUtils.randomAlphabetic(20)
                     + "_" + logoFile.getOriginalFilename();
@@ -58,7 +67,7 @@ public class AdminBranchController extends BaseController {
             }
             logoFile.transferTo(file);
             LOGGER.info("save upload image to {}", filePath);
-            return relativePath;
+            return filePath;
         }
     }
 

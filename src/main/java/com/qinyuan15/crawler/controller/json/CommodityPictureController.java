@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.controller.json;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.core.commodity.CommodityPictureUrlConverter;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.CommodityPictureDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CommodityPictureController extends BaseController {
     @ResponseBody
     @RequestMapping("/commodityPicture.json")
     public String get(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
-        CommodityPictureUrlConverter urlConverter = new CommodityPictureUrlConverter(
+        PictureUrlConverter urlConverter = new PictureUrlConverter(
                 imageDownloader, request.getLocalAddr());
         CommodityPictureDao dao = new CommodityPictureDao();
         Map<String, Object> jsonMap = new HashMap<String, Object>();

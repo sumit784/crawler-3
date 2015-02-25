@@ -164,3 +164,8 @@ table.normal th, table.normal td {
     padding: 5px;
     font-size: 10pt;
 }
+
+img.branch-logo {
+    width: 82px;
+    height: 38px;
+}

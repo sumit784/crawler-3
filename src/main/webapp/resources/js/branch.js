@@ -1,15 +1,18 @@
-;(function () {
-    angularUtils.controller(function ($scope) {
+;
+(function () {
+    angularUtils.controller(function ($scope, $http) {
+        $http.get('json/groupedBranches.json').success(function (data) {
+            $scope.branches = [];
+            for (var i = 0, len = letters.length; i < len; i++) {
+                var letter = letters[i];
+                if (letter in data) {
+                    $scope.branches.push({'letter': letters[i], 'branches': splitArray(data[letter], 7)});
+                } else {
+                    $scope.branches.push({'letter': letters[i], 'branches': []});
+                }
+            }
+        });
         var letters = getBranchGroupLetters();
-        $scope.branches = [];
-        for (var i = 0; i < letters.length; i++) {
-            var letter = letters[i];
-            var item = {
-                'letter': letters[i],
-                'branches': getBranches(letter)
-            };
-            $scope.branches.push(item);
-        }
         $scope.letters = splitArray(letters, 3);
         $scope.letterClick = function (letter) {
             $('div.branchGroup').each(function () {
@@ -31,25 +34,5 @@
         }
         arr.push('0-9');
         return arr;
-    }
-
-    function getBranches(letter) {
-        var branches = [];
-        for (var i = 0; i < 18; i++) {
-            if (i > 5 && i < 12) {
-                branches.push({
-                    "href": "shoppe",
-                    "src": "resources/css/images/branchs/branch2.png",
-                    "text": "BRACCIALINI"
-                });
-            } else {
-                branches.push({
-                    "href": "shoppe",
-                    "src": "resources/css/images/branchs/branch1.png",
-                    "text": "OLAY"
-                });
-            }
-        }
-        return splitArray(branches, 7);
     }
 })();

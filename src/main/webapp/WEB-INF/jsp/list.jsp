@@ -50,16 +50,16 @@
                             <div class="horizontalBorder"></div>
                             <div class="verticalBorder"></div>
                         </div>
-                        <div ng-if="branch.more" class="moreBranch">
-                            <a class="noLineAnchor" href="javascript:void(0)">
-                                <span>更多品牌</span><img src="resources/css/images/options.png"/>
-                            </a>
-                        </div>
-                        <div>
+                        <div ng-show="!(branch.more)">
                             <a href="shoppe?id={{branch.id}}" target="_blank">
                                 <img class="link" ng-src="{{branch.src}}"
                                      onmouseover="showBranchBorder(this)"
                                      onmouseout="hideBranchBorder(this)"/>
+                            </a>
+                        </div>
+                        <div ng-show="branch.more" class="moreBranch">
+                            <a class="noLineAnchor" href="javascript:void(0)">
+                                <span>更多品牌</span><img src="resources/css/images/options.png"/>
                             </a>
                         </div>
                     </td>

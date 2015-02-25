@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core.commodity;
+package com.qinyuan15.crawler.core.image;
 
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.CommodityPicture;
@@ -10,12 +10,12 @@ import java.util.List;
  * Class to convert commodity picture url
  * Created by qinyuan on 15-2-24.
  */
-public class CommodityPictureUrlConverter {
+public class PictureUrlConverter {
     private ImageDownloader imageDownloader;
     private String localAddress;
     private String urlPrefix = "ftp://";
 
-    public CommodityPictureUrlConverter(ImageDownloader imageDownloader, String localAddress) {
+    public PictureUrlConverter(ImageDownloader imageDownloader, String localAddress) {
         this.imageDownloader = imageDownloader;
         this.localAddress = localAddress;
     }

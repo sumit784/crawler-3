@@ -6,8 +6,8 @@
         <table>
             <tr ng-repeat="branchRow in branchGroup.branches">
                 <td ng-repeat="branch in branchRow">
-                    <a class="noLineAnchor" ng-href="{{branch.href}}" target="_blank">
-                        <img ng-src="{{branch.src}}"/><br>{{branch.text}}
+                    <a class="noLineAnchor" ng-href="shoppe?id={{branch.id}}" target="_blank">
+                        <img class="branch-logo" ng-src="{{branch.logo}}"/><br>{{branch.name}}
                     </a>
                 </td>
             </tr>

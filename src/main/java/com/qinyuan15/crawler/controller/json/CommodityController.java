@@ -2,7 +2,7 @@ package com.qinyuan15.crawler.controller.json;
 
 import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.DateUtils;
-import com.qinyuan15.crawler.core.commodity.CommodityPictureUrlConverter;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +62,7 @@ public class CommodityController extends BaseController {
     }
 
     private List<String> getPictures(Integer commodityId) {
-        CommodityPictureUrlConverter urlConverter = new CommodityPictureUrlConverter(
+        PictureUrlConverter urlConverter = new PictureUrlConverter(
                 imageDownloader, request.getLocalAddr());
         List<CommodityPicture> commodityPictures = new CommodityPictureDao().getInstances(commodityId);
         return urlConverter.pathsToUrls(commodityPictures);

@@ -2,9 +2,13 @@ package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.branch.BranchGrouper;
+import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
+import com.qinyuan15.crawler.core.image.ImageDownloader;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +25,9 @@ import java.util.Map;
  */
 @Controller
 public class BranchController extends BaseController {
+
+    @Autowired
+    private ImageDownloader imageDownloader;
 
     @RequestMapping("/branch")
     public String index(ModelMap model) {
@@ -55,6 +62,11 @@ public class BranchController extends BaseController {
     public String queryGroupedBranches() {
         BranchDao dao = new BranchDao();
         List<Branch> branches = dao.getInstances();
+
+        PictureUrlConverter urlConverter = new PictureUrlConverter(imageDownloader, request.getLocalAddr());
+        BranchUrlAdapter branchUrlAdapter = new BranchUrlAdapter(urlConverter);
+        branchUrlAdapter.adjust(branches);
+
         BranchGrouper branchGrouper = new BranchGrouper();
         return toJson(branchGrouper.groupByLetter(branches));
     }

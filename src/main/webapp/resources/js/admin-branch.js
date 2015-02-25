@@ -31,11 +31,13 @@
         var $tr = getParent($(this), 'tr');
         var id = $tr.attr('id').replace(/\D/g, '');
         var name = $tr.find('td.name').text();
+        var firstLetter = $tr.find('td.firstLetter').text();
         var logo = $tr.find('td.logo a').attr('title');
         var parentId = $tr.find('td.parent').dataOptions()['parentId'];
 
         $branchForm.find('input[name=id]').val(id);
         $branchForm.find('input[name=name]').val(name).focusOrSelect();
+        $branchForm.find('input[name=firstLetter]').val(firstLetter);
         $branchForm.find('input[name=logo]').val(logo);
         $branchForm.find('select[name=parentId]').val(parentId);
 

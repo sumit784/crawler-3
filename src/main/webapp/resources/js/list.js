@@ -70,7 +70,7 @@
             if (!this.searchDivInitHeight) {
                 this._initSearchDivInitHeight();
             }
-            $elements.getMoreBranch().show().next().hide();
+            $elements.getMoreBranch().show().prev().hide();
             var self = this;
             $elements.hideBranch.stop(true, true).slideUp(function () {
                 $elements.searchDiv.height(self.searchDivInitHeight);
@@ -86,7 +86,7 @@
             $elements.hideBranch.stop(true, true).slideDown(function () {
                 $elements.searchDiv.height(self.searchDivInitHeight + self.getHideBranchHeight());
             });
-            $elements.getMoreBranch().hide().next().show();
+            $elements.getMoreBranch().hide().prev().show();
         }
     };
 
@@ -124,7 +124,7 @@
         hotWords: $('div.search > div.searchForm div.hotWords'),
         branchPoster: $('div.search > div.branch > div.poster'),
         getMoreBranch: function () {
-            return $('div.search > div.branch > div.logos div.moreBranch');
+            return $('div.search > div.branch > div.logos div.moreBranch:last');
         }
     };
 

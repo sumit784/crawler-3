@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.core.commodity.CommodityPictureUrlConverter;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
@@ -37,7 +37,7 @@ public class AdminController extends BaseController {
         List<Commodity> commodities = CommodityDao.factory().getInstances();
         List<SimpleCommodity> simpleCommodities = new ArrayList<SimpleCommodity>();
         CommodityPictureDao commodityPictureDao = new CommodityPictureDao();
-        CommodityPictureUrlConverter urlConverter = new CommodityPictureUrlConverter(
+        PictureUrlConverter urlConverter = new PictureUrlConverter(
                 imageDownloader, request.getLocalAddr());
         for (Commodity commodity : commodities) {
             SimpleCommodity simpleCommodity = new SimpleCommodity();
