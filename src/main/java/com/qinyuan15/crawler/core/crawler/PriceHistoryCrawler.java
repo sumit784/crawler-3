@@ -87,7 +87,7 @@ public class PriceHistoryCrawler {
                         commodityPool.reset();
                     } else {
                         if (dao.hasInstanceToday(commodity.getId())) {
-                            LOGGER.error("Today's price of commodity {} already save, just skip it",
+                            LOGGER.info("Today's price of commodity {} already save, just skip it",
                                     commodity.getName());
                         } else {
                             this.singleCommodityCrawler.save(commodity);

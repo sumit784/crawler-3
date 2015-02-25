@@ -38,14 +38,4 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="100000"/>
     </bean>
-
-    <!-- Spring MVC configuration end -->
-
-    <import resource="application-proxy.xml"/>
-    <!--
-    <import resource="application-price-crawler.xml"/>
-    -->
-    <import resource="application-image-download.xml"/>
-    <import resource="application-page-parser.xml"/>
-
 </beans>
