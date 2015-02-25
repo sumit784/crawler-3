@@ -98,32 +98,24 @@ CommodityDescription.prototype.text = function (text) {
         $scope.selectSubBranch2 = function (id) {
             selectBranch($scope.subBranch2, id);
         };
-        $scope.imageUrls = [];
-        $scope.detailImageUrls = [];
-        var commodityId = $.url.param("id");
-        if (commodityId) {
-            $http.get("commodityPicture.json?commodityId=" + commodityId).success(function (data) {
-                $scope.imageUrls = data['pictures'];
-                $scope.detailImageUrls = data['detailPictures'];
+        var initBranchId = $initBranchId.val();
+        if (initBranchId != '') {
+            $http.get('json/parentBranch.json?branchId=' + initBranchId).success(function (data) {
+                var branchId = data['branchId'];
+                if (branchId) {
+                    selectBranch($scope.branch, branchId, $scope.subBranch1, function () {
+                        var subBranch1Id = data["subBranch1Id"];
+                        if (subBranch1Id) {
+                            selectBranch($scope.subBranch1, subBranch1Id, $scope.subBranch2, function () {
+                                var subBranch2Id = data["subBranch2Id"];
+                                if (subBranch2Id) {
+                                    selectBranch($scope.subBranch2, subBranch2Id);
+                                }
+                            });
+                        }
+                    });
+                }
             });
-            if ($initBranchId.val() != '') {
-                $http.get('json/parentBranch.json?branchId=' + $initBranchId.val()).success(function (data) {
-                    var branchId = data['branchId'];
-                    if (branchId) {
-                        selectBranch($scope.branch, branchId, $scope.subBranch1, function () {
-                            var subBranch1Id = data["subBranch1Id"];
-                            if (subBranch1Id) {
-                                selectBranch($scope.subBranch1, subBranch1Id, $scope.subBranch2, function () {
-                                    var subBranch2Id = data["subBranch2Id"];
-                                    if (subBranch2Id) {
-                                        selectBranch($scope.subBranch2, subBranch2Id);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
         }
         $scope.deleteImage = function (index) {
             $scope.imageUrls.splice(index, 1);
@@ -161,6 +153,18 @@ CommodityDescription.prototype.text = function (text) {
             var input = '<input type="text" class="form-control" name="' + name + '"/>';
             $(event.target).before(input).prev().focus();
         };
+        $scope.imageUrls = [];
+        $scope.detailImageUrls = [];
+        var commodityId = $.url.param("id");
+        if (commodityId) {
+            // load image after 1 second, or page will be blocked
+            setTimeout(function () {
+                $http.get("commodityPicture.json?commodityId=" + commodityId).success(function (data) {
+                    $scope.imageUrls = data['pictures'];
+                    $scope.detailImageUrls = data['detailPictures'];
+                });
+            }, 1000);
+        }
 
         function selectBranch(branchObj, idToSelect, subBranchObj, callBack) {
             $.each(branchObj.items, function () {

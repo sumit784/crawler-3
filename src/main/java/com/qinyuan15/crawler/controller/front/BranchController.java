@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.core.branch.BranchGrouper;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +28,14 @@ public class BranchController extends BaseController {
         return "branch";
     }
 
+    /**
+     * Query branches.
+     * If parentId parameter present then return sub branches of that branch,
+     * else return root branches
+     *
+     * @param parentId parent branch id
+     * @return branches
+     */
     @ResponseBody
     @RequestMapping("/json/branch.json")
     public String query(@RequestParam(value = "parentId", required = false) Integer parentId) {
@@ -35,6 +45,18 @@ public class BranchController extends BaseController {
         } else {
             return toJson(dao.getRootInstances());
         }
+    }
+
+    /**
+     * @return branches grouped by first letter
+     */
+    @ResponseBody
+    @RequestMapping("/json/groupedBranches.json")
+    public String queryGroupedBranches() {
+        BranchDao dao = new BranchDao();
+        List<Branch> branches = dao.getInstances();
+        BranchGrouper branchGrouper = new BranchGrouper();
+        return toJson(branchGrouper.groupByLetter(branches));
     }
 
 

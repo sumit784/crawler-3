@@ -8,6 +8,15 @@ public class Branch extends PersistObject {
     private String name;
     private String logo;
     private Integer parentId;
+    private String firstLetter;
+
+    public void setFirstLetter(String firstLetter) {
+        this.firstLetter = firstLetter;
+    }
+
+    public String getFirstLetter() {
+        return firstLetter;
+    }
 
     public String getName() {
         return name;

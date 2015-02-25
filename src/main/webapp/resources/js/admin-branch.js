@@ -6,6 +6,8 @@
     var $editImages = $table.find('img.edit');
     var $addSubmit = $('#addSubmit');
     var $editSubmit = $('#editSubmit');
+    var $name = $('#name');
+    var $firstLetter = $('#firstLetter');
 
     $branchForm.ajaxForm(function (data) {
         if (data.success) {
@@ -16,7 +18,7 @@
     });
     $deleteImages.click(function () {
         $.post('admin-branch-delete', {
-            id: getBranchIdByImage(this)
+            id: getBranchIdByImgElement(this)
         }, function (data) {
             if (data.success) {
                 location.reload();
@@ -40,7 +42,19 @@
         $addSubmit.attr('disabled', true);
         $editSubmit.attr('disabled', false);
     });
-    function getBranchIdByImage(image) {
+    $name.keyup(function () {
+        var name = $(this).val();
+        if (name != '') {
+            $.post('chinese-letter.json?string=' + name, function (data) {
+                if (data.result) {
+                    $firstLetter.val(data.result);
+                }
+            });
+        } else {
+            $firstLetter.val("");
+        }
+    });
+    function getBranchIdByImgElement(image) {
         var $tr = getParent($(image), "tr");
         return $tr.attr('id').replace(/\D/g, '');
     }

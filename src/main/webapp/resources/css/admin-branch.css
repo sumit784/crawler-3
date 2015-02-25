@@ -1,18 +1,19 @@
 div.content > div:first-child {
     padding: 50px;
     background-color: #ffffff;
-    position: relative;
-    min-height: 500px;
+    overflow: hidden;
 }
 
 div.content table {
     float: left;
-    width: 500px;
+    width: 580px;
+    margin-right: 50px;
 }
 
 div.content form {
-    float: right;
-    width: 250px;
+    float: left;
+    width: 220px;
+    background-color: lightblue;
 }
 
 div.content form > div {

@@ -9,6 +9,11 @@ import java.util.List;
 public class BranchDao {
 
     @SuppressWarnings("unchecked")
+    public List<Branch> getInstances() {
+        return HibernateUtil.getList("Branch");
+    }
+
+    @SuppressWarnings("unchecked")
     public List<String> getRootInstances() {
         String hql = "Branch WHERE parentId IS NULL OR parentId<=0";
         return HibernateUtil.getList(hql);

@@ -22,6 +22,8 @@ public class BaseController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
+    protected final static Map<String, String> EMPTY_MAP = new HashMap<String, String>();
+
     protected final static Map<String, Object> SUCCESS = createResultMap(true, null);
 
     protected final static String TITLE = "title";
@@ -63,6 +65,12 @@ public class BaseController {
         LOGGER.info(result);
     }
 
+    protected Map<String, String> createSimpleMap(String key, String value) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put(key, value);
+        return map;
+    }
+
     protected static Map<String, Object> createResultMap(boolean success, Object detail) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", success);
@@ -73,5 +81,4 @@ public class BaseController {
     protected static Map<String, Object> createFailResult(Object detail) {
         return createResultMap(false, detail);
     }
-
 }

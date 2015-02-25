@@ -5,6 +5,7 @@
         <thead>
         <tr>
             <th>名称</th>
+            <th>首字母</th>
             <th>logo</th>
             <th>父品牌</th>
             <th></th>
@@ -22,6 +23,7 @@
             </c:choose>
             <tr id="branch_${branch.id}">
                 <td class="name">${branch.name}</td>
+                <td class="firstLetter">${branch.firstLetter}</td>
                 <td class="logo">
                     <a class="limit-size" data-options="limit:40" href="${logoUrl}"
                        target="_blank">${branch.logo}</a>
@@ -41,6 +43,10 @@
         <div>
             <label>名称: </label><br/>
             <input type="text" id="name" name="name"/>
+        </div>
+        <div>
+            <label>首字母</label>
+            <input type="text" id="firstLetter" name="firstLetter"/>
         </div>
         <div>
             <label>Logo(url或上传图片): </label><br/>

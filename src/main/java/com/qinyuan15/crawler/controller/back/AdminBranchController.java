@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,7 +68,8 @@ public class AdminBranchController extends BaseController {
                                          @RequestParam(value = "name", required = true) String name,
                                          @RequestParam(value = "logo", required = true) String logo,
                                          @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
-                                         @RequestParam(value = "parentId", required = true) Integer parentId) {
+                                         @RequestParam(value = "parentId", required = true) Integer parentId,
+                                         @RequestParam(value = "firstLetter", required = true) String firstLetter) {
         String logoUrl;
         try {
             logoUrl = getLogoUrl(logo, logoFile);
@@ -84,6 +86,10 @@ public class AdminBranchController extends BaseController {
         branch.setName(name);
         branch.setLogo(logoUrl);
         branch.setParentId(parentId);
+
+        if (StringUtils.hasText(firstLetter)) {
+            branch.setFirstLetter(firstLetter.substring(0, 1));
+        }
 
         if (update) {
             session.update(branch);
