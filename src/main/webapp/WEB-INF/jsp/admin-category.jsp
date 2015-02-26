@@ -6,23 +6,16 @@
         <tr>
             <th>序号</th>
             <th>名称</th>
-            <th>首字母</th>
-            <th>logo</th>
-            <th>父品牌</th>
+            <th>父分类</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="branch" items="${branches}" varStatus="status">
-            <tr id="branch_${branch.id}">
+        <c:forEach var="category" items="${categories}" varStatus="status">
+            <tr id="category_${category.id}">
                 <td class="index">${status.index+1}</td>
-                <td class="name">${branch.name}</td>
-                <td class="firstLetter">${branch.firstLetter}</td>
-                <td class="logo">
-                    <a class="limit-size" data-options="limit:40" href="${branch.logo}"
-                       target="_blank">${branch.logo}</a>
-                </td>
-                <td class="parent" data-options="parentId: ${branch.parentId}">${branch.parentName}</td>
+                <td class="name">${category.name}</td>
+                <td class="parent" data-options="parentId: ${category.parentId}">${category.parentName}</td>
                 <td>
                     <jsp:include page="widget-edit-delete.jsp"/>
                 </td>
@@ -30,7 +23,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <form id="branchForm" method="post" action="admin-branch-add-update"
+    <form id="categoryForm" method="post" action="admin-category-add-update"
           enctype="multipart/form-data">
         <input type="hidden" name="id"/>
 
@@ -39,17 +32,8 @@
             <input type="text" id="name" name="name"/>
         </div>
         <div>
-            <label>首字母</label>
-            <input type="text" id="firstLetter" name="firstLetter"/>
-        </div>
-        <div>
-            <label>Logo(url或上传图片): </label><br/>
-            <input type="text" id="logo" name="logo"/>
-            <input type="file" name="logoFile"/>
-        </div>
-        <div>
-            <label>父品牌</label><br/>
-            <jsp:include page="admin-branch-select.jsp">
+            <label>父分类</label><br/>
+            <jsp:include page="admin-category-select.jsp">
                 <jsp:param name="elementId" value="parentId"/>
             </jsp:include>
         </div>

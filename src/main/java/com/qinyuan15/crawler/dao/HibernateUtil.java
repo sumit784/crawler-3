@@ -125,6 +125,11 @@ public class HibernateUtil {
         return object;
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> getList(Class<T> clazz) {
+        return getList(clazz.getSimpleName());
+    }
+
     public static List getList(String hql) {
         return getList(hql, -1, -1);
     }

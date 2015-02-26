@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Page to edit commodity
+ * Page to edit branch
  * Created by qinyuan on 15-2-19.
  */
 @Controller
@@ -38,7 +38,6 @@ public class AdminBranchController extends BaseController {
     private ImageDownloader imageDownloader;
 
     @RequestMapping("/admin-branch")
-    @SuppressWarnings("unchecked")
     public String index(ModelMap model) {
         List<Branch> branches = new BranchDao().getInstances();
         PictureUrlConverter pictureUrlConverter = new PictureUrlConverter(imageDownloader, request.getLocalAddr());
@@ -46,7 +45,6 @@ public class AdminBranchController extends BaseController {
         branchUrlAdapter.adjust(branches);
 
         model.addAttribute("branches", branches);
-        model.addAttribute("host", request.getLocalAddr());
         setTitle("编辑品牌");
         return "admin-branch";
     }
@@ -88,10 +86,9 @@ public class AdminBranchController extends BaseController {
             return createFailResult("logo文件处理失败!");
         }
 
-        boolean update = (id != null && id > 0);
         Session session = HibernateUtil.getSession();
 
-        Branch branch = update ? (Branch) session.get(Branch.class, id) : new Branch();
+        Branch branch = isPositive(id) ? (Branch) session.get(Branch.class, id) : new Branch();
         branch.setName(name);
         branch.setLogo(logoUrl);
         branch.setParentId(parentId);
@@ -100,11 +97,7 @@ public class AdminBranchController extends BaseController {
             branch.setFirstLetter(firstLetter.substring(0, 1));
         }
 
-        if (update) {
-            session.update(branch);
-        } else {
-            session.save(branch);
-        }
+        session.saveOrUpdate(branch);
         HibernateUtil.commit(session);
         return SUCCESS;
     }

@@ -20,5 +20,6 @@
         <property name="serialNumber" column="serial_number"/>
         <property name="showId" column="show_id"/>
         <property name="parameters"/>
+        <property name="categoryId" column="category_id"/>
     </class>
 </hibernate-mapping>

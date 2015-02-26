@@ -21,6 +21,15 @@ public class Commodity extends SimpleCommodity {
     private Boolean active;
     private Integer branchId;
     private String parameters;
+    private Integer categoryId;
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public void setParameters(String parameters) {
         this.parameters = parameters;

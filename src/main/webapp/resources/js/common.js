@@ -75,6 +75,14 @@ function setHoverColor($element, color) {
     });
 }
 
+function normalSubmitCallback(data) {
+    if (data.success) {
+        location.reload();
+    } else {
+        alert(data.detail);
+    }
+}
+
 var images = {
     unSort: 'resources/css/images/unSort.gif',
     arrowUp: 'resources/css/images/arrow_up.gif',
