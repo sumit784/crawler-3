@@ -4,50 +4,19 @@
     <form action="admin-commodity-add-update" method="post" id="mainForm">
         <input type="hidden" name="id" value="${commodity.id}">
 
-        <div class="branch">
+        <div class="basic">
             <div class="serial">
                 <input type="hidden" name="serialNumber" value="${commodity.serialNumber}"/>
-                商品编号：<span id="serial">${commodity.serialNumber}</span>
+                商品编号
+                &nbsp;&nbsp;
+                <span id="serial">${commodity.serialNumber}</span>
             </div>
-            <input type="hidden" id="initBranchId" value="${commodity.branchId}"/>
-            <div id="branchSelect" class="input-group-btn">
-                <input type="hidden" name="branchId" value="{{branch.selected.id}}">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    {{branch.selected.name}}
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="item in branch.items">
-                        <a href="javascript:void(0)" ng-click="selectBranch(item.id)">{{item.name}}</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="firstLevelBranchSelect" class="input-group-btn">
-                <input type="hidden" name="subBranch1Id" value="{{subBranch1.selected.id}}">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        ng-disabled="subBranch1.disabled">
-                    {{subBranch1.selected.name}}
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="item in subBranch1.items">
-                        <a href="javascript:void(0)" ng-click="selectSubBranch1(item.id)">{{item.name}}</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="secondLevelBranchSelect" class="input-group-btn">
-                <input type="hidden" name="subBranch2Id" value="{{subBranch2.selected.id}}">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                        ng-disabled="subBranch2.disabled">
-                    {{subBranch2.selected.name}}
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="item in subBranch2.items">
-                        <a href="javascript:void(0)" ng-click="selectSubBranch2(item.id)">{{item.name}}</a>
-                    </li>
-                </ul>
-            </div>
-            <div style="position: absolute; right: 40px;top: 25px;">(必填)</div>
-            <div style="float:right;clear:both;right:30px;font-size:9pt;top:8px;">
-                <a target="_blank" href="admin-branch">品牌管理&gt;&gt;</a>
+            <div class="branch">
+                <%@include file="admin-edit-commodity-branch-select.jsp" %>
+                <div style="position: absolute; right: 40px;top: 25px;">(必填)</div>
+                <div style="float:right;clear:both;right:30px;font-size:9pt;top:8px;">
+                    <a target="_blank" href="admin-branch">品牌管理&gt;&gt;</a>
+                </div>
             </div>
         </div>
         <div class="link">

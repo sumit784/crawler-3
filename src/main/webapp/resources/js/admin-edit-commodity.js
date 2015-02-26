@@ -27,7 +27,7 @@ CommodityDescription.prototype.text = function (text) {
 };
 (function () {
     var $commodityDescription = $('#commodityDescription');
-    var $selectButtons = $('div.content div.branch button');
+    var $selectButtons = $('div.content div.basic button');
     var $commodityDescriptionEffect = $('#commodityDescriptionEffect');
     var $form = $('#mainForm');
     var $branchId = $('input[name=branchId]');

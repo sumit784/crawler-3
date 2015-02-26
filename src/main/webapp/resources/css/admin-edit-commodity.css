@@ -8,16 +8,15 @@ div.content > div.boxShadow form > div {
     background-color: #ffffff;
 }
 
-div.content div.branch {
-    height: 80px;
+div.content div.basic {
     padding-top: 20px;
 }
 
-div.content div.branch div.serial {
+div.content div.basic div.serial {
     padding-top: 5px;
 }
 
-div.content div.branch > div.input-group-btn {
+div.content div.basic > div.input-group-btn {
     top: 20px;
     position: absolute;
 }
@@ -38,7 +37,7 @@ div.content div.branch > div.input-group-btn {
     margin-right: 70px;
 }
 
-div.content div.branch button {
+div.content div.basic button {
     background: no-repeat url("images/edit-commodity/select.png") right #ffffff;
     width: 180px;
     text-align: left;
