@@ -7,14 +7,15 @@
         <div class="basic">
             <div class="serial">
                 <input type="hidden" name="serialNumber" value="${commodity.serialNumber}"/>
-                商品编号
-                &nbsp;&nbsp;
+
+                <span class="title">商品编号</span>
                 <span id="serial">${commodity.serialNumber}</span>
             </div>
             <div class="branch">
+                <div class="title">品牌选择</div>
                 <%@include file="admin-edit-commodity-branch-select.jsp" %>
-                <div style="position: absolute; right: 40px;top: 25px;">(必填)</div>
-                <div style="float:right;clear:both;right:30px;font-size:9pt;top:8px;">
+                <div class="require-info">(必填)</div>
+                <div class="handle-link">
                     <a target="_blank" href="admin-branch">品牌管理&gt;&gt;</a>
                 </div>
             </div>

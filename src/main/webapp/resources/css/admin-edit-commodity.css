@@ -9,32 +9,50 @@ div.content > div.boxShadow form > div {
 }
 
 div.content div.basic {
-    padding-top: 20px;
+    padding-top: 10px;
+    height: 150px;
+    vertical-align: middle;
 }
 
-div.content div.basic div.serial {
-    padding-top: 5px;
+div.content div.basic span.title, div.content div.basic div.title {
+    margin-right: 18px;
 }
 
-div.content div.basic > div.input-group-btn {
-    top: 20px;
-    position: absolute;
+div.content div.basic > div {
+    margin: 20px 0;
+}
+
+div.content div.basic div.branch > div {
+    float: left;
+}
+
+div.content div.basic div.branch > div.title {
+    margin-top: 6px;
 }
 
 #branchSelect {
-    left: 285px;
+    position: absolute;
+    left: 85px;
 }
 
 #firstLevelBranchSelect {
-    left: 475px;
+    left: 200px;
 }
 
 #secondLevelBranchSelect {
-    left: 665px;
+    left: 390px;
 }
 
-#serial {
-    margin-right: 70px;
+div.content div.basic div.handle-link {
+    margin-top: 6px;
+    position: absolute;
+    right: 30px;
+}
+
+div.content div.basic div.branch div.require-info {
+    position: absolute;
+    top: 6px;
+    left: 670px;
 }
 
 div.content div.basic button {
