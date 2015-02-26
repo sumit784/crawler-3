@@ -10,7 +10,7 @@ div.content > div.boxShadow form > div {
 
 div.content div.basic {
     padding-top: 10px;
-    height: 150px;
+    height: 180px;
     vertical-align: middle;
 }
 
@@ -22,37 +22,46 @@ div.content div.basic > div {
     margin: 20px 0;
 }
 
-div.content div.basic div.branch > div {
-    float: left;
+div.content div.basic div.branch > div.title,
+div.content div.basic div.category > div.title {
+    padding-top: 6px;
 }
 
-div.content div.basic div.branch > div.title {
-    margin-top: 6px;
-}
-
-#branchSelect {
+#branchSelect, #firstLevelBranchSelect, #secondLevelBranchSelect,
+#categorySelect, #subCategorySelect {
     position: absolute;
+    top: 0;
+}
+
+#branchSelect, #categorySelect {
     left: 85px;
 }
 
-#firstLevelBranchSelect {
-    left: 200px;
+#firstLevelBranchSelect, #subCategorySelect {
+    left: 278px;
 }
 
 #secondLevelBranchSelect {
-    left: 390px;
+    left: 470px;
+}
+
+div.content div.basic div.handle-link,
+div.content div.basic div.branch div.require-info,
+div.content div.basic div.category div.require-info {
+    position: absolute;
+    top: 6px;
 }
 
 div.content div.basic div.handle-link {
-    margin-top: 6px;
-    position: absolute;
     right: 30px;
 }
 
 div.content div.basic div.branch div.require-info {
-    position: absolute;
-    top: 6px;
     left: 670px;
+}
+
+div.content div.basic div.category div.require-info {
+    left: 480px;
 }
 
 div.content div.basic button {

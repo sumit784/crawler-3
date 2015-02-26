@@ -8,20 +8,15 @@ import java.util.List;
  */
 public class BranchDao {
 
-    @SuppressWarnings("unchecked")
     public List<Branch> getInstances() {
-        return HibernateUtil.getList("Branch");
+        return HibernateUtil.getList(Branch.class);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<String> getRootInstances() {
-        String hql = "Branch WHERE parentId IS NULL OR parentId<=0";
-        return HibernateUtil.getList(hql);
+    public List<Branch> getRootInstances() {
+        return HibernateUtil.getList(Branch.class, "parentId IS NULL OR parentId<=0");
     }
 
-    @SuppressWarnings("unchecked")
-    public List<String> getSubInstances(int parentId) {
-        String hql = "Branch WHERE parentId=" + parentId;
-        return HibernateUtil.getList(hql);
+    public List<Branch> getSubInstances(int parentId) {
+        return HibernateUtil.getList(Branch.class, "parentId=" + parentId);
     }
 }

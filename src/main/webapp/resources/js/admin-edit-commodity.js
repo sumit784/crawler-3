@@ -35,6 +35,7 @@ CommodityDescription.prototype.text = function (text) {
     var $submitInfo = $('#submitInfo');
     var $showId = $('input[name=showId]');
     var $initBranchId = $('#initBranchId');
+    var $initCategoryId = $('#initCategoryId');
 
     $selectButtons.click(function () {
         $(this).css({
@@ -70,6 +71,7 @@ CommodityDescription.prototype.text = function (text) {
 
     angularUtils.controller(function ($scope, $http) {
         initBranchSelects();
+        initCategorySelects();
         initImages();
         $scope.runCrawler = function () {
             var showId = $.trim($showId.val());
@@ -123,48 +125,84 @@ CommodityDescription.prototype.text = function (text) {
             }
         }
 
+        function initCategorySelects() {
+            $scope.category = {
+                default: {id: 0, 'name': '(一级分类)'},
+                selected: {id: 0, 'name': '(一级分类)'},
+                items: []
+            };
+            var categoryJsonUrl = "json/category.json";
+            loadSelectData(categoryJsonUrl, $scope.category);
+            $scope.subCategory = {
+                disabled: true,
+                default: {id: 0, name: '(二级分类)'},
+                selected: {id: 0, name: '(二级分类)'},
+                items: []
+            };
+            $scope.selectCategory = function (id) {
+                selectItem($scope.category, id, $scope.subCategory, categoryJsonUrl);
+            };
+            $scope.selectSubCategory = function (id) {
+                selectItem($scope.subCategory, id);
+            };
+            var initCategoryId = $initCategoryId.val();
+            if (initCategoryId != '') {
+                $http.get('json/parentCategory.json?categoryId=' + initCategoryId).success(function (data) {
+                    var categoryId = data['categoryId'];
+                    if (categoryId) {
+                        selectItem($scope.category, categoryId, $scope.subCategory, categoryJsonUrl, function () {
+                            var subCategoryId = data["subCategoryId"];
+                            if (subCategoryId) {
+                                selectItem($scope.subCategory, subCategoryId);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
         function initBranchSelects() {
             $scope.branch = {
-                default: { id: 0, name: '(品牌选择)' },
-                selected: { id: 0, name: '(品牌选择)' },
+                default: {id: 0, name: '(品牌选择)'},
+                selected: {id: 0, name: '(品牌选择)'},
                 items: []
             };
             var branchJsonUrl = "json/branch.json";
-            loadBranches(branchJsonUrl, $scope.branch);
+            loadSelectData(branchJsonUrl, $scope.branch);
             $scope.subBranch1 = {
                 disabled: true,
-                default: { id: 0, name: '(一级子品牌)' },
-                selected: { id: 0, name: '(一级子品牌)' },
+                default: {id: 0, name: '(一级子品牌)'},
+                selected: {id: 0, name: '(一级子品牌)'},
                 items: []
             };
             $scope.subBranch2 = {
                 disabled: true,
-                default: { id: 0, name: '(二级子品牌)' },
-                selected: { id: 0, name: '(二级子品牌)' },
+                default: {id: 0, name: '(二级子品牌)'},
+                selected: {id: 0, name: '(二级子品牌)'},
                 items: []
             };
             $scope.selectBranch = function (id) {
-                selectBranch($scope.branch, id, $scope.subBranch1);
+                selectItem($scope.branch, id, $scope.subBranch1, branchJsonUrl);
                 $scope.subBranch2.disabled = true;
             };
             $scope.selectSubBranch1 = function (id) {
-                selectBranch($scope.subBranch1, id, $scope.subBranch2);
+                selectItem($scope.subBranch1, id, $scope.subBranch2, branchJsonUrl);
             };
             $scope.selectSubBranch2 = function (id) {
-                selectBranch($scope.subBranch2, id);
+                selectItem($scope.subBranch2, id);
             };
             var initBranchId = $initBranchId.val();
             if (initBranchId != '') {
                 $http.get('json/parentBranch.json?branchId=' + initBranchId).success(function (data) {
                     var branchId = data['branchId'];
                     if (branchId) {
-                        selectBranch($scope.branch, branchId, $scope.subBranch1, function () {
+                        selectItem($scope.branch, branchId, $scope.subBranch1, branchJsonUrl, function () {
                             var subBranch1Id = data["subBranch1Id"];
                             if (subBranch1Id) {
-                                selectBranch($scope.subBranch1, subBranch1Id, $scope.subBranch2, function () {
+                                selectItem($scope.subBranch1, subBranch1Id, $scope.subBranch2, branchJsonUrl, function () {
                                     var subBranch2Id = data["subBranch2Id"];
                                     if (subBranch2Id) {
-                                        selectBranch($scope.subBranch2, subBranch2Id);
+                                        selectItem($scope.subBranch2, subBranch2Id);
                                     }
                                 });
                             }
@@ -172,33 +210,34 @@ CommodityDescription.prototype.text = function (text) {
                     }
                 });
             }
-            function selectBranch(branchObj, idToSelect, subBranchObj, callBack) {
-                $.each(branchObj.items, function () {
-                    if (this.id == idToSelect) {
-                        branchObj.selected.id = this.id;
-                        branchObj.selected.name = this.name;
-                        if (subBranchObj) {
-                            loadBranches(branchJsonUrl + "?parentId=" + this.id, subBranchObj, callBack);
-                        }
-                    }
-                });
-            }
+        }
 
-            function loadBranches(url, branchObj, callBack) {
-                var items = branchObj.items;
-                $http.get(url).success(function (data) {
-                    items.splice(0, items.length);
-                    branchObj.disabled = (data.length == 0);
-                    branchObj.selected.id = branchObj.default.id;
-                    branchObj.selected.name = branchObj.default.name;
-                    $.each(data, function () {
-                        items.push({id: this.id, name: this.name});
-                    });
-                    if (callBack) {
-                        callBack();
+        function selectItem(dataModel, idToSelect, subDataModel, url, callBack) {
+            $.each(dataModel.items, function () {
+                if (this.id == idToSelect) {
+                    dataModel.selected.id = this.id;
+                    dataModel.selected.name = this.name;
+                    if (subDataModel) {
+                        loadSelectData(url + "?parentId=" + this.id, subDataModel, callBack);
                     }
+                }
+            });
+        }
+
+        function loadSelectData(url, dataModel, callBack) {
+            var items = dataModel.items;
+            $http.get(url).success(function (data) {
+                items.splice(0, items.length);
+                dataModel.disabled = (data.length == 0);
+                dataModel.selected.id = dataModel.default.id;
+                dataModel.selected.name = dataModel.default.name;
+                $.each(data, function () {
+                    items.push({id: this.id, name: this.name});
                 });
-            }
+                if (callBack) {
+                    callBack();
+                }
+            });
         }
     });
 })();

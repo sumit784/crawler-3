@@ -65,6 +65,8 @@ public class AdminEditCommodityController extends BaseController {
             @RequestParam(value = "branchId", required = true) Integer branchId,
             @RequestParam(value = "subBranch1Id", required = true) Integer subBranch1Id,
             @RequestParam(value = "subBranch2Id", required = true) Integer subBranch2Id,
+            @RequestParam(value = "categoryId", required = true) Integer categoryId,
+            @RequestParam(value = "subCategoryId", required = true) Integer subCategoryId,
             @RequestParam(value = "commodityName", required = true) String commodityName,
             @RequestParam(value = "serialNumber", required = true) String serialNumber,
             @RequestParam(value = "showId", required = true) String showId,
@@ -96,6 +98,11 @@ public class AdminEditCommodityController extends BaseController {
             return createFailResult("品牌未设置");
         }
         commodity.setBranchId(getBranchId(branchId, subBranch1Id, subBranch2Id));
+
+        if (!isPositive(categoryId)) {
+            return createFailResult("商品分类未设置");
+        }
+        commodity.setCategoryId(getCategoryId(categoryId, subCategoryId));
 
         if (!StringUtils.hasText(commodityName)) {
             return createFailResult("名称未设置");
@@ -146,6 +153,14 @@ public class AdminEditCommodityController extends BaseController {
         }
 
         return SUCCESS;
+    }
+
+    private Integer getCategoryId(Integer id1, Integer id2) {
+        if (!isPositive(id2)) {
+            return id1;
+        } else {
+            return id2;
+        }
     }
 
     private Integer getBranchId(Integer id1, Integer id2, Integer id3) {

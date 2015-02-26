@@ -90,12 +90,18 @@ public class HibernateUtil {
 
     public static void delete(Class<?> clazz, String whereClause) {
         Session session = HibernateUtil.getSession();
-        if (!whereClause.trim().toLowerCase().startsWith("where")) {
-            whereClause = "WHERE " + whereClause;
-        }
-        String hql = "DELETE FROM " + clazz.getSimpleName() + " " + whereClause;
+        String hql = "DELETE FROM " + clazz.getSimpleName() + " " +
+                adjustWhereClause(whereClause);
         session.createQuery(hql).executeUpdate();
         HibernateUtil.commit(session);
+    }
+
+    private static String adjustWhereClause(String whereClause) {
+        if (!whereClause.trim().toLowerCase().startsWith("where")) {
+            return " WHERE " + whereClause;
+        } else {
+            return whereClause;
+        }
     }
 
     public static void delete(Class clazz, Integer id) {
@@ -128,6 +134,12 @@ public class HibernateUtil {
     @SuppressWarnings("unchecked")
     public static <T> List<T> getList(Class<T> clazz) {
         return getList(clazz.getSimpleName());
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> getList(Class<T> clazz, String whereClause) {
+        String hql = clazz.getSimpleName() + " " + adjustWhereClause(whereClause);
+        return getList(hql);
     }
 
     public static List getList(String hql) {
