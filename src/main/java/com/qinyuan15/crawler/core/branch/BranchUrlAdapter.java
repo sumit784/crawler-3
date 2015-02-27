@@ -18,7 +18,11 @@ public class BranchUrlAdapter {
 
     public void adjust(List<Branch> branches) {
         for (Branch branch : branches) {
-            branch.setLogo(this.pictureUrlConverter.pathToUrl(branch.getLogo()));
+            adjust(branch);
         }
+    }
+
+    public void adjust(Branch branch) {
+        branch.setLogo(this.pictureUrlConverter.pathToUrl(branch.getLogo()));
     }
 }

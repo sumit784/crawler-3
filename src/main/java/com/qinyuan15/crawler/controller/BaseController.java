@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Base class of controller
@@ -63,6 +61,22 @@ public class BaseController {
 
     protected boolean isPositive(String strValue) {
         return NumberUtils.isNumber(strValue) && NumberUtils.toInt(strValue) > 0;
+    }
+
+    protected void addCss(String file) {
+        addListAttribute("moreCss", file);
+    }
+
+    protected void addJs(String file) {
+        addListAttribute("moreJs", file);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected void addListAttribute(String key, String value) {
+        if (request.getAttribute(key) == null) {
+            request.setAttribute(key, new ArrayList<String>());
+        }
+        ((List) request.getAttribute(key)).add(value);
     }
 
     protected void debugParameters() {

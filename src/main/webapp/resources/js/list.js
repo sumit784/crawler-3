@@ -160,22 +160,32 @@
         }
     });
 
-    angularUtils.controller(function ($scope) {
-        $scope.snapshots = splitArray(getSnapshots(), 3);
+    angularUtils.controller(function ($scope, $http) {
+        initSnapshot();
+        initBranch();
+
         $scope.hotWords = getHotWords();
         $scope.showMore = function () {
             branchLinks.showMore();
         };
 
-        var branches = getBranches();
-        if (branches.length > 14) {
-            branches[13]['more'] = true;
-            $scope.hideBranches = splitArray(branches.slice(14), 7);
-            branches = branches.slice(0, 14);
-            $scope.branches = splitArray(branches, 7);
-        } else {
-            $scope.hideBranches = [];
-            $scope.branches = splitArray(branches, 7);
+        function initBranch() {
+            var branches = getBranches();
+            if (branches.length > 14) {
+                branches[13]['more'] = true;
+                $scope.hideBranches = splitArray(branches.slice(14), 7);
+                branches = branches.slice(0, 14);
+                $scope.branches = splitArray(branches, 7);
+            } else {
+                $scope.hideBranches = [];
+                $scope.branches = splitArray(branches, 7);
+            }
+        }
+
+        function initSnapshot() {
+            $http.get("json/commoditySnapshot.json").success(function (data) {
+                $scope.snapshots = data;
+            });
         }
     });
 
@@ -201,24 +211,6 @@
         words.push({'text': '护手霜'});
         words.push({'text': '男 棉衣', color: 'red'});
         return words;
-    }
-
-    function getSnapshots() {
-        var snapshots = [];
-        for (var i = 0; i < 9; i++) {
-            var snapshot = {
-                id: 1,
-                src: "resources/css/images/goods/clothes4.gif",
-                description: "原创春夏季女装 文艺田园清新宽松娃娃领纯绵双层纱T恤上衣常规",
-                price: 19.80,
-                branch: {
-                    id: 1,
-                    url: "resources/css/images/branchs/branch3.gif"
-                }
-            };
-            snapshots.push(snapshot);
-        }
-        return snapshots;
     }
 })();
 

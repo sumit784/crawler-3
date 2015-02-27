@@ -1,11 +1,8 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,15 +12,16 @@ import javax.servlet.http.HttpServletRequest;
  * Created by qinyuan on 15-2-14.
  */
 @Controller
-public class CompanyInfoController extends BaseController{
+public class CompanyInfoController extends BaseController {
 
     @Autowired
     private HttpServletRequest request;
 
     @RequestMapping("/company-info")
-    public String index(ModelMap model) {
-        String tabIndex = request.getParameter("tab");
+    public String index() {
+        addJs("lib/handlebars.min-v1.3.0");
 
+        String tabIndex = request.getParameter("tab");
         if (tabIndex.equals("1")) {
             setTitle("关于我们");
         } else if (tabIndex.equals("2")) {

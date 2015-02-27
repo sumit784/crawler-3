@@ -24,10 +24,8 @@
 
     var href = location.href.toString();
     var match = href.match(/tab=[0-9]+/);
-    if (match) {
-        var selectedRightNaviIndex = match[0].replace(/\D+/g, '');
-    } else {
-        var selectedRightNaviIndex = 1;
-    }
+    var selectedRightNaviIndex = match ? match[0].replace(/\D+/g, '') : 1;
     switchContent($elements.rightNaviLinks.eq(selectedRightNaviIndex - 1));
+    angularUtils.controller(function ($scope, $http) {
+    });
 })();
