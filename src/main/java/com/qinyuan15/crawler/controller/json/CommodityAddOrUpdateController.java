@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Add or update Commodity
  * Created by qinyuan on 15-1-22.
- */
+ *//*
 @Controller
 public class CommodityAddOrUpdateController extends BaseController{
     @ResponseBody
@@ -85,4 +85,4 @@ public class CommodityAddOrUpdateController extends BaseController{
         public String onShelfTime;
         public Integer id;
     }
-}
+}*/

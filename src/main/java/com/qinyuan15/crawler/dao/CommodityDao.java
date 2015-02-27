@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
 import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.core.IntegerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,26 @@ public class CommodityDao {
         private Integer id;
         private boolean inLowPrice = false;
         private boolean orderByActive = false;
+        private Integer categoryId;
+        private Boolean active;
 
         public Factory setId(Integer id) {
             this.id = id;
             return this;
         }
 
+        public Factory setActive(Boolean active) {
+            this.active = active;
+            return this;
+        }
+
+        public Factory setCategoryId(Integer categoryId) {
+            this.categoryId = categoryId;
+            return this;
+        }
+
         /**
-         * if inLowPrice is set to true, getInstances() only return
+         * if inLowPrice is set to true, create() only return
          * commodities that in lowest price during three month
          *
          * @param inLowPrice whether get commodities only in lowest price of three month
@@ -45,8 +58,16 @@ public class CommodityDao {
             // build SQL query command
             String query = "FROM Commodity WHERE 1=1";
 
-            if (id != null && id > 0) {
+            if (IntegerUtils.isPositive(id)) {
                 query += " AND id=" + id;
+            }
+
+            if (IntegerUtils.isPositive(categoryId)) {
+                query += " AND category_id=" + categoryId;
+            }
+
+            if (active != null) {
+                query += " AND active=" + active;
             }
 
             if (this.orderByActive) {

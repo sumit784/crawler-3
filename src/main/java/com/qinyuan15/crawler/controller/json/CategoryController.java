@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * CategoryController
+ * Controller to query category
  * Created by qinyuan on 15-2-26.
  */
 @Controller

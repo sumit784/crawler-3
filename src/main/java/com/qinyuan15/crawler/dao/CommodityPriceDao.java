@@ -10,6 +10,10 @@ public class CommodityPriceDao {
         return new PriceRange(commodityId);
     }
 
+    /**
+     * Class to query maximum and minimum price of certain commodity
+     * during a period of time
+     */
     public static class PriceRange {
         private Integer commodityId;
         private String startTime;

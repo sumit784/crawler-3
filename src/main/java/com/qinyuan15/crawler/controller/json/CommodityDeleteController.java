@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Controller to delete Commodity
  * Created by qinyuan on 15-1-22.
- */
+ *//*
 @Controller
 public class CommodityDeleteController extends BaseController{
     @ResponseBody
@@ -43,4 +43,4 @@ public class CommodityDeleteController extends BaseController{
             return createFailResult(e);
         }
     }
-}
+}*/
