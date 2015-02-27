@@ -2,25 +2,26 @@
 <%@include file="header.jsp" %>
 <div class="search boxShadow">
     <div class="classification">
-        <c:forEach var="classification" items="${classifications}" varStatus="status">
+        <c:forEach var="subCategory" items="${subCategories}" varStatus="status">
             <c:if test="${status.index % 2 == 0}"><div></c:if>
-            <a href="javascript:void(0)" class="noLineAnchor lightGrayFont">${classification}</a>
+            <a href="javascript:void(0)" class="noLineAnchor lightGrayFont">${subCategory.name}</a>
             <c:if test="${status.index % 2 == 1}"></div></c:if>
         </c:forEach>
     </div>
     <div class="navigationName boxShadow orangeBack">
-        <span class="selectedNavigation">{{keyWord}}</span>
+        <span class="selectedNavigation">${categoryName}</span>
     </div>
     <div class="split"></div>
     <div class="searchForm">
         <div class="input-group">
             <div class="input-group-btn searchType">
-                <button type="button" class="btn btn-default dropdown-toggle grayBack" data-toggle="dropdown">
+                <button type="button" class="btn btn-default dropdown-toggle grayBack"
+                        data-toggle="dropdown">
                     全部分类<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <c:forEach var="classification" items="${classifications}">
-                        <li><a href="javascript:void(0)">${classification}</a></li>
+                    <c:forEach var="subCategory" items="${subCategories}">
+                        <li><a href="javascript:void(0)">${subCategory.name}</a></li>
                     </c:forEach>
                 </ul>
             </div>

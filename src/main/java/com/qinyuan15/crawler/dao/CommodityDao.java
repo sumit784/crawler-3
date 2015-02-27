@@ -18,6 +18,7 @@ public class CommodityDao {
     public static class Factory {
         private Integer id;
         private boolean inLowPrice = false;
+        private boolean orderByActive = false;
 
         public Factory setId(Integer id) {
             this.id = id;
@@ -35,12 +36,21 @@ public class CommodityDao {
             return this;
         }
 
+        public Factory orderByActive() {
+            this.orderByActive = true;
+            return this;
+        }
+
         public List<Commodity> getInstances() {
             // build SQL query command
             String query = "FROM Commodity WHERE 1=1";
 
             if (id != null && id > 0) {
                 query += " AND id=" + id;
+            }
+
+            if (this.orderByActive) {
+                query += " ORDER BY active DESC";
             }
 
             // execute query
@@ -70,5 +80,25 @@ public class CommodityDao {
     public Commodity getInstance(int id) {
         List<Commodity> commodities = factory().setId(id).getInstances();
         return commodities.size() == 0 ? null : commodities.get(0);
+    }
+
+    public void delete(int id) {
+        HibernateUtil.delete(Commodity.class, id);
+    }
+
+    public void deactivate(int id) {
+        Commodity commodity = HibernateUtil.get(Commodity.class, id);
+        if (commodity != null) {
+            commodity.setActive(false);
+            HibernateUtil.update(commodity);
+        }
+    }
+
+    public void activate(int id) {
+        Commodity commodity = HibernateUtil.get(Commodity.class, id);
+        if (commodity != null) {
+            commodity.setActive(true);
+            HibernateUtil.update(commodity);
+        }
     }
 }

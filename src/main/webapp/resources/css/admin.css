@@ -2,11 +2,16 @@ div.content {
     margin-top: 37px;
 }
 
+div.content div.left, div.content div.right {
+    float: left;
+    margin-bottom: 40px;
+}
+
 div.content div.left {
     padding-top: 8px;
     width: 120px;
     height: 100px;
-    float: left;
+    margin-right: 10px;
 }
 
 div.content div.left > div {
@@ -35,38 +40,64 @@ div.content div.left div.user {
     font-weight: bold;
 }
 
+div.content div.left div.active, div.content div.left div.inactive {
+    font-size: 10pt;
+}
+
+div.content div.left div.active {
+    padding-bottom: 2px;
+}
+
+div.content div.left div.inactive {
+    padding-top: 2px;
+}
+
 div.content div.left div.commodity, div.content div.left div.log {
     font-size: 9pt;
 }
 
 div.content div.right {
-    float: right;
+    width: 820px;
 }
 
-div.content div.right td {
-    padding: 0 11px 20px 0;
-}
-
-div.content div.right td > div {
+div.content div.right > div {
     background-color: #ffffff;
+    float: left;
+    margin: 0 5px 10px 0;
 }
 
-div.content div.right td div.image img {
-    height: 194px;
-    width: 194px;
+div.content div.right > div.active {
+    border: 4px solid #05FF0D;
 }
 
-div.content div.right tr:last-child td:last-child div.image img {
+div.content div.left span.active {
+    background-color: #05FF0D;
+}
+
+div.content div.right > div.inactive {
+    border: 4px solid #A53614;
+}
+
+div.content div.left span.inactive {
+    background-color: #A53614;
+}
+
+div.content div.right div.image img {
+    height: 192px;
+    width: 192px;
+}
+
+div.content div.right div.image:last-child img {
     height: 260px;
 }
 
-div.content div.right table div.description {
-    width: 192px;
+div.content div.right div.description {
+    width: 190px;
     padding: 10px 8px;
     height: 70px;
 }
 
-div.content div.right table div.description a {
+div.content div.right div.description a {
     font-size: 10pt;
     color: #7F4B2F;
 }

@@ -25,7 +25,7 @@
         </div>
         <div class="navigationLinks">
             <a ng-repeat="category in categories" class="{{category.class}} noLineAnchor"
-               href="javascript:void(0)" ng-href="list?keyWord={{category.text}}">{{category.text}}</a>
+               href="javascript:void(0)" ng-href="list?id={{category.id}}">{{category.text}}</a>
         </div>
     </div>
 </div>

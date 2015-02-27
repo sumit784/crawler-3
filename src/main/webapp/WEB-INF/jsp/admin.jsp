@@ -9,38 +9,30 @@
     </div>
     <div class="log">操作日志</div>
     <div class="split"></div>
+    <div class="active">有效 <span class="active">&nbsp;&nbsp;</span></div>
+    <div class="inactive">无效 <span class="inactive">&nbsp;&nbsp;</span></div>
+    <div class="split"></div>
 </div>
 <div class="right">
-    <table>
-        <c:forEach var="commodity" items="${commodities}" varStatus="status">
-            <c:if test="${status.index%4==0}"><tr></c:if>
-            <td>
-                <div class="boxShadow">
-                    <div class="image">
-                        <a href="admin-edit-commodity?id=${commodity.id}" target="_blank">
-                            <img class="link" src="${commodity.picture}"/>
-                        </a>
-                    </div>
-                    <div class="description">
-                        <a href="admin-edit-commodity?id=${commodity.id}"
-                           class="noLineAnchor limit-size" data-options="limit:28" target="_blank">${commodity.name}</a>
-                    </div>
-                </div>
-            </td>
-            <c:if test="${status.index%4==3}"></tr></c:if>
-        </c:forEach>
-        <c:if test="${fn:length(commodities)%4==0}">
-        <tr></c:if>
-            <td>
-                <div>
-                    <div class="image">
-                        <a href="admin-edit-commodity" target="_blank">
-                            <img class="link" src="resources/css/images/manage-commodity/add_c.png"/>
-                        </a>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
+    <c:forEach var="commodity" items="${commodities}">
+        <div class="boxShadow ${commodity.active ? 'active' : 'inactive'}">
+            <div class="image">
+                <a href="admin-edit-commodity?id=${commodity.id}">
+                    <img class="link" src="${commodity.picture}"/>
+                </a>
+            </div>
+            <div class="description">
+                <a href="admin-edit-commodity?id=${commodity.id}"
+                   class="noLineAnchor limit-size" data-options="limit:28">${commodity.name}</a>
+            </div>
+        </div>
+    </c:forEach>
+    <div>
+        <div class="image">
+            <a href="admin-edit-commodity">
+                <img class="link" src="resources/css/images/manage-commodity/add_c.png"/>
+            </a>
+        </div>
+    </div>
 </div>
 <%@include file="footer.jsp" %>

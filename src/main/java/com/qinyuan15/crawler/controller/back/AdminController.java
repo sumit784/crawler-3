@@ -1,8 +1,8 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.dao.CommodityPicture;
@@ -34,7 +34,7 @@ public class AdminController extends BaseController {
     }
 
     private List<SimpleCommodity> getCommodities(int adminId) {
-        List<Commodity> commodities = CommodityDao.factory().getInstances();
+        List<Commodity> commodities = CommodityDao.factory().orderByActive().getInstances();
         List<SimpleCommodity> simpleCommodities = new ArrayList<SimpleCommodity>();
         CommodityPictureDao commodityPictureDao = new CommodityPictureDao();
         PictureUrlConverter urlConverter = new PictureUrlConverter(
@@ -44,10 +44,12 @@ public class AdminController extends BaseController {
 
             simpleCommodity.id = commodity.getId();
             simpleCommodity.name = commodity.getName();
+            simpleCommodity.active = commodity.getActive();
             CommodityPicture commodityPicture = commodityPictureDao.getFirstInstance(commodity.getId());
             if (commodityPicture != null) {
                 simpleCommodity.picture = urlConverter.pathToUrl(commodityPicture.getUrl());
             }
+            //simpleCommodity.style = commodity.getActive() ? "active" : "inactive";
 
             simpleCommodities.add(simpleCommodity);
         }
@@ -59,6 +61,12 @@ public class AdminController extends BaseController {
         String name;
         String picture;
 
+        /**
+         * CSS style
+         */
+        //String style;
+        Boolean active;
+
         public int getId() {
             return id;
         }
@@ -69,6 +77,15 @@ public class AdminController extends BaseController {
 
         public String getPicture() {
             return picture;
+        }
+
+        /*
+        public String getStyle() {
+            return style;
+        }
+        */
+        public Boolean getActive() {
+            return active;
         }
     }
 }

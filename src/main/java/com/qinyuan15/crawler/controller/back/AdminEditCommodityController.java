@@ -74,6 +74,8 @@ public class AdminEditCommodityController extends BaseController {
             @RequestParam(value = "url", required = true) String url,
             @RequestParam(value = "parameters", required = true) String parameters,
             @RequestParam(value = "deleteSubmit", required = false) String deleteSubmit,
+            @RequestParam(value = "activateSubmit", required = false) String activateSubmit,
+            @RequestParam(value = "deactivateSubmit", required = false) String deactivateSubmit,
             @RequestParam(value = "publishSubmit", required = false) String publishSubmit,
             @RequestParam(value = "positiveAppraiseGroups", required = false) String[] positiveAppraiseGroups,
             @RequestParam(value = "negativeAppraiseGroups", required = false) String[] negativeAppraiseGroups,
@@ -82,11 +84,22 @@ public class AdminEditCommodityController extends BaseController {
         //debugParameters();
 
         if (deleteSubmit != null) {
-            if (id != null && id > 0) {
-                HibernateUtil.delete(Commodity.class, id);
+            if (isPositive(id)) {
+                new CommodityDao().delete(id);
+            }
+            return SUCCESS;
+        } else if (activateSubmit != null) {
+            if (isPositive(id)) {
+                new CommodityDao().activate(id);
+            }
+            return SUCCESS;
+        } else if (deactivateSubmit != null) {
+            if (isPositive(id)) {
+                new CommodityDao().deactivate(id);
             }
             return SUCCESS;
         }
+
 
         if (publishSubmit == null) {
             return createFailResult("未知错误");

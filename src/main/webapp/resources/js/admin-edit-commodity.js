@@ -36,6 +36,7 @@ CommodityDescription.prototype.text = function (text) {
     var $showId = $('input[name=showId]');
     var $initBranchId = $('#initBranchId');
     var $initCategoryId = $('#initCategoryId');
+    var $enlargeImage = $('#enlargeImage');
 
     $selectButtons.click(function () {
         $(this).css({
@@ -52,7 +53,7 @@ CommodityDescription.prototype.text = function (text) {
     $form.ajaxForm(function (data) {
         $submitInfo.fadeOut(200);
         if (data.success) {
-            alert("操作成功");
+            location.href = "admin";
         } else {
             alert(data.detail);
         }
@@ -110,6 +111,32 @@ CommodityDescription.prototype.text = function (text) {
             };
             $scope.deleteDetailImage = function (index) {
                 $scope.detailImageUrls.splice(index, 1);
+            };
+            $scope.enlargeImage = function (imageUrl, event) {
+                var pageX = event.clientX;
+                var pageY = event.clientY;
+                var totalWidth = document.body.clientWidth;
+
+                var $image = $enlargeImage.find('img');
+                var x, y;
+                if (pageX > totalWidth / 2) {
+                    x = pageX - $image.width() - 100;
+                } else {
+                    x = pageX + 100;
+                }
+                y = pageY - $image.height() / 2;
+                if (y < 0) {
+                    y = 0;
+                }
+
+                $image.attr('src', imageUrl);
+                $enlargeImage.css({
+                    left: x,
+                    top: y
+                }).show();
+            };
+            $scope.closeEnlargeImage = function () {
+                $enlargeImage.hide();
             };
             $scope.imageUrls = [];
             $scope.detailImageUrls = [];
@@ -240,4 +267,5 @@ CommodityDescription.prototype.text = function (text) {
             });
         }
     });
+    //console.log(document.body.clientWidth);
 })();

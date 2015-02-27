@@ -74,7 +74,9 @@
                     <div class="imageGroup">
                         <div class="image" ng-repeat="imageUrl in imageUrls">
                             <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
-                            <img ng-src="{{imageUrl}}"/><br/>
+                            <img class="link" ng-src="{{imageUrl}}"
+                                 ng-mouseover="enlargeImage(imageUrl, $event)"
+                                 ng-mouseout="closeEnlargeImage()"/><br/>
                             <a class="noLineAnchor" href="javascript:void(0)"
                                ng-click="deleteImage($index)">删除</a>
                         </div>
@@ -85,13 +87,16 @@
                     <div class="imageGroup">
                         <div class="image" ng-repeat="detailImageUrl in detailImageUrls">
                             <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
-                            <img ng-src="{{detailImageUrl}}"/><br/>
+                            <img class="link" ng-src="{{detailImageUrl}}"
+                                 ng-mouseover="enlargeImage(detailImageUrl, $event)"
+                                 ng-mouseout="closeEnlargeImage()"/><br/>
                             <a class="noLineAnchor" href="javascript:void(0)"
                                ng-click="deleteDetailImage($index)">删除</a>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="enlargeImage" class="boxShadow"><img src=""/></div>
         </div>
         <div class="detail">
             <table>
@@ -138,8 +143,23 @@
             </table>
         </div>
         <div class="button">
-            <button id="deleteCommodity" name="deleteSubmit" type="submit">删除商品</button>
-            <button id="publishCommodity" name="publishSubmit" type="submit">发布商品</button>
+            <c:choose>
+                <c:when test="${commodity.id == null}">
+                    <button id="publishCommodity" name="publishSubmit" type="submit">发布商品</button>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${commodity.active}">
+                            <button id="deleteCommodity" name="deactivateSubmit" type="submit">删除商品</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button id="deleteCommodity" name="activateSubmit" type="submit">激活商品</button>
+                            <button id="deleteCommodity" name="deleteSubmit" type="submit">彻底删除</button>
+                        </c:otherwise>
+                    </c:choose>
+                    <button id="publishCommodity" name="publishSubmit" type="submit">修改商品</button>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div class="price">
             <div class="recommend">(建议不写)</div>

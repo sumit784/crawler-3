@@ -12,6 +12,12 @@ public class CategoryDao {
         return HibernateUtil.getList(Category.class);
     }
 
+    public Category getFirstInstance() {
+        @SuppressWarnings("unchecked")
+        List<Category> instances = HibernateUtil.getList("FROM Category ORDER BY id");
+        return instances.size() == 0 ? null : instances.get(0);
+    }
+
     public List<Category> getRootInstances() {
         return HibernateUtil.getList(Category.class, "parentId IS NULL OR parentId<=0");
     }

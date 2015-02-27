@@ -163,7 +163,6 @@
     angularUtils.controller(function ($scope) {
         $scope.snapshots = splitArray(getSnapshots(), 3);
         $scope.hotWords = getHotWords();
-        $scope.keyWord = getKeyWord();
         $scope.showMore = function () {
             branchLinks.showMore();
         };

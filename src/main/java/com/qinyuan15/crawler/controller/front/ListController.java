@@ -1,18 +1,13 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.core.ApplicationConfig;
-import com.qinyuan15.crawler.core.commodity.CategoryUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.qinyuan15.crawler.dao.Category;
+import com.qinyuan15.crawler.dao.CategoryDao;
+import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import java.net.URLEncoder;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Commodity list page controller
@@ -21,26 +16,18 @@ import java.net.URLEncoder;
 @Controller
 public class ListController extends BaseController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ListController.class);
-
-    @Autowired
-    private HttpServletRequest request;
-
     @RequestMapping("/list")
-    public String index(ModelMap model) {
-        ApplicationConfig config = ApplicationConfig.getInstance();
-        String keyWord = request.getParameter("keyWord");
-        if (!StringUtils.hasText(keyWord)) {
-            try {
-                keyWord = URLEncoder.encode(CategoryUtils.getCategories().get(0), config.getDefaultEncoding());
-                return "redirect:list?keyWord=" + keyWord;
-            } catch (Exception e) {
-                LOGGER.error("fail to redirect /list: {}", e);
-            }
+    public String index(ModelMap model, @RequestParam(value = "id", required = false) Integer id) {
+        CategoryDao dao = new CategoryDao();
+
+        Category category = HibernateUtil.get(Category.class, id);
+        if (category == null) {
+            category = dao.getFirstInstance();
         }
 
-        setTitle(keyWord + " 相关商品");
-        model.addAttribute("classifications", CategoryUtils.getSubCategories(keyWord));
+        setTitle(category.getName() + " 相关商品");
+        model.addAttribute("categoryName", category.getName());
+        model.addAttribute("subCategories", dao.getSubInstances(category.getId()));
         return "list";
     }
 }

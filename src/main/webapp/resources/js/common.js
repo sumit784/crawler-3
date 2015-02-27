@@ -129,11 +129,8 @@ var angularUtils = {
     }
 };
 
-function getKeyWord() {
-    return $.url.param('keyWord');
-}
 
-/*
+/**
  * query plugins
  */
 jQuery.fn.dataOptions = function () {
@@ -153,20 +150,18 @@ jQuery.fn.focusOrSelect = function () {
 };
 
 (function () {
-    angularUtils.controller('NavigationController', function ($scope) {
-        var categories = getCategories();
-        $scope.selectedCategory = getKeyWord();
-        $scope.categories = [];
-        for (var i = 0, len = categories.length; i < len; i++) {
-            var category = categories[i];
-            $scope.categories.push({
-                'text': category,
-                'class': category == $scope.selectedCategory ? 'selected' : 'darkFont'
+    angularUtils.controller('NavigationController', function ($scope, $http) {
+        $http.get("json/category.json").success(function (data) {
+            var selectedCategoryIndex = $.url.param('id');
+            $scope.categories = [];
+            $.each(data, function () {
+                $scope.categories.push({
+                    id: this.id,
+                    text: this.name,
+                    class: this.id == selectedCategoryIndex ? 'selected' : 'darkFont'
+                });
             });
-        }
-        function getCategories() {
-            return ['女人' , '男人', '小孩', '数码家电', '居家'];
-        }
+        });
     });
 
     var toTopLink = {

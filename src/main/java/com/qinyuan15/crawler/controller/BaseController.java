@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,15 @@ public class BaseController {
 
     @Autowired
     protected HttpServletRequest request;
+
+    protected String getParameter(String name) {
+        try {
+            request.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        return request.getParameter(name);
+    }
 
     protected void setTitle(Object title) {
         request.setAttribute(TITLE, title);

@@ -15,7 +15,7 @@ public class ListControllerTest {
         ListController controller = new ListController();
         ControllerTestUtils.injectRequest(controller);
 
-        String result = controller.index(ControllerTestUtils.mockModelMap());
+        String result = controller.index(ControllerTestUtils.mockModelMap(), 1);
         assertThat(result).startsWith("redirect:list?keyWord=");
     }
 }

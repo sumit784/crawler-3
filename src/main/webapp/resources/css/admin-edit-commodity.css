@@ -102,6 +102,10 @@ div.content div.link td a.keyWordLink {
     color: #1A1AA6;
 }
 
+div.content div.link div.images {
+    margin-top: 15px;
+}
+
 div.content div.link div.images > div {
     vertical-align: top;
 }
@@ -146,6 +150,20 @@ div.content div.link div.images div.image img {
 div.content div.link div.images div.commodityImage {
     width: 400px;
     margin-right: 20px;
+}
+
+#enlargeImage {
+    position: fixed;
+    left: 300px;
+    top: 0;
+    z-index: 10;
+    border: 2px solid #2B2C30;
+    display: none;
+}
+
+#enlargeImage img {
+    height: 500px;
+    width: 500px;
 }
 
 div.content div.detail {
@@ -205,12 +223,12 @@ div.content div.detail td input.form-control {
 
 div.content div.boxShadow form > div.button {
     background-color: transparent;
-    margin: 30px 0;
-    padding-left: 265px;
+    padding: 30px 0;
+    text-align: center;
 }
 
 div.content div.boxShadow form > div.button button {
-    margin-right: 95px;
+    margin: 0 90px;
     color: #ffffff;
     padding: 5px 20px;
     border: 0;
