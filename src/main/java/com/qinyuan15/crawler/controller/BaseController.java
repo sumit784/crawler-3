@@ -29,6 +29,8 @@ public class BaseController {
 
     protected final static String BLANK = "blank";
 
+    protected final static String RESULT = "result";
+
     @Autowired
     protected HttpServletRequest request;
 
@@ -89,8 +91,8 @@ public class BaseController {
         LOGGER.info(result);
     }
 
-    protected Map<String, String> createSimpleMap(String key, String value) {
-        Map<String, String> map = new HashMap<String, String>();
+    protected Map<String, Object> createSimpleMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put(key, value);
         return map;
     }

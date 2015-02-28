@@ -24,6 +24,6 @@ public class ChineseLetterController extends BaseController {
 
         String firstChar = string.trim().substring(0, 1);
         String firstLetter = ChineseUtils.getPhoneticLetter(firstChar);
-        return toJson(createSimpleMap("result", firstLetter));
+        return toJson(createSimpleMap(RESULT, firstLetter));
     }
 }
