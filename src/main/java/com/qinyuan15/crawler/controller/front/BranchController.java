@@ -45,12 +45,17 @@ public class BranchController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/json/branch.json")
-    public String query(@RequestParam(value = "parentId", required = false) Integer parentId) {
+    public String query(@RequestParam(value = "parentId", required = false) Integer parentId,
+                        @RequestParam(value = "categoryId", required = false) Integer categoryId) {
         BranchDao dao = new BranchDao();
+        if (isPositive(categoryId)) {
+            return toJson(adjustBranch(dao.getInstancesByCategoryId(categoryId)));
+        }
+
         if (isPositive(parentId)) {
-            return toJson(dao.getSubInstances(parentId));
+            return toJson(adjustBranch(dao.getSubInstances(parentId)));
         } else {
-            return toJson(dao.getRootInstances());
+            return toJson(adjustBranch(dao.getRootInstances()));
         }
     }
 
@@ -60,17 +65,17 @@ public class BranchController extends BaseController {
     @ResponseBody
     @RequestMapping("/json/groupedBranches.json")
     public String queryGroupedBranches() {
-        BranchDao dao = new BranchDao();
-        List<Branch> branches = dao.getInstances();
+        List<Branch> branches = new BranchDao().getInstances();
+        BranchGrouper branchGrouper = new BranchGrouper();
+        return toJson(branchGrouper.groupByLetter(adjustBranch(branches)));
+    }
 
+    private List<Branch> adjustBranch(List<Branch> branches) {
         PictureUrlConverter urlConverter = new PictureUrlConverter(imageDownloader, request.getLocalAddr());
         BranchUrlAdapter branchUrlAdapter = new BranchUrlAdapter(urlConverter);
         branchUrlAdapter.adjust(branches);
-
-        BranchGrouper branchGrouper = new BranchGrouper();
-        return toJson(branchGrouper.groupByLetter(branches));
+        return branches;
     }
-
 
     @ResponseBody
     @RequestMapping("/json/parentBranch.json")

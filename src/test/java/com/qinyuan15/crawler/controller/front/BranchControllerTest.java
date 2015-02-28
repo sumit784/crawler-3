@@ -13,7 +13,7 @@ public class BranchControllerTest {
     public void testQuery() throws Exception {
         BranchController controller = new BranchController();
         injectRequest(controller);
-        System.out.println(controller.query(null));
-        System.out.println(controller.query(7));
+        System.out.println(controller.query(null, null));
+        System.out.println(controller.query(7, null));
     }
 }

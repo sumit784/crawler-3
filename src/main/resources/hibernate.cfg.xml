@@ -20,6 +20,7 @@
 
         <mapping resource="com/qinyuan15/crawler/dao/Proxy.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/Branch.hbm.xml"/>
+        <mapping resource="com/qinyuan15/crawler/dao/HotSearchWord.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/Category.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/AppraiseGroup.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/PriceRecord.hbm.xml"/>

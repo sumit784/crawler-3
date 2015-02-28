@@ -1,11 +1,5 @@
 ;
 (function () {
-    function switchNavigationLinks($link) {
-        $elements.navigationLinks.filter('.selected').removeClass('selected').addClass('darkFont');
-        $link.removeClass('darkFont').addClass("selected");
-        $elements.selectedNavigation.text($link.text());
-    }
-
     var branchPoster = {
         speed: 500,
         show: function () {
@@ -58,38 +52,6 @@
         }
     };
 
-    var branchLinks = {
-        searchDivInitHeight: null,
-        _initSearchDivInitHeight: function () {
-            this.searchDivInitHeight = $elements.searchDiv.height();
-        },
-        getHideBranchHeight: function () {
-            return $elements.hideBranch.height();
-        },
-        hideMore: function () {
-            if (!this.searchDivInitHeight) {
-                this._initSearchDivInitHeight();
-            }
-            $elements.getMoreBranch().show().prev().hide();
-            var self = this;
-            $elements.hideBranch.stop(true, true).slideUp(function () {
-                $elements.searchDiv.height(self.searchDivInitHeight);
-            });
-        },
-        showMore: function () {
-            if (!this.searchDivInitHeight) {
-                this._initSearchDivInitHeight();
-            }
-            var newHeight = this.searchDivInitHeight + this.getHideBranchHeight();
-            $elements.searchDiv.height(newHeight);
-            var self = this;
-            $elements.hideBranch.stop(true, true).slideDown(function () {
-                $elements.searchDiv.height(self.searchDivInitHeight + self.getHideBranchHeight());
-            });
-            $elements.getMoreBranch().hide().prev().show();
-        }
-    };
-
     function switchSortLinks($link) {
         var $image = $link.find('img');
         switch ($image.attr('src')) {
@@ -109,10 +71,8 @@
     var $elements = {
         collectButton: $('#collectButton'),
         refreshButton: $('#refreshButton'),
-        navigationLinks: $('div.navigation > div.navigationLinks a'),
         classifyLinks: $('div.search > div.classification a'),
         sortLinks: $('div.sort > div.links a'),
-        selectedNavigation: $('span.selectedNavigation'),
         searchDiv: $('div.search'),
         branchDiv: $('div.branch'),
         branchLogo: $('div.branch div.logos'),
@@ -120,21 +80,14 @@
         branchLogoTable: $('div.branch div.logos table'),
         goodsImages: $('div.goods div.images div.image img'),
         goodsDescriptions: $('div.goods div.images div.description a'),
-        hideBranch: $('div.search > div.branch > div.logos div.hideBranch'),
-        hotWords: $('div.search > div.searchForm div.hotWords'),
-        branchPoster: $('div.search > div.branch > div.poster'),
-        getMoreBranch: function () {
-            return $('div.search > div.branch > div.logos div.moreBranch:last');
-        }
+        hotWords: $('div.search div.right div.searchForm div.hotWords'),
+        branchPoster: $('div.search div.right div.branch div.poster')
     };
 
     $elements.collectButton.click(function () {
     });
     $elements.refreshButton.click(function () {
         location.reload();
-    });
-    $elements.navigationLinks.click(function () {
-        switchNavigationLinks($(this));
     });
     $elements.classifyLinks.click(function (event) {
         classifyLinks.click($(this));
@@ -152,34 +105,52 @@
     }, function () {
         $(this).removeClass('deepTransparent');
     });
-    $elements.branchDiv.hover(function (event) {
-    }, function (event) {
-        var $target = $(event.target);
-        if ($target.hasClass('branch') && $target.is('div')) {
-            branchLinks.hideMore();
-        }
-    });
-
     angularUtils.controller(function ($scope, $http) {
         initSnapshot();
         initBranch();
 
         $scope.hotWords = getHotWords();
         $scope.showMore = function () {
-            branchLinks.showMore();
+            if ($scope.hideBranches.length == 0) {
+                return;
+            }
+            $('div.search > div.right div.branch > div.logos div.hideBranch').show();
+            $('div.search > div.right div.branch > div.logos div.moreBranch').hide();
+        };
+        $scope.hideMore = function (event) {
+            if ($scope.hideBranches.length == 0) {
+                return;
+            }
+
+            var target = event.target;
+            var $target = $(target);
+            if (!($target.is('div'))) {
+                return;
+            }
+
+            if ($target.hasClass("logos") || $target.hasClass("branch")
+                || $target.hasClass('right') || $target.hasClass('search')
+                || $target.hasClass('split')) {
+                $('div.search > div.right div.branch > div.logos div.hideBranch').hide();
+                $('div.search > div.right div.branch > div.logos div.moreBranch').show();
+            }
         };
 
         function initBranch() {
-            var branches = getBranches();
-            if (branches.length > 14) {
-                branches[13]['more'] = true;
-                $scope.hideBranches = splitArray(branches.slice(14), 7);
-                branches = branches.slice(0, 14);
-                $scope.branches = splitArray(branches, 7);
-            } else {
-                $scope.hideBranches = [];
-                $scope.branches = splitArray(branches, 7);
-            }
+            var url = "json/branch.json?categoryId=" + $.url.param('id');
+            $http.get(url).success(function (branches) {
+                //var branches = getBranches();
+                $scope.moreBranch = {logo: 'resources/css/images/list/more-branch.png'};
+                if (branches.length > 14) {
+                    $scope.showBranches = branches.slice(0, 13);
+                    $scope.hideBranches = branches.slice(13);
+                    $scope.moreBranch.show = true;
+                } else {
+                    $scope.showBranches = branches;
+                    $scope.hideBranches = [];
+                    $scope.moreBranch.show = false;
+                }
+            });
         }
 
         function initSnapshot() {
@@ -188,17 +159,6 @@
             });
         }
     });
-
-    function getBranches() {
-        var branches = [];
-        for (var i = 0; i < 35; i++) {
-            branches.push({
-                "id": i,
-                "src": "resources/css/images/branchs/branch1.png"
-            });
-        }
-        return branches;
-    }
 
     function getHotWords() {
         var words = [];
