@@ -76,29 +76,43 @@ CommodityDescription.prototype.text = function (text) {
         initImages();
         $scope.runCrawler = function () {
             var showId = $.trim($showId.val());
-            var $crawlerLink = $('#crawlerLink');
-            var $buyLink = $('#buyLink');
-            var $commodityName = $('#commodityName');
-            if (showId != "") {
-                var crawlerLink = "http://s.etao.com/detail/" + showId + ".html";
-                $scope.runningCrawler = true;
-                $http.get("commodity-crawler.json?url=" + crawlerLink).success(function (data) {
-                    $crawlerLink.text(crawlerLink).attr('href', crawlerLink).prev().val(crawlerLink);
-                    var buyLink = data['buyUrl'];
-                    $buyLink.text(buyLink).attr('href', buyLink).prev().val(buyLink);
-                    var name = data['name'];
-                    $commodityName.text(name).attr('href', crawlerLink).prev().val(name);
-
-                    $scope.imageUrls = data['imageUrls'];
-                    $scope.detailImageUrls = data['detailImageUrls'];
-
-                    $scope.runningCrawler = false;
-                });
-            } else {
-                $crawlerLink.text("").attr('href', "").prev().val("");
-                $buyLink.text("").attr('href', "").prev().val("");
-                $commodityName.text("").attr('href', "").prev().val("");
+            if (showId == "") {
+                $scope.crawlerInfo = '请输入商品ID！';
+                $scope.showCrawlerInfo = true;
+                $showId.focus();
+                return;
             }
+
+            var validateUrl = "json/commodityShowIdValidate.json?showId=" + showId;
+            var commodityId = $.url.param("id");
+            if (commodityId != null) {
+                validateUrl += "&id=" + commodityId;
+            }
+            $http.get(validateUrl).success(function (data) {
+                if (!data['result']) {
+                    $scope.crawlerInfo = '该商品ID已经存在！';
+                    $scope.showCrawlerInfo = true;
+                } else {
+                    var $crawlerLink = $('#crawlerLink');
+                    var $buyLink = $('#buyLink');
+                    var $commodityName = $('#commodityName');
+                    var crawlerLink = "http://s.etao.com/detail/" + showId + ".html";
+                    $scope.crawlerInfo = '正在抓取网页...';
+                    $scope.showCrawlerInfo = true;
+                    $http.get("commodity-crawler.json?url=" + crawlerLink).success(function (data) {
+                        $crawlerLink.text(crawlerLink).attr('href', crawlerLink).prev().val(crawlerLink);
+                        var buyLink = data['buyUrl'];
+                        $buyLink.text(buyLink).attr('href', buyLink).prev().val(buyLink);
+                        var name = data['name'];
+                        $commodityName.text(name).attr('href', crawlerLink).prev().val(name);
+
+                        $scope.imageUrls = data['imageUrls'];
+                        $scope.detailImageUrls = data['detailImageUrls'];
+                        $scope.showCrawlerInfo = false;
+                    });
+
+                }
+            });
         };
         $scope.addAppraiseGroup = function (event, name) {
             var input = '<input type="text" class="form-control" name="' + name + '"/>';
@@ -113,23 +127,35 @@ CommodityDescription.prototype.text = function (text) {
                 $scope.detailImageUrls.splice(index, 1);
             };
             $scope.enlargeImage = function (imageUrl, event) {
+                var $image = $enlargeImage.find('img');
+                $image.attr('src', imageUrl);
+
+                var imageHeight = images.getHeight($image);
+                var imageWidth = images.getWidth($image);
+                var totalHeight = window.screen.availHeight - 120;
+                if (imageHeight > totalHeight) {
+                    imageWidth = imageWidth * totalHeight / imageHeight;
+                    imageHeight = totalHeight;
+                }
+                $image.css({
+                    width: imageWidth,
+                    height: imageHeight
+                });
+
                 var pageX = event.clientX;
                 var pageY = event.clientY;
                 var totalWidth = document.body.clientWidth;
-
-                var $image = $enlargeImage.find('img');
                 var x, y;
                 if (pageX > totalWidth / 2) {
-                    x = pageX - $image.width() - 100;
+                    x = pageX - imageWidth - 100;
                 } else {
                     x = pageX + 100;
                 }
-                y = pageY - $image.height() / 2;
+                y = pageY - imageHeight / 2;
                 if (y < 0) {
                     y = 0;
                 }
 
-                $image.attr('src', imageUrl);
                 $enlargeImage.css({
                     left: x,
                     top: y
@@ -267,5 +293,4 @@ CommodityDescription.prototype.text = function (text) {
             });
         }
     });
-    //console.log(document.body.clientWidth);
 })();

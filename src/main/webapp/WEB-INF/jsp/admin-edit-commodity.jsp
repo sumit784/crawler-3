@@ -39,9 +39,7 @@
                             <button type="button" ng-click="runCrawler()" class="btn btn-success">
                                 OK
                             </button>
-                        <span class="runCrawlerInfo" ng-show="runningCrawler">
-                            (正在抓取网页...)
-                        </span>
+                            <span class="runCrawlerInfo" ng-show="showCrawlerInfo">({{crawlerInfo}})</span>
                         </div>
                     </td>
                 </tr>

@@ -161,11 +161,6 @@ div.content div.link div.images div.commodityImage {
     display: none;
 }
 
-#enlargeImage img {
-    height: 500px;
-    width: 500px;
-}
-
 div.content div.detail {
     margin-top: 17px;
     padding-top: 40px;
