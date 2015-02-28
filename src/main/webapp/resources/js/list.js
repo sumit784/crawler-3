@@ -105,7 +105,6 @@
     angularUtils.controller(function ($scope, $http) {
         initSnapshot();
         initBranch();
-        initHotWord();
         $scope.showMore = function () {
             if ($scope.hideBranches.length == 0) {
                 return;
@@ -133,7 +132,9 @@
         };
         $scope.selectSubCategory = function (event) {
             var $this = $(event.target);
-            var id = $this.dataOptions('id');
+            var id = $this.dataOptions()['id'];
+            loadHotWord(id);
+            subCategoryLinks.click($this);
             event.stopPropagation();
         };
         function get$HideBranch() {
@@ -166,8 +167,12 @@
             });
         }
 
-        function initHotWord() {
-            $http.get('json/hotSearchWord.json').success(function (data) {
+        function loadHotWord(categoryId) {
+            var url = 'json/hotSearchWord.json?size=8';
+            if (categoryId) {
+                //url += '&categoryId=' + categoryId;
+            }
+            $http.get(url).success(function (data) {
                 $scope.hotWords = data;
                 data[0].color = 'red';
                 data[3].color = 'red';
