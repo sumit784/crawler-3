@@ -23,7 +23,7 @@
         }
     };
 
-    var classifyLinks = {
+    var subCategoryLinks = {
         originalColor: 'rgb(102, 102, 102)',
         _unSelect: function ($target) {
             $target.removeClass('orangeBack').removeClass('selected').css('color', this.originalColor);
@@ -34,7 +34,7 @@
                 hotWords.hide();
                 branchPoster.show();
             } else {
-                this._unSelect($elements.classifyLinks.filter('.orangeBack'));
+                this._unSelect($elements.subCategoryLinks.filter('.orangeBack'));
                 $link.addClass('orangeBack').addClass('selected').css('color', '#ffffff');
                 hotWords.show();
                 branchPoster.hide();
@@ -71,7 +71,7 @@
     var $elements = {
         collectButton: $('#collectButton'),
         refreshButton: $('#refreshButton'),
-        classifyLinks: $('div.search > div.classification a'),
+        subCategoryLinks: $('div.search > div.subCategory a'),
         sortLinks: $('div.sort > div.links a'),
         searchDiv: $('div.search'),
         branchDiv: $('div.branch'),
@@ -89,13 +89,10 @@
     $elements.refreshButton.click(function () {
         location.reload();
     });
-    $elements.classifyLinks.click(function (event) {
-        classifyLinks.click($(this));
-        event.stopPropagation();
-    }).hover(function () {
-        classifyLinks.over($(this));
+    $elements.subCategoryLinks.hover(function () {
+        subCategoryLinks.over($(this));
     }, function () {
-        classifyLinks.off($(this));
+        subCategoryLinks.off($(this));
     });
     $elements.sortLinks.click(function () {
         switchSortLinks($(this));
@@ -108,14 +105,13 @@
     angularUtils.controller(function ($scope, $http) {
         initSnapshot();
         initBranch();
-
-        $scope.hotWords = getHotWords();
+        initHotWord();
         $scope.showMore = function () {
             if ($scope.hideBranches.length == 0) {
                 return;
             }
-            $('div.search > div.right div.branch > div.logos div.hideBranch').show();
-            $('div.search > div.right div.branch > div.logos div.moreBranch').hide();
+            get$HideBranch().show();
+            get$MoreBranch().hide();
         };
         $scope.hideMore = function (event) {
             if ($scope.hideBranches.length == 0) {
@@ -131,15 +127,26 @@
             if ($target.hasClass("logos") || $target.hasClass("branch")
                 || $target.hasClass('right') || $target.hasClass('search')
                 || $target.hasClass('split')) {
-                $('div.search > div.right div.branch > div.logos div.hideBranch').hide();
-                $('div.search > div.right div.branch > div.logos div.moreBranch').show();
+                get$HideBranch().hide();
+                get$MoreBranch().show();
             }
         };
+        $scope.selectSubCategory = function (event) {
+            var $this = $(event.target);
+            var id = $this.dataOptions('id');
+            event.stopPropagation();
+        };
+        function get$HideBranch() {
+            return  $('div.search > div.right div.branch > div.logos div.hideBranch');
+        }
+
+        function get$MoreBranch() {
+            return $('div.search > div.right div.branch > div.logos div.moreBranch');
+        }
 
         function initBranch() {
             var url = "json/branch.json?categoryId=" + $.url.param('id');
             $http.get(url).success(function (branches) {
-                //var branches = getBranches();
                 $scope.moreBranch = {logo: 'resources/css/images/list/more-branch.png'};
                 if (branches.length > 14) {
                     $scope.showBranches = branches.slice(0, 13);
@@ -158,26 +165,20 @@
                 $scope.snapshots = data;
             });
         }
+
+        function initHotWord() {
+            $http.get('json/hotSearchWord.json').success(function (data) {
+                $scope.hotWords = data;
+                data[0].color = 'red';
+                data[3].color = 'red';
+                data[7].color = 'red';
+            });
+        }
     });
-
-    function getHotWords() {
-        var words = [];
-        words.push({'text': '加湿器', color: 'red'});
-        words.push({'text': '羽绒服 男'});
-        words.push({'text': '小米4'});
-        words.push({'text': '冲锋衣', color: 'red'});
-        words.push({'text': '棉拖鞋'});
-        words.push({'text': '丝棉被'});
-        words.push({'text': '护手霜'});
-        words.push({'text': '男 棉衣', color: 'red'});
-        return words;
-    }
 })();
-
 function showBranchBorder(element) {
     getParent($(element), 'div').prev().show();
 }
-
 function hideBranchBorder(element) {
     getParent($(element), 'div').prev().hide();
 }

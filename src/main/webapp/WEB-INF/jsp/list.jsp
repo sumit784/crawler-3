@@ -4,10 +4,12 @@
     <div class="navigationName boxShadow orangeBack">
         <span class="selectedNavigation">${categoryName}</span>
     </div>
-    <div class="classification">
+    <div class="subCategory">
         <c:forEach var="subCategory" items="${subCategories}" varStatus="status">
             <c:if test="${status.index % 2 == 0}"><div></c:if>
-            <a href="javascript:void(0)" class="noLineAnchor lightGrayFont">${subCategory.name}</a>
+            <a href="javascript:void(0)" class="noLineAnchor lightGrayFont"
+                    data-options="id:${subCategory.id}"
+                    ng-click="selectSubCategory($event)">${subCategory.name}</a>
             <c:if test="${status.index % 2 == 1}"></div></c:if>
         </c:forEach>
     </div>
@@ -35,9 +37,12 @@
                 </form>
             </div>
             <div class="hotWords">
-        <span ng-repeat="hotWord in hotWords">
-            <a class="noLineAnchor {{hotWord.color}}" href="javascript:void(0)">{{hotWord.text}}</a>
-        </span>
+                <span ng-repeat="hotWord in hotWords">
+                    <a class="noLineAnchor {{hotWord.color}}" href="javascript:void(0)"
+                       ng-href="search?keyWord={{hotWord.content}}" target="_blank">
+                        {{hotWord.content}}
+                    </a>
+                </span>
             </div>
         </div>
         <%@include file="list-branch.jsp" %>

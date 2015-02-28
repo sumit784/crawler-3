@@ -135,9 +135,13 @@ var angularUtils = {
  */
 jQuery.fn.dataOptions = function () {
     var dataOptionsString = this.attr('data-options');
-    var dataOptions = null;
-    eval('dataOptions = {' + dataOptionsString + "}");
-    return dataOptions;
+    if (dataOptionsString) {
+        var dataOptions = null;
+        eval('dataOptions = {' + dataOptionsString + "}");
+        return dataOptions;
+    } else {
+        return null;
+    }
 };
 
 jQuery.fn.focusOrSelect = function () {

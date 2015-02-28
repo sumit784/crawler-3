@@ -13,10 +13,8 @@ public class HotSearchWordDao {
     public List<HotSearchWord> getInstances(Integer categoryId, int size) {
         String hql = "FROM HotSearchWord";
         if (IntegerUtils.isPositive(categoryId)) {
-            hql += " WHERE categoryId=" + categoryId;
-            hql += " ORDER BY searchCount DESC,lastTime DESC";
+            hql += " WHERE categoryId=" + categoryId + " ORDER BY searchCount DESC,lastTime DESC";
         } else {
-            hql += " WHERE categoryId IS NULL";
             hql += " ORDER BY categoryId ASC,searchCount DESC,lastTime DESC";
         }
         return HibernateUtil.getList(hql, 0, size);

@@ -17,18 +17,18 @@ div.search > div.navigationName {
     padding: 8px 0;
 }
 
-div.search > div.classification {
+div.search > div.subCategory {
     float: left;
     padding-top: 50px;
     padding-left: 30px;
     width: 200px;
 }
 
-div.search > div.classification > div {
+div.search > div.subCategory > div {
     margin: 17px 0;
 }
 
-div.search > div.classification a {
+div.search > div.subCategory a {
     border: 1px solid rgb(249, 205, 98);
     font-size: 9pt;
     border-radius: 4px;
