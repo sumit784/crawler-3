@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.dao;
 
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.IntegerUtils;
+import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,7 @@ public class CommodityDao {
             }
 
             if (IntegerUtils.isPositive(categoryId)) {
-                query += " AND category_id=" + categoryId;
+                query += " AND categoryId=" + categoryId;
             }
 
             if (active != null) {
@@ -101,6 +102,15 @@ public class CommodityDao {
     public Commodity getInstance(int id) {
         List<Commodity> commodities = factory().setId(id).getInstances();
         return commodities.size() == 0 ? null : commodities.get(0);
+    }
+
+    public List<Commodity> getInstancesByShowId(String showId) {
+        Session session = HibernateUtil.getSession();
+        String hql = "FROM Commodity WHERE showId=:showId";
+        @SuppressWarnings("unchecked")
+        List<Commodity> commodities = session.createQuery(hql).setString("showId", showId).list();
+        HibernateUtil.commit(session);
+        return commodities;
     }
 
     public void delete(int id) {

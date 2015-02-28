@@ -26,10 +26,16 @@ public class CommodityDaoTest {
     @Test
     public void testGetInstance() throws Exception {
         CommodityDao dao = new CommodityDao();
-        Commodity commodity =  dao.getInstance(10);
-        if (commodity!=null) {
+        Commodity commodity = dao.getInstance(10);
+        if (commodity != null) {
             System.out.println(commodity.getShowId());
             System.out.println(commodity.getSerialNumber());
         }
+    }
+
+    @Test
+    public void testGetInstancesByShowId() throws Exception {
+        List<Commodity> commodities = new CommodityDao().getInstancesByShowId("40780735321");
+        System.out.println(commodities.size());
     }
 }
