@@ -8,6 +8,20 @@ div.content table {
     margin-bottom: 20px;
 }
 
+div.content table col.index {
+    width: 40px;
+}
+
+div.content table col.name,
+div.content table col.firstLetter,
+div.content table col.parent {
+    width: 50px;
+}
+
+div.content table col.slogan {
+    width: 270px;
+}
+
 div.content form {
     padding: 5px;
     background-color: #D3E6E2;
@@ -36,7 +50,7 @@ div.content form div.button button {
     margin: 0 20px;
 }
 
-div.content form div.slogan textarea{
+div.content form div.slogan textarea {
     font-size: 9pt;
 }
 
@@ -47,3 +61,5 @@ div.content form > div {
 div.content form > div * {
     vertical-align: middle;
 }
+
+

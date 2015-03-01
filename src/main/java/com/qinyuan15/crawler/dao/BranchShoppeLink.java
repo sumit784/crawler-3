@@ -1,10 +1,10 @@
 package com.qinyuan15.crawler.dao;
 
 /**
- * Link of Shoppe
+ * Link of BranchShoppe
  * Created by qinyuan on 15-2-17.
  */
-public class ShoppeLink {
+public class BranchShoppeLink {
     private String url;
     private String name;
 
@@ -24,10 +24,10 @@ public class ShoppeLink {
         return name;
     }
 
-    public static ShoppeLink create(String url, String name) {
-        ShoppeLink shoppeLink = new ShoppeLink();
-        shoppeLink.url = url;
-        shoppeLink.name = name;
-        return shoppeLink;
+    public static BranchShoppeLink create(String url, String name) {
+        BranchShoppeLink branchShoppeLink = new BranchShoppeLink();
+        branchShoppeLink.url = url;
+        branchShoppeLink.name = name;
+        return branchShoppeLink;
     }
 }

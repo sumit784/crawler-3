@@ -1,2 +1,7 @@
-alter table branch add column square_logo char(200);
-alter table branch add column slogan char(200);
+create table shoppe(
+  id int primary key auto_increment,
+  name char(50),
+  url char(200)
+);
+
+alter table shoppe add column branch_id int;

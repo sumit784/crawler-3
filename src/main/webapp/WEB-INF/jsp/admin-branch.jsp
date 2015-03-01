@@ -2,6 +2,16 @@
 <%@include file="header.jsp" %>
 <div class="boxShadow">
     <table class="normal">
+        <colgroup>
+            <col class="index"/>
+            <col class="name"/>
+            <col class="firstLetter"/>
+            <col class="parent"/>
+            <col class="logo"/>
+            <col class="squareLogo"/>
+            <col class="slogan"/>
+            <col class="edit"/>
+        </colgroup>
         <thead>
         <tr>
             <th>序号</th>
@@ -22,15 +32,15 @@
                 <td class="firstLetter">${branch.firstLetter}</td>
                 <td class="parent" data-options="parentId: ${branch.parentId}">${branch.parentName}</td>
                 <td class="logo">
-                    <a class="limit-size" data-options="limit:30" href="${branch.logo}"
+                    <a class="limit-size" data-options="limit:26" href="${branch.logo}"
                        target="_blank">${branch.logo}</a>
                 </td>
                 <td class="squareLogo">
-                    <a class="limit-size" data-options="limit:30" href="${branch.squareLogo}"
+                    <a class="limit-size" data-options="limit:26" href="${branch.squareLogo}"
                        target="_blank">${branch.squareLogo}</a>
                 </td>
-                <td class="slogan limit-size" data-options="limit:50">${branch.slogan}</td>
-                <td>
+                <td class="slogan">${branch.slogan}</td>
+                <td class="edit">
                     <jsp:include page="widget-edit-delete.jsp"/>
                 </td>
             </tr>
@@ -52,12 +62,12 @@
             </jsp:include>
         </div>
         <div class="logo">
-            <label>矩形Logo(url或上传图片)</label>
+            <label>矩形logo(url或上传图片)</label>
             <input type="text" id="logo" name="logo"/>
             <input type="file" name="logoFile"/>
         </div>
         <div class="logo">
-            <label>方形Logo(url或上传图片)</label>
+            <label>方形logo(url或上传图片)</label>
             <input type="text" id="squareLogo" name="squareLogo"/>
             <input type="file" name="squareLogoFile"/>
         </div>
@@ -66,10 +76,12 @@
             <textarea cols="65" rows="3" name="slogan"></textarea>
         </div>
         <div class="button">
-            <button id="addSubmit" type="submit" class="btn btn-primary">
+            <button id="addSubmit" type="submit" class="btn btn-primary"
+                    ng-click="validateInput($event)">
                 添加
             </button>
-            <button id="editSubmit" type="submit" class="btn btn-success" disabled>
+            <button id="editSubmit" type="submit" class="btn btn-success" disabled
+                    ng-click="validateInput($event)">
                 修改
             </button>
         </div>
