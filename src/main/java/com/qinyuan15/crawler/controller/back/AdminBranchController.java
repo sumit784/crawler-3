@@ -80,15 +80,27 @@ public class AdminBranchController extends BaseController {
                                          @RequestParam(value = "name", required = true) String name,
                                          @RequestParam(value = "logo", required = true) String logo,
                                          @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
+                                         @RequestParam(value = "squareLogo", required = true) String squareLogo,
+                                         @RequestParam(value = "squareLogoFile", required = false) MultipartFile squareLogoFile,
                                          @RequestParam(value = "parentId", required = true) Integer parentId,
-                                         @RequestParam(value = "firstLetter", required = true) String firstLetter) {
+                                         @RequestParam(value = "firstLetter", required = true) String firstLetter,
+                                         @RequestParam(value = "slogan", required = true) String slogan) {
         String logoUrl;
         try {
             logoUrl = getLogoUrl(logo, logoFile);
         } catch (Exception e) {
             LOGGER.error("fail to deal with upload logo, logo:{}, logoFile:{}, error:{}"
                     , logo, logoFile, e);
-            return createFailResult("logo文件处理失败!");
+            return createFailResult("矩形Logo文件处理失败!");
+        }
+
+        String squareLogoUrl;
+        try {
+            squareLogoUrl = getLogoUrl(squareLogo, squareLogoFile);
+        } catch (Exception e) {
+            LOGGER.error("fail to deal with upload squareLogo, squareLogo:{}, squareLogoFile:{}, error:{}"
+                    , logo, logoFile, e);
+            return createFailResult("方形Logo文件处理失败!");
         }
 
         Session session = HibernateUtil.getSession();
@@ -96,7 +108,9 @@ public class AdminBranchController extends BaseController {
         Branch branch = isPositive(id) ? (Branch) session.get(Branch.class, id) : new Branch();
         branch.setName(name);
         branch.setLogo(logoUrl);
+        branch.setSquareLogo(squareLogoUrl);
         branch.setParentId(parentId);
+        branch.setSlogan(slogan);
 
         if (StringUtils.hasText(firstLetter)) {
             branch.setFirstLetter(firstLetter.substring(0, 1));

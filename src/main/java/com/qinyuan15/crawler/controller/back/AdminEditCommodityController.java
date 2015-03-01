@@ -158,6 +158,7 @@ public class AdminEditCommodityController extends BaseController {
         appraiseGroupDao.clearAndSave(id, negativeAppraiseGroups, false);
 
         CommodityPictureDownloader pictureDownloader = new CommodityPictureDownloader(imageDownloader);
+        pictureDownloader.setLocalAddress(getLocalAddress());
         if (imageUrls != null) {
             pictureDownloader.clearAndSave(id, Arrays.asList(imageUrls));
         }
