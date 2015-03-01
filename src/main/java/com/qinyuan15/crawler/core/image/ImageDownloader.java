@@ -78,7 +78,7 @@ public class ImageDownloader {
     }
 
     private String getSavePath(String url) {
-        url = url.replaceAll("^.*\\://", "");
+        url = url.replaceAll("^.*://", "");
         return this.saveDir + "/" + url;
     }
 }

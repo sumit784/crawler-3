@@ -24,5 +24,6 @@ public class BranchUrlAdapter {
 
     public void adjust(Branch branch) {
         branch.setLogo(this.pictureUrlConverter.pathToUrl(branch.getLogo()));
+        branch.setSquareLogo(this.pictureUrlConverter.pathToUrl(branch.getSquareLogo()));
     }
 }

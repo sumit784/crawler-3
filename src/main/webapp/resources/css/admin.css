@@ -52,7 +52,10 @@ div.content div.left div.inactive {
     padding-top: 2px;
 }
 
-div.content div.left div.commodity, div.content div.left div.log {
+div.content div.left div.commodity,
+div.content div.left div.log,
+div.content div.left div.branch,
+div.content div.left div.category {
     font-size: 9pt;
 }
 

@@ -43,6 +43,10 @@ public class BaseController {
         return request.getParameter(name);
     }
 
+    protected String getLocalAddress() {
+        return request.getLocalAddr();
+    }
+
     protected void setTitle(Object title) {
         request.setAttribute(TITLE, title);
     }

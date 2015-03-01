@@ -9,6 +9,24 @@ public class Branch extends PersistObject {
     private String logo;
     private Integer parentId;
     private String firstLetter;
+    private String squareLogo;
+    private String slogan;
+
+    public void setSquareLogo(String squareLogo) {
+        this.squareLogo = squareLogo;
+    }
+
+    public String getSquareLogo() {
+        return squareLogo;
+    }
+
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
 
     public void setFirstLetter(String firstLetter) {
         this.firstLetter = firstLetter;

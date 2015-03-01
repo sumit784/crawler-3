@@ -3,23 +3,14 @@
     var branchPoster = {
         speed: 500,
         show: function () {
-            $elements.branchTitle.hide();
-            $elements.branchLogo.hide();
-            $elements.branchPoster.fadeIn(this.speed);
+            $branchTitle.hide();
+            $branchLogo.hide();
+            $branchPoster.fadeIn(this.speed);
         },
         hide: function () {
-            $elements.branchTitle.fadeIn(this.speed);
-            $elements.branchLogo.fadeIn(this.speed);
-            $elements.branchPoster.hide();
-        }
-    };
-
-    var hotWords = {
-        show: function () {
-            $elements.hotWords.show();
-        },
-        hide: function () {
-            $elements.hotWords.hide();
+            $branchTitle.fadeIn(this.speed);
+            $branchLogo.fadeIn(this.speed);
+            $branchPoster.hide();
         }
     };
 
@@ -31,12 +22,12 @@
         click: function ($link) {
             if ($link.hasClass('selected')) {
                 this._unSelect($link);
-                hotWords.hide();
+                $hotWords.hide();
                 branchPoster.show();
             } else {
-                this._unSelect($elements.subCategoryLinks.filter('.orangeBack'));
+                this._unSelect($subCategoryLinks.filter('.orangeBack'));
                 $link.addClass('orangeBack').addClass('selected').css('color', '#ffffff');
-                hotWords.show();
+                $hotWords.show();
                 branchPoster.hide();
             }
         },
@@ -56,7 +47,7 @@
         var $image = $link.find('img');
         switch ($image.attr('src')) {
             case images.unSort:
-                $elements.sortLinks.find('img').attr('src', images.unSort);
+                $sortLinks.find('img').attr('src', images.unSort);
                 $image.attr('src', images.arrowUp);
                 break;
             case images.arrowDown:
@@ -68,36 +59,39 @@
         }
     }
 
-    var $elements = {
-        collectButton: $('#collectButton'),
-        refreshButton: $('#refreshButton'),
-        subCategoryLinks: $('div.search > div.subCategory a'),
-        sortLinks: $('div.sort > div.links a'),
-        searchDiv: $('div.search'),
-        branchDiv: $('div.branch'),
-        branchLogo: $('div.branch div.logos'),
-        branchTitle: $('div.branch div.title'),
-        branchLogoTable: $('div.branch div.logos table'),
-        goodsImages: $('div.goods div.images div.image img'),
-        goodsDescriptions: $('div.goods div.images div.description a'),
-        hotWords: $('div.search div.right div.searchForm div.hotWords'),
-        branchPoster: $('div.search div.right div.branch div.poster')
-    };
+    var $collectButton = $('#collectButton');
+    var $refreshButton = $('#refreshButton');
+    var $subCategoryLinks = $('div.search > div.subCategory a');
+    var $sortLinks = $('div.sort > div.links a');
+    var $branchLogo = $('div.branch div.logos');
+    var $branchTitle = $('div.branch div.title');
+    var $goodsImages = $('div.goods div.images div.image img');
+    var $hotWords = $('div.search div.right div.searchForm div.hotWords');
+    var $branchPoster = $('div.search div.right div.branch div.poster');
+    var $searchTypeList = $('div.search div.right div.searchForm div.searchType li');
+    var $searchCategoryId = $('#searchCategoryId');
 
-    $elements.collectButton.click(function () {
+    $collectButton.click(function () {
     });
-    $elements.refreshButton.click(function () {
+    $refreshButton.click(function () {
         location.reload();
     });
-    $elements.subCategoryLinks.hover(function () {
+    $searchTypeList.click(function () {
+        var $this = $(this);
+        var text = $this.text();
+        var $div = getParent($this, 'div');
+        $div.find('span.text').text(text);
+        $searchCategoryId.val($this.dataOptions()['id']);
+    });
+    $subCategoryLinks.hover(function () {
         subCategoryLinks.over($(this));
     }, function () {
         subCategoryLinks.off($(this));
     });
-    $elements.sortLinks.click(function () {
+    $sortLinks.click(function () {
         switchSortLinks($(this));
     });
-    $elements.goodsImages.hover(function () {
+    $goodsImages.hover(function () {
         $(this).addClass('deepTransparent');
     }, function () {
         $(this).removeClass('deepTransparent');
@@ -170,6 +164,7 @@
         function loadHotWord(categoryId) {
             var url = 'json/hotSearchWord.json?size=8';
             if (categoryId) {
+                // TODO just for test
                 //url += '&categoryId=' + categoryId;
             }
             $http.get(url).success(function (data) {

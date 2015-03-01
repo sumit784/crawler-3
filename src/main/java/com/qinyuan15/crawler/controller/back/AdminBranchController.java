@@ -4,6 +4,7 @@ import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
+import com.qinyuan15.crawler.core.image.PictureUrlValidator;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
@@ -40,7 +41,7 @@ public class AdminBranchController extends BaseController {
     @RequestMapping("/admin-branch")
     public String index(ModelMap model) {
         List<Branch> branches = new BranchDao().getInstances();
-        PictureUrlConverter pictureUrlConverter = new PictureUrlConverter(imageDownloader, request.getLocalAddr());
+        PictureUrlConverter pictureUrlConverter = new PictureUrlConverter(imageDownloader, getLocalAddress());
         BranchUrlAdapter branchUrlAdapter = new BranchUrlAdapter(pictureUrlConverter);
         branchUrlAdapter.adjust(branches);
 
@@ -51,9 +52,13 @@ public class AdminBranchController extends BaseController {
 
     private String getLogoUrl(String logoUrl, MultipartFile logoFile) throws IOException {
         if (logoFile == null) {
-            String filePath = imageDownloader.save(logoUrl);
-            LOGGER.info("save upload image to {}", filePath);
-            return filePath;
+            if (new PictureUrlValidator(getLocalAddress()).isLocal(logoUrl)) {
+                return new PictureUrlConverter(imageDownloader, getLocalAddress()).urlToPath(logoUrl);
+            } else {
+                String filePath = imageDownloader.save(logoUrl);
+                LOGGER.info("save upload image to {}", filePath);
+                return filePath;
+            }
         } else {
             String relativePath = "mall/branch/logo/" + RandomStringUtils.randomAlphabetic(20)
                     + "_" + logoFile.getOriginalFilename();

@@ -92,6 +92,8 @@ div.search > div.right div.searchForm input, div.searchForm button {
 div.search > div.right div.searchForm div.searchType button {
     font-size: 9pt;
     color: rgb(119, 119, 119);
+    width: 80px;
+    text-align: right;
 }
 
 #searchInput {
@@ -274,6 +276,7 @@ div.goods > div.images div.branch {
 div.goods > div.loading {
     padding: 42px;
     text-align: center;
+    display: none;
 }
 
 div.rightFloat div.split {

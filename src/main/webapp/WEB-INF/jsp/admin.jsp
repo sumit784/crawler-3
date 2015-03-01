@@ -12,6 +12,9 @@
     <div class="active">有效 <span class="active">&nbsp;&nbsp;</span></div>
     <div class="inactive">无效 <span class="inactive">&nbsp;&nbsp;</span></div>
     <div class="split"></div>
+    <div class="branch"><a target="_blank" href="admin-branch">品牌管理&gt;&gt;</a></div>
+    <div class="category"><a target="_blank" href="admin-category">分类管理&gt;&gt;</a></div>
+    <div class="split"></div>
 </div>
 <div class="right">
     <c:forEach var="commodity" items="${commodities}">

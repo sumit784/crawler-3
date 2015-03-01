@@ -1,4 +1,2 @@
-alter table commodity modify column url char(200);
-alter table commodity modify column buy_url char(200);
-alter table commodity add unique(serial_number);
-alter table commodity add unique(show_id);
+alter table branch add column square_logo char(200);
+alter table branch add column slogan char(200);

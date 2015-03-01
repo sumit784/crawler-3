@@ -32,14 +32,18 @@
         var id = $tr.attr('id').replace(/\D/g, '');
         var name = $tr.find('td.name').text();
         var firstLetter = $tr.find('td.firstLetter').text();
-        var logo = $tr.find('td.logo a').attr('title');
         var parentId = $tr.find('td.parent').dataOptions()['parentId'];
+        var logo = $tr.find('td.logo a').attr('title');
+        var squareLogo = $tr.find('td.squareLogo').attr('title');
+        var slogan = $tr.find('td.slogan').attr('title');
 
         $branchForm.find('input[name=id]').val(id);
         $branchForm.find('input[name=name]').val(name).focusOrSelect();
         $branchForm.find('input[name=firstLetter]').val(firstLetter);
-        $branchForm.find('input[name=logo]').val(logo);
         $branchForm.find('select[name=parentId]').val(parentId);
+        $branchForm.find('input[name=logo]').val(logo);
+        $branchForm.find('input[name=squareLogo]').val(squareLogo);
+        $branchForm.find('input[name=slogan]').val(slogan);
 
         $addSubmit.attr('disabled', true);
         $editSubmit.attr('disabled', false);
