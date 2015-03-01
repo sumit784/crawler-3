@@ -75,6 +75,17 @@
             <label>品牌口号</label>
             <textarea cols="65" rows="3" name="slogan"></textarea>
         </div>
+        <div class="shoppe">
+            <div class="left"><label>官方旗舰店</label></div>
+            <div class="right">
+                <div ng-repeat="shoppe in shoppes">
+                    名称: <input type="text" name="shoppeNames" value="{{shoppe.name}}"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    url: <input type="text" name="shoppeUrls" value="{{shoppe.url}}"/>
+                </div>
+                <img ng-click="addShoppe()" class="link" title="添加" src="resources/css/images/add.png"/>
+            </div>
+        </div>
         <div class="button">
             <button id="addSubmit" type="submit" class="btn btn-primary"
                     ng-click="validateInput($event)">

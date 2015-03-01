@@ -8,6 +8,7 @@
     var $editSubmit = $('#editSubmit');
     var $name = $('#name');
     var $firstLetter = $('#firstLetter');
+    var $addShoppeButton = $('#addShoppeButton');
 
     $branchForm.ajaxForm(function (data) {
         if (data.success) {
@@ -97,7 +98,7 @@
         var parentId = $tr.find('td.parent').dataOptions()['parentId'];
         var logo = $tr.find('td.logo a').attr('title');
         var squareLogo = $tr.find('td.squareLogo a').attr('title');
-        var slogan = $tr.find('td.slogan').attr('title');
+        var slogan = $tr.find('td.slogan').text();
 
         input.get$Id().val(id);
         input.get$Name().val(name).focusOrSelect();
@@ -135,6 +136,13 @@
             } else {
                 return true;
             }
-        }
+        };
+        $scope.shoppes = [];
+        $scope.addShoppe = function () {
+            $scope.shoppes.push({name: '', url: ''});
+            setTimeout(function () {
+                $('div.content form div.shoppe div.right div:last').find('input:first').focus();
+            }, 100);
+        };
     });
 })();

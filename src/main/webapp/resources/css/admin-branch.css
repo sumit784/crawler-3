@@ -54,6 +54,14 @@ div.content form div.slogan textarea {
     font-size: 9pt;
 }
 
+div.content form div.shoppe {
+    overflow: hidden;
+}
+
+div.content form div.shoppe > div {
+    float: left;
+}
+
 div.content form > div {
     padding: 10px;
 }
@@ -61,5 +69,3 @@ div.content form > div {
 div.content form > div * {
     vertical-align: middle;
 }
-
-

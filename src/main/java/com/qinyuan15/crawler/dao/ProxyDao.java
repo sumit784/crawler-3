@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Data Access Object of Proxy
+ * Data access object of Proxy
  * Created by qinyuan on 15-1-1.
  */
 public class ProxyDao {

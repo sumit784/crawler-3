@@ -123,7 +123,7 @@
                                    value="${appraiseGroup.content}"/>
                         </c:forEach>
                         <img class="link" title="添加" ng-click="addAppraiseGroup($event, 'positiveAppraiseGroups')"
-                             src="resources/css/images/edit-commodity/add.png"/>
+                             src="resources/css/images/add.png"/>
                     </td>
                 </tr>
                 <tr>
@@ -134,7 +134,7 @@
                                    value="${appraiseGroup.content}"/>
                         </c:forEach>
                         <img class="link" title="添加" ng-click="addAppraiseGroup($event, 'negativeAppraiseGroups')"
-                             src="resources/css/images/edit-commodity/add.png"/>
+                             src="resources/css/images/add.png"/>
                     </td>
                 </tr>
                 </tbody>

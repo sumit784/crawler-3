@@ -5,9 +5,7 @@ import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.core.image.PictureUrlValidator;
-import com.qinyuan15.crawler.dao.Branch;
-import com.qinyuan15.crawler.dao.BranchDao;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -24,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +84,9 @@ public class AdminBranchController extends BaseController {
                                          @RequestParam(value = "squareLogoFile", required = false) MultipartFile squareLogoFile,
                                          @RequestParam(value = "parentId", required = true) Integer parentId,
                                          @RequestParam(value = "firstLetter", required = true) String firstLetter,
-                                         @RequestParam(value = "slogan", required = true) String slogan) {
+                                         @RequestParam(value = "slogan", required = true) String slogan,
+                                         @RequestParam(value = "shoppeNames", required = true) String[] shoppeNames,
+                                         @RequestParam(value = "shoppeUrls", required = true) String[] shoppeUrls) {
         String logoUrl;
         try {
             logoUrl = getLogoUrl(logo, logoFile);
@@ -116,9 +118,49 @@ public class AdminBranchController extends BaseController {
             branch.setFirstLetter(firstLetter.substring(0, 1));
         }
 
-        session.saveOrUpdate(branch);
+        if (isPositive(id)) {
+            session.update(branch);
+        } else {
+            id = (Integer) session.save(branch);
+        }
         HibernateUtil.commit(session);
+
+        List<Shoppe> shoppes = createShoppes(id, shoppeNames, shoppeUrls);
+        //new ShoppeDao().clear
         return SUCCESS;
+    }
+
+    private List<Shoppe> createShoppes(Integer branchId, String[] shoppeNames, String[] shoppeUrls) {
+        if (shoppeNames == null || shoppeUrls == null) {
+            return new ArrayList<Shoppe>();
+        }
+        int size = Math.min(shoppeNames.length, shoppeUrls.length);
+        List<Shoppe> shoppes = new ArrayList<Shoppe>(size);
+        for (int i = 0; i < size; i++) {
+            Shoppe shoppe = new Shoppe();
+            shoppe.setBranchId(branchId);
+            shoppe.setName(shoppeNames[i]);
+            shoppe.setUrl(shoppeUrls[i]);
+            shoppes.add(shoppe);
+        }
+        return shoppes;
+    }
+
+    private void addShoppes() {
+        System.out.println("afdakfjdafj");
+        List<Shoppe> shoppes = new ArrayList<Shoppe>();
+        System.out.println(request.getParameterMap().keySet());
+        @SuppressWarnings("unchecked")
+        Enumeration<String> keyEnum = request.getParameterNames();
+        while (keyEnum.hasMoreElements()) {
+            String key = keyEnum.nextElement();
+            System.out.println(key + "------");
+            if (key != null && key.startsWith("shoppeName")) {
+                String shoppeName = request.getParameter(key);
+                String shoppeUrl = request.getParameter(key.replace("shoppeName", "shoppeUrl"));
+                System.out.println(shoppeName + " " + shoppeUrl);
+            }
+        }
     }
 
     @ResponseBody
