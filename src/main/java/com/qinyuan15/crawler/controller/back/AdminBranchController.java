@@ -125,8 +125,9 @@ public class AdminBranchController extends BaseController {
         }
         HibernateUtil.commit(session);
 
-        List<Shoppe> shoppes = createShoppes(id, shoppeNames, shoppeUrls);
-        //new ShoppeDao().clear
+        ShoppeDao dao = new ShoppeDao();
+        dao.clear(id);
+        dao.save(createShoppes(id, shoppeNames, shoppeUrls));
         return SUCCESS;
     }
 
