@@ -8,7 +8,7 @@
             <col class="firstLetter"/>
             <col class="parent"/>
             <col class="logo"/>
-            <col class="squareLogo"/>
+            <col class="shoppe"/>
             <col class="slogan"/>
             <col class="edit"/>
         </colgroup>
@@ -18,8 +18,8 @@
             <th>名称</th>
             <th>首字母</th>
             <th>父品牌</th>
-            <th>logo(矩形)</th>
-            <th>logo(方形)</th>
+            <th>logo</th>
+            <th>旗舰店</th>
             <th>品牌口号</th>
             <th></th>
         </tr>
@@ -32,16 +32,22 @@
                 <td class="firstLetter">${branch.firstLetter}</td>
                 <td class="parent" data-options="parentId: ${branch.parentId}">${branch.parentName}</td>
                 <td class="logo">
-                    <a class="limit-size" data-options="limit:26" href="${branch.logo}"
-                       target="_blank">${branch.logo}</a>
+                    矩形: <a class="limit-size" data-options="limit:26" href="${branch.logo}"
+                           target="_blank">${branch.logo}</a><br/>
+                    方形: <a class="limit-size" data-options="limit:26" href="${branch.squareLogo}"
+                           target="_blank">${branch.squareLogo}</a>
                 </td>
-                <td class="squareLogo">
-                    <a class="limit-size" data-options="limit:26" href="${branch.squareLogo}"
-                       target="_blank">${branch.squareLogo}</a>
+                <td class="shoppe">
+                    <c:forEach var="shoppe" items="${branch.shoppes}">
+                        <a target="_blank" href="${shoppe.url}">${shoppe.name}</a><br/>
+                    </c:forEach>
                 </td>
                 <td class="slogan">${branch.slogan}</td>
                 <td class="edit">
-                    <jsp:include page="widget-edit-delete.jsp"/>
+                    <jsp:include page="widget-edit-delete.jsp">
+                        <jsp:param name="editAction" value="editBranch($event)"/>
+                        <jsp:param name="deleteAction" value="deleteBranch($event)"/>
+                    </jsp:include>
                 </td>
             </tr>
         </c:forEach>

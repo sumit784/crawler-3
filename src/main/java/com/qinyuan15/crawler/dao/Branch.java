@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
+import java.util.List;
+
 /**
  * Persist Object of Branch
  * Created by qinyuan on 15-2-18.
@@ -70,5 +72,9 @@ public class Branch extends PersistObject {
 
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
+    }
+
+    public List<Shoppe> getShoppes() {
+        return new ShoppeDao().getInstances(this.getId());
     }
 }

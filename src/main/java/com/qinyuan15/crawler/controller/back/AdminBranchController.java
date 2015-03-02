@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
@@ -145,23 +144,6 @@ public class AdminBranchController extends BaseController {
             shoppes.add(shoppe);
         }
         return shoppes;
-    }
-
-    private void addShoppes() {
-        System.out.println("afdakfjdafj");
-        List<Shoppe> shoppes = new ArrayList<Shoppe>();
-        System.out.println(request.getParameterMap().keySet());
-        @SuppressWarnings("unchecked")
-        Enumeration<String> keyEnum = request.getParameterNames();
-        while (keyEnum.hasMoreElements()) {
-            String key = keyEnum.nextElement();
-            System.out.println(key + "------");
-            if (key != null && key.startsWith("shoppeName")) {
-                String shoppeName = request.getParameter(key);
-                String shoppeUrl = request.getParameter(key.replace("shoppeName", "shoppeUrl"));
-                System.out.println(shoppeName + " " + shoppeUrl);
-            }
-        }
     }
 
     @ResponseBody
