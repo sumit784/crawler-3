@@ -1,9 +1,6 @@
 ;
 (function () {
     var $branchForm = $('#branchForm');
-    var $table = $('table.normal');
-    //var $deleteImages = $table.find('img.delete');
-    //var $editImages = $table.find('img.edit');
     var $addSubmit = $('#addSubmit');
     var $editSubmit = $('#editSubmit');
     var $name = $('#name');
@@ -16,19 +13,6 @@
             alert(data.detail);
         }
     });
-    /*
-     $deleteImages.click(function () {
-     $.post('admin-branch-delete', {
-     id: getBranchIdByImgElement(this)
-     }, function (data) {
-     if (data.success) {
-     location.reload();
-     } else {
-     alert(data.detail);
-     }
-     });
-     });
-     */
     var input = {
         get$Id: function () {
             return $branchForm.find('input[name=id]');
@@ -91,29 +75,6 @@
             return true;
         }
     };
-    /*
-     $editImages.click(function () {
-     var $tr = getParent($(this), 'tr');
-     var id = $tr.attr('id').replace(/\D/g, '');
-     var name = $tr.find('td.name').text();
-     var firstLetter = $tr.find('td.firstLetter').text();
-     var parentId = $tr.find('td.parent').dataOptions()['parentId'];
-     var logo = $tr.find('td.logo a').attr('title');
-     var squareLogo = $tr.find('td.squareLogo a').attr('title');
-     var slogan = $tr.find('td.slogan').text();
-
-     input.get$Id().val(id);
-     input.get$Name().val(name).focusOrSelect();
-     input.get$FirstLetter().val(firstLetter);
-     input.get$ParentId().val(parentId);
-     input.get$Logo().val(logo);
-     input.get$SquareLogo().val(squareLogo);
-     input.get$Slogan().val(slogan);
-
-     $addSubmit.attr('disabled', true);
-     $editSubmit.attr('disabled', false);
-     });
-     */
     $name.keyup(function () {
         var name = $(this).val();
         if (name != '') {
@@ -160,6 +121,15 @@
 
             $addSubmit.attr('disabled', true);
             $editSubmit.attr('disabled', false);
+
+            $scope.shoppes = [];
+            $tr.find('td.shoppe a').each(function () {
+                var $this = $(this);
+                $scope.shoppes.push({
+                    url: $this.attr('href'),
+                    name: $this.text()
+                });
+            });
         };
         $scope.deleteBranch = function (event) {
             $.post('admin-branch-delete', {
