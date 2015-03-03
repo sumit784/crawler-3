@@ -19,7 +19,7 @@ div.content div.logo {
     background-color: #ffffff;
 }
 
-div.content div.logo div.logoImage, div.content div.logo div.description {
+div.content div.logo div.logoImage, div.content div.logo div.slogan {
     padding-top: 11px;
     padding-bottom: 11px;
 }
@@ -28,13 +28,19 @@ div.content div.logo div.logoImage {
     padding-left: 25px;
 }
 
-div.content div.logo div.description {
+div.content div.logo div.logoImage img {
+    width: 70px;
+    height: 70px;
+}
+
+div.content div.logo div.slogan {
     padding-left: 20px;
     position: absolute;
     top: 0;
     left: 100px;
     font-size: 10pt;
     line-height: 24px;
+    width: 290px;
 }
 
 div.content div.logo div.links {
@@ -42,14 +48,19 @@ div.content div.logo div.links {
     padding: 20px 60px;
     top: 0;
     right: 0;
+    height: 90px;
     width: 510px;
     background: url("images/shoppe/linksBack.png") no-repeat;
     line-height: 25px;
 }
 
+div.content div.logo div.links > div {
+    float: left;
+    margin: 0 30px;
+}
+
 div.content div.logo div.links a {
     font-size: 9pt;
-    margin: 0 20px;
     color: #3377aa;
 }
 

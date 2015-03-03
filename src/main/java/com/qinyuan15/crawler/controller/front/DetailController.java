@@ -1,18 +1,15 @@
 package com.qinyuan15.crawler.controller.front;
 
-import com.google.common.collect.Lists;
-import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.dao.Branch;
+import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.dao.Commodity;
+import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.dao.CommodityPicture;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.qinyuan15.crawler.dao.CommodityPictureDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,59 +17,34 @@ import java.util.List;
  * Created by qinyuan on 15-2-17.
  */
 @Controller
-public class DetailController extends BaseController {
-
-    @Autowired
-    private HttpServletRequest request;
-
+public class DetailController extends ImageController {
     @RequestMapping("/detail")
-    public String index(ModelMap model) {
-        String idString = request.getParameter("id");
-        if (!NumberUtils.isDigits(idString)) {
+    public String index(ModelMap model, @RequestParam(value = "id", required = true) Integer id) {
+        if (!isPositive(id)) {
             return BLANK;
         }
 
-        int id = NumberUtils.toInt(idString);
-        Commodity commodity = getCommodity(id);
+        // commodity
+        Commodity commodity = new CommodityDao().getInstance(id);
         model.addAttribute("commodity", commodity);
-        model.addAttribute("pictures", getCommodityPictures(commodity.getId()));
-        model.addAttribute("branch", getBranch(commodity.getId()));
 
-        List<String> moreJs = Lists.newArrayList("list");
-        moreJs.add("lib/jsutils/jsutils");
-        moreJs.add("lib/linecharts/raphael-min");
-        moreJs.add("lib/linecharts/linecharts");
-        model.addAttribute("moreJs", moreJs);
+        // commodity picture
+        CommodityPictureDao pictureDao = new CommodityPictureDao();
+        List<CommodityPicture> pictures = pictureDao.getInstances(id);
+        model.addAttribute("pictures", parseCommodityPictureUrls(pictures));
+        List<CommodityPicture> detailPictures = pictureDao.getDetailInstances(id);
+        model.addAttribute("detailPictures", parseCommodityPictureUrls(detailPictures));
+
+        // branch
+        model.addAttribute("branch", adjustBranch(commodity.getBranch()));
+
+        addJs("list");
+        addJs("lib/jsutils/jsutils");
+        addJs("lib/linecharts/raphael-min");
+        addJs("lib/linecharts/linecharts");
 
         setTitle("商品明细");
 
         return "detail";
-    }
-
-    private Commodity getCommodity(int id) {
-        Commodity commodity = new Commodity();
-        commodity.setId(id);
-        return commodity;
-    }
-
-    private List<CommodityPicture> getCommodityPictures(int commodityId) {
-        List<CommodityPicture> pictures = new ArrayList<CommodityPicture>();
-
-        CommodityPicture commodity = new CommodityPicture();
-        commodity.setId(1);
-        commodity.setUrl("resources/css/images/detail/detail-large2.png");
-        commodity.setCommodityId(commodityId);
-
-        pictures.add(commodity);
-
-        return pictures;
-    }
-
-    private Branch getBranch(int id) {
-        Branch branch = new Branch();
-        branch.setId(id);
-        branch.setLogo("resources/css/images/branchs/branch4.png");
-        branch.setName("Adidas");
-        return branch;
     }
 }

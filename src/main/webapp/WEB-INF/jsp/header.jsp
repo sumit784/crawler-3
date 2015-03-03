@@ -29,4 +29,5 @@
         </div>
     </div>
 </div>
+${headerAdditions}
 <div class="content" ng-controller="ContentController">

@@ -1,11 +1,8 @@
 package com.qinyuan15.crawler.controller.json;
 
-import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.DateUtils;
-import com.qinyuan15.crawler.core.image.PictureUrlConverter;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +17,7 @@ import java.util.TreeMap;
  * Created by qinyuan on 14-12-27.
  */
 @Controller
-public class CommodityController extends BaseController {
-    @Autowired
-    private ImageDownloader imageDownloader;
-
+public class CommodityController extends ImageController {
     @ResponseBody
     @RequestMapping("/commodity.json")
     public String get(@RequestParam(value = "id", required = false) Integer id,
@@ -55,19 +49,13 @@ public class CommodityController extends BaseController {
             commodityJson.url = commodity.getUrl();
             commodityJson.onShelfTime = commodity.getOnShelfTime();
             commodityJson.onShelf = isOnShelf(commodity);
-            commodityJson.pictures = getPictures(id);
+
+            List<CommodityPicture> commodityPictures = new CommodityPictureDao().getInstances(id);
+            commodityJson.pictures = parseCommodityPictureUrls(commodityPictures);
             commodityJsonMap.put(id, commodityJson);
         }
         return commodityJsonMap;
     }
-
-    private List<String> getPictures(Integer commodityId) {
-        PictureUrlConverter urlConverter = new PictureUrlConverter(
-                imageDownloader, request.getLocalAddr());
-        List<CommodityPicture> commodityPictures = new CommodityPictureDao().getInstances(commodityId);
-        return urlConverter.pathsToUrls(commodityPictures);
-    }
-
 
     /**
      * check whether a commodity is on shelf

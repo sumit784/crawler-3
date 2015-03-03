@@ -11,6 +11,11 @@ import java.util.List;
  */
 public class BranchDao {
 
+    public Branch getInstance(Integer id) {
+        return HibernateUtil.get(Branch.class, id);
+    }
+
+
     public List<Branch> getInstances() {
         return HibernateUtil.getList(Branch.class);
     }

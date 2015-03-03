@@ -1,10 +1,7 @@
 package com.qinyuan15.crawler.controller.json;
 
-import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.core.image.PictureUrlConverter;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
+import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.dao.CommodityPictureDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,19 +15,14 @@ import java.util.Map;
  * Created by qinyuan on 14-12-27.
  */
 @Controller
-public class CommodityPictureController extends BaseController {
-    @Autowired
-    private ImageDownloader imageDownloader;
-
+public class CommodityPictureController extends ImageController {
     @ResponseBody
     @RequestMapping("/commodityPicture.json")
     public String get(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
-        PictureUrlConverter urlConverter = new PictureUrlConverter(
-                imageDownloader, request.getLocalAddr());
         CommodityPictureDao dao = new CommodityPictureDao();
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("pictures", urlConverter.pathsToUrls(dao.getInstances(commodityId)));
-        jsonMap.put("detailPictures", urlConverter.pathsToUrls(dao.getDetailInstances(commodityId)));
+        jsonMap.put("pictures", parseCommodityPictureUrls(dao.getInstances(commodityId)));
+        jsonMap.put("detailPictures", parseCommodityPictureUrls(dao.getDetailInstances(commodityId)));
         return toJson(jsonMap);
     }
 }

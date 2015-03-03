@@ -111,6 +111,10 @@ public class Commodity extends SimpleCommodity {
         return branchId;
     }
 
+    public Branch getBranch() {
+        return new BranchDao().getInstance(this.branchId);
+    }
+
     public void setLowPrice(Double lowPrice) {
         this.lowPrice = lowPrice;
     }

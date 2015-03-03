@@ -4,7 +4,6 @@ import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.branch.BranchGrouper;
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
-import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
@@ -48,14 +47,15 @@ public class BranchController extends BaseController {
     public String query(@RequestParam(value = "parentId", required = false) Integer parentId,
                         @RequestParam(value = "categoryId", required = false) Integer categoryId) {
         BranchDao dao = new BranchDao();
+        BranchUrlAdapter urlAdapter = new BranchUrlAdapter(imageDownloader, getLocalAddress());
         if (isPositive(categoryId)) {
-            return toJson(adjustBranch(dao.getInstancesByCategoryId(categoryId)));
+            return toJson(urlAdapter.adjust(dao.getInstancesByCategoryId(categoryId)));
         }
 
         if (isPositive(parentId)) {
-            return toJson(adjustBranch(dao.getSubInstances(parentId)));
+            return toJson(urlAdapter.adjust(dao.getSubInstances(parentId)));
         } else {
-            return toJson(adjustBranch(dao.getRootInstances()));
+            return toJson(urlAdapter.adjust(dao.getRootInstances()));
         }
     }
 
@@ -67,14 +67,8 @@ public class BranchController extends BaseController {
     public String queryGroupedBranches() {
         List<Branch> branches = new BranchDao().getInstances();
         BranchGrouper branchGrouper = new BranchGrouper();
-        return toJson(branchGrouper.groupByLetter(adjustBranch(branches)));
-    }
-
-    private List<Branch> adjustBranch(List<Branch> branches) {
-        PictureUrlConverter urlConverter = new PictureUrlConverter(imageDownloader, request.getLocalAddr());
-        BranchUrlAdapter branchUrlAdapter = new BranchUrlAdapter(urlConverter);
-        branchUrlAdapter.adjust(branches);
-        return branches;
+        BranchUrlAdapter urlAdapter = new BranchUrlAdapter(imageDownloader, getLocalAddress());
+        return toJson(branchGrouper.groupByLetter(urlAdapter.adjust(branches)));
     }
 
     @ResponseBody

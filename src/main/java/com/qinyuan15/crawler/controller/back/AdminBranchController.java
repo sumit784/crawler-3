@@ -1,16 +1,12 @@
 package com.qinyuan15.crawler.controller.back;
 
-import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
-import com.qinyuan15.crawler.core.image.PictureUrlConverter;
+import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.image.PictureUrlValidator;
 import com.qinyuan15.crawler.dao.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -31,20 +27,13 @@ import java.util.Map;
  * Created by qinyuan on 15-2-19.
  */
 @Controller
-public class AdminBranchController extends BaseController {
+public class AdminBranchController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminBranchController.class);
-
-    @Autowired
-    private ImageDownloader imageDownloader;
 
     @RequestMapping("/admin-branch")
     public String index(ModelMap model) {
         List<Branch> branches = new BranchDao().getInstances();
-        PictureUrlConverter pictureUrlConverter = new PictureUrlConverter(imageDownloader, getLocalAddress());
-        BranchUrlAdapter branchUrlAdapter = new BranchUrlAdapter(pictureUrlConverter);
-        branchUrlAdapter.adjust(branches);
-
-        model.addAttribute("branches", branches);
+        model.addAttribute("branches", adjustBranches(branches));
         setTitle("编辑品牌");
         return "admin-branch";
     }
@@ -52,7 +41,7 @@ public class AdminBranchController extends BaseController {
     private String getLogoUrl(String logoUrl, MultipartFile logoFile) throws IOException {
         if (logoFile == null) {
             if (new PictureUrlValidator(getLocalAddress()).isLocal(logoUrl)) {
-                return new PictureUrlConverter(imageDownloader, getLocalAddress()).urlToPath(logoUrl);
+                return getPictureUrlConverter().urlToPath(logoUrl);
             } else {
                 String filePath = imageDownloader.save(logoUrl);
                 LOGGER.info("save upload image to {}", filePath);
