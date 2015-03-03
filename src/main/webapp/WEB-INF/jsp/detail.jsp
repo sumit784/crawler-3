@@ -6,16 +6,16 @@
             <div class="branch">
                 所属品牌：
                 <a href="shoppe?id=${branch.id}" target="_blank">
-                    <img src="${branch.logo}"/>
+                    <img class="branch-logo" src="${branch.logo}"/>
                 </a>
             </div>
             <div class="largeImage">
                 <c:if test="${fn:length(pictures)>0}">
-                    <img class="boxShadow" src="${pictures[0].url}"/>
+                    <img class="boxShadow" src="${pictures[0]}"/>
 
                     <div class="enlarge"></div>
                     <div class="enlargeImage">
-                        <img src="${pictures[0].url}"/>
+                        <img src="${pictures[0]}"/>
 
                         <div class="closeLargeImage"></div>
                     </div>
@@ -23,7 +23,7 @@
             </div>
             <div class="smallImage">
                 <c:forEach var="picture" items="${pictures}" varStatus="status">
-                    <img class="link<c:if test='${status.index==0}'> selected</c:if>" src="${picture.url}"/>
+                    <img class="link<c:if test='${status.index==0}'> selected</c:if>" src="${picture}"/>
                 </c:forEach>
             </div>
         </div>
