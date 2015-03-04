@@ -41,6 +41,11 @@ public class DetailController extends ImageController {
         model.addAttribute("lowPrice", priceDao.getMinPriceInThreeMonth(id));
         model.addAttribute("highPrice", priceDao.getMaxPrice(id));
 
+        // appraise
+        AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
+        model.addAttribute("positiveAppraiseGroups", appraiseGroupDao.getPositiveInstances(id));
+        model.addAttribute("negativeAppraiseGroups", appraiseGroupDao.getNegativeInstances(id));
+
         addJs("list");
         addJs("commodity-parameters");
         addJs("lib/jsutils/jsutils");

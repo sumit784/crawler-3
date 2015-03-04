@@ -20,6 +20,14 @@ public class AppraiseGroupDao {
                 " AND positive=" + positive);
     }
 
+    public List<AppraiseGroup> getPositiveInstances(int commodityId) {
+        return getInstancesByCommodityId(commodityId, true);
+    }
+
+    public List<AppraiseGroup> getNegativeInstances(int commodityId) {
+        return getInstancesByCommodityId(commodityId, false);
+    }
+
     public void clear(int commodityId, boolean positive) {
         HibernateUtil.delete(AppraiseGroup.class,
                 "commodityId=" + commodityId + " AND positive=" + positive);

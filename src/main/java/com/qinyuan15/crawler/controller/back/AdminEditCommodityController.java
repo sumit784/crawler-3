@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -40,10 +39,8 @@ public class AdminEditCommodityController extends BaseController {
             setTitle("编辑商品");
             model.addAttribute("commodity", getCommodity(id));
             AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
-            model.addAttribute("positiveAppraiseGroups",
-                    appraiseGroupDao.getInstancesByCommodityId(id, true));
-            model.addAttribute("negativeAppraiseGroups",
-                    appraiseGroupDao.getInstancesByCommodityId(id, false));
+            model.addAttribute("positiveAppraiseGroups", appraiseGroupDao.getPositiveInstances(id));
+            model.addAttribute("negativeAppraiseGroups", appraiseGroupDao.getNegativeInstances(id));
         } else {
             setTitle("添加商品");
             model.addAttribute("commodity", newCommodity());

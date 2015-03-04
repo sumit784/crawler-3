@@ -39,8 +39,8 @@
                     上价时间： <span class="releaseDate">2014.03.21</span>
                 </div>
                 <div>
-                        <span class="trend" id="trendImage">相关评价 和 历史价格走势
-                        <img class="link" src="resources/css/images/detail/trend.png"/></span>
+                    <span class="trend" id="trendImage">相关评价 和 历史价格走势
+                    <img class="link" src="resources/css/images/detail/trend.png"/></span>
                 </div>
             </div>
             <div class="priceHistory boxShadow">
@@ -48,12 +48,9 @@
                 <div class="triangle-border tb-border"></div>
                 <div class="triangle-border tb-background"></div>
                 <div class="comments">
-                    <a class="noLineAnchor" href="javascript:void(0)"
-                       style="background-color:#FFE2E2;border:1px solid #B10000;color:#B10000;">无色差</a>
-                    <a class="noLineAnchor" href="javascript:void(0)"
-                       style="background-color:#D9F5ED;border:1px solid #40927F;color:#40927F;">起球</a>
-                    <a class="noLineAnchor" href="javascript:void(0)"
-                       style="background-color:#D9F5ED;border:1px solid #40927F;color:#40927F;">跟描述不符</a>
+                    <a class="noLineAnchor positive" href="javascript:void(0)">无色差</a>
+                    <a class="noLineAnchor negative" href="javascript:void(0)">起球</a>
+                    <a class="noLineAnchor negative" href="javascript:void(0)">跟描述不符</a>
                 </div>
             </div>
             <div class="buySubmit">
