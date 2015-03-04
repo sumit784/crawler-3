@@ -38,9 +38,7 @@
                            target="_blank">${branch.squareLogo}</a>
                 </td>
                 <td class="shoppe">
-                    <c:forEach var="shoppe" items="${branch.shoppes}">
-                        <a target="_blank" href="${shoppe.url}">${shoppe.name}</a><br/>
-                    </c:forEach>
+                    <%@include file="widget-shoppe-link.jsp" %>
                 </td>
                 <td class="slogan">${branch.slogan}</td>
                 <td class="edit">

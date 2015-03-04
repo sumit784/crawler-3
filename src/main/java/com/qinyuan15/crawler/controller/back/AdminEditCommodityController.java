@@ -8,7 +8,6 @@ import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +32,12 @@ public class AdminEditCommodityController extends BaseController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminEditCommodityController.class);
 
     @Autowired
-    private HttpServletRequest request;
-
-    @Autowired
     private ImageDownloader imageDownloader;
 
     @RequestMapping("/admin-edit-commodity")
-    public String index(ModelMap model) {
-        String idString = request.getParameter("id");
-        if (isPositive(idString)) {
+    public String index(ModelMap model, @RequestParam(value = "id", required = false) Integer id) {
+        if (isPositive(id)) {
             setTitle("编辑商品");
-            Integer id = NumberUtils.toInt(idString);
             model.addAttribute("commodity", getCommodity(id));
             AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
             model.addAttribute("positiveAppraiseGroups",
@@ -55,6 +49,7 @@ public class AdminEditCommodityController extends BaseController {
             model.addAttribute("commodity", newCommodity());
         }
 
+        addJs("commodity-parameters");
         return "admin-edit-commodity";
     }
 

@@ -245,11 +245,16 @@ div.content > div.left div.description div.title span.selected {
 div.content > div.left div.description div.detail {
     padding-bottom: 10px;
     min-height: 245px;
+    overflow: hidden;
 }
 
 div.content > div.left div.description div.detail div.shoppe {
     display: none;
     line-height: 30px;
+}
+
+div.content > div.left div.description div.detail div.shoppe div {
+    float: left;
 }
 
 div.content > div.left div.description div.detail div.shoppe a {

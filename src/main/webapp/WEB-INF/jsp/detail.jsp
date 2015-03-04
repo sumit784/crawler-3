@@ -28,9 +28,7 @@
             </div>
         </div>
         <div class="right">
-            <div class="name">
-                烟雨集森林清新文艺个性棉麻纯色抽象五分袖宽松大码连衣长裙
-            </div>
+            <div class="name">${commodity.name}</div>
             <div class="price">
                 <div>
                     历史低价：<span class="lowPrice">￥168.85</span>
@@ -88,68 +86,21 @@
             <div class="title">
                 <span class="goodsDetail selected">商品详情</span>
                 <img src="resources/css/images/detail/vertical-split.png"/>
-                <span class="shoppe">adidas官方店铺</span>
+                <span class="shoppe">${branch.name}官方店铺</span>
                 <img src="resources/css/images/detail/vertical-split.png"/>
             </div>
             <div class="detail">
-                <div class="goodsDetail">
-                    <table>
-                        <tr>
-                            <td>保修：全国联保</td>
-                            <td>是否商场同款：是</td>
-                            <td>品牌：COACH/蔻驰</td>
-                        </tr>
-                        <tr>
-                            <td>型号：14000035</td>
-                            <td>机芯类型：石英表</td>
-                            <td>手表各类：情侣表</td>
-                        </tr>
-                        <tr>
-                            <td>风格：时尚潮流</td>
-                            <td>表带材质：真皮</td>
-                            <td>形状：圆形</td>
-                        </tr>
-                        <tr>
-                            <td>显示方式：指针式</td>
-                            <td>上市时间：2013年</td>
-                            <td>颜色分类：140000035 14000034</td>
-                        </tr>
-                        <tr>
-                            <td>成色：全新</td>
-                            <td>防水深度：30米生活防水</td>
-                            <td>表扣款式：皮带喑扣</td>
-                        </tr>
-                        <tr>
-                            <td>表底类型：普通</td>
-                            <td>表冠类型：普通</td>
-                            <td>表盘深度：7mm</td>
-                        </tr>
-                        <tr>
-                            <td>表盘直径：27mm</td>
-                            <td>产地：美国</td>
-                            <td>手表价格区间：3001-5000元</td>
-                        </tr>
-                        <tr>
-                            <td>流行元素：复古</td>
-                            <td>表壳村质：精钢</td>
-                        </tr>
-                    </table>
-                </div>
+                <script id="commodityParametersData" type="text/x-data">${commodity.parameters}</script>
+                <div id="commodityParameters" class="goodsDetail"></div>
                 <div class="shoppe">
-                    <a href="javascript:void(0)">唯品会营店</a>
-                    <a href="javascript:void(0)">聚美优品官方旗舰店</a>
-                    <a href="javascript:void(0)">天猫官方旗舰店</a>
-                    <a href="javascript:void(0)">京东官方旗舰店</a>
+                    <%@include file="widget-shoppe-link.jsp" %>
                 </div>
             </div>
         </div>
     </div>
-    <div class="detailImage boxShadow">
-        <img src="resources/css/images/detail/detail1.png"/>
-    </div>
-    <div class="detailImage boxShadow">
-        <img src="resources/css/images/detail/detail2.png"/>
-    </div>
+    <c:forEach var="detailPicture" items="${detailPictures}">
+        <img src="${detailPicture}"/>
+    </c:forEach>
 </div>
 <div class="right">
     <div class="whiteBack boxShadow">

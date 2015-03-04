@@ -43,8 +43,7 @@ var transparentBackground = {
     _getDiv: function () {
         var $transparentBackground = $('#transparentBackground');
         if ($transparentBackground.size() == 0) {
-            $('body').append("<div id='transparentBackground'></div>");
-            $('#transparentBackground').css({
+            return $('<div></div>').attr('id', 'transparentBackground').css({
                 'position': 'fixed',
                 'width': '100%',
                 'height': '100%',
@@ -52,9 +51,10 @@ var transparentBackground = {
                 'left': 0,
                 'display': 'none',
                 'background-color': '#000000'
-            }).addClass('deepTransparent');
+            }).addClass('deepTransparent').appendTo('body');
+        } else {
+            return $transparentBackground;
         }
-        return $transparentBackground;
     },
     show: function () {
         this._getDiv().show();

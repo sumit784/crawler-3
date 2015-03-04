@@ -1,34 +1,6 @@
-function CommodityDescription(id) {
-    this._div = $('#' + id);
-}
-CommodityDescription.prototype.text = function (text) {
-    text = $.trim(text);
-    var lines = text.split('\n');
-    if (lines.length == 0) {
-        this._div.html('');
-    }
-
-    while (lines.length % 3 != 2) {
-        lines.push("");
-    }
-    var html = '<table>';
-    var columnCount = 3;
-    for (var i = 0, len = lines.length; i < len; i++) {
-        if (i % columnCount == 0) {
-            html += '<tr>';
-        }
-        html += '<td><div>' + $.trim(lines[i]) + '</div></td>';
-        if (i % columnCount == columnCount - 1) {
-            html += '</tr>';
-        }
-    }
-    html += '</table>';
-    this._div.empty().html(html);
-};
 (function () {
     var $commodityDescription = $('#commodityDescription');
     var $selectButtons = $('div.content div.basic button');
-    var $commodityDescriptionEffect = $('#commodityDescriptionEffect');
     var $form = $('#mainForm');
     var $branchId = $('input[name=branchId]');
     var $commodityName = $('input[name=commodityName]');
@@ -44,10 +16,9 @@ CommodityDescription.prototype.text = function (text) {
             'background-image': 'url("resources/css/images/edit-commodity/select.png")'
         });
     });
-    var commodityDescriptionEffect = new CommodityDescription($commodityDescriptionEffect.attr('id'));
     $commodityDescription.keyup(function () {
         var text = $(this).val();
-        commodityDescriptionEffect.text(text);
+        loadCommodityParameters('commodityDescriptionEffect', text);
     }).trigger('keyup');
 
     $form.ajaxForm(function (data) {

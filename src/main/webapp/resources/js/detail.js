@@ -34,7 +34,11 @@
     };
     $elements.smallImages.mouseover(function () {
         $elements.smallImages.filter('.selected').removeClass('selected');
-        $(this).addClass('selected');
+        var $this = $(this);
+        $this.addClass('selected');
+        var src = $this.attr('src');
+        $elements.largeImage.find('img.boxShadow').attr('src', src);
+        $elements.enlargeImage.find('img').attr('src', src);
     });
     $elements.trendImage.hover(function () {
         historyTrend.show();
@@ -70,5 +74,6 @@
         $elements.enlargeImage.fadeOut(250);
         transparentBackground.hide();
     });
+    loadCommodityParameters("commodityParameters", $('#commodityParametersData').text());
     setHoverColor($elements.couponLink, '#3E3E3E');
 })();

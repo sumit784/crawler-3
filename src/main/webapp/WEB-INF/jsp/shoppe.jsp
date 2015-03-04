@@ -4,11 +4,7 @@
     <div class="logoImage"><img src="${branch.squareLogo}"/></div>
     <div class="slogan">${branch.slogan}</div>
     <div class="links">
-        <c:forEach var="shoppe" items="${branch.shoppes}">
-            <div>
-                <a target="_blank" href="${shoppe.url}">${shoppe.name}</a>
-            </div>
-        </c:forEach>
+        <%@include file="widget-shoppe-link.jsp" %>
     </div>
 </div>
 <div class="goods">

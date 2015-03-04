@@ -1,10 +1,7 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.ImageController;
-import com.qinyuan15.crawler.dao.Commodity;
-import com.qinyuan15.crawler.dao.CommodityDao;
-import com.qinyuan15.crawler.dao.CommodityPicture;
-import com.qinyuan15.crawler.dao.CommodityPictureDao;
+import com.qinyuan15.crawler.dao.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +33,14 @@ public class DetailController extends ImageController {
         model.addAttribute("detailPictures", parseCommodityPictureUrls(detailPictures));
 
         // branch
-        model.addAttribute("branch", adjustBranch(commodity.getBranch()));
+        Branch branch = commodity.getBranch();
+        model.addAttribute("branch", adjustBranch(branch));
+
+        // shoppe
+        //model.addAttribute("shoppes", new ShoppeDao().getInstances(branch.getId()));
 
         addJs("list");
+        addJs("commodity-parameters");
         addJs("lib/jsutils/jsutils");
         addJs("lib/linecharts/raphael-min");
         addJs("lib/linecharts/linecharts");
