@@ -23,7 +23,7 @@
             </div>
             <div class="smallImage">
                 <c:forEach var="picture" items="${pictures}" varStatus="status">
-                    <img class="link<c:if test='${status.index==0}'> selected</c:if>" src="${picture}"/>
+                    <img class="${status.index==0?'link selected':'link'}" src="${picture}"/>
                 </c:forEach>
             </div>
         </div>
@@ -31,11 +31,11 @@
             <div class="name">${commodity.name}</div>
             <div class="price">
                 <div>
-                    历史低价：<span class="lowPrice">￥168.85</span>
+                    历史低价： <span class="lowPrice">￥${lowPrice}</span>
                     销量： <span class="sales">16</span>件
                 </div>
                 <div>
-                    最高售价： <span class="highestPrice">￥399</span>
+                    最高售价： <span class="highestPrice">￥${highPrice}</span>
                     上价时间： <span class="releaseDate">2014.03.21</span>
                 </div>
                 <div>

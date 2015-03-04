@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
+import com.qinyuan15.crawler.core.DateUtils;
+
 /**
  * Query price of Commodity
  * Created by qinyuan on 15-1-22.
@@ -55,8 +57,21 @@ public class CommodityPriceDao {
         }
     }
 
+    public Double getMaxPrice(Integer commodityId) {
+        return CommodityPriceDao.range(commodityId).getMax();
+    }
+
+    public Double getMinPriceInThreeMonth(Integer commodityId) {
+        String startTime = DateUtils.threeMonthAgo().toString();
+        return CommodityPriceDao.range(commodityId)
+                .setStartTime(startTime)
+                .getMin();
+    }
+
     public Double getCurrentPrice(Integer commodityId) {
-        PriceRecord priceRecord = PriceRecordDao.factory().setCommodityId(commodityId).getLastInstance();
+        PriceRecord priceRecord = PriceRecordDao.factory()
+                .setCommodityId(commodityId)
+                .getLastInstance();
         return priceRecord == null ? null : priceRecord.getPrice();
     }
 }

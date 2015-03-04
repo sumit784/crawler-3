@@ -1,15 +1,30 @@
+;
 (function () {
     var historyTrend = {
         _chartCreated: false,
+        _data: null,
+        loadData: function () {
+            var commodityId = parseInt($.url.param('id'));
+            var url = "priceHistory.json?commodityId=" + commodityId;
+            var self = this;
+            $.get(url, function (data) {
+                var xSerial = [], ySerial = [];
+                $.each(data[commodityId]['prices'], function () {
+                    xSerial.push(this['date']);
+                    ySerial.push(this['price']);
+                });
+                self._data = {
+                    xSerial: xSerial,
+                    ySerial: ySerial,
+                    width: 300,
+                    height: 200
+                };
+            });
+        },
         show: function () {
             $elements.priceHistory.show();
             if (!this._chartCreated) {
-                priceLineChart($elements.trendChart.attr('id'), {
-                    xSerial: ['2014-09-25', '2014-09-30', '2014-10-05', '2014-10-10', '2014-12-01'],
-                    ySerial: [180, 200, 200, 190, 190],
-                    width: 300,
-                    height: 200
-                });
+                priceLineChart($elements.trendChart.attr('id'), this._data);
                 this._chartCreated = true;
             }
         },
@@ -17,6 +32,7 @@
             $elements.priceHistory.hide();
         }
     };
+    historyTrend.loadData();
 
     var $elements = {
         smallImages: $('div.snapshot div.left div.smallImage img'),

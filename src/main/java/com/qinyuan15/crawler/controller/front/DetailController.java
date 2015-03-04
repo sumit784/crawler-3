@@ -36,8 +36,10 @@ public class DetailController extends ImageController {
         Branch branch = commodity.getBranch();
         model.addAttribute("branch", adjustBranch(branch));
 
-        // shoppe
-        //model.addAttribute("shoppes", new ShoppeDao().getInstances(branch.getId()));
+        // price
+        CommodityPriceDao priceDao = new CommodityPriceDao();
+        model.addAttribute("lowPrice", priceDao.getMinPriceInThreeMonth(id));
+        model.addAttribute("highPrice", priceDao.getMaxPrice(id));
 
         addJs("list");
         addJs("commodity-parameters");
