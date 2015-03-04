@@ -48,9 +48,12 @@
                 <div class="triangle-border tb-border"></div>
                 <div class="triangle-border tb-background"></div>
                 <div class="comments">
-                    <a class="noLineAnchor positive" href="javascript:void(0)">无色差</a>
-                    <a class="noLineAnchor negative" href="javascript:void(0)">起球</a>
-                    <a class="noLineAnchor negative" href="javascript:void(0)">跟描述不符</a>
+                    <c:forEach var="appraiseGroup" items="${positiveAppraiseGroups}">
+                        <a class="noLineAnchor positive" href="javascript:void(0)">${appraiseGroup.content}</a>
+                    </c:forEach>
+                    <c:forEach var="appraiseGroup" items="${negativeAppraiseGroups}">
+                        <a class="noLineAnchor negative" href="javascript:void(0)">${appraiseGroup.content}</a>
+                    </c:forEach>
                 </div>
             </div>
             <div class="buySubmit">
@@ -59,7 +62,9 @@
                     <img src="resources/css/images/edit-commodity/coupon.png"/>
                     哦
                 </a>
-                <button id="buySubmit" class="orangeButton">去购买</button>
+                <a href="${commodity.buyUrl}" target="_blank">
+                    <button id="buySubmit" class="orangeButton">去购买</button>
+                </a>
             </div>
         </div>
         <div class="share">
