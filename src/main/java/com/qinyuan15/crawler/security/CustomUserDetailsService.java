@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.security;
 
+import com.qinyuan15.crawler.dao.UserDao;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,8 +18,18 @@ import java.util.HashSet;
 public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        com.qinyuan15.crawler.dao.User user = new UserDao().getInstanceByName(s);
+        if (user == null) {
+            return null;
+        }
+
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ADMIN"));
-        return new User("admin", "admin", authorities);
+        if (user.getRole() != null) {
+            for (String role : user.getRole().split(",")) {
+                authorities.add(new SimpleGrantedAuthority(role));
+            }
+        }
+
+        return new User(user.getUsername(), user.getPassword(), authorities);
     }
 }

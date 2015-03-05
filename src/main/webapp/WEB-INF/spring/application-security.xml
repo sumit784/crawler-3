@@ -8,15 +8,13 @@
         http://www.springframework.org/schema/security/spring-security.xsd">
 
     <security:http auto-config="true">
-        <security:intercept-url pattern="/admin*" access="ROLE_ADMIN,ROLE_USER,ROLE_GUEST"/>
+        <security:intercept-url pattern="/admin*" access="ROLE_SUPPER_ADMIN,ROLE_ADMIN"/>
+        <security:form-login login-page="/login.jsp" authentication-failure-url="/login.jsp?error=true"/>
     </security:http>
 
     <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="admin" authorities="ROLE_ADMIN,ROLE_USER" password="admin"/>
-                <security:user name="user1" authorities="ROLE_USER" password="1111"/>
-            </security:user-service>
-        </security:authentication-provider>
+        <security:authentication-provider user-service-ref="customUserDetailsService"/>
     </security:authentication-manager>
+
+    <bean id="customUserDetailsService" class="com.qinyuan15.crawler.security.CustomUserDetailsService"/>
 </beans>
