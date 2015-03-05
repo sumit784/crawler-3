@@ -33,7 +33,7 @@
         </div>
         <div>
             <label>父分类</label><br/>
-            <jsp:include page="admin-category-select.jsp">
+            <jsp:include page="admin-category-parent-select.jsp">
                 <jsp:param name="elementId" value="parentId"/>
             </jsp:include>
         </div>

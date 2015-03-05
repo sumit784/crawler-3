@@ -104,6 +104,33 @@
             <version>1.5.2</version>
         </dependency>
 
+        <!-- spring security dependencies -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-acl</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!-- servlet dependencies -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -221,7 +248,7 @@
                 <configuration>
                     <reload>automatic</reload>
                     <scanIntervalSeconds>3</scanIntervalSeconds>
-                    <contextPath>/mall</contextPath>
+                    <contextPath>/</contextPath>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
                             <port>8080</port>
