@@ -1,9 +1,13 @@
+;
 (function () {
-    var $elements = {
-        closeLink: $('#closeLink'),
-        loginDiv: $('div.content div.login')
-    };
-    $elements.closeLink.click(function () {
-        $elements.loginDiv.fadeOut(500);
+    var $closeLink = $('#closeLink');
+    var $loginDiv = $('div.content div.login');
+    var $username = $('input[name=j_username]');
+
+    $closeLink.click(function () {
+        $loginDiv.fadeOut(500);
+    });
+    $username.focus();
+    angularUtils.controller(function ($scope, $http) {
     });
 })();
