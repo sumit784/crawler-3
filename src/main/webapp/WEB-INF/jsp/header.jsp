@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head lang="zh-ch">
@@ -12,7 +13,8 @@
     <c:forEach var="css" items="${moreCss}">
         <link rel="stylesheet" href="resources/css/${css}.css">
     </c:forEach>
-    <link rel="stylesheet" href="resources/css/<%=request.getRequestURI().replaceAll("^.*/","").replace(".jsp",".css")%>">
+    <link rel="stylesheet"
+          href="resources/css/<%=request.getRequestURI().replaceAll("^.*/","").replace(".jsp",".css")%>">
 </head>
 <body class="ng-app:main" ng-app="main" id="ng-app">
 <div class="header">

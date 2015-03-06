@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
 <div class="left">
-    <div class="user">XXX账号名</div>
+    <div class="user"><security:authentication property="name"/></div>
     <div class="split"></div>
     <div class="commodity">发布的商品<span id="commodityCount">(${fn:length(commodities)})</span></div>
     <div class="split">
