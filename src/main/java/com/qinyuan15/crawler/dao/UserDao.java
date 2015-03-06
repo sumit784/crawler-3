@@ -17,4 +17,9 @@ public class UserDao {
         HibernateUtil.commit(session);
         return user;
     }
+
+    public Integer getIdByName(String username) {
+        User user = this.getInstanceByName(username);
+        return user == null ? null : user.getId();
+    }
 }
