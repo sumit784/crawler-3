@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
 <div class="left">
-    <div class="user"><security:authentication property="name"/></div>
+    <div class="user">
+        <security:authentication property="name"/>
+        <a href="/j_spring_security_logout">[退出]</a>
+    </div>
     <div class="split"></div>
     <div class="commodity">发布的商品<span id="commodityCount">(${fn:length(commodities)})</span></div>
     <div class="split">
         <div class="boldSplit"></div>
     </div>
-    <div class="log">操作日志</div>
+    <div class="log">
+        <a href="admin-log" target="_blank">操作日志</a>
+    </div>
     <div class="split"></div>
     <div class="active">有效 <span class="active">&nbsp;&nbsp;</span></div>
     <div class="inactive">无效 <span class="inactive">&nbsp;&nbsp;</span></div>

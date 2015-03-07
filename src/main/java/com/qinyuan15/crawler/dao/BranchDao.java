@@ -15,6 +15,16 @@ public class BranchDao {
         return HibernateUtil.get(Branch.class, id);
     }
 
+    public boolean isUsed(Integer id) {
+        return HibernateUtil.getCount(Commodity.class, "branchId=" + id) > 0;
+    }
+
+    public void delete(Integer id) {
+        if (!isUsed(id)) {
+            new ShoppeDao().clear(id);
+            HibernateUtil.delete(Branch.class, id);
+        }
+    }
 
     public List<Branch> getInstances() {
         return HibernateUtil.getList(Branch.class);

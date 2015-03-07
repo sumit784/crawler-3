@@ -1,11 +1,9 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.Category;
 import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
-import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,19 +34,32 @@ public class AdminCategoryController extends BaseController {
     public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
                                          @RequestParam(value = "name", required = true) String name,
                                          @RequestParam(value = "parentId", required = true) Integer parentId) {
-        Session session = HibernateUtil.getSession();
-        Category category = isPositive(id) ? (Category) session.get(Category.class, id) : new Category();
+        // build Category object
+        Category category = isPositive(id) ? new CategoryDao().getInstance(id) : new Category();
         category.setName(name);
         category.setParentId(parentId);
-        session.saveOrUpdate(category);
-        HibernateUtil.commit(session);
+
+        // save or update
+        if (isPositive(id)) {
+            HibernateUtil.update(category);
+            logAction("更新商品分类'%s'", category.getName());
+        } else {
+            HibernateUtil.save(category);
+            logAction("添加商品分类'%s'", category.getName());
+        }
         return SUCCESS;
     }
 
     @ResponseBody
     @RequestMapping(value = "/admin-category-delete", method = RequestMethod.POST)
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
-        HibernateUtil.delete(Branch.class, id);
-        return SUCCESS;
+        CategoryDao dao = new CategoryDao();
+        if (dao.isUsed(id)) {
+            return createFailResult("该商品分类已经被某些商品使用，不能删除");
+        } else {
+            logAction("删除商品分类'%s'", dao.getInstance(id).getName());
+            dao.delete(id);
+            return SUCCESS;
+        }
     }
 }

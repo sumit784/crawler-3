@@ -168,12 +168,13 @@ public class HibernateUtil {
         }
     }
 
-    public static long getCount(String persistObjectName) {
-        return getCount(persistObjectName, "");
+    public static long getCount(Class<?> clazz) {
+        return getCount(clazz, "");
     }
 
-    public static long getCount(String persistObjectName, String whereCondition) {
-        List list = getList("SELECT COUNT(*) FROM " + persistObjectName + " " + whereCondition);
+    public static long getCount(Class<?> clazz, String whereCondition) {
+        List list = getList("SELECT COUNT(*) FROM " + clazz.getSimpleName() + " " +
+                adjustWhereClause(whereCondition));
         return (Long) list.get(0);
     }
 }

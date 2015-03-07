@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test CommodityDao
@@ -20,6 +20,12 @@ public class CommodityDaoTest {
     @Test
     public void testInLowPrice() throws Exception {
         List<Commodity> commodities = CommodityDao.factory().setInLowPrice(true).getInstances();
+        System.out.println(commodities.size());
+    }
+
+    @Test
+    public void testSetUserId() throws Exception {
+        List<Commodity> commodities = CommodityDao.factory().setUserId(1).getInstances();
         System.out.println(commodities.size());
     }
 

@@ -23,6 +23,12 @@ public class CommodityDao {
         private boolean orderByActive = false;
         private Integer categoryId;
         private Boolean active;
+        private Integer userId;
+
+        public Factory setUserId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
 
         public Factory setId(Integer id) {
             this.id = id;
@@ -67,6 +73,10 @@ public class CommodityDao {
                 query += " AND categoryId=" + categoryId;
             }
 
+            if (IntegerUtils.isPositive(userId)) {
+                query += " AND userId=" + userId;
+            }
+
             if (active != null) {
                 query += " AND active=" + active;
             }
@@ -102,6 +112,11 @@ public class CommodityDao {
     public Commodity getInstance(int id) {
         List<Commodity> commodities = factory().setId(id).getInstances();
         return commodities.size() == 0 ? null : commodities.get(0);
+    }
+
+    public String getNameById(Integer id) {
+        Commodity commodity = getInstance(id);
+        return commodity == null ? null : commodity.getName();
     }
 
     public List<Commodity> getInstancesByShowId(String showId) {

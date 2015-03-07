@@ -1,0 +1,21 @@
+div.content > div:first-child {
+    padding: 50px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+col.index {
+    width: 50px;
+}
+
+col.user {
+    width: 150px;
+}
+
+col.time {
+    width: 150px;
+}
+
+col.action {
+    width: 400px;
+}

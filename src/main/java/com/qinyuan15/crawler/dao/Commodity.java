@@ -22,6 +22,7 @@ public class Commodity extends SimpleCommodity {
     private Integer branchId;
     private String parameters;
     private Integer categoryId;
+    private Integer userId;
 
     public Integer getCategoryId() {
         return categoryId;
@@ -115,6 +116,10 @@ public class Commodity extends SimpleCommodity {
         return new BranchDao().getInstance(this.branchId);
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
     public void setLowPrice(Double lowPrice) {
         this.lowPrice = lowPrice;
     }
@@ -137,5 +142,9 @@ public class Commodity extends SimpleCommodity {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

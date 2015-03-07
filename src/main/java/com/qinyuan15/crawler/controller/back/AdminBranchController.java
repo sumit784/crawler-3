@@ -4,7 +4,6 @@ import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.image.PictureUrlValidator;
 import com.qinyuan15.crawler.dao.*;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -73,8 +72,9 @@ public class AdminBranchController extends ImageController {
                                          @RequestParam(value = "parentId", required = true) Integer parentId,
                                          @RequestParam(value = "firstLetter", required = true) String firstLetter,
                                          @RequestParam(value = "slogan", required = true) String slogan,
-                                         @RequestParam(value = "shoppeNames", required = true) String[] shoppeNames,
+                                         @RequestParam(value = "shoppeNames", required = false) String[] shoppeNames,
                                          @RequestParam(value = "shoppeUrls", required = true) String[] shoppeUrls) {
+        // deal with logUrl
         String logoUrl;
         try {
             logoUrl = getLogoUrl(logo, logoFile);
@@ -84,6 +84,7 @@ public class AdminBranchController extends ImageController {
             return createFailResult("矩形Logo文件处理失败!");
         }
 
+        // deal with squareLogoUrl
         String squareLogoUrl;
         try {
             squareLogoUrl = getLogoUrl(squareLogo, squareLogoFile);
@@ -93,25 +94,25 @@ public class AdminBranchController extends ImageController {
             return createFailResult("方形Logo文件处理失败!");
         }
 
-        Session session = HibernateUtil.getSession();
-
-        Branch branch = isPositive(id) ? (Branch) session.get(Branch.class, id) : new Branch();
+        // build branch object
+        Branch branch = isPositive(id) ? new BranchDao().getInstance(id) : new Branch();
         branch.setName(name);
         branch.setLogo(logoUrl);
         branch.setSquareLogo(squareLogoUrl);
         branch.setParentId(parentId);
         branch.setSlogan(slogan);
-
         if (StringUtils.hasText(firstLetter)) {
             branch.setFirstLetter(firstLetter.substring(0, 1));
         }
 
+        // save or update branch
         if (isPositive(id)) {
-            session.update(branch);
+            HibernateUtil.update(branch);
+            logAction("更新品牌'%s'", branch.getName());
         } else {
-            id = (Integer) session.save(branch);
+            id = (Integer) HibernateUtil.save(branch);
+            logAction("添加品牌'%s'", branch.getName());
         }
-        HibernateUtil.commit(session);
 
         ShoppeDao dao = new ShoppeDao();
         dao.clear(id);
@@ -138,7 +139,13 @@ public class AdminBranchController extends ImageController {
     @ResponseBody
     @RequestMapping(value = "/admin-branch-delete", method = RequestMethod.POST)
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
-        HibernateUtil.delete(Branch.class, id);
-        return SUCCESS;
+        BranchDao dao = new BranchDao();
+        if (dao.isUsed(id)) {
+            return createFailResult("该品牌已经被某些商品使用，不允许删除！");
+        } else {
+            logAction("删除品牌'%s'", dao.getInstance(id).getName());
+            dao.delete(id);
+            return SUCCESS;
+        }
     }
 }

@@ -40,6 +40,11 @@ div.content div.left div.user {
     font-weight: bold;
 }
 
+div.content div.left div.user a {
+    font-size: 9pt;
+    font-weight: normal;
+}
+
 div.content div.left div.active, div.content div.left div.inactive {
     font-size: 10pt;
 }

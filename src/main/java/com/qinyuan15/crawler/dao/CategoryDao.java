@@ -12,6 +12,10 @@ public class CategoryDao {
         return HibernateUtil.getList(Category.class);
     }
 
+    public Category getInstance(Integer id) {
+        return HibernateUtil.get(Category.class, id);
+    }
+
     public Category getFirstInstance() {
         @SuppressWarnings("unchecked")
         List<Category> instances = HibernateUtil.getList("FROM Category ORDER BY id");
@@ -24,5 +28,16 @@ public class CategoryDao {
 
     public List<Category> getSubInstances(int parentId) {
         return HibernateUtil.getList(Category.class, "parentId=" + parentId);
+    }
+
+    public boolean isUsed(int id) {
+        return HibernateUtil.getCount(Commodity.class, "categoryId=" + id) > 0;
+    }
+
+    public void delete(int id) {
+        if (!isUsed(id)) {
+            new HotSearchWordDao().clear(id);
+            HibernateUtil.delete(Category.class, id);
+        }
     }
 }

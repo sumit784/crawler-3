@@ -38,7 +38,7 @@ public class DatabaseCommodityPool implements CommodityPool {
     }
 
     public long size() {
-        return HibernateUtil.getCount("Commodity WHERE active=true");
+        return HibernateUtil.getCount(Commodity.class, "active=true");
     }
 
     @Override

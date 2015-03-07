@@ -19,4 +19,9 @@ public class HotSearchWordDao {
         }
         return HibernateUtil.getList(hql, 0, size);
     }
+
+    public void clear(int categoryId) {
+        HibernateUtil.delete(HotSearchWord.class, "categoryId=" + categoryId);
+    }
+
 }

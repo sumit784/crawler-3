@@ -9,6 +9,10 @@ import java.util.List;
  * Created by qinyuan on 15-3-5.
  */
 public class UserDao {
+    public User getInstance(Integer userId) {
+        return HibernateUtil.get(User.class, userId);
+    }
+
     public User getInstanceByName(String username) {
         Session session = HibernateUtil.getSession();
         List list = session.createQuery("FROM User WHERE username=:username")
@@ -21,5 +25,10 @@ public class UserDao {
     public Integer getIdByName(String username) {
         User user = this.getInstanceByName(username);
         return user == null ? null : user.getId();
+    }
+
+    public String getNameById(Integer userId) {
+        User user = getInstance(userId);
+        return user == null ? null : user.getUsername();
     }
 }

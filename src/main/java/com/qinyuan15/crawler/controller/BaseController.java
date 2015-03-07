@@ -2,6 +2,8 @@ package com.qinyuan15.crawler.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.qinyuan15.crawler.dao.UserLogDao;
+import com.qinyuan15.crawler.security.SecurityUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +69,17 @@ public class BaseController {
 
     protected boolean isPositive(String strValue) {
         return NumberUtils.isNumber(strValue) && NumberUtils.toInt(strValue) > 0;
+    }
+
+    protected void logAction(String action, String... args) {
+        Integer userId = SecurityUtils.getUserId();
+        if (args.length > 0) {
+            action = String.format(action, args);
+        }
+        if (isPositive(userId)) {
+            UserLogDao userLogDao = new UserLogDao();
+            userLogDao.save(userId, action);
+        }
     }
 
     protected void addCss(String file) {

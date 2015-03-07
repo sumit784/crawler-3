@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.security;
 
+import com.qinyuan15.crawler.dao.UserDao;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,10 @@ public class SecurityUtils {
     public final static String SUPPER_ADMIN = "ROLE_SUPPER_ADMIN";
 
     private SecurityUtils() {
+    }
+
+    public static Integer getUserId() {
+        return new UserDao().getIdByName(getUsername());
     }
 
     public static String getUsername() {

@@ -1,8 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
-import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.commodity.CommodityPictureDownloader;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.AppraiseGroupDao;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
@@ -10,7 +9,6 @@ import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -26,12 +24,9 @@ import java.util.Map;
  * Created by qinyuan on 15-2-19.
  */
 @Controller
-public class AdminEditCommodityController extends BaseController {
+public class AdminEditCommodityController extends ImageController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminEditCommodityController.class);
-
-    @Autowired
-    private ImageDownloader imageDownloader;
 
     @RequestMapping("/admin-edit-commodity")
     public String index(ModelMap model, @RequestParam(value = "id", required = false) Integer id) {
@@ -75,19 +70,23 @@ public class AdminEditCommodityController extends BaseController {
             @RequestParam(value = "detailImageUrls", required = false) String[] detailImageUrls) {
         //debugParameters();
 
+        CommodityDao commodityDao = new CommodityDao();
         if (deleteSubmit != null) {
             if (isPositive(id)) {
-                new CommodityDao().delete(id);
+                logAction("彻底删除商品'%s'", commodityDao.getNameById(id));
+                commodityDao.delete(id);
             }
             return SUCCESS;
         } else if (activateSubmit != null) {
             if (isPositive(id)) {
-                new CommodityDao().activate(id);
+                logAction("激活商品'%s'", commodityDao.getNameById(id));
+                commodityDao.activate(id);
             }
             return SUCCESS;
         } else if (deactivateSubmit != null) {
             if (isPositive(id)) {
-                new CommodityDao().deactivate(id);
+                logAction("删除商品'%s'", commodityDao.getNameById(id));
+                commodityDao.deactivate(id);
             }
             return SUCCESS;
         }
@@ -97,7 +96,7 @@ public class AdminEditCommodityController extends BaseController {
             return createFailResult("未知错误");
         }
 
-        Commodity commodity = isPositive(id) ? HibernateUtil.get(Commodity.class, id) : new Commodity();
+        Commodity commodity = isPositive(id) ? commodityDao.getInstance(id) : new Commodity();
 
         if (!isPositive(branchId)) {
             return createFailResult("品牌未设置");
@@ -137,11 +136,14 @@ public class AdminEditCommodityController extends BaseController {
         commodity.setParameters(parameters);
         commodity.setActive(true);
 
+        // add or update
         if (isPositive(id)) {
             HibernateUtil.update(commodity);
+            logAction("更新商品'%s'", commodity.getName());
             LOGGER.info("Update Commodity {}", commodity.getId());
         } else {
             id = (Integer) HibernateUtil.save(commodity);
+            logAction("添加商品'%s'", commodity.getName());
             LOGGER.info("Insert new Commodity {}", id);
         }
 

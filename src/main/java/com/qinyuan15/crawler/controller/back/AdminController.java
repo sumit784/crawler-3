@@ -5,6 +5,7 @@ import com.qinyuan15.crawler.core.commodity.CommoditySimpleSnapshot;
 import com.qinyuan15.crawler.core.commodity.CommoditySimpleSnapshotBuilder;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
+import com.qinyuan15.crawler.security.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,14 @@ public class AdminController extends ImageController {
 
     @RequestMapping("/admin")
     public String index(ModelMap model) {
-        List<Commodity> commodities = CommodityDao.factory().orderByActive().getInstances();
+        CommodityDao.Factory factory = CommodityDao.factory().orderByActive();
+
+        if (!SecurityUtils.isSupperAdmin()) {
+            Integer userId = SecurityUtils.getUserId();
+            factory.setUserId(userId);
+        }
+
+        List<Commodity> commodities = factory.getInstances();
         List<CommoditySimpleSnapshot> snapshots = new CommoditySimpleSnapshotBuilder().build(
                 commodities, imageDownloader, getLocalAddress());
         model.addAttribute("commodities", snapshots);

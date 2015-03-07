@@ -9,14 +9,12 @@ import java.util.List;
  * Created by qinyuan on 15-2-24.
  */
 public class AppraiseGroupDao {
-    @SuppressWarnings("unchecked")
     public List<AppraiseGroup> getInstancesByCommodityId(int commodityId) {
-        return HibernateUtil.getList("AppraiseGroup WHERE commodityId=" + commodityId);
+        return HibernateUtil.getList(AppraiseGroup.class, "commodityId=" + commodityId);
     }
 
-    @SuppressWarnings("unchecked")
     public List<AppraiseGroup> getInstancesByCommodityId(int commodityId, boolean positive) {
-        return HibernateUtil.getList("AppraiseGroup WHERE commodityId=" + commodityId +
+        return HibernateUtil.getList(AppraiseGroup.class, "commodityId=" + commodityId +
                 " AND positive=" + positive);
     }
 
@@ -26,6 +24,10 @@ public class AppraiseGroupDao {
 
     public List<AppraiseGroup> getNegativeInstances(int commodityId) {
         return getInstancesByCommodityId(commodityId, false);
+    }
+
+    public void clear(int commodityId) {
+        HibernateUtil.delete(AppraiseGroup.class, "commodityId=" + commodityId);
     }
 
     public void clear(int commodityId, boolean positive) {

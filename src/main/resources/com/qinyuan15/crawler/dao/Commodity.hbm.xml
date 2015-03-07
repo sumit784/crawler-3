@@ -21,5 +21,6 @@
         <property name="showId" column="show_id"/>
         <property name="parameters"/>
         <property name="categoryId" column="category_id"/>
+        <property name="userId" column="user_id"/>
     </class>
 </hibernate-mapping>
