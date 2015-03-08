@@ -171,18 +171,24 @@
             };
             var initCategoryId = $initCategoryId.val();
             if (initCategoryId != '') {
-                $http.get('json/parentCategory.json?categoryId=' + initCategoryId).success(function (data) {
-                    var categoryId = data['categoryId'];
-                    if (categoryId) {
-                        selectItem($scope.category, categoryId, $scope.subCategory, categoryJsonUrl, function () {
-                            var subCategoryId = data["subCategoryId"];
-                            if (subCategoryId) {
-                                selectItem($scope.subCategory, subCategoryId);
-                            }
-                        });
-                    }
-                });
+                setTimeout(function () {
+                    initCategoryValue(initCategoryId, categoryJsonUrl);
+                }, 100);
             }
+        }
+
+        function initCategoryValue(initCategoryId, categoryJsonUrl) {
+            $http.get('json/parentCategory.json?categoryId=' + initCategoryId).success(function (data) {
+                var categoryId = data['categoryId'];
+                if (categoryId) {
+                    selectItem($scope.category, categoryId, $scope.subCategory, categoryJsonUrl, function () {
+                        var subCategoryId = data["subCategoryId"];
+                        if (subCategoryId) {
+                            selectItem($scope.subCategory, subCategoryId);
+                        }
+                    });
+                }
+            });
         }
 
         function initBranchSelects() {
@@ -217,23 +223,29 @@
             };
             var initBranchId = $initBranchId.val();
             if (initBranchId != '') {
-                $http.get('json/parentBranch.json?branchId=' + initBranchId).success(function (data) {
-                    var branchId = data['branchId'];
-                    if (branchId) {
-                        selectItem($scope.branch, branchId, $scope.subBranch1, branchJsonUrl, function () {
-                            var subBranch1Id = data["subBranch1Id"];
-                            if (subBranch1Id) {
-                                selectItem($scope.subBranch1, subBranch1Id, $scope.subBranch2, branchJsonUrl, function () {
-                                    var subBranch2Id = data["subBranch2Id"];
-                                    if (subBranch2Id) {
-                                        selectItem($scope.subBranch2, subBranch2Id);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
+                setTimeout(function () {
+                    initBranchValue(initBranchId, branchJsonUrl);
+                }, 100);
             }
+        }
+
+        function initBranchValue(initBranchId, branchJsonUrl) {
+            $http.get('json/parentBranch.json?branchId=' + initBranchId).success(function (data) {
+                var branchId = data['branchId'];
+                if (branchId) {
+                    selectItem($scope.branch, branchId, $scope.subBranch1, branchJsonUrl, function () {
+                        var subBranch1Id = data["subBranch1Id"];
+                        if (subBranch1Id) {
+                            selectItem($scope.subBranch1, subBranch1Id, $scope.subBranch2, branchJsonUrl, function () {
+                                var subBranch2Id = data["subBranch2Id"];
+                                if (subBranch2Id) {
+                                    selectItem($scope.subBranch2, subBranch2Id);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         }
 
         function selectItem(dataModel, idToSelect, subDataModel, url, callBack) {

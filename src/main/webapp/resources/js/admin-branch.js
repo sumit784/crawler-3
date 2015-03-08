@@ -35,6 +35,9 @@
         get$SquareLogo: function () {
             return $branchForm.find('input[name=squareLogo]');
         },
+        get$Poster: function () {
+            return $branchForm.find('input[name=poster]');
+        },
         get$SquareLogoFile: function () {
             return $branchForm.find('input[name=squareLogoFile]');
         },
@@ -107,8 +110,10 @@
             var name = $tr.find('td.name').text();
             var firstLetter = $tr.find('td.firstLetter').text();
             var parentId = $tr.find('td.parent').dataOptions()['parentId'];
-            var logo = $tr.find('td.logo a:first').attr('title');
-            var squareLogo = $tr.find('td.logo a:last').attr('title');
+            var $logoAnchors = $tr.find('td.logo a');
+            var logo = $logoAnchors.eq(0).attr('title');
+            var squareLogo = $logoAnchors.eq(1).attr('title');
+            var poster = $logoAnchors.eq(2).attr('title');
             var slogan = $tr.find('td.slogan').text();
 
             input.get$Id().val(id);
@@ -117,6 +122,7 @@
             input.get$ParentId().val(parentId);
             input.get$Logo().val(logo);
             input.get$SquareLogo().val(squareLogo);
+            input.get$Poster().val(poster);
             input.get$Slogan().val(slogan);
 
             $addSubmit.attr('disabled', true);

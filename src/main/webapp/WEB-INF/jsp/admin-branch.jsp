@@ -35,7 +35,9 @@
                     矩形: <a class="limit-size" data-options="limit:26" href="${branch.logo}"
                            target="_blank">${branch.logo}</a><br/>
                     方形: <a class="limit-size" data-options="limit:26" href="${branch.squareLogo}"
-                           target="_blank">${branch.squareLogo}</a>
+                           target="_blank">${branch.squareLogo}</a><br/>
+                    海报: <a class="limit-size" data-options="limit:26" href="${branch.poster}"
+                           target="_blank">${branch.poster}</a>
                 </td>
                 <td class="shoppe">
                     <%@include file="widget-shoppe-link.jsp" %>
@@ -57,8 +59,10 @@
 
         <div class="basic">
             <label>名称</label>
+            <span class="required">*</span>
             <input type="text" id="name" name="name"/>
             <label>首字母</label>
+            <span class="required">*</span>
             <input type="text" id="firstLetter" name="firstLetter"/>
             <label>父品牌</label>
             <jsp:include page="admin-branch-select.jsp">
@@ -67,25 +71,32 @@
         </div>
         <div class="logo">
             <label>矩形logo(url或上传图片)</label>
+            <span class="required">*</span>
             <input type="text" id="logo" name="logo"/>
             <input type="file" name="logoFile"/>
         </div>
         <div class="logo">
             <label>方形logo(url或上传图片)</label>
+            <span class="required">*</span>
             <input type="text" id="squareLogo" name="squareLogo"/>
             <input type="file" name="squareLogoFile"/>
         </div>
+        <div class="logo">
+            <label>品牌海报(url或上传图片)</label>
+            <input type="text" id="poster" name="poster"/>
+            <input type="file" name="posterFile"/>
+        </div>
         <div class="slogan">
             <label>品牌口号</label>
-            <textarea cols="65" rows="3" name="slogan"></textarea>
+            <textarea cols="65" rows="3" id="slogan" name="slogan"></textarea>
         </div>
         <div class="shoppe">
             <div class="left"><label>官方旗舰店</label></div>
             <div class="right">
                 <div ng-repeat="shoppe in shoppes">
-                    名称: <input type="text" name="shoppeNames" value="{{shoppe.name}}"/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    url: <input type="text" name="shoppeUrls" value="{{shoppe.url}}"/>
+                    <label>名称</label><input type="text" name="shoppeNames" value="{{shoppe.name}}"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>url</label><input type="text" name="shoppeUrls" value="{{shoppe.url}}"/>
                 </div>
                 <img ng-click="addShoppe()" class="link" title="添加" src="resources/css/images/add.png"/>
             </div>

@@ -13,6 +13,7 @@
         <property name="parentId" column="parent_id"/>
         <property name="firstLetter" column="first_letter"/>
         <property name="squareLogo" column="square_logo"/>
+        <property name="poster"/>
         <property name="slogan"/>
     </class>
 </hibernate-mapping>

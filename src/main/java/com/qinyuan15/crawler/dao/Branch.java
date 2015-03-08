@@ -13,6 +13,15 @@ public class Branch extends PersistObject {
     private String firstLetter;
     private String squareLogo;
     private String slogan;
+    private String poster;
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
 
     public void setSquareLogo(String squareLogo) {
         this.squareLogo = squareLogo;

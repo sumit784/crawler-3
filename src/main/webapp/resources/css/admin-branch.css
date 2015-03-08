@@ -37,13 +37,17 @@ div.content form {
     font-size: 11pt;
 }
 
-div.content form div label {
-    margin-right: 10px;
-}
-
 div.content form div.basic input {
     width: 150px;
     margin-right: 50px;
+}
+
+div.content form div.basic select {
+    margin-left: 5px;
+}
+
+div.content form span.required {
+    color: #C00000;
 }
 
 div.content form div.logo input[type="file"] {
@@ -70,10 +74,22 @@ div.content form div.shoppe > div {
     float: left;
 }
 
+div.content form div.shoppe > div.left {
+    margin-right: 20px;
+}
+
+div.content form div.shoppe > div.right label {
+    margin-right: 10px;
+}
+
 div.content form > div {
     padding: 10px;
 }
 
 div.content form > div * {
     vertical-align: middle;
+}
+
+#poster, #slogan {
+    margin-left: 10px;
 }

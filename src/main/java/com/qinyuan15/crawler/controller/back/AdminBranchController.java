@@ -37,25 +37,25 @@ public class AdminBranchController extends ImageController {
         return "admin-branch";
     }
 
-    private String getLogoUrl(String logoUrl, MultipartFile logoFile) throws IOException {
-        if (logoFile == null) {
-            if (new PictureUrlValidator(getLocalAddress()).isLocal(logoUrl)) {
-                return getPictureUrlConverter().urlToPath(logoUrl);
+    private String getImageUrl(String imageUrl, MultipartFile imageFile) throws IOException {
+        if (imageFile == null) {
+            if (new PictureUrlValidator(getLocalAddress()).isLocal(imageUrl)) {
+                return getPictureUrlConverter().urlToPath(imageUrl);
             } else {
-                String filePath = imageDownloader.save(logoUrl);
+                String filePath = imageDownloader.save(imageUrl);
                 LOGGER.info("save upload image to {}", filePath);
                 return filePath;
             }
         } else {
             String relativePath = "mall/branch/logo/" + RandomStringUtils.randomAlphabetic(20)
-                    + "_" + logoFile.getOriginalFilename();
+                    + "_" + imageFile.getOriginalFilename();
             String filePath = imageDownloader.getSaveDir() + "/" + relativePath;
             File file = new File(filePath);
             File parent = file.getParentFile();
             if (!parent.isDirectory() && !parent.mkdirs()) {
                 LOGGER.error("fail to create directory {}", parent.getAbsolutePath());
             }
-            logoFile.transferTo(file);
+            imageFile.transferTo(file);
             LOGGER.info("save upload image to {}", filePath);
             return filePath;
         }
@@ -69,6 +69,8 @@ public class AdminBranchController extends ImageController {
                                          @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
                                          @RequestParam(value = "squareLogo", required = true) String squareLogo,
                                          @RequestParam(value = "squareLogoFile", required = false) MultipartFile squareLogoFile,
+                                         @RequestParam(value = "poster", required = true) String poster,
+                                         @RequestParam(value = "posterFile", required = false) MultipartFile posterFile,
                                          @RequestParam(value = "parentId", required = true) Integer parentId,
                                          @RequestParam(value = "firstLetter", required = true) String firstLetter,
                                          @RequestParam(value = "slogan", required = true) String slogan,
@@ -77,9 +79,9 @@ public class AdminBranchController extends ImageController {
         // deal with logUrl
         String logoUrl;
         try {
-            logoUrl = getLogoUrl(logo, logoFile);
+            logoUrl = getImageUrl(logo, logoFile);
         } catch (Exception e) {
-            LOGGER.error("fail to deal with upload logo, logo:{}, logoFile:{}, error:{}"
+            LOGGER.error("fail to deal with logoUrl, logo:{}, logoFile:{}, error:{}"
                     , logo, logoFile, e);
             return createFailResult("矩形Logo文件处理失败!");
         }
@@ -87,11 +89,21 @@ public class AdminBranchController extends ImageController {
         // deal with squareLogoUrl
         String squareLogoUrl;
         try {
-            squareLogoUrl = getLogoUrl(squareLogo, squareLogoFile);
+            squareLogoUrl = getImageUrl(squareLogo, squareLogoFile);
         } catch (Exception e) {
-            LOGGER.error("fail to deal with upload squareLogo, squareLogo:{}, squareLogoFile:{}, error:{}"
+            LOGGER.error("fail to deal with squareLogoUrl, squareLogo:{}, squareLogoFile:{}, error:{}"
                     , logo, logoFile, e);
             return createFailResult("方形Logo文件处理失败!");
+        }
+
+        // deal with poster
+        String posterUrl;
+        try {
+            posterUrl = getImageUrl(poster, posterFile);
+        } catch (Exception e) {
+            LOGGER.error("fail to deal with posterUrl, poster:{}, posterFile:{}, error:{}"
+                    , poster, posterFile, e);
+            return createFailResult("海报文件处理失败!");
         }
 
         // build branch object
@@ -99,6 +111,7 @@ public class AdminBranchController extends ImageController {
         branch.setName(name);
         branch.setLogo(logoUrl);
         branch.setSquareLogo(squareLogoUrl);
+        branch.setPoster(posterUrl);
         branch.setParentId(parentId);
         branch.setSlogan(slogan);
         if (StringUtils.hasText(firstLetter)) {
