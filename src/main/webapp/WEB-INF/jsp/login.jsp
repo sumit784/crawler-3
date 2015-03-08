@@ -16,7 +16,7 @@
             </p>
 
             <p>
-                <input type="checkbox" id="rememberMe"/>
+                <input type="checkbox" id="rememberMe" name="_spring_security_remember_me"/>
                 <span id="rememberMeLabel">记住我</span>
                 <input type="submit" id="loginSubmit" value="登录"/>
             </p>
