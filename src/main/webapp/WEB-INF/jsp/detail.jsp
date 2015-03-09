@@ -32,11 +32,11 @@
             <div class="price">
                 <div>
                     历史低价： <span class="lowPrice">￥${lowPrice}</span>
-                    销量： <span class="sales">16</span>件
+                    销量： <span class="sales">${commodity.sales}</span>件
                 </div>
                 <div>
                     最高售价： <span class="highestPrice">￥${highPrice}</span>
-                    上价时间： <span class="releaseDate">2014.03.21</span>
+                    上架时间： <span class="releaseDate">${commodity.onShelfTime}</span>
                 </div>
                 <div>
                     <span class="trend" id="trendImage">相关评价 和 历史价格走势

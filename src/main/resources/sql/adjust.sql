@@ -1,0 +1,1 @@
+alter table commodity add column sales int;

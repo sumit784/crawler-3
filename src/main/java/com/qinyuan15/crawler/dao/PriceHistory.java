@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Created by qinyuan on 14-12-28.
- */
+ *//*
 public class PriceHistory {
     private List<String> times;
     private List<Double> prices;
@@ -24,4 +24,4 @@ public class PriceHistory {
     public void setPrices(List<Double> prices) {
         this.prices = prices;
     }
-}
+}*/

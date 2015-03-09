@@ -147,4 +147,25 @@ public class CommodityDao {
             HibernateUtil.update(commodity);
         }
     }
+
+    public void updateSales(int id, Integer sales) {
+        if (sales == null) {
+            return;
+        }
+
+        Commodity commodity = getInstance(id);
+        commodity.setSales(sales);
+        HibernateUtil.save(commodity);
+    }
+
+    public void updateOnShelfTime(int id) {
+        PriceRecord firstPriceRecord = new PriceRecordDao().getFirstInstance(id);
+        if (firstPriceRecord == null) {
+            return;
+        }
+
+        Commodity commodity = getInstance(id);
+        commodity.setOnShelfTime(firstPriceRecord.getRecordTime().toString());
+        HibernateUtil.save(commodity);
+    }
 }

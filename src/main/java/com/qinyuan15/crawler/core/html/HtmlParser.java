@@ -30,8 +30,17 @@ public class HtmlParser {
         return doc.getElementsByTag(tagName);
     }
 
+    public Element getElement(String tagName, String className) {
+        Elements elements = this.getElements(tagName, className);
+        return elements.size() > 0 ? elements.get(0) : null;
+    }
+
     public Elements getElements(String tagName, String className) {
         Elements elements = getElements(tagName);
+        return filterElements(elements, className);
+    }
+
+    private static Elements filterElements(Elements elements, String className) {
         Elements filteredElements = new Elements();
 
         for (Element element : elements) {
@@ -49,6 +58,15 @@ public class HtmlParser {
         }
 
         return filteredElements;
+    }
+
+    public static Elements getSubElements(Element element, String tagName, String className) {
+        return filterElements(element.getElementsByTag(tagName), className);
+    }
+
+    public static Element getSubElement(Element element, String tagName, String className) {
+        Elements elements = getSubElements(element, tagName, className);
+        return elements.size() > 0 ? elements.get(0) : null;
     }
 
     public String getInnerHTML(String tagName) {

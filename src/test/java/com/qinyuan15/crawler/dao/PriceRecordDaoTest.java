@@ -36,4 +36,12 @@ public class PriceRecordDaoTest {
     public void testHasInstanceToday() throws Exception {
         new PriceRecordDao().hasInstanceToday(1);
     }
+
+    @Test
+    public void testGetFirstInstance() throws Exception {
+        PriceRecord priceRecord = new PriceRecordDao().getFirstInstance(6);
+        if (priceRecord != null) {
+            System.out.println(priceRecord.getRecordTime().toString());
+        }
+    }
 }

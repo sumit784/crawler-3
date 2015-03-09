@@ -15,7 +15,7 @@ public class Commodity extends SimpleCommodity {
     private String onShelfTime;
     private Double originalPrice;
     private Boolean lowestInThreeMonth;
-    private PriceHistory trend;
+    //private PriceHistory trend;
     private String url;
     private String buyUrl;
     private Boolean active;
@@ -23,6 +23,15 @@ public class Commodity extends SimpleCommodity {
     private String parameters;
     private Integer categoryId;
     private Integer userId;
+    private Integer sales;
+
+    public Integer getSales() {
+        return sales;
+    }
+
+    public void setSales(Integer sales) {
+        this.sales = sales;
+    }
 
     public Integer getCategoryId() {
         return categoryId;
@@ -95,10 +104,10 @@ public class Commodity extends SimpleCommodity {
     public Boolean getLowestInThreeMonth() {
         return lowestInThreeMonth;
     }
-
+/*
     public PriceHistory getTrend() {
         return trend;
-    }
+    }*/
 
     public Boolean getActive() {
         return active;
@@ -135,11 +144,11 @@ public class Commodity extends SimpleCommodity {
     public void setLowestInThreeMonth(Boolean lowestInThreeMonth) {
         this.lowestInThreeMonth = lowestInThreeMonth;
     }
-
+/*
     public void setTrend(PriceHistory trend) {
         this.trend = trend;
     }
-
+*/
     public void setActive(Boolean active) {
         this.active = active;
     }

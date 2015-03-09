@@ -26,4 +26,6 @@ public interface CommodityPageParser {
     List<String> getImageUrls();
 
     List<String> getDetailImagesUrls();
+
+    Integer getSales();
 }

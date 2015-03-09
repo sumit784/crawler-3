@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.util.StringUtils;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class to parse page of http://s.etao.com
@@ -66,6 +69,36 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
             Double realPrice = parseDouble(realPriceElement.text());
             if (realPrice != null) {
                 return realPrice;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer getSales() {
+        HtmlParser htmlParser = new HtmlParser(this.html);
+        Element productInfoDiv = htmlParser.getElement("div", "product-info");
+        if (productInfoDiv == null) {
+            return null;
+        }
+
+        Element ulElement = HtmlParser.getSubElement(productInfoDiv, "ul", "meta");
+        if (ulElement == null) {
+            return null;
+        }
+
+        Elements liElements = ulElement.getElementsByTag("li");
+        char htmlSpace = 160;
+        String regex = String.format("销[\\s%c]*量\\d", htmlSpace);
+        Pattern pattern = Pattern.compile(regex);
+        for (Element liElement : liElements) {
+            String text = liElement.text().trim();
+            Matcher matcher = pattern.matcher(text);
+            if (matcher.find()) {
+                return NumberUtils.toInt(matcher.group().replaceAll("\\D", ""));
             }
         }
         return null;

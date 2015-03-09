@@ -80,10 +80,18 @@ public class PriceRecordDao {
             return HibernateUtil.getList(getHQL());
         }
 
-        @SuppressWarnings("unchecked")
         public PriceRecord getLastInstance() {
-            String hql = getHQL();
-            hql += " ORDER BY recordTime DESC";
+            String hql = getHQL() + " ORDER BY recordTime DESC";
+
+            @SuppressWarnings("unchecked")
+            List<PriceRecord> priceRecords = HibernateUtil.getList(hql, 0, 1);
+            return priceRecords.size() == 0 ? null : priceRecords.get(0);
+        }
+
+        public PriceRecord getFirstInstance() {
+            String hql = getHQL() + " ORDER BY recordTime ASC";
+
+            @SuppressWarnings("unchecked")
             List<PriceRecord> priceRecords = HibernateUtil.getList(hql, 0, 1);
             return priceRecords.size() == 0 ? null : priceRecords.get(0);
         }
@@ -104,5 +112,9 @@ public class PriceRecordDao {
                 .setStartTime(DateUtils.todayStartTime())
                 .setEndTime(DateUtils.todayEndTime())
                 .hasInstance();
+    }
+
+    public PriceRecord getFirstInstance(int commodityId) {
+        return factory().setCommodityId(commodityId).getFirstInstance();
     }
 }

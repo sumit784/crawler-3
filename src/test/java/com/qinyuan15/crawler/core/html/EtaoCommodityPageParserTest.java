@@ -1,7 +1,6 @@
 package com.qinyuan15.crawler.core.html;
 
 import com.qinyuan15.crawler.core.DateUtils;
-import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -94,5 +93,11 @@ public class EtaoCommodityPageParserTest {
             assertThat(url).contains(".jpg").contains("http://")
                     .contains("taobaocdn.com/imgextra");
         }
+    }
+
+    @Test
+    public void testGetSales() throws Exception {
+        Integer sale = parser.getSales();
+        assertThat(sale).isEqualTo(2);
     }
 }

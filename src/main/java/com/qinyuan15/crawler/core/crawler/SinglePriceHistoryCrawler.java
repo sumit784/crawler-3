@@ -6,10 +6,7 @@ import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
-import com.qinyuan15.crawler.dao.Commodity;
-import com.qinyuan15.crawler.dao.HibernateUtil;
-import com.qinyuan15.crawler.dao.PriceRecord;
-import com.qinyuan15.crawler.dao.PriceRecordDao;
+import com.qinyuan15.crawler.dao.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,8 +61,14 @@ class SinglePriceHistoryCrawler {
                 }
             }
 
+            // save images
             CommodityPictureDownloader downloader = new CommodityPictureDownloader(imageDownloader);
             downloader.saveIfNotExist(commodity.getId(), commodityPageParser.getImageUrls());
+
+            // save sales and on self time
+            CommodityDao commodityDao = new CommodityDao();
+            commodityDao.updateSales(commodity.getId(), commodityPageParser.getSales());
+            commodityDao.updateOnShelfTime(commodity.getId());
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
         }
