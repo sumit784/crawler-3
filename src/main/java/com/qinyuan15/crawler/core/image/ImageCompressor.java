@@ -42,6 +42,10 @@ public class ImageCompressor {
         }
     }
 
+    public void compress(String targetPath, ImageSize size) {
+        this.compress(targetPath, size.width, size.height);
+    }
+
     private String getFormatName() {
         sourcePath = sourcePath.toLowerCase();
         if (sourcePath.endsWith(".png")) {
