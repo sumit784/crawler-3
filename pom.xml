@@ -49,7 +49,7 @@
             <version>2.14</version>
         </dependency>
 
-        <!-- depencies about database -->
+        <!-- dependencies about database -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -75,7 +75,6 @@
             <artifactId>mchange-commons-java</artifactId>
             <version>0.2.8</version>
         </dependency>
-
 
         <!-- spring MVC dependencies -->
         <dependency>
@@ -210,6 +209,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
         </dependency>
 
         <!-- test dependencies -->

@@ -155,7 +155,7 @@ public class CommodityDao {
 
         Commodity commodity = getInstance(id);
         commodity.setSales(sales);
-        HibernateUtil.save(commodity);
+        HibernateUtil.update(commodity);
     }
 
     public void updateOnShelfTime(int id) {
@@ -166,6 +166,6 @@ public class CommodityDao {
 
         Commodity commodity = getInstance(id);
         commodity.setOnShelfTime(firstPriceRecord.getRecordTime().toString());
-        HibernateUtil.save(commodity);
+        HibernateUtil.update(commodity);
     }
 }

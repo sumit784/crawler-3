@@ -44,4 +44,14 @@ public class CommodityDaoTest {
         List<Commodity> commodities = new CommodityDao().getInstancesByShowId("40780735321");
         System.out.println(commodities.size());
     }
+
+    @Test
+    public void testUpdateSales() throws Exception {
+        //new CommodityDao().updateSales(6, 2);
+    }
+
+    @Test
+    public void testUpdateOnShelfTime() throws Exception {
+        //new CommodityDao().updateOnShelfTime(6);
+    }
 }

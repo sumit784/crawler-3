@@ -15,8 +15,16 @@ public class TestFileUtils {
     private TestFileUtils() {
     }
 
+    public static String getAbsolutePath(String fileName) {
+        return getFileByName(fileName).getAbsolutePath();
+    }
+
+    private static File getFileByName(String fileName) {
+        return new File("src/test/resources/" + fileName);
+    }
+
     public static String read(String fileName) throws IOException {
-        File file = new File("src/test/resources/" + fileName);
+        File file = getFileByName(fileName);
         return FileUtils.readFileToString(file, "utf8");
     }
 }
