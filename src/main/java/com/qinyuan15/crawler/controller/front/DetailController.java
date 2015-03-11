@@ -29,6 +29,8 @@ public class DetailController extends ImageController {
         CommodityPictureDao pictureDao = new CommodityPictureDao();
         List<CommodityPicture> pictures = pictureDao.getInstances(id);
         model.addAttribute("pictures", parseCommodityPictureUrls(pictures));
+        model.addAttribute("middlePictures", parseCommodityPictureMiddleUrls(pictures));
+        model.addAttribute("smallPictures", parseCommodityPictureSmallUrls(pictures));
         List<CommodityPicture> detailPictures = pictureDao.getDetailInstances(id);
         model.addAttribute("detailPictures", parseCommodityPictureUrls(detailPictures));
 

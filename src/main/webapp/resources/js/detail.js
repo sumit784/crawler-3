@@ -1,5 +1,18 @@
 ;
 (function () {
+    function loadPicturesData(elementId) {
+        var pictures = $('#' + elementId).text();
+        pictures = pictures.substring(1, pictures.length - 1);
+        pictures = pictures.split(',');
+        for (var i = 0, len = pictures.length; i < len; i++) {
+            pictures[i] = $.trim(pictures[i]);
+        }
+        return pictures;
+    }
+
+    var pictures = loadPicturesData('pictures');
+    var middlePictures = loadPicturesData('middlePictures');
+
     var historyTrend = {
         _chartCreated: false,
         _data: null,
@@ -52,9 +65,9 @@
         $elements.smallImages.filter('.selected').removeClass('selected');
         var $this = $(this);
         $this.addClass('selected');
-        var src = $this.attr('src');
-        $elements.largeImage.find('img.boxShadow').attr('src', src);
-        $elements.enlargeImage.find('img').attr('src', src);
+        var index = $this.dataOptions()['index'];
+        $elements.largeImage.find('img.boxShadow').attr('src', middlePictures[index]);
+        $elements.enlargeImage.find('img').attr('src', pictures[index]);
     });
     $elements.trendImage.hover(function () {
         historyTrend.show();

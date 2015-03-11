@@ -14,5 +14,5 @@ public class ImageSize {
     }
 
     public static ImageSize SMALL = new ImageSize(50, 50);
-    public static ImageSize MIDDLE = new ImageSize(400, 400);
+    public static ImageSize MIDDLE = new ImageSize(310, 310);
 }

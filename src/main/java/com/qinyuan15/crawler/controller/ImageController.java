@@ -24,6 +24,11 @@ public class ImageController extends BaseController {
         return getPictureUrlConverter().pathsToUrls(commodityPictures);
     }
 
+    protected List<String> parseCommodityPictureMiddleUrls(List<CommodityPicture> commodityPictures){
+        return getPictureUrlConverter().setThumbnailType(ThumbnailType.MIDDLE)
+                .pathsToUrls(commodityPictures);
+    }
+
     protected List<String> parseCommodityPictureSmallUrls(List<CommodityPicture> commodityPictures) {
         return getPictureUrlConverter().setThumbnailType(ThumbnailType.SMALL)
                 .pathsToUrls(commodityPictures);

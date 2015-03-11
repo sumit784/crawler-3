@@ -78,7 +78,9 @@
                         $commodityName.text(name).attr('href', crawlerLink).prev().val(name);
 
                         $scope.imageUrls = data['imageUrls'];
+                        $scope.originalImageUrls = data['imageUrls'];
                         $scope.detailImageUrls = data['detailImageUrls'];
+                        $scope.originalDetailImageUrls = data['detailImageUrls'];
                         $scope.showCrawlerInfo = false;
                     });
 
@@ -98,39 +100,40 @@
                 $scope.detailImageUrls.splice(index, 1);
             };
             $scope.enlargeImage = function (imageUrl, event) {
-                var $image = $enlargeImage.find('img');
-                $image.attr('src', imageUrl);
+                $enlargeImage.empty();
+                var image = new Image();
+                image.onload = function () {
+                    var imageHeight = image.height;
+                    var imageWidth = image.width;
+                    var totalHeight = window.screen.availHeight - 120;
+                    if (imageHeight > totalHeight) {
+                        imageWidth = imageWidth * totalHeight / imageHeight;
+                        imageHeight = totalHeight;
+                    }
+                    image.height = imageHeight;
+                    image.width = imageWidth;
 
-                var imageHeight = images.getHeight($image);
-                var imageWidth = images.getWidth($image);
-                var totalHeight = window.screen.availHeight - 120;
-                if (imageHeight > totalHeight) {
-                    imageWidth = imageWidth * totalHeight / imageHeight;
-                    imageHeight = totalHeight;
-                }
-                $image.css({
-                    width: imageWidth,
-                    height: imageHeight
-                });
+                    var pageX = event.clientX;
+                    var pageY = event.clientY;
+                    var totalWidth = document.body.clientWidth;
+                    var x, y;
+                    if (pageX > totalWidth / 2) {
+                        x = pageX - imageWidth - 100;
+                    } else {
+                        x = pageX + 100;
+                    }
+                    y = pageY - imageHeight / 2;
+                    if (y < 0) {
+                        y = 0;
+                    }
 
-                var pageX = event.clientX;
-                var pageY = event.clientY;
-                var totalWidth = document.body.clientWidth;
-                var x, y;
-                if (pageX > totalWidth / 2) {
-                    x = pageX - imageWidth - 100;
-                } else {
-                    x = pageX + 100;
-                }
-                y = pageY - imageHeight / 2;
-                if (y < 0) {
-                    y = 0;
-                }
-
-                $enlargeImage.css({
-                    left: x,
-                    top: y
-                }).show();
+                    $enlargeImage.css({
+                        left: x,
+                        top: y
+                    }).show();
+                };
+                image.src = imageUrl;
+                $enlargeImage.append(image);
             };
             $scope.closeEnlargeImage = function () {
                 $enlargeImage.hide();
@@ -143,7 +146,9 @@
                 setTimeout(function () {
                     $http.get("commodityPicture.json?commodityId=" + commodityId).success(function (data) {
                         $scope.imageUrls = data['pictures'];
+                        $scope.originalImageUrls = data['originalPictures'];
                         $scope.detailImageUrls = data['detailPictures'];
+                        $scope.originalDetailImageUrls = data['originalDetailPictures'];
                     });
                 }, 2000);
             }

@@ -9,9 +9,11 @@
                     <img class="branch-logo" src="${branch.logo}"/>
                 </a>
             </div>
+            <script id="pictures" type="text/x-data">${pictures}</script>
+            <script id="middlePictures" type="text/x-data">${middlePictures}</script>
             <div class="largeImage">
                 <c:if test="${fn:length(pictures)>0}">
-                    <img class="boxShadow" src="${pictures[0]}"/>
+                    <img class="boxShadow" src="${middlePictures[0]}"/>
 
                     <div class="enlarge"></div>
                     <div class="enlargeImage">
@@ -22,8 +24,9 @@
                 </c:if>
             </div>
             <div class="smallImage">
-                <c:forEach var="picture" items="${pictures}" varStatus="status">
-                    <img class="${status.index==0?'link selected':'link'}" src="${picture}"/>
+                <c:forEach var="picture" items="${smallPictures}" varStatus="status">
+                    <img class="${status.index==0?'link selected':'link'}" data-options="index:${status.index}"
+                         src="${picture}"/>
                 </c:forEach>
             </div>
         </div>
