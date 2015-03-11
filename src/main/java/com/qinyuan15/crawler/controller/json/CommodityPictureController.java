@@ -21,8 +21,8 @@ public class CommodityPictureController extends ImageController {
     public String get(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
         CommodityPictureDao dao = new CommodityPictureDao();
         Map<String, Object> jsonMap = new HashMap<String, Object>();
-        jsonMap.put("pictures", parseCommodityPictureUrls(dao.getInstances(commodityId)));
-        jsonMap.put("detailPictures", parseCommodityPictureUrls(dao.getDetailInstances(commodityId)));
+        jsonMap.put("pictures", parseCommodityPictureSmallUrls(dao.getInstances(commodityId)));
+        jsonMap.put("detailPictures", parseCommodityPictureSmallUrls(dao.getDetailInstances(commodityId)));
         return toJson(jsonMap);
     }
 }

@@ -11,13 +11,13 @@ public class ThumbnailTest {
 
     @Test
     public void testGetSmall() throws Exception {
-        //String path = TestFileUtils.getAbsolutePath("meituan.png");
-        //System.out.println(thumbnail.getSmall(path));
+        String path = "/home/qinyuan/share/meituan.png";
+        System.out.println(thumbnail.getSmall(path));
     }
 
     @Test
     public void testGetMiddle() throws Exception {
-        //String path = TestFileUtils.getAbsolutePath("meituan.png");
-        //System.out.println(thumbnail.getMiddle(path));
+        String path = "/home/qinyuan/share/meituan.png";
+        System.out.println(thumbnail.getMiddle(path));
     }
 }

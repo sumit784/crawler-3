@@ -14,14 +14,21 @@ public class PictureUrlConverter {
     private ImageDownloader imageDownloader;
     private String localAddress;
     private String urlPrefix = "ftp://";
+    private ThumbnailType thumbnailType = ThumbnailType.NONE;
 
     public PictureUrlConverter(ImageDownloader imageDownloader, String localAddress) {
         this.imageDownloader = imageDownloader;
         this.localAddress = localAddress;
     }
 
-    public void setUrlPrefix(String urlPrefix) {
+    public PictureUrlConverter setUrlPrefix(String urlPrefix) {
         this.urlPrefix = urlPrefix;
+        return this;
+    }
+
+    public PictureUrlConverter setThumbnailType(ThumbnailType thumbnailType) {
+        this.thumbnailType = thumbnailType;
+        return this;
     }
 
     public String urlToPath(String url) {
@@ -35,6 +42,16 @@ public class PictureUrlConverter {
     public String pathToUrl(String path) {
         if (!StringUtils.hasText(path) || !path.startsWith(imageDownloader.getSaveDir())) {
             return path;
+        }
+
+        Thumbnail thumbnail = new Thumbnail();
+        switch (this.thumbnailType) {
+            case SMALL:
+                path = thumbnail.getSmall(path);
+                break;
+            case MIDDLE:
+                path = thumbnail.getMiddle(path);
+                break;
         }
 
         path = path.replaceFirst(imageDownloader.getSaveDir(), "");

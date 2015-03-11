@@ -3,6 +3,7 @@ package com.qinyuan15.crawler.controller;
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
+import com.qinyuan15.crawler.core.image.ThumbnailType;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.CommodityPicture;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +21,27 @@ public class ImageController extends BaseController {
     protected ImageDownloader imageDownloader;
 
     protected List<String> parseCommodityPictureUrls(List<CommodityPicture> commodityPictures) {
-        PictureUrlConverter urlConverter = new PictureUrlConverter(
-                imageDownloader, getLocalAddress());
-        return urlConverter.pathsToUrls(commodityPictures);
+        return getPictureUrlConverter().pathsToUrls(commodityPictures);
+    }
+
+    protected List<String> parseCommodityPictureSmallUrls(List<CommodityPicture> commodityPictures) {
+        return getPictureUrlConverter().setThumbnailType(ThumbnailType.SMALL)
+                .pathsToUrls(commodityPictures);
     }
 
     protected PictureUrlConverter getPictureUrlConverter() {
         return new PictureUrlConverter(imageDownloader, getLocalAddress());
     }
 
+    protected BranchUrlAdapter getBranchUrlAdapter() {
+        return new BranchUrlAdapter(imageDownloader, getLocalAddress());
+    }
+
     protected List<Branch> adjustBranches(List<Branch> branches) {
-        BranchUrlAdapter urlAdapter = new BranchUrlAdapter(imageDownloader, getLocalAddress());
-        return urlAdapter.adjust(branches);
+        return getBranchUrlAdapter().adjust(branches);
     }
 
     protected Branch adjustBranch(Branch branch) {
-        BranchUrlAdapter urlAdapter = new BranchUrlAdapter(imageDownloader, getLocalAddress());
-        return urlAdapter.adjust(branch);
+        return getBranchUrlAdapter().adjust(branch);
     }
 }

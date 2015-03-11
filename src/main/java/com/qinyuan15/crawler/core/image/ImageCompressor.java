@@ -1,10 +1,13 @@
 package com.qinyuan15.crawler.core.image;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -19,10 +22,22 @@ public class ImageCompressor {
     public ImageCompressor(String sourcePath) {
         try {
             this.sourcePath = sourcePath;
-            this.sourceImage = ImageIO.read(new File(sourcePath));
+            if (isJPG(sourcePath)) {
+                JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder(
+                        new FileInputStream(sourcePath));
+                this.sourceImage = decoder.decodeAsBufferedImage();
+            } else {
+                this.sourceImage = ImageIO.read(new File(sourcePath));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean isJPG(String sourcePath) {
+        sourcePath = sourcePath.toLowerCase();
+        return sourcePath.endsWith(".jpg") || sourcePath.endsWith(".jpeg")
+                || sourcePath.endsWith(".jpe");
     }
 
     public void compress(String targetPath, double rate) {
@@ -53,7 +68,7 @@ public class ImageCompressor {
         } else if (sourcePath.endsWith(".gif")) {
             return "gif";
         } else {
-            return "jpg";
+            return "jpeg";
         }
     }
 }
