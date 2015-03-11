@@ -33,6 +33,11 @@ public class ComposableCommodityPageParser extends AbstractCommodityPageParser {
     }
 
     @Override
+    public boolean isExpire() {
+        return getSuitableParser().isExpire();
+    }
+
+    @Override
     public String getName() {
         return getSuitableParser().getName();
     }

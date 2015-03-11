@@ -50,6 +50,11 @@ class SinglePriceHistoryCrawler {
             String html = client.getContent(url);
             commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
+            if (commodityPageParser.isExpire()) {
+                new CommodityDao().deactivate(commodity.getId());
+                return;
+            }
+
             Map<Date, Double> priceHistory = commodityPageParser.getPriceHistory();
             if (priceHistory == null) {
                 LOGGER.info("can not get priceHistory from url {}, html contents: {}", url, html);

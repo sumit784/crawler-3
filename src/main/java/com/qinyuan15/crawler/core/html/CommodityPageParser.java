@@ -28,4 +28,6 @@ public interface CommodityPageParser {
     List<String> getDetailImagesUrls();
 
     Integer getSales();
+
+    boolean isExpire();
 }

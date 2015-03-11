@@ -104,6 +104,11 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         return null;
     }
 
+    @Override
+    public boolean isExpire() {
+        return this.html.contains("您所访问的页面已经被删除");
+    }
+
     /**
      * {@inheritDoc}
      */
