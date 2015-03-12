@@ -21,8 +21,10 @@ public class Thumbnail {
     }
 
     private String buildThumbnail(String imagePath, String targetPath, ImageSize size) {
-        ImageCompressor compressor = new ImageCompressor(imagePath);
-        compressor.compress(targetPath, size);
+        if (new File(imagePath).isFile()) {
+            ImageCompressor compressor = new ImageCompressor(imagePath);
+            compressor.compress(targetPath, size);
+        }
         return targetPath;
     }
 
