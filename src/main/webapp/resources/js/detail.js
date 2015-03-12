@@ -66,8 +66,8 @@
         var $this = $(this);
         $this.addClass('selected');
         var index = $this.dataOptions()['index'];
-        $elements.largeImage.find('img.boxShadow').attr('src', middlePictures[index]);
-        $elements.enlargeImage.find('img').attr('src', pictures[index]);
+        $elements.largeImage.find('img.boxShadow').hide().eq(index).show();
+        $elements.enlargeImage.find('img').hide().eq(index).show();
     });
     $elements.trendImage.hover(function () {
         historyTrend.show();

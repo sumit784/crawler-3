@@ -73,7 +73,7 @@
                         <div class="image" ng-repeat="imageUrl in imageUrls">
                             <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
                             <img class="link" ng-src="{{imageUrl}}"
-                                 ng-mouseover="enlargeImage(originalImageUrls[$index], $event)"
+                                 ng-mouseover="enlargeImage($index, $event, 'normal')"
                                  ng-mouseout="closeEnlargeImage()"/><br/>
                             <a class="noLineAnchor" href="javascript:void(0)"
                                ng-click="deleteImage($index)">删除</a>
@@ -86,7 +86,7 @@
                         <div class="image" ng-repeat="detailImageUrl in detailImageUrls">
                             <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
                             <img class="link" ng-src="{{detailImageUrl}}"
-                                 ng-mouseover="enlargeImage(originalDetailImageUrls[$index], $event)"
+                                 ng-mouseover="enlargeImage($index, $event, 'detail')"
                                  ng-mouseout="closeEnlargeImage()"/><br/>
                             <a class="noLineAnchor" href="javascript:void(0)"
                                ng-click="deleteDetailImage($index)">删除</a>
@@ -94,7 +94,14 @@
                     </div>
                 </div>
             </div>
-            <div id="enlargeImage" class="boxShadow"><img src=""/></div>
+            <div id="enlargeImage" class="boxShadow">
+                <div class="normal" ng-repeat="imageUrl in originalImageUrls">
+                    <img ng-src="{{imageUrl}}"/>
+                </div>
+                <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls">
+                    <img ng-src="{{detailImageUrl}}"/>
+                </div>
+            </div>
         </div>
         <div class="detail">
             <table>

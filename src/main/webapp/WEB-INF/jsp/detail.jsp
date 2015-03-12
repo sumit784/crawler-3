@@ -13,11 +13,16 @@
             <script id="middlePictures" type="text/x-data">${middlePictures}</script>
             <div class="largeImage">
                 <c:if test="${fn:length(pictures)>0}">
-                    <img class="boxShadow" src="${middlePictures[0]}"/>
+                    <c:forEach var="picture" items="${middlePictures}" varStatus="status">
+                        <img class="boxShadow" src="${picture}"
+                             <c:if test="${status.index >0 }">style="display: none;"</c:if>/>
+                    </c:forEach>
 
                     <div class="enlarge"></div>
                     <div class="enlargeImage">
-                        <img src="${pictures[0]}"/>
+                        <c:forEach var="picture" items="${pictures}" varStatus="status">
+                            <img src="${picture}"/>
+                        </c:forEach>
 
                         <div class="closeLargeImage"></div>
                     </div>

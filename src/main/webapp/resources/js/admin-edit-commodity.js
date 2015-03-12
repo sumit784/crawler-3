@@ -99,41 +99,41 @@
             $scope.deleteDetailImage = function (index) {
                 $scope.detailImageUrls.splice(index, 1);
             };
-            $scope.enlargeImage = function (imageUrl, event) {
-                $enlargeImage.empty();
-                var image = new Image();
-                image.onload = function () {
-                    var imageHeight = image.height;
-                    var imageWidth = image.width;
-                    var totalHeight = window.screen.availHeight - 120;
-                    if (imageHeight > totalHeight) {
-                        imageWidth = imageWidth * totalHeight / imageHeight;
-                        imageHeight = totalHeight;
-                    }
-                    image.height = imageHeight;
-                    image.width = imageWidth;
+            $scope.enlargeImage = function (index, event, type) {
+                $enlargeImage.find('img').hide();
+                $enlargeImage.find('div').hide();
+                var $targetDiv = $enlargeImage.find('div.' + type).show();
+                var $targetImage = $targetDiv.find('img').eq(index).show();
+                var imageWidth = images.getWidth($targetImage);
+                var imageHeight = images.getHeight($targetImage);
+                var totalHeight = window.screen.availHeight - 120;
+                if (imageHeight > totalHeight) {
+                    imageWidth = imageWidth * totalHeight / imageHeight;
+                    imageHeight = totalHeight;
+                }
+                $targetImage.css({
+                    height: imageHeight,
+                    width: imageWidth
+                });
 
-                    var pageX = event.clientX;
-                    var pageY = event.clientY;
-                    var totalWidth = document.body.clientWidth;
-                    var x, y;
-                    if (pageX > totalWidth / 2) {
-                        x = pageX - imageWidth - 100;
-                    } else {
-                        x = pageX + 100;
-                    }
-                    y = pageY - imageHeight / 2;
-                    if (y < 0) {
-                        y = 0;
-                    }
+                var pageX = event.clientX;
+                var pageY = event.clientY;
+                var totalWidth = document.body.clientWidth;
+                var x, y;
+                if (pageX > totalWidth / 2) {
+                    x = pageX - imageWidth - 100;
+                } else {
+                    x = pageX + 100;
+                }
+                y = pageY - imageHeight / 2;
+                if (y < 0) {
+                    y = 0;
+                }
 
-                    $enlargeImage.css({
-                        left: x,
-                        top: y
-                    }).show();
-                };
-                image.src = imageUrl;
-                $enlargeImage.append(image);
+                $enlargeImage.css({
+                    left: x,
+                    top: y
+                }).show();
             };
             $scope.closeEnlargeImage = function () {
                 $enlargeImage.hide();
