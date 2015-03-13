@@ -26,6 +26,7 @@ public class ListController extends BaseController {
         }
 
         setTitle(category.getName() + " 相关商品");
+        model.addAttribute("categoryId", category.getId());
         model.addAttribute("categoryName", category.getName());
         model.addAttribute("subCategories", dao.getSubInstances(category.getId()));
         return "list";

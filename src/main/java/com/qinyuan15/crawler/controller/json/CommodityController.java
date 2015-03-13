@@ -64,8 +64,7 @@ public class CommodityController extends ImageController {
      */
     // TODO This way to check whether commodity on shelf is religious
     private boolean isOnShelf(Commodity commodity) {
-        PriceRecord priceRecord = PriceRecordDao.factory()
-                .setCommodityId(commodity.getId()).getLastInstance();
+        PriceRecord priceRecord = new PriceRecordDao().getLastInstance(commodity.getId());
         return DateUtils.getDayDiff(priceRecord.getRecordTime(), DateUtils.now()) <= 2;
     }
 

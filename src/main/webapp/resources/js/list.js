@@ -97,8 +97,8 @@
         $(this).removeClass('deepTransparent');
     });
     angularUtils.controller(function ($scope, $http) {
-        initSnapshot();
         initBranch();
+        loadSnapshot($('#categoryId').val());
         $scope.showMore = function () {
             if ($scope.hideBranches.length == 0) {
                 return;
@@ -128,6 +128,7 @@
             var $this = $(event.target);
             var id = $this.dataOptions()['id'];
             loadHotWord(id);
+            loadSnapshot(id);
             subCategoryLinks.click($this);
             event.stopPropagation();
         };
@@ -155,8 +156,9 @@
             });
         }
 
-        function initSnapshot() {
-            $http.get("json/commoditySnapshot.json").success(function (data) {
+        function loadSnapshot(categoryId) {
+            var url = "json/commoditySnapshot.json?categoryId=" + categoryId;
+            $http.get(url).success(function (data) {
                 $scope.snapshots = data;
             });
         }

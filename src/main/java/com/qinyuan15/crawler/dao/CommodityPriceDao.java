@@ -69,9 +69,7 @@ public class CommodityPriceDao {
     }
 
     public Double getCurrentPrice(Integer commodityId) {
-        PriceRecord priceRecord = PriceRecordDao.factory()
-                .setCommodityId(commodityId)
-                .getLastInstance();
+        PriceRecord priceRecord = new PriceRecordDao().getLastInstance(commodityId);
         return priceRecord == null ? null : priceRecord.getPrice();
     }
 }

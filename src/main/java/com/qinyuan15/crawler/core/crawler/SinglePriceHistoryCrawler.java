@@ -64,16 +64,17 @@ class SinglePriceHistoryCrawler {
                 for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                     savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
                 }
+
+                // save images
+                CommodityPictureDownloader downloader = new CommodityPictureDownloader(imageDownloader);
+                downloader.saveIfNotExist(commodity.getId(), commodityPageParser.getImageUrls());
+
+                // save sales and on self time
+                CommodityDao commodityDao = new CommodityDao();
+                commodityDao.updateSales(commodity.getId(), commodityPageParser.getSales());
+                commodityDao.updateOnShelfTime(commodity.getId());
+                commodityDao.updatePrice(commodity.getId());
             }
-
-            // save images
-            CommodityPictureDownloader downloader = new CommodityPictureDownloader(imageDownloader);
-            downloader.saveIfNotExist(commodity.getId(), commodityPageParser.getImageUrls());
-
-            // save sales and on self time
-            CommodityDao commodityDao = new CommodityDao();
-            commodityDao.updateSales(commodity.getId(), commodityPageParser.getSales());
-            commodityDao.updateOnShelfTime(commodity.getId());
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
         }

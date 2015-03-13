@@ -30,6 +30,13 @@ public class CommodityDaoTest {
     }
 
     @Test
+    public void testSetCategoryId() throws Exception {
+        List<Commodity> commodities = CommodityDao.factory().setCategoryId(5).getInstances();
+        System.out.println(commodities.size());
+    }
+
+
+    @Test
     public void testGetInstance() throws Exception {
         CommodityDao dao = new CommodityDao();
         Commodity commodity = dao.getInstance(10);

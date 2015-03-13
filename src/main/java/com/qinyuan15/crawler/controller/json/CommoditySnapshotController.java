@@ -1,12 +1,10 @@
 package com.qinyuan15.crawler.controller.json;
 
-import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.commodity.CommoditySnapshot;
 import com.qinyuan15.crawler.core.commodity.CommoditySnapshotBuilder;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,10 +17,7 @@ import java.util.List;
  * Created by qinyuan on 15-2-27.
  */
 @Controller
-public class CommoditySnapshotController extends BaseController {
-
-    @Autowired
-    private ImageDownloader imageDownloader;
+public class CommoditySnapshotController extends ImageController {
 
     @ResponseBody
     @RequestMapping("/json/commoditySnapshot.json")

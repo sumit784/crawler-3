@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
+<input type="hidden" id="categoryId" value="${categoryId}"/>
 <div class="search boxShadow" ng-mouseout="hideMore($event)">
     <div class="navigationName boxShadow orangeBack">
         <span class="selectedNavigation">${categoryName}</span>

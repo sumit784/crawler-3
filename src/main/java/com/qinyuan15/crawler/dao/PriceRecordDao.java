@@ -114,6 +114,10 @@ public class PriceRecordDao {
                 .hasInstance();
     }
 
+    public PriceRecord getLastInstance(int commodityId){
+        return factory().setCommodityId(commodityId).getLastInstance();
+    }
+
     public PriceRecord getFirstInstance(int commodityId) {
         return factory().setCommodityId(commodityId).getFirstInstance();
     }

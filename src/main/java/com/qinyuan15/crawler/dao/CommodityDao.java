@@ -70,7 +70,8 @@ public class CommodityDao {
             }
 
             if (IntegerUtils.isPositive(categoryId)) {
-                query += " AND categoryId=" + categoryId;
+                String categoryIds = new CategoryDao().getSubInstancesAndSelfIdsString(categoryId);
+                query += " AND categoryId IN (" + categoryIds + ")";
             }
 
             if (IntegerUtils.isPositive(userId)) {
@@ -156,6 +157,15 @@ public class CommodityDao {
         Commodity commodity = getInstance(id);
         commodity.setSales(sales);
         HibernateUtil.update(commodity);
+    }
+
+    public void updatePrice(int id) {
+        Double currentPrice = new CommodityPriceDao().getCurrentPrice(id);
+        if (currentPrice != null) {
+            Commodity commodity = getInstance(id);
+            commodity.setPrice(currentPrice);
+            HibernateUtil.update(commodity);
+        }
     }
 
     public void updateOnShelfTime(int id) {
