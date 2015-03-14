@@ -109,7 +109,9 @@
         </div>
     </div>
     <c:forEach var="detailPicture" items="${detailPictures}">
-        <img src="${detailPicture}"/>
+        <div class="detailImage boxShadow">
+            <img src="${detailPicture}"/>
+        </div>
     </c:forEach>
 </div>
 <div class="right">

@@ -39,6 +39,12 @@ public class CommodityDaoTest {
     }
 
     @Test
+    public void testGetCount() throws Exception {
+        CommodityDao.Factory factory = CommodityDao.factory().setBranchId(2);
+        assertThat(factory.getInstances()).hasSize((int) (factory.getCount()));
+    }
+
+    @Test
     public void testSetKeyWord() throws Exception {
         List<Commodity> commodities = CommodityDao.factory().setKeyWord("兔耳朵").getInstances();
         System.out.println(commodities.size());

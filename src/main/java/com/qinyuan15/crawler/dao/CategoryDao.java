@@ -1,7 +1,5 @@
 package com.qinyuan15.crawler.dao;
 
-import com.qinyuan15.crawler.core.category.CategoryUtils;
-
 import java.util.List;
 
 /**
@@ -38,7 +36,7 @@ public class CategoryDao {
 
     public String getSubInstancesAndSelfIdsString(int parentId) {
         List<Category> categories = getSubInstancesAndSelf(parentId);
-        return CategoryUtils.getIdsString(categories);
+        return PersistObjectUtils.getIdsString(categories);
     }
 
     public boolean isUsed(int id) {

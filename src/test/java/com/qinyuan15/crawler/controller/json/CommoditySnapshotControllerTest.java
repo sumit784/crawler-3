@@ -17,6 +17,6 @@ public class CommoditySnapshotControllerTest {
         injectImageDownloader(controller);
 
         //System.out.println(controller.index(1, true, null, null));
-        System.out.println(controller.index(2, true, "price", "asc"));
+        System.out.println(controller.index(2, true, null, null, "price", "asc"));
     }
 }

@@ -175,7 +175,6 @@ jQuery.fn.focusOrSelect = function () {
                 if (!categoryId) {
                     categoryId = $('#categoryId').val();
                 }
-                console.log(categoryId);
                 selectedCategoryIndex = parseInt(categoryId);
             } else {
                 selectedCategoryIndex = -1;

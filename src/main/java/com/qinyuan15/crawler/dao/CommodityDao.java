@@ -227,7 +227,7 @@ public class CommodityDao {
             return this;
         }
 
-        public List<Commodity> getInstances() {
+        private String getHQL() {
             // build SQL query command
             String query = "FROM Commodity WHERE 1=1";
 
@@ -245,7 +245,8 @@ public class CommodityDao {
             }
 
             if (IntegerUtils.isPositive(branchId)) {
-                query += " AND branchId=" + branchId;
+                String branchIds = new BranchDao().getAllSubInstancesAndSelfIdsString(branchId);
+                query += " AND branchId IN (" + branchIds + ")";
             }
 
             if (keyWords != null && keyWords.length > 0) {
@@ -260,7 +261,7 @@ public class CommodityDao {
                 query += " AND active=" + active;
             }
 
-            List<String> orderItems = new ArrayList<String>();
+            List<String> orderItems = new ArrayList<>();
             if (this.orderByActive) {
                 orderItems.add("active DESC");
             }
@@ -270,15 +271,23 @@ public class CommodityDao {
             if (orderItems.size() > 0) {
                 query += " ORDER BY " + StringUtils.join(orderItems, ",");
             }
+            return query;
+        }
 
-            // execute query
+        public long getCount() {
             @SuppressWarnings("unchecked")
-            List<Commodity> commodities = HibernateUtil.getList(query);
+            List<Long> list = HibernateUtil.getList("SELECT COUNT(*) " + getHQL());
+            return list.get(0);
+        }
+
+        public List<Commodity> getInstances() {
+            @SuppressWarnings("unchecked")
+            List<Commodity> commodities = HibernateUtil.getList(getHQL());
 
             if (!inLowPrice) {
                 return commodities;
             } else {
-                List<Commodity> commoditiesInLowPrice = new ArrayList<Commodity>();
+                List<Commodity> commoditiesInLowPrice = new ArrayList<>();
                 String startTime = DateUtils.threeMonthAgo().toString();
                 String endTime = DateUtils.now().toString();
                 for (Commodity commodity : commodities) {

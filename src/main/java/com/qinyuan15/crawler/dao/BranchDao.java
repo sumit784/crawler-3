@@ -1,5 +1,8 @@
 package com.qinyuan15.crawler.dao;
 
+import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +36,29 @@ public class BranchDao {
 
     public List<Branch> getSubInstances(int parentId) {
         return HibernateUtil.getList(Branch.class, "parentId=" + parentId);
+    }
+
+    public List<Branch> getAllSubInstances(int parentId) {
+        List<Branch> allBranches = new ArrayList<>();
+        List<Branch> subBranches = getSubInstances(parentId);
+        if (subBranches.size() > 0) {
+            allBranches.addAll(subBranches);
+            for (Branch branch : subBranches) {
+                allBranches.addAll(getAllSubInstances(branch.getId()));
+            }
+        }
+        return allBranches;
+    }
+
+    public List<Branch> getAllSubInstancesAndSelf(int parentId) {
+        List<Branch> branches = Lists.newArrayList(getInstance(parentId));
+        branches.addAll(getAllSubInstances(parentId));
+        return branches;
+    }
+
+    public String getAllSubInstancesAndSelfIdsString(int parentId) {
+        List<Branch> branches = getAllSubInstancesAndSelf(parentId);
+        return PersistObjectUtils.getIdsString(branches);
     }
 
     public List<Branch> getInstancesByCategoryId(int categoryId) {

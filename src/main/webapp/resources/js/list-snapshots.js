@@ -34,6 +34,12 @@ function loadSnapshot($scope, $http, orderField, orderType) {
     if ($scope.categoryId) {
         params.push("categoryId=" + $scope.categoryId);
     }
+    if ($scope.branchId) {
+        params.push('branchId='+$scope.branchId);
+    }
+    if($scope.keyWord) {
+        params.push("keyWord="+encodeURI($scope.keyWord));
+    }
     if (orderField) {
         params.push("orderField=" + orderField);
     }

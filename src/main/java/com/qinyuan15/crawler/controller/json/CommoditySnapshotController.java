@@ -24,6 +24,8 @@ public class CommoditySnapshotController extends ImageController {
     @RequestMapping("/json/commoditySnapshot.json")
     public String index(@RequestParam(value = "categoryId", required = false) Integer categoryId,
                         @RequestParam(value = "active", required = false) Boolean active,
+                        @RequestParam(value = "keyWord", required = false) String keyWord,
+                        @RequestParam(value = "branchId", required = false) Integer branchId,
                         @RequestParam(value = "orderField", required = false) String orderField,
                         @RequestParam(value = "orderType", required = false) String orderType) {
         // set default value of active to true
@@ -31,7 +33,7 @@ public class CommoditySnapshotController extends ImageController {
             active = true;
         }
         CommodityDao.Factory factory = CommodityDao.factory().setCategoryId(categoryId)
-                .setActive(active).orderByActive();
+                .setActive(active).setKeyWord(keyWord).setBranchId(branchId).orderByActive();
 
         if (StringUtils.hasText(orderField) && StringUtils.hasText(orderType)) {
             CommodityDao.Order order = new CommodityDao.Order()

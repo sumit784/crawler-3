@@ -1,6 +1,5 @@
-package com.qinyuan15.crawler.core.category;
+package com.qinyuan15.crawler.dao;
 
-import com.qinyuan15.crawler.dao.Category;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -9,19 +8,19 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test CategoryUtils
+ * Test PersistObjectUtils
  * Created by qinyuan on 15-3-13.
  */
-public class CategoryUtilsTest {
+public class PersistObjectUtilsTest {
     @Test
     public void testGetIds() throws Exception {
         List<Category> categories = mockCategories();
-        List<Integer> ids = CategoryUtils.getIds(categories);
+        List<Integer> ids = PersistObjectUtils.getIds(categories);
         assertThat(ids).containsExactly(1, 2, 3, 4, 5);
     }
 
     private List<Category> mockCategories() {
-        List<Category> categories = new ArrayList<Category>();
+        List<Category> categories = new ArrayList<>();
         categories.add(mockCategory(1));
         categories.add(mockCategory(2));
         categories.add(mockCategory(3));
@@ -39,7 +38,7 @@ public class CategoryUtilsTest {
     @Test
     public void testGetIdsString() throws Exception {
         List<Category> categories = mockCategories();
-        String idsString = CategoryUtils.getIdsString(categories);
+        String idsString = PersistObjectUtils.getIdsString(categories);
         assertThat(idsString).isEqualTo("1,2,3,4,5");
     }
 }

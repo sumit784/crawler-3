@@ -71,7 +71,7 @@ public class BaseController {
         return NumberUtils.isNumber(strValue) && NumberUtils.toInt(strValue) > 0;
     }
 
-    protected void logAction(String action, String... args) {
+    protected void logAction(String action, Object... args) {
         Integer userId = SecurityUtils.getUserId();
         if (args.length > 0) {
             action = String.format(action, args);

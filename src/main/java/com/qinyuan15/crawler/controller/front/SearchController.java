@@ -1,9 +1,9 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.dao.CommodityDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,17 +19,15 @@ public class SearchController extends BaseController {
                         @RequestParam(value = "keyWord", required = true) String keyWord,
                         @RequestParam(value = "categoryId", required = false) Integer categoryId) {
         addCssAndJs("list-snapshots");
-        if (hasResult(keyWord)) {
+        long count = CommodityDao.factory().setKeyWord(keyWord).setCategoryId(categoryId).getCount();
+        if (count > 0) {
             setTitle(keyWord + " 相关商品");
             model.addAttribute("keyWord", keyWord);
             return "search";
         } else {
+            addCss("list");
             setTitle("找不到相关商品");
             return "search-no-result";
         }
-    }
-
-    private boolean hasResult(String keyWord) {
-        return StringUtils.hasText(keyWord);
     }
 }
