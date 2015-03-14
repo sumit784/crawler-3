@@ -30,6 +30,36 @@ public class CommodityDaoTest {
     }
 
     @Test
+    public void testSetBranchId() throws Exception {
+        List<Commodity> commodities = CommodityDao.factory().setBranchId(2).getInstances();
+        System.out.println(commodities.size());
+        for (Commodity commodity : commodities) {
+            assertThat(commodity.getBranchId()).isEqualTo(2);
+        }
+    }
+
+    @Test
+    public void testSetKeyWord() throws Exception {
+        List<Commodity> commodities = CommodityDao.factory().setKeyWord("兔耳朵").getInstances();
+        System.out.println(commodities.size());
+        for (Commodity commodity : commodities) {
+            assertThat(commodity.getName()).contains("兔耳朵");
+        }
+
+        commodities = CommodityDao.factory().setKeyWord("o").getInstances();
+        System.out.println(commodities.size());
+        for (Commodity commodity : commodities) {
+            assertThat(commodity.getName()).contains("o");
+        }
+
+        commodities = CommodityDao.factory().setKeyWord("o P").getInstances();
+        System.out.println(commodities.size());
+        for (Commodity commodity : commodities) {
+            assertThat(commodity.getName()).contains("o").contains("P");
+        }
+    }
+
+    @Test
     public void testSetCategoryId() throws Exception {
         List<Commodity> commodities = CommodityDao.factory().setCategoryId(5).getInstances();
         System.out.println(commodities.size());

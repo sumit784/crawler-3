@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.dao;
 
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.IntegerUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 
@@ -13,6 +14,75 @@ import java.util.List;
  * Created by qinyuan on 15-1-14.
  */
 public class CommodityDao {
+
+    public Commodity getInstance(int id) {
+        List<Commodity> commodities = factory().setId(id).getInstances();
+        return commodities.size() == 0 ? null : commodities.get(0);
+    }
+
+    public String getNameById(Integer id) {
+        Commodity commodity = getInstance(id);
+        return commodity == null ? null : commodity.getName();
+    }
+
+    public List<Commodity> getInstancesByShowId(String showId) {
+        Session session = HibernateUtil.getSession();
+        String hql = "FROM Commodity WHERE showId=:showId";
+        @SuppressWarnings("unchecked")
+        List<Commodity> commodities = session.createQuery(hql).setString("showId", showId).list();
+        HibernateUtil.commit(session);
+        return commodities;
+    }
+
+    public void delete(int id) {
+        HibernateUtil.delete(Commodity.class, id);
+    }
+
+    public void deactivate(int id) {
+        Commodity commodity = HibernateUtil.get(Commodity.class, id);
+        if (commodity != null) {
+            commodity.setActive(false);
+            HibernateUtil.update(commodity);
+        }
+    }
+
+    public void activate(int id) {
+        Commodity commodity = HibernateUtil.get(Commodity.class, id);
+        if (commodity != null) {
+            commodity.setActive(true);
+            HibernateUtil.update(commodity);
+        }
+    }
+
+    public void updateSales(int id, Integer sales) {
+        if (sales == null) {
+            return;
+        }
+
+        Commodity commodity = getInstance(id);
+        commodity.setSales(sales);
+        HibernateUtil.update(commodity);
+    }
+
+    public void updatePrice(int id) {
+        Double currentPrice = new CommodityPriceDao().getCurrentPrice(id);
+        if (currentPrice != null) {
+            Commodity commodity = getInstance(id);
+            commodity.setPrice(currentPrice);
+            HibernateUtil.update(commodity);
+        }
+    }
+
+    public void updateOnShelfTime(int id) {
+        PriceRecord firstPriceRecord = new PriceRecordDao().getFirstInstance(id);
+        if (firstPriceRecord == null) {
+            return;
+        }
+
+        Commodity commodity = getInstance(id);
+        commodity.setOnShelfTime(firstPriceRecord.getRecordTime().toString());
+        HibernateUtil.update(commodity);
+    }
 
     public static Factory factory() {
         return new Factory();
@@ -97,10 +167,22 @@ public class CommodityDao {
         private Integer categoryId;
         private Boolean active;
         private Integer userId;
+        private Integer branchId;
+        private String[] keyWords;
         private Order order = new Order();
 
         public Factory setUserId(Integer userId) {
             this.userId = userId;
+            return this;
+        }
+
+        public Factory setKeyWord(String keyWord) {
+            if (StringUtils.isBlank(keyWord)) {
+                this.keyWords = null;
+            } else {
+                this.keyWords = keyWord.split("\\s+");
+            }
+
             return this;
         }
 
@@ -111,6 +193,11 @@ public class CommodityDao {
 
         public Factory setActive(Boolean active) {
             this.active = active;
+            return this;
+        }
+
+        public Factory setBranchId(Integer branchId) {
+            this.branchId = branchId;
             return this;
         }
 
@@ -125,7 +212,7 @@ public class CommodityDao {
         }
 
         /**
-         * if inLowPrice is set to true, create() only return
+         * If inLowPrice is set to true, create() only return
          * commodities that in lowest price during three month
          *
          * @param inLowPrice whether get commodities only in lowest price of three month
@@ -155,6 +242,18 @@ public class CommodityDao {
 
             if (IntegerUtils.isPositive(userId)) {
                 query += " AND userId=" + userId;
+            }
+
+            if (IntegerUtils.isPositive(branchId)) {
+                query += " AND branchId=" + branchId;
+            }
+
+            if (keyWords != null && keyWords.length > 0) {
+                for (String keyWord : keyWords) {
+                    if (StringUtils.isNotBlank(keyWord)) {
+                        query += " AND name LIKE '%" + StringEscapeUtils.escapeSql(keyWord) + "%'";
+                    }
+                }
             }
 
             if (active != null) {
@@ -194,74 +293,5 @@ public class CommodityDao {
                 return commoditiesInLowPrice;
             }
         }
-    }
-
-    public Commodity getInstance(int id) {
-        List<Commodity> commodities = factory().setId(id).getInstances();
-        return commodities.size() == 0 ? null : commodities.get(0);
-    }
-
-    public String getNameById(Integer id) {
-        Commodity commodity = getInstance(id);
-        return commodity == null ? null : commodity.getName();
-    }
-
-    public List<Commodity> getInstancesByShowId(String showId) {
-        Session session = HibernateUtil.getSession();
-        String hql = "FROM Commodity WHERE showId=:showId";
-        @SuppressWarnings("unchecked")
-        List<Commodity> commodities = session.createQuery(hql).setString("showId", showId).list();
-        HibernateUtil.commit(session);
-        return commodities;
-    }
-
-    public void delete(int id) {
-        HibernateUtil.delete(Commodity.class, id);
-    }
-
-    public void deactivate(int id) {
-        Commodity commodity = HibernateUtil.get(Commodity.class, id);
-        if (commodity != null) {
-            commodity.setActive(false);
-            HibernateUtil.update(commodity);
-        }
-    }
-
-    public void activate(int id) {
-        Commodity commodity = HibernateUtil.get(Commodity.class, id);
-        if (commodity != null) {
-            commodity.setActive(true);
-            HibernateUtil.update(commodity);
-        }
-    }
-
-    public void updateSales(int id, Integer sales) {
-        if (sales == null) {
-            return;
-        }
-
-        Commodity commodity = getInstance(id);
-        commodity.setSales(sales);
-        HibernateUtil.update(commodity);
-    }
-
-    public void updatePrice(int id) {
-        Double currentPrice = new CommodityPriceDao().getCurrentPrice(id);
-        if (currentPrice != null) {
-            Commodity commodity = getInstance(id);
-            commodity.setPrice(currentPrice);
-            HibernateUtil.update(commodity);
-        }
-    }
-
-    public void updateOnShelfTime(int id) {
-        PriceRecord firstPriceRecord = new PriceRecordDao().getFirstInstance(id);
-        if (firstPriceRecord == null) {
-            return;
-        }
-
-        Commodity commodity = getInstance(id);
-        commodity.setOnShelfTime(firstPriceRecord.getRecordTime().toString());
-        HibernateUtil.update(commodity);
     }
 }

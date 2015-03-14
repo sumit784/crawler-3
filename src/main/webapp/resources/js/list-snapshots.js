@@ -27,7 +27,7 @@ function initSnapshot($scope, $http) {
         }
         loadSnapshot($scope, $http, orderField, orderType);
     };
-    loadSnapshot($scope, $http);
+    loadSnapshot($scope, $http, 'onShelfTime', 'desc');
 }
 function loadSnapshot($scope, $http, orderField, orderType) {
     var params = [];
