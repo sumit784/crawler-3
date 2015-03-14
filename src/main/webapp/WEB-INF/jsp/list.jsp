@@ -25,11 +25,14 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li data-options="id:0">
-                            <a href="javascript:void(0)" data-options="id:0">全部分类</a>
+                            <a href="javascript:void(0)">全部分类</a>
+                        </li>
+                        <li data-options="id:${categoryId}">
+                            <a href="javascript:void(0)">${categoryName}</a>
                         </li>
                         <c:forEach var="subCategory" items="${subCategories}">
                             <li data-options="id:${subCategory.id}">
-                                <a href="javascript:void(0)"> ${subCategory.name}</a>
+                                <a href="javascript:void(0)">${subCategory.name}</a>
                             </li>
                         </c:forEach>
                     </ul>

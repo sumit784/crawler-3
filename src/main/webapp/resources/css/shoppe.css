@@ -63,19 +63,3 @@ div.content div.logo div.links a {
     font-size: 9pt;
     color: #3377aa;
 }
-
-div.content div.goods div.sort div.title div {
-    font-size: 11pt;
-    display: inline;
-    margin: 10px;
-    border-bottom: #a16b4e solid 2px;
-    padding-bottom: 11px;
-}
-
-div.content div.goods div.sort div.title div.all {
-    border-bottom-width: 0;
-}
-
-div.content div.goods div.sort div.title a {
-    color: #a16b4e;
-}

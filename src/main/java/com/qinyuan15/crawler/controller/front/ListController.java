@@ -25,6 +25,8 @@ public class ListController extends BaseController {
             category = dao.getFirstInstance();
         }
 
+        addCssAndJs("list-snapshots");
+
         setTitle(category.getName() + " 相关商品");
         model.addAttribute("categoryId", category.getId());
         model.addAttribute("categoryName", category.getName());

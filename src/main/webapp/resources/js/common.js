@@ -169,8 +169,14 @@ jQuery.fn.focusOrSelect = function () {
     angularUtils.controller('NavigationController', function ($scope, $http) {
         $http.get("json/category.json").success(function (data) {
             var selectedCategoryIndex;
-            if (location.href.toString().indexOf('/list?') > 0) {
-                selectedCategoryIndex = parseInt($.url.param('id'));
+            var href = location.href.toString();
+            if (href.indexOf('/list?') > 0 || href.substr(href.length - 5) == '/list') {
+                var categoryId = $.url.param('id');
+                if (!categoryId) {
+                    categoryId = $('#categoryId').val();
+                }
+                console.log(categoryId);
+                selectedCategoryIndex = parseInt(categoryId);
             } else {
                 selectedCategoryIndex = -1;
             }

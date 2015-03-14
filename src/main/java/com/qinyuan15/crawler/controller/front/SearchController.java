@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Index page controller
@@ -14,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SearchController extends BaseController {
 
     @RequestMapping("/search")
-    public String index(ModelMap model) {
-        addCss("list");
-        addJs("list");
-        String keyWord = request.getParameter("keyWord");
+    public String index(ModelMap model,
+                        @RequestParam(value = "keyWord", required = true) String keyWord,
+                        @RequestParam(value = "categoryId", required = false) Integer categoryId) {
+        addCssAndJs("list-snapshots");
         if (hasResult(keyWord)) {
-            addCss("shoppe");
             setTitle(keyWord + " 相关商品");
             model.addAttribute("keyWord", keyWord);
             return "search";

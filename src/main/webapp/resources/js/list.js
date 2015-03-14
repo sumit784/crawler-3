@@ -43,11 +43,9 @@
         }
     };
 
-
     var $collectButton = $('#collectButton');
     var $refreshButton = $('#refreshButton');
     var $subCategoryLinks = $('div.search > div.subCategory a');
-    var $sortLinks = $('div.sort > div.links a');
     var $branchLogo = $('div.branch div.logos');
     var $branchTitle = $('div.branch div.title');
     var $goodsImages = $('div.goods div.images div.image img');
@@ -82,7 +80,7 @@
     angularUtils.controller(function ($scope, $http) {
         $scope.categoryId = $('#categoryId').val();
         initBranch();
-        loadSnapshot();
+        initSnapshot($scope, $http);
         $scope.showMore = function () {
             if ($scope.hideBranches.length == 0) {
                 return;
@@ -112,28 +110,9 @@
             var $this = $(event.target);
             $scope.categoryId = $this.dataOptions()['id'];
             loadHotWord();
-            loadSnapshot();
+            loadSnapshot($scope, $http);
             subCategoryLinks.click($this);
             event.stopPropagation();
-        };
-        $scope.switchSortLinks = function (event, orderField) {
-            var $this = $(event.target);
-            var $image = $this.find('img');
-            var orderType = 'asc';
-            switch ($image.attr('src')) {
-                case images.unSort:
-                    $sortLinks.find('img').attr('src', images.unSort);
-                    $image.attr('src', images.arrowUp);
-                    break;
-                case images.arrowDown:
-                    $image.attr('src', images.arrowUp);
-                    break;
-                case images.arrowUp:
-                    $image.attr('src', images.arrowDown);
-                    orderType = 'desc';
-                    break;
-            }
-            loadSnapshot(orderField, orderType);
         };
 
         function get$HideBranch() {
@@ -157,20 +136,6 @@
                     $scope.hideBranches = [];
                     $scope.moreBranch.show = false;
                 }
-            });
-        }
-
-        function loadSnapshot(orderField, orderType) {
-            var url = "json/commoditySnapshot.json?categoryId=" + $scope.categoryId;
-            if (orderField) {
-                url += "&orderField=" + orderField;
-            }
-            if (orderType) {
-                url += "&orderType=" + orderType;
-            }
-            $http.get(url).success(function (data) {
-                console.log(data);
-                $scope.snapshots = data;
             });
         }
 

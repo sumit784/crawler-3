@@ -90,6 +90,11 @@ public class BaseController {
         addListAttribute("moreJs", file);
     }
 
+    protected void addCssAndJs(String file) {
+        addCss(file);
+        addJs(file);
+    }
+
     @SuppressWarnings("unchecked")
     protected void addListAttribute(String key, String value) {
         if (request.getAttribute(key) == null) {

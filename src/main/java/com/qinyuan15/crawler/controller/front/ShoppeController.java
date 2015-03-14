@@ -18,8 +18,7 @@ public class ShoppeController extends ImageController {
 
     @RequestMapping("/shoppe")
     public String index(ModelMap model, @RequestParam(value = "id", required = false) Integer id) {
-        addCss("list");
-        addJs("list");
+        addCssAndJs("list-snapshots");
 
         Branch branch = adjustBranch(new BranchDao().getInstance(id));
         model.addAttribute("branch", branch);
