@@ -1,15 +1,11 @@
 package com.qinyuan15.crawler.controller.back;
 
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import org.junit.Test;
-import org.powermock.reflect.Whitebox;
 import org.springframework.ui.ModelMap;
 
 import java.util.List;
 
-import static com.qinyuan15.crawler.controller.ControllerTestUtils.inject;
-import static com.qinyuan15.crawler.controller.ControllerTestUtils.injectRequest;
-import static com.qinyuan15.crawler.controller.ControllerTestUtils.mockModelMap;
+import static com.qinyuan15.crawler.controller.ControllerTestUtils.*;
 
 /**
  * Test AdminController
@@ -19,9 +15,8 @@ public class AdminControllerTest {
     @Test
     public void testIndex() throws Exception {
         AdminController controller = new AdminController();
-        ImageDownloader imageDownloader = new ImageDownloader("/var/ftp");
         injectRequest(controller);
-        inject(controller, "imageDownloader", imageDownloader);
+        injectImageDownloader(controller);
 
         ModelMap modelMap = mockModelMap();
         controller.index(modelMap);

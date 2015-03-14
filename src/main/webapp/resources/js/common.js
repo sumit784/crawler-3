@@ -27,6 +27,18 @@ function getParent($element, parentTagName) {
     }
 }
 
+function copyArray(array) {
+    var arr = [];
+    for (var i = 0, len = array.length; i < len; i++) {
+        arr.push(array[i]);
+    }
+    return arr;
+}
+
+function removeArrayItem(array, index) {
+    array.splice(index, 1);
+}
+
 function splitArray(array, groupSize) {
     var result = [], group;
     for (var i = 0, len = array.length; i < len; i++) {

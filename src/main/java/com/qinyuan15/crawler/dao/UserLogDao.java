@@ -21,7 +21,7 @@ public class UserLogDao {
         UserLog userLog = new UserLog();
         userLog.setUserId(userId);
         userLog.setAction(action);
-        userLog.setLogTime(DateUtils.now());
+        userLog.setLogTime(DateUtils.nowString());
         HibernateUtil.save(userLog);
     }
 }

@@ -71,7 +71,6 @@
                     <div class="title">商品图片</div>
                     <div class="imageGroup">
                         <div class="image" ng-repeat="imageUrl in imageUrls">
-                            <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
                             <img class="link" ng-src="{{imageUrl}}"
                                  ng-mouseover="enlargeImage($index, $event, 'normal')"
                                  ng-mouseout="closeEnlargeImage()"/><br/>
@@ -84,7 +83,6 @@
                     <div class="title">商品描述图片</div>
                     <div class="imageGroup">
                         <div class="image" ng-repeat="detailImageUrl in detailImageUrls">
-                            <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
                             <img class="link" ng-src="{{detailImageUrl}}"
                                  ng-mouseover="enlargeImage($index, $event, 'detail')"
                                  ng-mouseout="closeEnlargeImage()"/><br/>
@@ -96,9 +94,11 @@
             </div>
             <div id="enlargeImage" class="boxShadow">
                 <div class="normal" ng-repeat="imageUrl in originalImageUrls">
+                    <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
                     <img ng-src="{{imageUrl}}"/>
                 </div>
                 <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls">
+                    <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
                     <img ng-src="{{detailImageUrl}}"/>
                 </div>
             </div>

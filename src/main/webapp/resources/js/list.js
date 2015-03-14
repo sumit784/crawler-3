@@ -43,21 +43,6 @@
         }
     };
 
-    function switchSortLinks($link) {
-        var $image = $link.find('img');
-        switch ($image.attr('src')) {
-            case images.unSort:
-                $sortLinks.find('img').attr('src', images.unSort);
-                $image.attr('src', images.arrowUp);
-                break;
-            case images.arrowDown:
-                $image.attr('src', images.arrowUp);
-                break;
-            case images.arrowUp:
-                $image.attr('src', images.arrowDown);
-                break;
-        }
-    }
 
     var $collectButton = $('#collectButton');
     var $refreshButton = $('#refreshButton');
@@ -88,17 +73,16 @@
     }, function () {
         subCategoryLinks.off($(this));
     });
-    $sortLinks.click(function () {
-        switchSortLinks($(this));
-    });
+
     $goodsImages.hover(function () {
         $(this).addClass('deepTransparent');
     }, function () {
         $(this).removeClass('deepTransparent');
     });
     angularUtils.controller(function ($scope, $http) {
+        $scope.categoryId = $('#categoryId').val();
         initBranch();
-        loadSnapshot($('#categoryId').val());
+        loadSnapshot();
         $scope.showMore = function () {
             if ($scope.hideBranches.length == 0) {
                 return;
@@ -126,12 +110,32 @@
         };
         $scope.selectSubCategory = function (event) {
             var $this = $(event.target);
-            var id = $this.dataOptions()['id'];
-            loadHotWord(id);
-            loadSnapshot(id);
+            $scope.categoryId = $this.dataOptions()['id'];
+            loadHotWord();
+            loadSnapshot();
             subCategoryLinks.click($this);
             event.stopPropagation();
         };
+        $scope.switchSortLinks = function (event, orderField) {
+            var $this = $(event.target);
+            var $image = $this.find('img');
+            var orderType = 'asc';
+            switch ($image.attr('src')) {
+                case images.unSort:
+                    $sortLinks.find('img').attr('src', images.unSort);
+                    $image.attr('src', images.arrowUp);
+                    break;
+                case images.arrowDown:
+                    $image.attr('src', images.arrowUp);
+                    break;
+                case images.arrowUp:
+                    $image.attr('src', images.arrowDown);
+                    orderType = 'desc';
+                    break;
+            }
+            loadSnapshot(orderField, orderType);
+        };
+
         function get$HideBranch() {
             return  $('div.search > div.right div.branch > div.logos div.hideBranch');
         }
@@ -141,7 +145,7 @@
         }
 
         function initBranch() {
-            var url = "json/branch.json?categoryId=" + $.url.param('id');
+            var url = "json/branch.json?categoryId=" + $scope.categoryId;
             $http.get(url).success(function (branches) {
                 $scope.moreBranch = {logo: 'resources/css/images/list/more-branch.png'};
                 if (branches.length > 14) {
@@ -156,24 +160,33 @@
             });
         }
 
-        function loadSnapshot(categoryId) {
-            var url = "json/commoditySnapshot.json?categoryId=" + categoryId;
+        function loadSnapshot(orderField, orderType) {
+            var url = "json/commoditySnapshot.json?categoryId=" + $scope.categoryId;
+            if (orderField) {
+                url += "&orderField=" + orderField;
+            }
+            if (orderType) {
+                url += "&orderType=" + orderType;
+            }
             $http.get(url).success(function (data) {
+                console.log(data);
                 $scope.snapshots = data;
             });
         }
 
-        function loadHotWord(categoryId) {
-            var url = 'json/hotSearchWord.json?size=8';
-            if (categoryId) {
-                // TODO just for test
-                //url += '&categoryId=' + categoryId;
-            }
+        function loadHotWord() {
+            var url = 'json/hotSearchWord.json?size=8&categoryId=' + $scope.categoryId;
             $http.get(url).success(function (data) {
                 $scope.hotWords = data;
-                data[0].color = 'red';
-                data[3].color = 'red';
-                data[7].color = 'red';
+                if (data[0]) {
+                    data[0].color = 'red';
+                }
+                if (data[3]) {
+                    data[3].color = 'red';
+                }
+                if (data[7]) {
+                    data[7].color = 'red';
+                }
             });
         }
     });

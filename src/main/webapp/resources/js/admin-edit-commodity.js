@@ -77,10 +77,10 @@
                         var name = data['name'];
                         $commodityName.text(name).attr('href', crawlerLink).prev().val(name);
 
-                        $scope.imageUrls = data['imageUrls'];
-                        $scope.originalImageUrls = data['imageUrls'];
-                        $scope.detailImageUrls = data['detailImageUrls'];
-                        $scope.originalDetailImageUrls = data['detailImageUrls'];
+                        $scope.imageUrls = copyArray(data['imageUrls']);
+                        $scope.originalImageUrls = copyArray(data['imageUrls']);
+                        $scope.detailImageUrls = copyArray(data['detailImageUrls']);
+                        $scope.originalDetailImageUrls = copyArray(data['detailImageUrls']);
                         $scope.showCrawlerInfo = false;
                     });
 
@@ -94,10 +94,12 @@
 
         function initImages() {
             $scope.deleteImage = function (index) {
-                $scope.imageUrls.splice(index, 1);
+                removeArrayItem($scope.imageUrls, index);
+                removeArrayItem($scope.originalImageUrls, index);
             };
             $scope.deleteDetailImage = function (index) {
-                $scope.detailImageUrls.splice(index, 1);
+                removeArrayItem($scope.detailImageUrls, index);
+                removeArrayItem($scope.originalDetailImageUrls, index);
             };
             $scope.enlargeImage = function (index, event, type) {
                 $enlargeImage.find('img').hide();
@@ -142,7 +144,7 @@
             $scope.detailImageUrls = [];
             var commodityId = $.url.param("id");
             if (commodityId) {
-                // load image after 2 second, or page will be blocked
+                // load image after 1 second, or page will be blocked
                 setTimeout(function () {
                     $http.get("commodityPicture.json?commodityId=" + commodityId).success(function (data) {
                         $scope.imageUrls = data['pictures'];
@@ -150,7 +152,7 @@
                         $scope.detailImageUrls = data['detailPictures'];
                         $scope.originalDetailImageUrls = data['originalDetailPictures'];
                     });
-                }, 2000);
+                }, 1000);
             }
         }
 

@@ -32,6 +32,12 @@ public class DateUtilsTest {
     }
 
     @Test
+    public void testToLongString() throws  Exception {
+        Date date= DateUtils.newDate("2012-12-12");
+        assertThat(DateUtils.toLongString(date)).isEqualTo("2012-12-12 00:00:00");
+    }
+
+    @Test
     public void testThreeMonthAgo() throws Exception {
         Date date = DateUtils.threeMonthAgo();
         System.out.println(date);

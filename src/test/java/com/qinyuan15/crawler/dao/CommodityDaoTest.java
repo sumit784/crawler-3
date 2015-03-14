@@ -47,6 +47,27 @@ public class CommodityDaoTest {
     }
 
     @Test
+    public void testOrder() throws Exception {
+        CommodityDao.Order order = new CommodityDao.Order();
+
+        assertThat(order.toString()).isEqualTo("onShelfTime DESC");
+
+        order.setField(CommodityDao.OrderField.PRICE);
+        order.setType(CommodityDao.OrderType.ASC);
+
+        assertThat(order.toString()).isEqualTo("price ASC");
+
+        List<Commodity> commodities = CommodityDao.factory().setOrder(order).getInstances();
+        Double previousPrice = null;
+        for (Commodity commodity : commodities) {
+            if (previousPrice != null && commodity.getPrice() != null) {
+                assertThat(commodity.getPrice()).isGreaterThanOrEqualTo(previousPrice);
+            }
+            previousPrice = commodity.getPrice();
+        }
+    }
+
+    @Test
     public void testGetInstancesByShowId() throws Exception {
         List<Commodity> commodities = new CommodityDao().getInstancesByShowId("40780735321");
         System.out.println(commodities.size());

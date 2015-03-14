@@ -1,7 +1,5 @@
 package com.qinyuan15.crawler.dao;
 
-import java.sql.Date;
-
 /**
  * Persist object of user log
  * Created by qinyuan on 15-3-6.
@@ -9,7 +7,7 @@ import java.sql.Date;
 public class UserLog extends PersistObject {
     private Integer userId;
     private String action;
-    private Date logTime;
+    private String logTime;
 
     public Integer getUserId() {
         return userId;
@@ -19,8 +17,12 @@ public class UserLog extends PersistObject {
         return action;
     }
 
-    public Date getLogTime() {
-        return logTime;
+    public String getLogTime() {
+        if (logTime == null) {
+            return null;
+        } else {
+            return logTime.replaceAll("\\.\\d*$", "");
+        }
     }
 
     public void setUserId(Integer userId) {
@@ -31,7 +33,7 @@ public class UserLog extends PersistObject {
         this.action = action;
     }
 
-    public void setLogTime(Date logTime) {
+    public void setLogTime(String logTime) {
         this.logTime = logTime;
     }
 

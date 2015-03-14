@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.dao;
 
 import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.IntegerUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
@@ -17,6 +18,78 @@ public class CommodityDao {
         return new Factory();
     }
 
+    public static enum OrderField {
+        ON_SHELF_TIME, PRICE, SALES;
+
+        public static OrderField create(String str) {
+            str = str.toLowerCase();
+            if (str.equals("price")) {
+                return PRICE;
+            } else if (str.equals("sales")) {
+                return SALES;
+            } else {
+                return ON_SHELF_TIME;
+            }
+        }
+    }
+
+    public static enum OrderType {
+        ASC, DESC;
+
+        public static OrderType create(String str) {
+            str = str.toLowerCase();
+            if (str.equals("asc")) {
+                return ASC;
+            } else {
+                return DESC;
+            }
+        }
+    }
+
+    public static class Order {
+        private OrderField field = OrderField.ON_SHELF_TIME;
+        private OrderType type = OrderType.DESC;
+
+        public Order setField(OrderField field) {
+            this.field = field;
+            return this;
+        }
+
+        public Order setType(OrderType type) {
+            this.type = type;
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            String str;
+            switch (this.field) {
+                case ON_SHELF_TIME:
+                    str = "onShelfTime";
+                    break;
+                case PRICE:
+                    str = "price";
+                    break;
+                case SALES:
+                    str = "sales";
+                    break;
+                default:
+                    str = "onShelfTime";
+            }
+            switch (this.type) {
+                case ASC:
+                    str += " ASC";
+                    break;
+                case DESC:
+                    str += " DESC";
+                    break;
+                default:
+                    str += " ASC";
+            }
+            return str;
+        }
+    }
+
     public static class Factory {
         private Integer id;
         private boolean inLowPrice = false;
@@ -24,6 +97,7 @@ public class CommodityDao {
         private Integer categoryId;
         private Boolean active;
         private Integer userId;
+        private Order order = new Order();
 
         public Factory setUserId(Integer userId) {
             this.userId = userId;
@@ -42,6 +116,11 @@ public class CommodityDao {
 
         public Factory setCategoryId(Integer categoryId) {
             this.categoryId = categoryId;
+            return this;
+        }
+
+        public Factory setOrder(Order order) {
+            this.order = order;
             return this;
         }
 
@@ -82,8 +161,15 @@ public class CommodityDao {
                 query += " AND active=" + active;
             }
 
+            List<String> orderItems = new ArrayList<String>();
             if (this.orderByActive) {
-                query += " ORDER BY active DESC";
+                orderItems.add("active DESC");
+            }
+            if (this.order != null) {
+                orderItems.add(this.order.toString());
+            }
+            if (orderItems.size() > 0) {
+                query += " ORDER BY " + StringUtils.join(orderItems, ",");
             }
 
             // execute query
