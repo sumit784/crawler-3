@@ -11,8 +11,10 @@
     </bean>
     <bean id="proxySpeedRecorder" class="com.qinyuan15.crawler.core.http.proxy.DatabaseProxySpeedRecorder"/>
     <bean id="httpClientPool" class="com.qinyuan15.crawler.core.http.HttpClientPool">
+        <!--
         <property name="proxyPool" ref="proxyPool"/>
         <property name="proxySpeedRecorder" ref="proxySpeedRecorder"/>
+        -->
     </bean>
     <bean id="commodityPool" class="com.qinyuan15.crawler.core.commodity.DatabaseCommodityPool"/>
     <bean id="etaoPageParser" class="com.qinyuan15.crawler.core.html.EtaoCommodityPageParser"/>
