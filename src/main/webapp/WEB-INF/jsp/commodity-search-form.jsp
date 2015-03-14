@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="searchForm">
     <div class="input-group">
         <div class="input-group-btn searchType">
@@ -20,21 +21,21 @@
                 </c:forEach>
             </ul>
         </div>
-        <form action="search" target="_blank">
+        <form action="search">
             <input type="hidden" id="searchCategoryId" name="categoryId"/>
             <input type="text" name="keyWord" id="searchInput"
                    class="form-control" placeholder="请输入您想查询的关键字"/>
-                    <span class="input-group-addon searchCommit">
-                        <img class="link" id="searchCommmit" src="resources/css/images/searchButton.png"/>
-                    </span>
+            <span class="input-group-addon searchCommit">
+                <img class="link" id="searchCommmit" src="resources/css/images/searchButton.png"/>
+            </span>
         </form>
     </div>
     <div class="hotWords">
-                <span ng-repeat="hotWord in hotWords">
-                    <a class="noLineAnchor {{hotWord.color}}" href="javascript:void(0)"
-                       ng-href="search?keyWord={{hotWord.content}}" target="_blank">
+        <span ng-repeat="hotWord in hotWords">
+             <a class="noLineAnchor {{hotWord.color}}" href="javascript:void(0)"
+                 ng-href="search?keyWord={{hotWord.content}}" target="_blank">
                         {{hotWord.content}}
-                    </a>
-                </span>
+             </a>
+        </span>
     </div>
 </div>

@@ -8,4 +8,5 @@
         }
         initSnapshot($scope, $http);
     });
+    $('#searchInput').focus();
 })();

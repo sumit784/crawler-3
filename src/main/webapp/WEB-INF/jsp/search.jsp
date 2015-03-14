@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
-<div class="searchInfo boxShadow">${keyWord} 相关搜索商品</div>
+<div class="searchInfo boxShadow">
+    <div class="keyWord">${keyWord} 相关搜索商品</div>
+    <div class="search">
+    <%@include file="commodity-search-form.jsp"%>
+    </div>
+</div>
 <div class="goods">
     <div class="sort">
         <div class="title">

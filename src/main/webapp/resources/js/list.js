@@ -155,6 +155,7 @@
             });
         }
     });
+    $('#searchInput').focus();
 })();
 function showBranchBorder(element) {
     getParent($(element), 'div').prev().show();

@@ -19,13 +19,14 @@ public class SearchController extends BaseController {
                         @RequestParam(value = "keyWord", required = true) String keyWord,
                         @RequestParam(value = "categoryId", required = false) Integer categoryId) {
         addCssAndJs("list-snapshots");
+        addCss("commodity-search-form");
+        model.addAttribute("keyWord", keyWord);
+
         long count = CommodityDao.factory().setKeyWord(keyWord).setCategoryId(categoryId).getCount();
         if (count > 0) {
             setTitle(keyWord + " 相关商品");
-            model.addAttribute("keyWord", keyWord);
             return "search";
         } else {
-            addCss("list");
             setTitle("找不到相关商品");
             return "search-no-result";
         }
