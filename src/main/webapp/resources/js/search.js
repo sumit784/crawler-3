@@ -6,6 +6,7 @@
         if ($.trim(categoryId) != "") {
             $scope.categoryId = categoryId;
         }
+        $scope.inLowPrice = true;
         initSnapshot($scope, $http);
     });
     focusSearchInput();

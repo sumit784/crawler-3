@@ -27,13 +27,15 @@ public class CommoditySnapshotController extends ImageController {
                         @RequestParam(value = "keyWord", required = false) String keyWord,
                         @RequestParam(value = "branchId", required = false) Integer branchId,
                         @RequestParam(value = "orderField", required = false) String orderField,
-                        @RequestParam(value = "orderType", required = false) String orderType) {
+                        @RequestParam(value = "orderType", required = false) String orderType,
+                        @RequestParam(value = "inLowPrice", required = false) Boolean inLowPrice) {
         // set default value of active to true
         if (active == null) {
             active = true;
         }
         CommodityDao.Factory factory = CommodityDao.factory().setCategoryId(categoryId)
-                .setActive(active).setKeyWord(keyWord).setBranchId(branchId).orderByActive();
+                .setActive(active).setKeyWord(keyWord).setBranchId(branchId)
+                .setInLowPrice(inLowPrice).orderByActive();
 
         if (StringUtils.hasText(orderField) && StringUtils.hasText(orderType)) {
             CommodityDao.Order order = new CommodityDao.Order()

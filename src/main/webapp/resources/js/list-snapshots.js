@@ -1,17 +1,22 @@
 ;
-(function () {
+function initSnapshot($scope, $http) {
     $('div.goods div.sort div.title div').click(function () {
         var $this = $(this);
+        if ($this.hasClass('all')) {
+            $scope.inLowPrice = false;
+        } else if ($this.hasClass('lowest')) {
+            $scope.inLowPrice = true;
+        }
+        loadSnapshot($scope, $http);
         $this.siblings().css('border-bottom-width', '0');
         $this.css('border-bottom-width', '2px');
     });
-})();
-function initSnapshot($scope, $http) {
     $scope.switchSortLinks = function (event, orderField) {
         var $sortLinks = $('div.sort > div.links a');
         var $this = $(event.target);
         var $image = $this.find('img');
-        var orderType = 'asc';
+        $scope.orderField = orderField;
+        $scope.orderType = 'asc';
         switch ($image.attr('src')) {
             case images.unSort:
                 $sortLinks.find('img').attr('src', images.unSort);
@@ -22,29 +27,36 @@ function initSnapshot($scope, $http) {
                 break;
             case images.arrowUp:
                 $image.attr('src', images.arrowDown);
-                orderType = 'desc';
+                $scope.orderType = 'desc';
                 break;
         }
-        loadSnapshot($scope, $http, orderField, orderType);
+        loadSnapshot($scope, $http);
     };
-    loadSnapshot($scope, $http, 'onShelfTime', 'desc');
+    $scope.orderField = 'onShelfTime';
+    $scope.orderType = 'desc';
+    loadSnapshot($scope, $http);
 }
-function loadSnapshot($scope, $http, orderField, orderType) {
+function loadSnapshot($scope, $http) {
     var params = [];
     if ($scope.categoryId) {
         params.push("categoryId=" + $scope.categoryId);
     }
     if ($scope.branchId) {
-        params.push('branchId='+$scope.branchId);
+        params.push('branchId=' + $scope.branchId);
     }
-    if($scope.keyWord) {
-        params.push("keyWord="+encodeURI($scope.keyWord));
+    if ($scope.keyWord) {
+        params.push("keyWord=" + encodeURI($scope.keyWord));
     }
-    if (orderField) {
-        params.push("orderField=" + orderField);
+    if ($scope.inLowPrice) {
+        params.push("inLowPrice=true");
+    } else {
+        params.push('inLowPrice=false');
     }
-    if (orderType) {
-        params.push("orderType=" + orderType);
+    if ($scope.orderField) {
+        params.push("orderField=" + $scope.orderField);
+    }
+    if ($scope.orderType) {
+        params.push("orderType=" + $scope.orderType);
     }
     var url = "json/commoditySnapshot.json?" + params.join('&');
     $http.get(url).success(function (data) {

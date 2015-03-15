@@ -93,12 +93,13 @@ public class CommodityDao {
 
         public static OrderField create(String str) {
             str = str.toLowerCase();
-            if (str.equals("price")) {
-                return PRICE;
-            } else if (str.equals("sales")) {
-                return SALES;
-            } else {
-                return ON_SHELF_TIME;
+            switch (str) {
+                case "price":
+                    return PRICE;
+                case "sales":
+                    return SALES;
+                default:
+                    return ON_SHELF_TIME;
             }
         }
     }

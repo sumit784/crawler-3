@@ -1,26 +1,22 @@
 package com.qinyuan15.crawler.dao;
 
-import java.util.List;
-
 /**
  * Persist Object of Commodity
  * Created by qinyuan on 14-12-28.
  */
 public class Commodity extends SimpleCommodity {
 
-    private List<String> pictures;
     private String serialNumber;
     private String showId;
     private Double lowPrice;
     private String onShelfTime;
     private Double originalPrice;
-    private Boolean lowestInThreeMonth;
+    //private Boolean lowestInThreeMonth;
     private String url;
     private String buyUrl;
     private Boolean active;
     private Integer branchId;
     private String parameters;
-    private Integer categoryId;
     private Integer userId;
     private Integer sales;
 
@@ -30,14 +26,6 @@ public class Commodity extends SimpleCommodity {
 
     public void setSales(Integer sales) {
         this.sales = sales;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
     }
 
     public void setParameters(String parameters) {
@@ -84,10 +72,6 @@ public class Commodity extends SimpleCommodity {
         return this.url;
     }
 
-    public List<String> getPictures() {
-        return pictures;
-    }
-
     public Double getLowPrice() {
         return lowPrice;
     }
@@ -99,17 +83,13 @@ public class Commodity extends SimpleCommodity {
     public Double getOriginalPrice() {
         return originalPrice;
     }
-
+/*
     public Boolean getLowestInThreeMonth() {
         return lowestInThreeMonth;
-    }
+    }*/
 
     public Boolean getActive() {
         return active;
-    }
-
-    public void setPictures(List<String> pictures) {
-        this.pictures = pictures;
     }
 
     public Integer getBranchId() {
@@ -136,15 +116,10 @@ public class Commodity extends SimpleCommodity {
         this.originalPrice = originalPrice;
     }
 
-    public void setLowestInThreeMonth(Boolean lowestInThreeMonth) {
+    /*public void setLowestInThreeMonth(Boolean lowestInThreeMonth) {
         this.lowestInThreeMonth = lowestInThreeMonth;
-    }
+    }*/
 
-    /*
-        public void setTrend(PriceHistory trend) {
-            this.trend = trend;
-        }
-    */
     public void setActive(Boolean active) {
         this.active = active;
     }
