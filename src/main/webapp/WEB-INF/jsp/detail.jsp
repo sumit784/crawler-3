@@ -120,43 +120,13 @@
             更多相关商品
         </div>
         <div class="other">
-            <c:forEach var="picture" items="${relatedPictures}">
+            <c:forEach var="commodity" items="${relatedCommodities}">
                 <div>
-                    <img src="${picture}"/>
+                    <a href="detail?id=${commodity.id}" target="_blank">
+                        <img src="${commodity.picture}"/>
+                    </a>
                 </div>
             </c:forEach>
-            <!--
-             <div>
-                 <img src="resources/css/images/detail/otherGoods1.png"/>
-             </div>
-             <div>
-                 <img src="resources/css/images/detail/otherGoods1.png"/>
-             </div>
-             <div>
-                 <img src="resources/css/images/detail/otherGoods1.png"/>
-             </div>
-             <div>
-                 <img src="resources/css/images/detail/otherGoods1.png"/>
-             </div>
-             -->
-            <!--
-            <div>
-                <img src="resources/css/images/detail/otherGoods1.png"/>
-                <img src="resources/css/images/detail/otherGoods2.png"/>
-            </div>
-            <div>
-                <img src="resources/css/images/detail/otherGoods1.png"/>
-                <img src="resources/css/images/detail/otherGoods2.png"/>
-            </div>
-            <div>
-                <img src="resources/css/images/detail/otherGoods1.png"/>
-                <img src="resources/css/images/detail/otherGoods2.png"/>
-            </div>
-            <div>
-                <img src="resources/css/images/detail/otherGoods1.png"/>
-                <img src="resources/css/images/detail/otherGoods2.png"/>
-            </div>
-            -->
         </div>
     </div>
     <div class="text">

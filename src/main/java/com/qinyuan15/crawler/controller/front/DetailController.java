@@ -1,12 +1,15 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.ImageController;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
+import com.qinyuan15.crawler.core.image.ThumbnailType;
 import com.qinyuan15.crawler.dao.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,9 +43,7 @@ public class DetailController extends ImageController {
 
         // related commodity
         List<Commodity> commodities = new RelatedCommodityDao().getInstances(commodity);
-        List<Integer> commodityIds = PersistObjectUtils.getIds(commodities);
-        List<CommodityPicture> commodityPictures = new CommodityPictureDao().getFirstInstances(commodityIds);
-        model.addAttribute("relatedPictures", parseCommodityPictureMiddleUrls(commodityPictures));
+        model.addAttribute("relatedCommodities", createRelatedCommodityWrappers(commodities));
 
         // branch
         Branch branch = commodity.getBranch();
@@ -67,5 +68,40 @@ public class DetailController extends ImageController {
         setTitle("商品明细");
 
         return "detail";
+    }
+
+    private List<RelatedCommodityWrapper> createRelatedCommodityWrappers(
+            List<Commodity> commodities) {
+        List<RelatedCommodityWrapper> wrappers = new ArrayList<>();
+        CommodityPictureDao pictureDao = new CommodityPictureDao();
+        PictureUrlConverter urlConverter = new PictureUrlConverter(imageDownloader, getLocalAddress())
+                .setThumbnailType(ThumbnailType.MIDDLE);
+        for (Commodity commodity : commodities) {
+            CommodityPicture picture = pictureDao.getFirstInstance(commodity.getId());
+            RelatedCommodityWrapper wrapper = new RelatedCommodityWrapper();
+            wrapper.id = commodity.getId();
+            wrapper.picture = urlConverter.pathToUrl(picture.getUrl());
+            wrapper.price = commodity.getPrice();
+            wrappers.add(wrapper);
+        }
+        return wrappers;
+    }
+
+    public static class RelatedCommodityWrapper {
+        private Integer id;
+        private String picture;
+        private Double price;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public String getPicture() {
+            return picture;
+        }
+
+        public Double getPrice() {
+            return price;
+        }
     }
 }

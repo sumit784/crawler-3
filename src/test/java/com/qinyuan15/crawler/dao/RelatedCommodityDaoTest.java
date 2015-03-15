@@ -14,5 +14,8 @@ public class RelatedCommodityDaoTest {
         Commodity commodity = new CommodityDao().getInstance(8);
         List<Commodity> commodities = new RelatedCommodityDao().getInstances(commodity);
         System.out.println(commodities.size());
+        for (Commodity c : commodities) {
+            System.out.println(c.getId());
+        }
     }
 }

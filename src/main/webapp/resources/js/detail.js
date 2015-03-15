@@ -59,7 +59,8 @@
         enlargeImage: $('div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage'),
         enlargeIcon: $('div.content > div.left div.snapshot div.left div.largeImage div.enlarge'),
         couponLink: $('#couponLink'),
-        closeLargeImageLink: $('div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage div.closeLargeImage')
+        closeLargeImageLink: $('div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage div.closeLargeImage'),
+        otherCommodityImages: $('div.content > div.right div.whiteBack div.other > div img')
     };
     $elements.smallImages.mouseover(function () {
         $elements.smallImages.filter('.selected').removeClass('selected');
@@ -103,6 +104,13 @@
         $elements.enlargeImage.fadeOut(250);
         transparentBackground.hide();
     });
+    $elements.otherCommodityImages.hover(function () {
+        $(this).addClass('deepTransparent').css('border-color', '#F33286');
+    }, function () {
+        $(this).removeClass('deepTransparent').css('border-color', '#ffffff');
+    });
     loadCommodityParameters("commodityParameters", $('#commodityParametersData').text());
     setHoverColor($elements.couponLink, '#3E3E3E');
+    angularUtils.controller(function () {
+    });
 })();

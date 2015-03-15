@@ -13,6 +13,13 @@ public class RelatedCommodityDao {
             return new ArrayList<>();
         }
 
-        return CommodityDao.factory().setCategoryId(commodity.getCategoryId()).getInstances();
+        List<Commodity> commodities = CommodityDao.factory().setCategoryId(commodity.getCategoryId()).getInstances();
+        for (int i = 0; i < commodities.size(); i++) {
+            if (commodities.get(i).getId().equals(commodity.getId())) {
+                commodities.remove(i);
+                break;
+            }
+        }
+        return commodities;
     }
 }

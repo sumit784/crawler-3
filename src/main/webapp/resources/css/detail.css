@@ -315,12 +315,13 @@ div.content > div.right div.whiteBack div.other {
 
 div.content > div.right div.whiteBack div.other > div {
     float: left;
-    padding: 2px;
+    padding: 1px;
 }
 
 div.content > div.right div.whiteBack div.other > div img {
     height: 107px;
     width: 107px;
+    border: 2px solid #ffffff;
 }
 
 div.content > div.right div.whiteBack {
