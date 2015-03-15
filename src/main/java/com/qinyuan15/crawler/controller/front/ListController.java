@@ -26,7 +26,7 @@ public class ListController extends BaseController {
         }
 
         addCssAndJs("list-snapshots");
-        addCss("commodity-search-form");
+        addCssAndJs("commodity-search-form");
 
         setTitle(category.getName() + " 相关商品");
         model.addAttribute("categoryId", category.getId());

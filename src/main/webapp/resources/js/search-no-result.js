@@ -1,6 +1,6 @@
 ;
 (function () {
-    $('#searchInput').focus();
+    focusSearchInput();
     angularUtils.controller(function ($scope, $http) {
     });
 })();

@@ -3,7 +3,7 @@
 <div class="searchInfo boxShadow">
     <div class="keyWord">${keyWord} 相关搜索商品</div>
     <div class="search">
-    <%@include file="commodity-search-form.jsp"%>
+        <%@include file="commodity-search-form.jsp" %>
     </div>
 </div>
 <div class="goods">

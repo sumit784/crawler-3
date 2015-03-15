@@ -51,20 +51,11 @@
     var $goodsImages = $('div.goods div.images div.image img');
     var $hotWords = $('div.search div.right div.searchForm div.hotWords');
     var $branchPoster = $('div.search div.right div.branch div.poster');
-    var $searchTypeList = $('div.search div.right div.searchForm div.searchType li');
-    var $searchCategoryId = $('#searchCategoryId');
 
     $collectButton.click(function () {
     });
     $refreshButton.click(function () {
         location.reload();
-    });
-    $searchTypeList.click(function () {
-        var $this = $(this);
-        var text = $this.text();
-        var $div = getParent($this, 'div');
-        $div.find('span.text').text(text);
-        $searchCategoryId.val($this.dataOptions()['id']);
     });
     $subCategoryLinks.hover(function () {
         subCategoryLinks.over($(this));
@@ -155,7 +146,7 @@
             });
         }
     });
-    $('#searchInput').focus();
+    focusSearchInput();
 })();
 function showBranchBorder(element) {
     getParent($(element), 'div').prev().show();

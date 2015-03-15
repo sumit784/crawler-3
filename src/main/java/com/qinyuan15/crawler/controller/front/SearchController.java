@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.CommodityDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,8 +20,15 @@ public class SearchController extends BaseController {
                         @RequestParam(value = "keyWord", required = true) String keyWord,
                         @RequestParam(value = "categoryId", required = false) Integer categoryId) {
         addCssAndJs("list-snapshots");
-        addCss("commodity-search-form");
+        addCssAndJs("commodity-search-form");
         model.addAttribute("keyWord", keyWord);
+
+        CategoryDao categoryDao = new CategoryDao();
+        if (isPositive(categoryId)) {
+            model.addAttribute("subCategories", categoryDao.getSubInstancesAndSelf(categoryId));
+        } else {
+            model.addAttribute("subCategories", categoryDao.getRootInstances());
+        }
 
         long count = CommodityDao.factory().setKeyWord(keyWord).setCategoryId(categoryId).getCount();
         if (count > 0) {

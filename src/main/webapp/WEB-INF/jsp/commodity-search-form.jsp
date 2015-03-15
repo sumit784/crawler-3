@@ -11,9 +11,11 @@
                 <li data-options="id:0">
                     <a href="javascript:void(0)">全部分类</a>
                 </li>
-                <li data-options="id:${categoryId}">
-                    <a href="javascript:void(0)">${categoryName}</a>
-                </li>
+                <c:if test="${categoryId!=null}">
+                    <li data-options="id:${categoryId}">
+                        <a href="javascript:void(0)">${categoryName}</a>
+                    </li>
+                </c:if>
                 <c:forEach var="subCategory" items="${subCategories}">
                     <li data-options="id:${subCategory.id}">
                         <a href="javascript:void(0)">${subCategory.name}</a>
@@ -33,8 +35,8 @@
     <div class="hotWords">
         <span ng-repeat="hotWord in hotWords">
              <a class="noLineAnchor {{hotWord.color}}" href="javascript:void(0)"
-                 ng-href="search?keyWord={{hotWord.content}}" target="_blank">
-                        {{hotWord.content}}
+                ng-href="search?keyWord={{hotWord.content}}" target="_blank">
+                 {{hotWord.content}}
              </a>
         </span>
     </div>
