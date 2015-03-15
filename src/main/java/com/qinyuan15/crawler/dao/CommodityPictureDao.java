@@ -3,6 +3,7 @@ package com.qinyuan15.crawler.dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,6 +82,14 @@ public class CommodityPictureDao {
         @SuppressWarnings("unchecked")
         List<CommodityPicture> pictures = HibernateUtil.getList(hql, 0, 1);
         return pictures.size() == 0 ? null : pictures.get(0);
+    }
+
+    public List<CommodityPicture> getFirstInstances(List<Integer> commodityIds) {
+        List<CommodityPicture> commodityPictures = new ArrayList<>();
+        for (Integer commodityId : commodityIds) {
+            commodityPictures.add(getFirstInstance(commodityId));
+        }
+        return commodityPictures;
     }
 
     public void deleteInstances(Integer commodityId) {

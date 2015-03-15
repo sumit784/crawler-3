@@ -23,6 +23,10 @@ public class DetailController extends ImageController {
 
         // commodity
         Commodity commodity = new CommodityDao().getInstance(id);
+        if (commodity == null) {
+            return BLANK;
+        }
+
         model.addAttribute("commodity", commodity);
 
         // commodity picture
@@ -33,6 +37,12 @@ public class DetailController extends ImageController {
         model.addAttribute("smallPictures", parseCommodityPictureSmallUrls(pictures));
         List<CommodityPicture> detailPictures = pictureDao.getDetailInstances(id);
         model.addAttribute("detailPictures", parseCommodityPictureUrls(detailPictures));
+
+        // related commodity
+        List<Commodity> commodities = new RelatedCommodityDao().getInstances(commodity);
+        List<Integer> commodityIds = PersistObjectUtils.getIds(commodities);
+        List<CommodityPicture> commodityPictures = new CommodityPictureDao().getFirstInstances(commodityIds);
+        model.addAttribute("relatedPictures", parseCommodityPictureMiddleUrls(commodityPictures));
 
         // branch
         Branch branch = commodity.getBranch();
@@ -48,7 +58,7 @@ public class DetailController extends ImageController {
         model.addAttribute("positiveAppraiseGroups", appraiseGroupDao.getPositiveInstances(id));
         model.addAttribute("negativeAppraiseGroups", appraiseGroupDao.getNegativeInstances(id));
 
-        addJs("list");
+        //addJs("list");
         addJs("commodity-parameters");
         addJs("lib/jsutils/jsutils");
         addJs("lib/linecharts/raphael-min");

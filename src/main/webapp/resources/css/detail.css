@@ -313,6 +313,16 @@ div.content > div.right div.whiteBack div.other {
     overflow-x: auto;
 }
 
+div.content > div.right div.whiteBack div.other > div {
+    float: left;
+    padding: 2px;
+}
+
+div.content > div.right div.whiteBack div.other > div img {
+    height: 107px;
+    width: 107px;
+}
+
 div.content > div.right div.whiteBack {
     padding-bottom: 10px;
 }
