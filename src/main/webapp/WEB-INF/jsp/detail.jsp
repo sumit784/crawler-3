@@ -50,18 +50,30 @@
                     <span class="trend" id="trendImage">相关评价 和 历史价格走势
                     <img class="link" src="resources/css/images/detail/trend.png"/></span>
                 </div>
-            </div>
-            <div class="priceHistory boxShadow">
-                <div id="trendChart"></div>
-                <div class="triangle-border tb-border"></div>
-                <div class="triangle-border tb-background"></div>
-                <div class="comments">
-                    <c:forEach var="appraiseGroup" items="${positiveAppraiseGroups}">
-                        <a class="noLineAnchor positive" href="javascript:void(0)">${appraiseGroup.content}</a>
-                    </c:forEach>
-                    <c:forEach var="appraiseGroup" items="${negativeAppraiseGroups}">
-                        <a class="noLineAnchor negative" href="javascript:void(0)">${appraiseGroup.content}</a>
-                    </c:forEach>
+                <div class="priceHistory boxShadow">
+                    <div id="trendChart"></div>
+                    <div class="triangle-border tb-border"></div>
+                    <div class="triangle-border tb-background"></div>
+                    <c:if test="${fn:length(positiveAppraiseGroups)>0 || fn:length(negativeAppraiseGroups)>0}">
+                        <div class="comments">
+                            <div class="appraiseGroups">
+                                <c:forEach var="appraiseGroup" items="${positiveAppraiseGroups}">
+                                    <div class="appraiseGroup">
+                                        <a class="noLineAnchor positive"
+                                           href="javascript:void(0)">${appraiseGroup.content}</a>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <div class="appraiseGroups">
+                                <c:forEach var="appraiseGroup" items="${negativeAppraiseGroups}">
+                                    <div class="appraiseGroup">
+                                        <a class="noLineAnchor negative"
+                                           href="javascript:void(0)">${appraiseGroup.content}</a>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </div>
             <div class="buySubmit">

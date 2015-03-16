@@ -60,7 +60,7 @@
         priceHistory: $('div.content > div.left div.snapshot div.right div.priceHistory'),
         descriptionTitles: $('div.description div.title span'),
         descriptionDetail: $('div.description div.detail'),
-        snapshotRight: $('div.content > div.left div.snapshot div.right'),
+        snapshotRightPrice: $('div.content > div.left div.snapshot div.right div.price'),
         largeImage: $('div.content > div.left div.snapshot div.left div.largeImage'),
         enlargeImage: $('div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage'),
         enlargeIcon: $('div.content > div.left div.snapshot div.left div.largeImage div.enlarge'),
@@ -98,12 +98,9 @@
             $elements.descriptionDetail.find('div.shoppe').show();
         }
     });
-    $elements.snapshotRight.hover(function () {
-    }, function (event) {
-        var $target = $(event.target);
-        if ($target.is('div') && $target.hasClass('right')) {
-            historyTrend.hide();
-        }
+    $elements.snapshotRightPrice.hover(function () {
+    }, function () {
+        historyTrend.hide();
     });
     $elements.enlargeIcon.click(function () {
         transparentBackground.show();

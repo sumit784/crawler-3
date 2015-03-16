@@ -119,18 +119,18 @@ div.content > div.left div.snapshot div.right div.price span.highestPrice {
 
 div.content > div.left div.snapshot div.right div.priceHistory {
     position: absolute;
-    top: 240px;
+    top: 117px;
     left: -120px;
-    height: 260px;
     width: 330px;
     background-color: #ffffff;
     border: 1px solid #d9d9d9;
     z-index: 5;
-    padding: 0 10px 10px 5px;
+    padding: 0 10px 25px 5px;
     display: none;
 }
 
 div.content > div.left div.snapshot div.right div.priceHistory div.comments {
+    margin-top: 15px;
     padding-left: 20px;
 }
 
@@ -139,7 +139,13 @@ div.content > div.left div.snapshot div.right div.priceHistory div.comments a {
     padding: 3px 8px;
     border-radius: 5px;
     font-size: 9pt;
+}
+
+div.content > div.left div.snapshot div.right div.priceHistory div.comments div.appraiseGroup {
+    float: left;
     margin: 0 5px;
+    padding: 0;
+    line-height: 28px;
 }
 
 div.content > div.left div.snapshot div.right div.priceHistory div.comments a.positive {
@@ -160,7 +166,6 @@ div.content > div.left div.snapshot div.right div.priceHistory div.comments a.ne
 
 #trendChart {
     margin-left: 20px;
-    margin-bottom: 15px;
 }
 
 div.content > div.left div.snapshot div.right div.priceHistory div.triangle-border {
