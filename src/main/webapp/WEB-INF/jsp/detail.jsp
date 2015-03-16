@@ -85,15 +85,11 @@
             </div>
             <div class="links">
                 告诉小伙伴：
-                    <span class="links">
-                    <a href="javascript:void(0)"><img src="resources/css/images/detail/share1.png"/></a>
-                    <a href="javascript:void(0)"><img src="resources/css/images/detail/share2.png"/></a>
-                    <a href="javascript:void(0)"><img src="resources/css/images/detail/share3.png"/></a>
-                    <a href="javascript:void(0)"><img src="resources/css/images/detail/share4.png"/></a>
-                    <a href="javascript:void(0)"><img src="resources/css/images/detail/share5.png"/></a>
-                    <a href="javascript:void(0)"><img src="resources/css/images/detail/share6.png"/></a>
-                    <a href="javascript:void(0)"><img src="resources/css/images/detail/share7.png"/></a>
-                    </span>
+                <span class="links">
+                <c:forEach var="link" items="${share.links}">
+                    <a href="${link.url}" title="${link.title}" target="_blank"><img src="${link.icon}"/></a>
+                </c:forEach>
+                </span>
             </div>
         </div>
         <div class="description">

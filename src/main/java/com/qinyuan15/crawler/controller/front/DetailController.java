@@ -3,7 +3,9 @@ package com.qinyuan15.crawler.controller.front;
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.core.image.ThumbnailType;
+import com.qinyuan15.crawler.core.share.ShareLinks;
 import com.qinyuan15.crawler.dao.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,9 @@ import java.util.List;
  */
 @Controller
 public class DetailController extends ImageController {
+    @Autowired
+    private ShareLinks shareLinks;
+
     @RequestMapping("/detail")
     public String index(ModelMap model, @RequestParam(value = "id", required = true) Integer id) {
         if (!isPositive(id)) {
@@ -58,6 +63,9 @@ public class DetailController extends ImageController {
         AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
         model.addAttribute("positiveAppraiseGroups", appraiseGroupDao.getPositiveInstances(id));
         model.addAttribute("negativeAppraiseGroups", appraiseGroupDao.getNegativeInstances(id));
+
+        // share
+        model.put("share", shareLinks);
 
         addJs("commodity-parameters");
         addJs("lib/jsutils/jsutils");
