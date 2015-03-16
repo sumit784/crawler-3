@@ -9,10 +9,7 @@
 </div>
 <div class="goods">
     <div class="sort">
-        <div class="title">
-            <div class="lowest"><a class="noLineAnchor" href="javascript:void(0)">历史最低</a></div>
-            <div class="all"><a class="noLineAnchor" href="javascript:void(0)">所有宝贝</a></div>
-        </div>
+        <%@include file="list-sort-links-title.jsp"%>
         <%@include file="list-sort-links.jsp" %>
     </div>
     <%@include file="list-shapshots.jsp" %>

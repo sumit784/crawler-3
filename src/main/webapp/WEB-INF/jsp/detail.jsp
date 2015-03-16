@@ -65,11 +65,15 @@
                 </div>
             </div>
             <div class="buySubmit">
-                <a id="couponLink" class="noLineAnchor" href="javascript:void(0)">
-                    别忘了领取
-                    <img src="resources/css/images/edit-commodity/coupon.png"/>
-                    哦
-                </a>
+                <c:if test="${fn:length(branch.shoppes)>0}">
+                    <a id="couponLink" class="noLineAnchor" href="javascript:void(0)">
+                        别忘了领取
+                        <a href="${branch.shoppes[0].url}" target="_blank">
+                            <img src="resources/css/images/edit-commodity/coupon.png"/>
+                        </a>
+                        哦
+                    </a>
+                </c:if>
                 <a href="${commodity.buyUrl}" target="_blank">
                     <button id="buySubmit" class="orangeButton">去购买</button>
                 </a>
@@ -77,7 +81,7 @@
         </div>
         <div class="share">
             <div class="foundTime">
-                发现时间：<span id="foundTime">15日 09:03</span>
+                发现时间：<span id="foundTime"></span>
             </div>
             <div class="links">
                 告诉小伙伴：
@@ -122,6 +126,10 @@
         <div class="other">
             <c:forEach var="commodity" items="${relatedCommodities}">
                 <div>
+                    <div class="price">
+                        <div class="priceBack deepTransparent"></div>
+                        <div class="text">￥ ${commodity.price}</div>
+                    </div>
                     <a href="detail?id=${commodity.id}" target="_blank">
                         <img src="${commodity.picture}"/>
                     </a>

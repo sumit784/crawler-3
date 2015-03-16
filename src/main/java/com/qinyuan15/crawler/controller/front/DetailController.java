@@ -59,7 +59,6 @@ public class DetailController extends ImageController {
         model.addAttribute("positiveAppraiseGroups", appraiseGroupDao.getPositiveInstances(id));
         model.addAttribute("negativeAppraiseGroups", appraiseGroupDao.getNegativeInstances(id));
 
-        //addJs("list");
         addJs("commodity-parameters");
         addJs("lib/jsutils/jsutils");
         addJs("lib/linecharts/raphael-min");

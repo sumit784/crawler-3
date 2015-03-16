@@ -318,6 +318,25 @@ div.content > div.right div.whiteBack div.other > div {
     padding: 1px;
 }
 
+div.content > div.right div.whiteBack div.other > div div.price {
+    position: absolute;
+    left: 2px;
+    bottom: 2px;
+    font-size: 9pt;
+    color: #ffffff;
+}
+
+div.content > div.right div.whiteBack div.other > div div.price div.priceBack {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #9C958C;
+}
+
+div.content > div.right div.whiteBack div.other > div div.price div.text {
+    padding: 2px 2px 0;
+}
+
 div.content > div.right div.whiteBack div.other > div img {
     height: 107px;
     width: 107px;

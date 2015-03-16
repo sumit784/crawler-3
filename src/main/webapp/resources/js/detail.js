@@ -10,6 +10,12 @@
         return pictures;
     }
 
+    function initFoundTime() {
+        var date = new Date();
+        var dateString = date.getDate() + "日 " + date.getHours() + ":" + date.getMinutes();
+        $elements.foundTime.text(dateString);
+    }
+
     var pictures = loadPicturesData('pictures');
     var middlePictures = loadPicturesData('middlePictures');
 
@@ -60,8 +66,11 @@
         enlargeIcon: $('div.content > div.left div.snapshot div.left div.largeImage div.enlarge'),
         couponLink: $('#couponLink'),
         closeLargeImageLink: $('div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage div.closeLargeImage'),
-        otherCommodityImages: $('div.content > div.right div.whiteBack div.other > div img')
+        otherCommodityImages: $('div.content > div.right div.whiteBack div.other > div img'),
+        foundTime: $('#foundTime')
     };
+
+    initFoundTime();
     $elements.smallImages.mouseover(function () {
         $elements.smallImages.filter('.selected').removeClass('selected');
         var $this = $(this);

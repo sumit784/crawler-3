@@ -83,7 +83,12 @@ public class Branch extends PersistObject {
         this.parentId = parentId;
     }
 
-    public List<Shoppe> getShoppes() {
-        return new ShoppeDao().getInstances(this.getId());
+    private List<Shoppe> shoppes;
+
+    public synchronized List<Shoppe> getShoppes() {
+        if (shoppes == null) {
+            shoppes = new ShoppeDao().getInstances(this.getId());
+        }
+        return shoppes;
     }
 }
