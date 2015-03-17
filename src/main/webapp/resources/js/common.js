@@ -1,10 +1,6 @@
-function isFirefox() {
-    return navigator.userAgent.indexOf('Firefox') >= 0;
-}
-
 function scrollTop($targetElement) {
     var offset = $targetElement ? $targetElement.offset().top : 0;
-    if (isFirefox()) {
+    if (JSUtils.isFirefox()) {
         document.documentElement.scrollTop = offset;
     } else {
         $('body').animate({scrollTop: offset}, 250);
@@ -25,30 +21,6 @@ function getParent($element, parentTagName) {
         }
         parent = parent.parent();
     }
-}
-
-function copyArray(array) {
-    var arr = [];
-    for (var i = 0, len = array.length; i < len; i++) {
-        arr.push(array[i]);
-    }
-    return arr;
-}
-
-function removeArrayItem(array, index) {
-    array.splice(index, 1);
-}
-
-function splitArray(array, groupSize) {
-    var result = [], group;
-    for (var i = 0, len = array.length; i < len; i++) {
-        if (i % groupSize == 0) {
-            group = [];
-            result.push(group);
-        }
-        group.push(array[i]);
-    }
-    return result;
 }
 
 var transparentBackground = {
@@ -138,30 +110,6 @@ var angularUtils = {
             });
         });
         return this;
-    }
-};
-
-
-/**
- * query plugins
- */
-jQuery.fn.dataOptions = function () {
-    var dataOptionsString = this.attr('data-options');
-    if (dataOptionsString) {
-        var dataOptions = null;
-        eval('dataOptions = {' + dataOptionsString + "}");
-        return dataOptions;
-    } else {
-        return null;
-    }
-};
-
-jQuery.fn.focusOrSelect = function () {
-    var value = this.val();
-    if (value != null && value != '') {
-        this.select();
-    } else {
-        this.focus();
     }
 };
 

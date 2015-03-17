@@ -68,7 +68,6 @@ public class DetailController extends ImageController {
         model.put("share", shareLinks);
 
         addJs("commodity-parameters");
-        addJs("lib/jsutils/jsutils");
         addJs("lib/linecharts/raphael-min");
         addJs("lib/linecharts/linecharts");
 

@@ -77,10 +77,10 @@
                         var name = data['name'];
                         $commodityName.text(name).attr('href', crawlerLink).prev().val(name);
 
-                        $scope.imageUrls = copyArray(data['imageUrls']);
-                        $scope.originalImageUrls = copyArray(data['imageUrls']);
-                        $scope.detailImageUrls = copyArray(data['detailImageUrls']);
-                        $scope.originalDetailImageUrls = copyArray(data['detailImageUrls']);
+                        $scope.imageUrls = JSUtils.copyArray(data['imageUrls']);
+                        $scope.originalImageUrls = JSUtils.copyArray(data['imageUrls']);
+                        $scope.detailImageUrls = JSUtils.copyArray(data['detailImageUrls']);
+                        $scope.originalDetailImageUrls = JSUtils.copyArray(data['detailImageUrls']);
                         $scope.showCrawlerInfo = false;
                     });
 
@@ -94,12 +94,12 @@
 
         function initImages() {
             $scope.deleteImage = function (index) {
-                removeArrayItem($scope.imageUrls, index);
-                removeArrayItem($scope.originalImageUrls, index);
+                JSUtils.removeArrayItem($scope.imageUrls, index);
+                JSUtils.removeArrayItem($scope.originalImageUrls, index);
             };
             $scope.deleteDetailImage = function (index) {
-                removeArrayItem($scope.detailImageUrls, index);
-                removeArrayItem($scope.originalDetailImageUrls, index);
+                JSUtils.removeArrayItem($scope.detailImageUrls, index);
+                JSUtils.removeArrayItem($scope.originalDetailImageUrls, index);
             };
             $scope.enlargeImage = function (index, event, type) {
                 $enlargeImage.find('img').hide();

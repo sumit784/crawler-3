@@ -6,14 +6,14 @@
             for (var i = 0, len = letters.length; i < len; i++) {
                 var letter = letters[i];
                 if (letter in data) {
-                    $scope.branches.push({'letter': letters[i], 'branches': splitArray(data[letter], 7)});
+                    $scope.branches.push({'letter': letters[i], 'branches': JSUtils.splitArray(data[letter], 7)});
                 } else {
                     $scope.branches.push({'letter': letters[i], 'branches': []});
                 }
             }
         });
         var letters = getBranchGroupLetters();
-        $scope.letters = splitArray(letters, 3);
+        $scope.letters = JSUtils.splitArray(letters, 3);
         $scope.letterClick = function (letter) {
             $('div.branchGroup').each(function () {
                 if ($.trim($(this).find('div.title').text()) == $.trim(letter)) {

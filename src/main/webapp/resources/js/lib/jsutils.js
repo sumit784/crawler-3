@@ -19,6 +19,27 @@ var JSUtils = {
         var day = parseInt(dateArr[2]);
         return new Date(year, month, day);
     },
+    splitArray: function (array, groupSize) {
+        var result = [], group;
+        for (var i = 0, len = array.length; i < len; i++) {
+            if (i % groupSize == 0) {
+                group = [];
+                result.push(group);
+            }
+            group.push(array[i]);
+        }
+        return result;
+    },
+    copyArray: function (array) {
+        var arr = [];
+        for (var i = 0, len = array.length; i < len; i++) {
+            arr.push(array[i]);
+        }
+        return arr;
+    },
+    removeArrayItem: function (array, index) {
+        array.splice(index, 1);
+    },
     isString: function (arg) {
         return (typeof arg) == 'string';
     },
@@ -82,5 +103,29 @@ var JSUtils = {
             offsetX: eventCoord.x - pageCoord.x,
             offsetY: eventCoord.y - pageCoord.y
         };
+    }
+};
+
+
+/**
+ * query plugins
+ */
+jQuery.fn.dataOptions = function () {
+    var dataOptionsString = this.attr('data-options');
+    if (dataOptionsString) {
+        var dataOptions = null;
+        eval('dataOptions = {' + dataOptionsString + "}");
+        return dataOptions;
+    } else {
+        return null;
+    }
+};
+
+jQuery.fn.focusOrSelect = function () {
+    var value = this.val();
+    if (value != null && value != '') {
+        this.select();
+    } else {
+        this.focus();
     }
 };

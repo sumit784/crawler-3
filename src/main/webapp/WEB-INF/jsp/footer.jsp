@@ -23,6 +23,8 @@
 <script src="resources/js/lib/angular/html5shiv.js"></script>
 <script src="resources/js/lib/angular/json2.js"></script>
 <script src="resources/js/lib/angular/angular.min.js"></script>
+<script src="resources/js/lib/jsutils.js"></script>
+<script src="resources/js/lib/underscore.js"></script>
 <script src="resources/js/common.js"></script>
 <c:forEach var="js" items="${moreJs}">
     <script src="resources/js/${js}.js"></script>

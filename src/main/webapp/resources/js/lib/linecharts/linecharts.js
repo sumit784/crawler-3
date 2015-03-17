@@ -13,26 +13,7 @@
  * @param config configure object
  */
 function linechart(elementId, config) {
-    function min(arr) {
-        var minValue = null;
-        for (var i = 0, len = arr.length; i < len; i++) {
-            if (minValue == null || arr[i] < minValue) {
-                minValue = arr[i];
-            }
-        }
-        return minValue;
-    }
-
-    function max(arr) {
-        var maxValue = null;
-        for (var i = 0, len = arr.length; i < len; i++) {
-            if (maxValue == null || arr[i] > maxValue) {
-                maxValue = arr[i];
-            }
-        }
-        return maxValue;
-    }
-
+    // parse configuration
     var width = config.width;
     var height = config.height;
     var xSerial = config.xSerial;
@@ -40,25 +21,38 @@ function linechart(elementId, config) {
     var xLabel = config.xLabel;
     var yLabel = config.yLabel;
     var yUnitString = config.yUnit;
-    var xMargin = 40;
-    var yMargin = 30;
-    var paper = Raphael(elementId, width, height);
-    var yGridNum = 5;
     var serialSize = Math.min(xSerial.length, ySerial.length);
-    var xGridWidth = (width - xMargin * 2) / (xSerial.length - 1);
 
-    var yMin = min(ySerial);
-    var yMax = max(ySerial);
-    var yRange = yMax - yMin;
+    // define constant
+    var X_MARGIN = 40;
+    var Y_MARGIN = 30;
+    var Y_GRID_COUNT = 5;
+
+    var paper = Raphael(elementId, width, height);
+    var xGridWidth = (width - X_MARGIN * 2) / (serialSize - 1);
+    var yGridHeight = (height - Y_MARGIN * 2) / Y_GRID_COUNT;
+
+    var yMin = _.min(ySerial);
+    var yMax = _.max(ySerial);
+    var yDiff = yMax - yMin;
+
+    drawGrid();
+    drawYAxis();
+    drawXAxis();
+    drawLine();
+    bindOverEvent();
 
     function getDots() {
-        var yPadding = (height - yMargin * 2) * (1 / yGridNum );
-        var yUnit = parseInt((height - yMargin * 2 - 2 * yPadding) / yRange);
-
+        var yUnit;
+        if (yDiff == 0) {
+            yUnit = (Y_GRID_COUNT - 1 ) * yGridHeight / yMax;
+        } else {
+            yUnit = parseInt((height - Y_MARGIN * 2 - 2 * yGridHeight) / yDiff);
+        }
         var dots = [];
         for (var i = 0; i < serialSize; i++) {
-            var x = xMargin + i * xGridWidth;
-            var y = yMargin + yPadding + (yMax - ySerial[i]) * yUnit;
+            var x = X_MARGIN + i * xGridWidth;
+            var y = Y_MARGIN + yGridHeight + (yMax - ySerial[i]) * yUnit;
             dots.push([x, y]);
         }
         return dots;
@@ -87,17 +81,17 @@ function linechart(elementId, config) {
     }
 
     function drawGrid() {
-        var xEnd = width - xMargin;
-        for (var i = 0; i <= yGridNum; i++) {
-            var y = yMargin + (height - yMargin * 2) * i / yGridNum;
+        var xEnd = width - X_MARGIN;
+        for (var i = 0; i <= Y_GRID_COUNT; i++) {
+            var y = Y_MARGIN + yGridHeight * i;
 
-            var lineString = 'M ' + xMargin + ',' + y + ' L ' + xEnd + ',' + y;
+            var lineString = 'M ' + X_MARGIN + ',' + y + ' L ' + xEnd + ',' + y;
             paper.path(lineString).attr({
                 'stroke': '#EEEEEE',
                 'stroke-width': 1
             });
 
-            lineString = 'M ' + xMargin * 0.8 + ',' + y + ' L ' + xMargin + ',' + y;
+            lineString = 'M ' + X_MARGIN * 0.8 + ',' + y + ' L ' + X_MARGIN + ',' + y;
             paper.path(lineString).attr({
                 'stroke': '#DEDEDE',
                 'stroke-width': 2
@@ -116,16 +110,23 @@ function linechart(elementId, config) {
             }
         }
 
-        var lineString = 'M ' + xMargin + ',' + yMargin + ' L ' + xMargin + ',' + (height - yMargin);
+        // draw vertical line of y axis
+        var lineString = 'M ' + X_MARGIN + ',' + Y_MARGIN + ' L ' + X_MARGIN + ',' + (height - Y_MARGIN);
         paper.path(lineString).attr({
             'stroke': '#DEDEDE',
             'stroke-width': 1
         });
 
-        var yValueOfOneGrid = yRange / (yGridNum - 2);
-        for (var i = 0; i <= yGridNum; i++) {
-            var y = yMargin + (height - yMargin * 2) * i / yGridNum;
-            var yValue = round(yValueOfOneGrid + yMax - yValueOfOneGrid * i);
+        // draw gradation values of y axis
+        var yValueOfOneGrid;
+        if (yDiff == 0) {
+            yValueOfOneGrid = yMax / (Y_GRID_COUNT - 1);
+        } else {
+            yValueOfOneGrid = yDiff / (Y_GRID_COUNT - 2);
+        }
+        for (var i = 0; i <= Y_GRID_COUNT; i++) {
+            var y = Y_MARGIN + yGridHeight * i;
+            var yValue = round(yMax - yValueOfOneGrid * (i - 1));
             paper.text(10, y, yValue).attr({
                 'font-size': 10,
                 'fill': '#666666'
@@ -135,21 +136,21 @@ function linechart(elementId, config) {
 
     function drawXAxis() {
         function drawLine(x, text) {
-            var lineString = 'M ' + x + ',' + (height - yMargin) + ' L ' + x + ',' + (height - yMargin * 0.8);
+            var lineString = 'M ' + x + ',' + (height - Y_MARGIN) + ' L ' + x + ',' + (height - Y_MARGIN * 0.8);
             paper.path(lineString).attr({
                 'stroke': '#DEDEDE',
                 'stroke-width': 2
             });
-            paper.text(x - text.length / 2, height - yMargin * 0.4, text).attr({
+            paper.text(x - text.length / 2, height - Y_MARGIN * 0.4, text).attr({
                 'font-size': 10,
                 'fill': '#666666'
             });
         }
 
-        drawLine(xMargin, xSerial[0]);
-        drawLine(width - xMargin, xSerial[xSerial.length - 1]);
+        drawLine(X_MARGIN, xSerial[0]);
+        drawLine(width - X_MARGIN, xSerial[xSerial.length - 1]);
         var xMiddle = parseInt((xSerial.length - 1) / 2);
-        drawLine(xMargin + xGridWidth * xMiddle, xSerial[xMiddle]);
+        drawLine(X_MARGIN + xGridWidth * xMiddle, xSerial[xMiddle]);
     }
 
     function bindOverEvent() {
@@ -161,7 +162,7 @@ function linechart(elementId, config) {
         }
 
         function createLine() {
-            return paper.rect(-10, yMargin, 0.1, height - 2 * yMargin).attr({
+            return paper.rect(-10, Y_MARGIN, 0.1, height - 2 * Y_MARGIN).attr({
                 'stroke': '#aaaaaa'
             });
         }
@@ -269,17 +270,17 @@ function linechart(elementId, config) {
             'background-color': 'transparent'
         }).appendTo($('#' + elementId)).mousemove(function (e) {
             var x = JSUtils.getOffsetByEvent(e).offsetX;
-            if (x >= xMargin && x < width - xMargin) {
-                var xIndex = parseInt((x - xMargin) / xGridWidth + 0.5);
-                var xOfGrid = xMargin + xIndex * xGridWidth;
+            if (x >= X_MARGIN && x < width - X_MARGIN) {
+                var xIndex = parseInt((x - X_MARGIN) / xGridWidth + 0.5);
+                var xOfGrid = X_MARGIN + xIndex * xGridWidth;
                 var y = dots[xIndex][1];
                 rectAbove.attr('x', xOfGrid);
                 rectBelow.attr('x', xOfGrid);
                 circle.attr('cx', xOfGrid);
 
-                rectAbove.attr('height', y - yMargin - circleRadius);
+                rectAbove.attr('height', y - Y_MARGIN - circleRadius);
                 rectBelow.attr('y', y + circleRadius);
-                rectBelow.attr('height', height - yMargin - rectBelow.attr('y'));
+                rectBelow.attr('height', height - Y_MARGIN - rectBelow.attr('y'));
                 circle.attr('cy', y);
 
                 descriptionPanel.show();
@@ -297,12 +298,6 @@ function linechart(elementId, config) {
             hideMark();
         });
     }
-
-    drawGrid();
-    drawYAxis();
-    drawXAxis();
-    drawLine();
-    bindOverEvent();
 }
 
 
