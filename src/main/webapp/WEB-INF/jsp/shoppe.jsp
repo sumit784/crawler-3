@@ -5,6 +5,10 @@
     <div class="slogan">${branch.slogan}</div>
     <div class="links">
         <%@include file="widget-shoppe-link.jsp" %>
+        <div class="left back"></div>
+        <div class="right back"></div>
+        <div class="top back"></div>
+        <div class="bottom back"></div>
     </div>
 </div>
 <div class="goods">
