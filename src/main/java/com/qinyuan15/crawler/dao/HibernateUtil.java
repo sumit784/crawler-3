@@ -8,6 +8,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -97,7 +98,11 @@ public class HibernateUtil {
     }
 
     private static String adjustWhereClause(String whereClause) {
+        if (!StringUtils.hasText(whereClause)) {
+            return "";
+        }
         String lowerCaseString = whereClause.trim().toLowerCase();
+
         if (!(lowerCaseString.startsWith("where") || lowerCaseString.startsWith("order by"))) {
             return " WHERE " + whereClause;
         } else {
@@ -173,8 +178,16 @@ public class HibernateUtil {
         return getCount(clazz, "");
     }
 
+    public static long getCount(String className) {
+        return getCount(className, "");
+    }
+
     public static long getCount(Class<?> clazz, String whereCondition) {
-        List list = getList("SELECT COUNT(*) FROM " + clazz.getSimpleName() + " " +
+        return getCount(clazz.getSimpleName(), whereCondition);
+    }
+
+    public static long getCount(String className, String whereCondition) {
+        List list = getList("SELECT COUNT(*) FROM " + className + " " +
                 adjustWhereClause(whereCondition));
         return (Long) list.get(0);
     }

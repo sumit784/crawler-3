@@ -29,4 +29,10 @@ public class HibernateUtilTest {
             HibernateUtil.commit(session);
         }
     }
+
+    @Test
+    public void testGetCount() {
+        long count = HibernateUtil.getCount("Commodity");
+        assertThat(HibernateUtil.getCount("Commodity", "id>0")).isEqualTo(count);
+    }
 }

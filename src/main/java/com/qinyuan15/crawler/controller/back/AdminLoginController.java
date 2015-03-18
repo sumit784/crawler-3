@@ -2,7 +2,6 @@ package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -12,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AdminLoginController extends BaseController {
     @RequestMapping("/login")
-    public String index(ModelMap model) {
+    public String index() {
         addCss("index");
-        addJs("index");
         setTitle("用户登录");
         return "login";
     }
