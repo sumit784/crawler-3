@@ -27,6 +27,7 @@ public class AdminEditCommodityController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminEditCommodityController.class);
 
     private final static String INDEX = "admin";
+    private final static String REDIRECT_INDEX = "redirect:" + INDEX;
     private final static String EDIT_PAGE = "admin-edit-commodity";
 
     @RequestMapping("/admin-edit-commodity")

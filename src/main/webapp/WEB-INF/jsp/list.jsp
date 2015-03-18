@@ -8,11 +8,11 @@
     </div>
     <div class="subCategory">
         <c:forEach var="subCategory" items="${subCategories}" varStatus="status">
-            <c:if test="${status.index % 2 == 0}"><div></c:if>
-            <a href="javascript:void(0)" class="noLineAnchor lightGrayFont"
-               data-options="id:${subCategory.id}"
-               ng-click="selectSubCategory($event)">${subCategory.name}</a>
-            <c:if test="${status.index % 2 == 1}"></div></c:if>
+            <div>
+                <a href="javascript:void(0)" class="noLineAnchor lightGrayFont"
+                   data-options="id:${subCategory.id}"
+                   ng-click="selectSubCategory($event)">${subCategory.name}</a>
+            </div>
         </c:forEach>
     </div>
     <div class="split"></div>
@@ -24,7 +24,7 @@
 <div class="goods">
     <div class="sort">
         <div class="title blueFont">
-            今日<span class="selectedNavigation">女人</span>最低价
+            今日<span class="selectedNavigation">${categoryName}</span>最低价
         </div>
         <%@include file="list-sort-links.jsp" %>
     </div>

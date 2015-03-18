@@ -25,7 +25,8 @@ div.search > div.subCategory {
 }
 
 div.search > div.subCategory > div {
-    margin: 17px 0;
+    float: left;
+    margin: 8px 3px;
 }
 
 div.search > div.subCategory a {
