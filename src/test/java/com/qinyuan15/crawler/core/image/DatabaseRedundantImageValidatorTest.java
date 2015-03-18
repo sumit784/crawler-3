@@ -16,8 +16,6 @@ public class DatabaseRedundantImageValidatorTest {
     public void setUp() throws Exception {
         validator = new DatabaseRedundantImageValidator();
         validator.setColumns(Lists.newArrayList("Branch.logo"));
-        validator.setThumbnailSuffixes(
-                Lists.newArrayList("_thumbnail_small", "_thumbnail_middle"));
     }
 
     @Test
@@ -32,6 +30,12 @@ public class DatabaseRedundantImageValidatorTest {
         System.out.println(validator.isRedundant(testPath));
 
         testPath = "/var/ftp/mall/branch/logo/SgktfeqFDrllgIdjnyrU_make_.png";
+        System.out.println(validator.isRedundant(testPath));
+
+        testPath = "/var/ftp/img01.taobaocdn.com/imgextra/i1/761679524/TB2reV4bVXXXXcFXXXXXXXXXXXX-761679524.jpg";
+        System.out.println(validator.isRedundant(testPath));
+
+        testPath = "/var/ftp/img01.taobaocdn.com/imgextra/i1/761679524/TB2reV4bVXXXXcFXXXXXXXXXXXX-761679524_thumbnail_small.jpg";
         System.out.println(validator.isRedundant(testPath));
     }
 }

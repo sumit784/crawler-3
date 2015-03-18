@@ -36,9 +36,13 @@ public class ImageCompressor {
     }
 
     public void compress(String targetPath, int width, int height) {
-        if (width > getWidth() && height > getHeight()) {
-            return;
+        if (width > getWidth()) {
+            width = getWidth();
         }
+        if (height > getHeight()) {
+            height = getHeight();
+        }
+
         try {
             File targetFile = new File(targetPath);
             BufferedImage targetImage = Scalr.resize(sourceImage, Scalr.Method.QUALITY,

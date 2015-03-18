@@ -7,16 +7,13 @@ import java.io.File;
  * Created by qinyuan on 15-3-10.
  */
 public class Thumbnail {
-    private final static String SMALL_SUFFIX = "thumbnail_small";
-    private final static String MIDDLE_SUFFIX = "thumbnail_middle";
-
     public String buildSmall(String imagePath) {
-        String path = getPath(imagePath, SMALL_SUFFIX);
+        String path = getPath(imagePath, ThumbnailSuffix.SMALL_SUFFIX);
         return buildThumbnail(imagePath, path, ImageSize.SMALL);
     }
 
     public String buildMiddle(String imagePath) {
-        String path = getPath(imagePath, MIDDLE_SUFFIX);
+        String path = getPath(imagePath, ThumbnailSuffix.MIDDLE_SUFFIX);
         return buildThumbnail(imagePath, path, ImageSize.MIDDLE);
     }
 
@@ -29,7 +26,7 @@ public class Thumbnail {
     }
 
     public String getSmall(String imagePath) {
-        String path = getPath(imagePath, SMALL_SUFFIX);
+        String path = getPath(imagePath, ThumbnailSuffix.SMALL_SUFFIX);
         if (new File(path).isFile()) {
             return path;
         } else {
@@ -38,7 +35,7 @@ public class Thumbnail {
     }
 
     public String getMiddle(String imagePath) {
-        String path = getPath(imagePath, MIDDLE_SUFFIX);
+        String path = getPath(imagePath, ThumbnailSuffix.MIDDLE_SUFFIX);
         if (new File(path).isFile()) {
             return path;
         } else {
@@ -49,10 +46,10 @@ public class Thumbnail {
     private String getPath(String imagePath, String suffix) {
         int extendNameIndex = imagePath.lastIndexOf('.');
         if (extendNameIndex >= 0) {
-            return imagePath.substring(0, extendNameIndex) + "_" +
-                    suffix + imagePath.substring(extendNameIndex);
+            return imagePath.substring(0, extendNameIndex) + suffix +
+                    imagePath.substring(extendNameIndex);
         } else {
-            return imagePath + "_" + suffix;
+            return imagePath + suffix;
         }
     }
 }

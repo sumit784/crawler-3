@@ -69,6 +69,7 @@
         $(this).removeClass('deepTransparent');
     });
     angularUtils.controller(function ($scope, $http) {
+        $scope.inLowPrice = true;
         $scope.categoryId = $('#categoryId').val();
         initBranch();
         initSnapshot($scope, $http);

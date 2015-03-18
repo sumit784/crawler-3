@@ -5,7 +5,7 @@
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="application-page-parser.xml"/>
-    <import resource="application-image-download.xml"/>
+    <import resource="application-image.xml"/>
     <bean class="com.qinyuan15.crawler.core.crawler.PriceHistoryCrawler" init-method="init">
         <!-- run each 30 second for each thread -->
         <property name="interval" value="30000"/>
