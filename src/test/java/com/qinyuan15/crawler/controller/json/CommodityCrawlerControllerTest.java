@@ -19,12 +19,26 @@ public class CommodityCrawlerControllerTest {
         injectRequest(controller);
         Whitebox.getField(CommodityCrawlerController.class, "pageParser").set(controller,
                 ComposableCommodityPageParserTest.mockComposableCommodityPageParser());
-        Whitebox.getField(CommodityCrawlerController.class, "httpClientPool").set(controller,
-                new HttpClientPool());
 
         String result = controller.index("http://s.etao.com/detail/40780735321.html");
         System.out.println(result);
         assertThat(result).contains("name").contains("buyUrl").contains("imageUrls")
                 .contains("detailImageUrls");
     }
+
+    @Test
+    public void testIndex2() throws Exception {
+        CommodityCrawlerController controller = new CommodityCrawlerController();
+        injectRequest(controller);
+        Whitebox.getField(CommodityCrawlerController.class, "pageParser").set(controller,
+                ComposableCommodityPageParserTest.mockComposableCommodityPageParser());
+
+        String result = controller.index("http://s.etao.com/detail/407807353211.html");
+        System.out.println(result);
+        /*
+        assertThat(result).contains("name").contains("buyUrl").contains("imageUrls")
+                .contains("detailImageUrls");
+                */
+    }
+
 }

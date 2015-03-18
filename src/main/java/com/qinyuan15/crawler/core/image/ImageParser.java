@@ -1,8 +1,12 @@
 package com.qinyuan15.crawler.core.image;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageDecoder;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 
 /**
  * Class to parse image
@@ -15,8 +19,8 @@ public class ImageParser {
         this.image = image;
     }
 
-    public ImageParser(String sourcePath) throws Exception {
-        this(ImageIO.read(new File(sourcePath)));
+    public ImageParser(String sourcePath) {
+        this(createBufferedImage(sourcePath));
     }
 
     public int getWidth() {
@@ -25,5 +29,25 @@ public class ImageParser {
 
     public int getHeight() {
         return image.getHeight();
+    }
+
+    public static BufferedImage createBufferedImage(String sourcePath) {
+        try {
+            if (isJPG(sourcePath)) {
+                JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder(
+                        new FileInputStream(sourcePath));
+                return decoder.decodeAsBufferedImage();
+            } else {
+                return ImageIO.read(new File(sourcePath));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static boolean isJPG(String sourcePath) {
+        sourcePath = sourcePath.toLowerCase();
+        return sourcePath.endsWith(".jpg") || sourcePath.endsWith(".jpeg")
+                || sourcePath.endsWith(".jpe");
     }
 }

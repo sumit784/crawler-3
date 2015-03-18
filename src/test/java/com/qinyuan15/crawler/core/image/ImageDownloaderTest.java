@@ -3,6 +3,7 @@ package com.qinyuan15.crawler.core.image;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.powermock.reflect.Whitebox;
 
 import java.io.File;
 
@@ -26,6 +27,14 @@ public class ImageDownloaderTest {
         String savePath = this.dowloader.save(url);
         System.out.println(savePath);
         assertThat(new File(savePath)).isFile();
+    }
+
+    @Test
+    public void testGetSavePath() throws Exception {
+        String testPath = "http://www.baidu.com/hello/world/test.png?key=value";
+        String result = (String) Whitebox.getMethod(this.dowloader.getClass(), "getSavePath", String.class)
+                .invoke(this.dowloader, testPath);
+        assertThat(result).isEqualTo(TestFileUtils.tempDir + "/www.baidu.com/hello/world/test.png");
     }
 
     public static ImageDownloader mockImageDownloader() {

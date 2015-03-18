@@ -1,7 +1,6 @@
 (function () {
     var $commodityDescription = $('#commodityDescription');
     var $selectButtons = $('div.content div.basic button');
-    var $form = $('#mainForm');
     var $branchId = $('input[name=branchId]');
     var $commodityName = $('input[name=commodityName]');
     var $submitInfo = $('#submitInfo');
@@ -21,23 +20,18 @@
         loadCommodityParameters('commodityDescriptionEffect', text);
     }).trigger('keyup');
 
-    $form.ajaxForm(function (data) {
-        $submitInfo.fadeOut(200);
-        if (data.success) {
-            location.href = "admin";
-        } else {
-            alert(data.detail);
-        }
-    });
     $('#publishCommodity').click(function (e) {
         if (parseInt($branchId.val()) <= 0) {
             alert('品牌未设置!');
             e.preventDefault();
+            return false;
         } else if ($commodityName.val() == '') {
             alert('商品名称未设置!');
             e.preventDefault();
+            return false;
         } else {
             $submitInfo.fadeIn(200);
+            return true;
         }
     });
 
@@ -71,6 +65,11 @@
                     $scope.crawlerInfo = '正在抓取网页...';
                     $scope.showCrawlerInfo = true;
                     $http.get("commodity-crawler.json?url=" + crawlerLink).success(function (data) {
+                        if (!data.success) {
+                            $scope.crawlerInfo = data.detail;
+                            return;
+                        }
+
                         $crawlerLink.text(crawlerLink).attr('href', crawlerLink).prev().val(crawlerLink);
                         var buyLink = data['buyUrl'];
                         $buyLink.text(buyLink).attr('href', buyLink).prev().val(buyLink);
@@ -283,4 +282,8 @@
             });
         }
     });
+    var errorInfo = $('#errorInfo').val();
+    if (errorInfo != null && errorInfo != '') {
+        alert(errorInfo);
+    }
 })();

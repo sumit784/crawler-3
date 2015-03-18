@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.core.image;
 
+import com.qinyuan15.crawler.core.http.HttpClientWrapper;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,7 +9,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +39,13 @@ public class ImageDownloader {
     public String save(String url) {
         String savePath = getSavePath(url);
         try {
+            LOGGER.info("prepare to save image {} to {}", url, savePath);
+
             // create input stream and output stream
-            BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
+            HttpClientWrapper client = new HttpClientWrapper();
+            CloseableHttpResponse response = client.getResponse(url);
+            response.getEntity().getContent();
+            BufferedInputStream in = new BufferedInputStream(response.getEntity().getContent());
             File saveFile = new File(savePath);
             File parentDir = saveFile.getParentFile();
             if (!parentDir.isDirectory() && !parentDir.mkdirs()) {
@@ -57,7 +63,6 @@ public class ImageDownloader {
             out.close();
 
             LOGGER.info("save image {} to {}", url, savePath);
-
             return savePath;
         } catch (Exception e) {
             LOGGER.error("fail to save image {} to path {}: {}", url, savePath, e);
@@ -66,7 +71,7 @@ public class ImageDownloader {
     }
 
     public List<String> save(List<String> urls) {
-        List<String> savePaths = new ArrayList<String>();
+        List<String> savePaths = new ArrayList<>();
         for (String url : urls) {
             try {
                 savePaths.add(this.save(url));
@@ -78,7 +83,7 @@ public class ImageDownloader {
     }
 
     private String getSavePath(String url) {
-        url = url.replaceAll("^.*://", "");
+        url = url.replaceAll("^.*://", "").replaceAll("\\?.*", "");
         return this.saveDir + "/" + url;
     }
 }

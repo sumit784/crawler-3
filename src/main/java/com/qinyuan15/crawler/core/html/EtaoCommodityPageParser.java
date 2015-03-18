@@ -106,7 +106,8 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
 
     @Override
     public boolean isExpire() {
-        return this.html.contains("您所访问的页面已经被删除");
+        return this.html.contains("您所访问的页面已经被删除") ||
+                this.html.contains("您访问的内容不存在，您可尝试重新访问!");
     }
 
     /**
@@ -156,7 +157,14 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
     public List<String> getDetailImagesUrls() {
         HtmlParser htmlParser = new HtmlParser(this.html);
         Element productDetailDiv = htmlParser.getElements("div", "product-detail").first();
+        if (productDetailDiv == null) {
+            return null;
+        }
+
         String dataUrl = productDetailDiv.attr("data-url");
+        if (dataUrl == null) {
+            return null;
+        }
 
         HttpClientWrapper client = this.httpClientPool == null ?
                 new HttpClientWrapper() : this.httpClientPool.next();

@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.controller;
 
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
+import com.qinyuan15.crawler.core.image.ImageSize;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.core.image.ThumbnailType;
 import com.qinyuan15.crawler.dao.Branch;
@@ -21,17 +22,18 @@ public class ImageController extends BaseController {
     protected ImageDownloader imageDownloader;
 
     protected List<String> parseCommodityPictureUrls(List<CommodityPicture> commodityPictures) {
-        return getPictureUrlConverter().pathsToUrls(commodityPictures);
+        return getPictureUrlConverter().setFilterSize(ImageSize.VERY_SMALL)
+                .pathsToUrls(commodityPictures);
     }
 
-    protected List<String> parseCommodityPictureMiddleUrls(List<CommodityPicture> commodityPictures){
-        return getPictureUrlConverter().setThumbnailType(ThumbnailType.MIDDLE)
-                .pathsToUrls(commodityPictures);
+    protected List<String> parseCommodityPictureMiddleUrls(List<CommodityPicture> commodityPictures) {
+        return getPictureUrlConverter().setFilterSize(ImageSize.VERY_SMALL)
+                .setThumbnailType(ThumbnailType.MIDDLE).pathsToUrls(commodityPictures);
     }
 
     protected List<String> parseCommodityPictureSmallUrls(List<CommodityPicture> commodityPictures) {
-        return getPictureUrlConverter().setThumbnailType(ThumbnailType.SMALL)
-                .pathsToUrls(commodityPictures);
+        return getPictureUrlConverter().setFilterSize(ImageSize.VERY_SMALL)
+                .setThumbnailType(ThumbnailType.SMALL).pathsToUrls(commodityPictures);
     }
 
     protected PictureUrlConverter getPictureUrlConverter() {

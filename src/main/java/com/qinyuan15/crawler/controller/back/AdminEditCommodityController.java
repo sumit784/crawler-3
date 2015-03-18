@@ -14,10 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * Page to edit commodity
@@ -27,6 +25,9 @@ import java.util.Map;
 public class AdminEditCommodityController extends ImageController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminEditCommodityController.class);
+
+    private final static String INDEX = "admin";
+    private final static String EDIT_PAGE = "admin-edit-commodity";
 
     @RequestMapping("/admin-edit-commodity")
     public String index(ModelMap model, @RequestParam(value = "id", required = false) Integer id) {
@@ -42,12 +43,11 @@ public class AdminEditCommodityController extends ImageController {
         }
 
         addJs("commodity-parameters");
-        return "admin-edit-commodity";
+        return EDIT_PAGE;
     }
 
     @RequestMapping("/admin-commodity-add-update")
-    @ResponseBody
-    public Map<String, Object> addUpdate(
+    public String addUpdate(
             @RequestParam(value = "id", required = true) Integer id,
             @RequestParam(value = "branchId", required = true) Integer branchId,
             @RequestParam(value = "subBranch1Id", required = true) Integer subBranch1Id,
@@ -76,60 +76,60 @@ public class AdminEditCommodityController extends ImageController {
                 logAction("彻底删除商品'%s'", commodityDao.getNameById(id));
                 commodityDao.delete(id);
             }
-            return SUCCESS;
+            return INDEX;
         } else if (activateSubmit != null) {
             if (isPositive(id)) {
                 logAction("激活商品'%s'", commodityDao.getNameById(id));
                 commodityDao.activate(id);
             }
-            return SUCCESS;
+            return INDEX;
         } else if (deactivateSubmit != null) {
             if (isPositive(id)) {
                 logAction("删除商品'%s'", commodityDao.getNameById(id));
                 commodityDao.deactivate(id);
             }
-            return SUCCESS;
+            return INDEX;
         }
 
 
         if (publishSubmit == null) {
-            return createFailResult("未知错误");
+            return toEditPage("未知错误");
         }
 
         Commodity commodity = isPositive(id) ? commodityDao.getInstance(id) : new Commodity();
 
         if (!isPositive(branchId)) {
-            return createFailResult("品牌未设置");
+            return toEditPage("品牌未设置");
         }
         commodity.setBranchId(getBranchId(branchId, subBranch1Id, subBranch2Id));
 
         if (!isPositive(categoryId)) {
-            return createFailResult("商品分类未设置");
+            return toEditPage("商品分类未设置");
         }
         commodity.setCategoryId(getCategoryId(categoryId, subCategoryId));
 
         if (!StringUtils.hasText(commodityName)) {
-            return createFailResult("名称未设置");
+            return toEditPage("名称未设置");
         }
         commodity.setName(commodityName);
 
         if (!StringUtils.hasText(serialNumber)) {
-            return createFailResult("商品编号未设置");
+            return toEditPage("商品编号未设置");
         }
         commodity.setSerialNumber(serialNumber);
 
         if (!StringUtils.hasText(showId)) {
-            return createFailResult("商品ID未设置");
+            return toEditPage("商品ID未设置");
         }
         commodity.setShowId(showId);
 
         if (!StringUtils.hasText(buyUrl)) {
-            return createFailResult("购买链接未设置");
+            return toEditPage("购买链接未设置");
         }
         commodity.setBuyUrl(buyUrl);
 
         if (!StringUtils.hasText(url)) {
-            return createFailResult("爬虫链接未设置");
+            return toEditPage("爬虫链接未设置");
         }
         commodity.setUrl(url);
 
@@ -154,13 +154,22 @@ public class AdminEditCommodityController extends ImageController {
         CommodityPictureDownloader pictureDownloader = new CommodityPictureDownloader(imageDownloader);
         pictureDownloader.setLocalAddress(getLocalAddress());
         if (imageUrls != null) {
+            LOGGER.info("start saving images");
             pictureDownloader.clearAndSave(id, Arrays.asList(imageUrls));
+            LOGGER.info("complete saving images");
         }
         if (detailImageUrls != null) {
+            LOGGER.info("start saving detail images");
             pictureDownloader.clearAndSaveDetail(id, Arrays.asList(detailImageUrls));
+            LOGGER.info("complete saving detail images");
         }
 
-        return SUCCESS;
+        return "redirect:" + INDEX;
+    }
+
+    private String toEditPage(String errorInfo) {
+        request.setAttribute("errorInfo", errorInfo);
+        return EDIT_PAGE;
     }
 
     private Integer getCategoryId(Integer id1, Integer id2) {

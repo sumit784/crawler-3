@@ -1,13 +1,10 @@
 package com.qinyuan15.crawler.core.image;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -20,33 +17,28 @@ public class ImageCompressor {
     private BufferedImage sourceImage;
 
     public ImageCompressor(String sourcePath) {
-        try {
-            this.sourcePath = sourcePath;
-            if (isJPG(sourcePath)) {
-                JPEGImageDecoder decoder = JPEGCodec.createJPEGDecoder(
-                        new FileInputStream(sourcePath));
-                this.sourceImage = decoder.decodeAsBufferedImage();
-            } else {
-                this.sourceImage = ImageIO.read(new File(sourcePath));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        this.sourcePath = sourcePath;
+        this.sourceImage = ImageParser.createBufferedImage(this.sourcePath);
     }
 
-    private boolean isJPG(String sourcePath) {
-        sourcePath = sourcePath.toLowerCase();
-        return sourcePath.endsWith(".jpg") || sourcePath.endsWith(".jpeg")
-                || sourcePath.endsWith(".jpe");
+    public int getWidth() {
+        return this.sourceImage.getWidth();
+    }
+
+    public int getHeight() {
+        return this.sourceImage.getHeight();
     }
 
     public void compress(String targetPath, double rate) {
-        int width = (int) (this.sourceImage.getWidth() * rate);
-        int height = (int) (this.sourceImage.getHeight() * rate);
+        int width = (int) (getWidth() * rate);
+        int height = (int) (getHeight() * rate);
         compress(targetPath, width, height);
     }
 
     public void compress(String targetPath, int width, int height) {
+        if (width > getWidth() && height > getHeight()) {
+            return;
+        }
         try {
             File targetFile = new File(targetPath);
             BufferedImage targetImage = Scalr.resize(sourceImage, Scalr.Method.QUALITY,

@@ -97,7 +97,8 @@ public class HibernateUtil {
     }
 
     private static String adjustWhereClause(String whereClause) {
-        if (!whereClause.trim().toLowerCase().startsWith("where")) {
+        String lowerCaseString = whereClause.trim().toLowerCase();
+        if (!(lowerCaseString.startsWith("where") || lowerCaseString.startsWith("order by"))) {
             return " WHERE " + whereClause;
         } else {
             return whereClause;

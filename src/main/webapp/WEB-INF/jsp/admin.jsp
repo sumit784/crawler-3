@@ -31,7 +31,7 @@
             </div>
             <div class="description">
                 <a href="admin-edit-commodity?id=${commodity.id}"
-                   class="noLineAnchor limit-size" data-options="limit:28">${commodity.name}</a>
+                   class="noLineAnchor limit-size" data-options="limit:25">${commodity.name}</a>
             </div>
         </div>
     </c:forEach>

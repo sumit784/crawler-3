@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
+<input type="hidden" id="errorInfo" value="${errorInfo}">
 <div class="boxShadow">
     <form action="admin-commodity-add-update" method="post" id="mainForm">
         <input type="hidden" name="id" value="${commodity.id}">
@@ -198,7 +199,7 @@
         </div>
     </form>
     <div class="deepTransparent" id="submitInfo">
-        <h1>正在处理，请耐心等待...</h1>
+        <h1>正在处理，图片下载可能要一些时间，请耐心等待...</h1>
     </div>
 </div>
 <%@include file="footer.jsp" %>

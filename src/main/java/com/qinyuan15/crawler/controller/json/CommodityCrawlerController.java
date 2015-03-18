@@ -3,6 +3,8 @@ package com.qinyuan15.crawler.controller.json;
 import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import java.util.List;
  */
 @Controller
 public class CommodityCrawlerController extends BaseController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CommodityCrawlerController.class);
 
     @Autowired
     private ComposableCommodityPageParser pageParser;
@@ -24,24 +27,38 @@ public class CommodityCrawlerController extends BaseController {
     @ResponseBody
     @RequestMapping("/commodity-crawler.json")
     public String index(@RequestParam(value = "url", required = true) String url) {
-        HttpClientWrapper client = new HttpClientWrapper();
-        pageParser.setWebUrl(url);
-        pageParser.setHTML(client.getContent(url));
+        try {
+            HttpClientWrapper client = new HttpClientWrapper();
+            pageParser.setWebUrl(url);
+            pageParser.setHTML(client.getContent(url));
 
-        CommodityJson json = new CommodityJson();
-        json.name = pageParser.getName();
+            if (pageParser.isExpire()) {
+                return getFailResultString();
+            }
 
-        // TODO method to calculate buy url should be improved
-        json.buyUrl = url.replace(".html", "").replaceFirst("http://s.etao.com/detail/",
-                "http://detail.tmall.com/item.htm?id=");
-        json.imageUrls = pageParser.getImageUrls();
-        json.detailImageUrls = pageParser.getDetailImagesUrls();
-        return toJson(json);
+            CommodityJson json = new CommodityJson();
+            json.name = pageParser.getName();
+            // TODO method to calculate buy url should be improved
+            json.buyUrl = url.replace(".html", "").replaceFirst("http://s.etao.com/detail/",
+                    "http://detail.tmall.com/item.htm?id=");
+            json.imageUrls = pageParser.getImageUrls();
+            json.detailImageUrls = pageParser.getDetailImagesUrls();
+            json.success = true;
+            return toJson(json);
+        } catch (Exception e) {
+            LOGGER.error("Error in parsing {}, info: {}", url, e);
+            return getFailResultString();
+        }
+    }
+
+    private String getFailResultString() {
+        return toJson(createFailResult("商品链接无效！！！"));
     }
 
     static class CommodityJson {
         String name;
         String buyUrl;
+        boolean success;
         List<String> imageUrls;
         List<String> detailImageUrls;
     }

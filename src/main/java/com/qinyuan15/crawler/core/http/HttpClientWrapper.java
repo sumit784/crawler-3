@@ -64,8 +64,7 @@ public class HttpClientWrapper {
         client = httpClientBuilder.build();
     }
 
-    public HttpResponse get(String url) {
-        long startTime = System.currentTimeMillis();
+    public CloseableHttpResponse getResponse(String url) throws IOException {
         if (!url.contains("://")) {
             url = "http://" + url;
         }
@@ -81,9 +80,14 @@ public class HttpClientWrapper {
         }
         get.setConfig(configBuilder.build());
 
+        LOGGER.info("connecting {} with proxy {}", url, proxy);
+        return client.execute(get);
+    }
+
+    public HttpResponse get(String url) {
         try {
-            LOGGER.info("connecting {} with proxy {}", url, proxy);
-            CloseableHttpResponse response = client.execute(get);
+            long startTime = System.currentTimeMillis();
+            CloseableHttpResponse response = this.getResponse(url);
             LOGGER.info("connected to {} with proxy {}", url, proxy);
             String content = EntityUtils.toString(response.getEntity());
             LOGGER.info("parse content of {}", url);
