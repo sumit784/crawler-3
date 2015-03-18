@@ -55,7 +55,7 @@ public class AdminCategoryController extends BaseController {
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
         CategoryDao dao = new CategoryDao();
         if (dao.isUsed(id)) {
-            return createFailResult("该商品分类已经被某些商品使用，不能删除");
+            return createFailResult("该商品分类已经被某些商品或其他分类使用，不能删除");
         } else {
             logAction("删除商品分类'%s'", dao.getInstance(id).getName());
             dao.delete(id);

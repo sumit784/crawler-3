@@ -16,7 +16,8 @@ public class BranchDao {
     }
 
     public boolean isUsed(Integer id) {
-        return HibernateUtil.getCount(Commodity.class, "branchId=" + id) > 0;
+        return HibernateUtil.getCount(Commodity.class, "branchId=" + id) > 0 ||
+                HibernateUtil.getCount(Branch.class, "parentId=" + id) > 0;
     }
 
     public void delete(Integer id) {

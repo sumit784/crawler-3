@@ -40,7 +40,8 @@ public class CategoryDao {
     }
 
     public boolean isUsed(int id) {
-        return HibernateUtil.getCount(Commodity.class, "categoryId=" + id) > 0;
+        return HibernateUtil.getCount(Commodity.class, "categoryId=" + id) > 0 ||
+                HibernateUtil.getCount(Category.class, "parentId=" + id) > 0;
     }
 
     public void delete(int id) {

@@ -135,10 +135,10 @@ public class AdminBranchController extends ImageController {
 
     private List<Shoppe> createShoppes(Integer branchId, String[] shoppeNames, String[] shoppeUrls) {
         if (shoppeNames == null || shoppeUrls == null) {
-            return new ArrayList<Shoppe>();
+            return new ArrayList<>();
         }
         int size = Math.min(shoppeNames.length, shoppeUrls.length);
-        List<Shoppe> shoppes = new ArrayList<Shoppe>(size);
+        List<Shoppe> shoppes = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             Shoppe shoppe = new Shoppe();
             shoppe.setBranchId(branchId);
@@ -154,7 +154,7 @@ public class AdminBranchController extends ImageController {
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
         BranchDao dao = new BranchDao();
         if (dao.isUsed(id)) {
-            return createFailResult("该品牌已经被某些商品使用，不允许删除！");
+            return createFailResult("该品牌已经被某些商品或其他品牌使用，不允许删除！");
         } else {
             logAction("删除品牌'%s'", dao.getInstance(id).getName());
             dao.delete(id);
