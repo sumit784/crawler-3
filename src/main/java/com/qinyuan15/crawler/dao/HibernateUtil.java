@@ -53,10 +53,10 @@ public class HibernateUtil {
         }
     }
 
-    public static Serializable save(Object object) {
+    public static Integer save(Object object) {
         Session session = getSession();
         try {
-            return session.save(object);
+            return (Integer) session.save(object);
         } catch (Throwable e) {
             LOGGER.error("fail to save: {}", e);
             throw new RuntimeException(e);
@@ -125,7 +125,7 @@ public class HibernateUtil {
         }
     }
 
-    public static <T> T get(Class<T> clazz, Serializable id) {
+    public static <T> T get(Class<T> clazz, Integer id) {
         if (id == null) {
             return null;
         }

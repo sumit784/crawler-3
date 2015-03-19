@@ -20,6 +20,7 @@
 
         <mapping resource="com/qinyuan15/crawler/dao/Proxy.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/Branch.hbm.xml"/>
+        <mapping resource="com/qinyuan15/crawler/dao/IndexLogo.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/User.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/UserLog.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/Shoppe.hbm.xml"/>
