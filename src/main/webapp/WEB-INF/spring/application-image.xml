@@ -18,6 +18,7 @@
                 <value>Branch.squareLogo</value>
                 <value>Branch.poster</value>
                 <value>CommodityPicture.url</value>
+                <value>IndexLogo.path</value>
             </list>
         </property>
     </bean>
@@ -27,9 +28,8 @@
         <property name="baseDir" value="/var/ftp"/>
         <property name="redundantImageValidator" ref="redundantImageValidator"/>
     </bean>
-<!--
     <task:scheduled-tasks>
         <task:scheduled ref="imageCleaner" method="clean" cron="0 0 0 * * ?"/>
-    </task:scheduled-tasks>-->
+    </task:scheduled-tasks>
 
 </beans>

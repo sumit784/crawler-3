@@ -14,14 +14,14 @@
 </div>
 <div class="links">
     <c:forEach var="indexLogo" items="${indexLogos}">
-        <div class="logoGroup">
-            <a href="${fn:length(indexLogo.link)>0?indexLogo.link:'javascript:void(0)'}">
+        <a href="${fn:length(indexLogo.link)>0?indexLogo.link:'javascript:void(0)'}">
+            <div class="logoGroup">
                 <img src="${indexLogo.path}">
-            </a>
 
-            <div class="text">${indexLogo.description}</div>
-            <div class="cover deepTransparent"></div>
-        </div>
+                <div class="text">${indexLogo.description}</div>
+                <div class="cover deepTransparent"></div>
+            </div>
+        </a>
     </c:forEach>
 </div>
 <%@include file="footer.jsp" %>
