@@ -67,6 +67,7 @@ public class AdminIndexLogoController extends ImageController {
     public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
                                          @RequestParam(value = "logo", required = true) String logo,
                                          @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
+                                         @RequestParam(value = "description", required = true) String description,
                                          @RequestParam(value = "link", required = true) String link) {
         // deal with logUrl
         String logoUrl;
@@ -83,9 +84,10 @@ public class AdminIndexLogoController extends ImageController {
             IndexLogo indexLogo = dao.getInstance(id);
             indexLogo.setPath(logoUrl);
             indexLogo.setLink(link);
+            indexLogo.setDescription(description);
             HibernateUtil.update(indexLogo);
         } else {
-            dao.add(logoUrl, link);
+            dao.add(logoUrl, link, description);
         }
         return SUCCESS;
     }

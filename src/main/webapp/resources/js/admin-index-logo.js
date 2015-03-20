@@ -18,6 +18,9 @@
         get$LogoFile: function () {
             return $indexLogoForm.find('input[name=logoFile]');
         },
+        get$Description: function(){
+            return $indexLogoForm.find('input[name=description]');
+        },
         validate: function () {
             if ($.trim(this.get$Logo().val()) == '' &&
                 $.trim(this.get$LogoFile().val()) == '') {
@@ -32,7 +35,6 @@
 
     angularUtils.controller(function ($scope) {
         $scope.validateInput = function (event) {
-            console.log(input.validate());
             if (!input.validate()) {
                 event.preventDefault();
                 return false;
@@ -45,10 +47,12 @@
             var id = $tr.attr('id').replace(/\D/g, '');
             var link = $tr.find('td.link a').attr('title');
             var path = $tr.find('td.path a').attr('title');
+            var description = $tr.find('td.description').text();
 
             input.get$Id().val(id);
             input.get$link().val(link);
             input.get$Logo().val(path);
+            input.get$Description().val(description);
 
             $addSubmit.attr('disabled', true);
             $editSubmit.attr('disabled', false);

@@ -11,5 +11,6 @@
         <property name="path"/>
         <property name="link"/>
         <property name="ranking"/>
+        <property name="description"/>
     </class>
 </hibernate-mapping>

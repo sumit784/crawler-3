@@ -8,6 +8,7 @@ public class IndexLogo extends PersistObject {
     private String path;
     private String link;
     private Integer ranking;
+    private String description;
 
     public String getPath() {
         return path;
@@ -31,5 +32,13 @@ public class IndexLogo extends PersistObject {
 
     public void setRanking(Integer ranking) {
         this.ranking = ranking;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

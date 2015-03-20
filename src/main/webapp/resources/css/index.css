@@ -26,25 +26,19 @@ div.content > div.search span.searchCommit {
 
 div.content > div.links {
     top: 70px;
-}
-
-div.content > div.links table {
+    overflow: hidden;
+    width: 102%;
     margin-bottom: 330px;
-    position: relative;
 }
 
-div.content > div.links td {
-    padding: 6px 12px 6px 0;
-    position: relative;
-}
-
-div.content > div.links td > div {
-    padding: 0;
-    margin: 0;
+div.content > div.links div.logoGroup {
+    float: left;
+    margin: 6px 12px 6px 0;
     cursor: pointer;
+    padding: 0;
 }
 
-div.content > div.links td div.cover {
+div.content > div.links div.logoGroup div.cover {
     position: absolute;
     top: 0;
     left: 0;
@@ -54,15 +48,19 @@ div.content > div.links td div.cover {
     display: none;
 }
 
-div.content div.links td div.text {
+div.content div.links div.logoGroup div.text {
     position: absolute;
     font-size: 15pt;
     bottom: 0;
     padding: 5px 10px;
     color: #ffffff;
-    /*background-color: #533B24;*/
     margin-bottom: 6px;
     width: 148px;
+}
+
+div.content div.links div.logoGroup img {
+    width: 148px;
+    height: 148px;
 }
 
 div.footImage {

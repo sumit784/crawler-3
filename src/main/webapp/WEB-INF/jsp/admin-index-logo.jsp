@@ -7,6 +7,7 @@
             <th>序号</th>
             <th>图片链接</th>
             <th>目录链接</th>
+            <th>描述</th>
             <th>缩略图</th>
             <th></th>
         </tr>
@@ -23,6 +24,7 @@
                     <a class="limit-size" href="${indexLogo.link}" title="${indexLogo.link}" target="_blank"
                        data-options="limit:26">${indexLogo.link}</a>
                 </td>
+                <td class="description">${indexLogo.description}</td>
                 <td class="thumbnail">
                     <a href="${indexLogo.path}" target="_blank">
                         <img src="${indexLogo.path}"/>
@@ -50,12 +52,16 @@
             <label>图片(url或上传图片)</label>
             <span class="required">*</span>
             <br/>
-            <input type="text" id="logo" name="logo"/>
+            <input type="text" name="logo"/>
             <input type="file" name="logoFile"/>
         </div>
         <div class="link">
             <label>目标链接</label><br/>
-            <input type="text" id="link" name="link"/>
+            <input type="text" name="link"/>
+        </div>
+        <div class="description">
+            <label>描述</label><br/>
+            <input type="text" name="description"/>
         </div>
         <div>
             <button id="addSubmit" type="submit" class="btn btn-success"

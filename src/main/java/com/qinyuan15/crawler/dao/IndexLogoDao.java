@@ -16,10 +16,11 @@ public class IndexLogoDao {
         return HibernateUtil.getList(IndexLogo.class, ASC_ORDER);
     }
 
-    public Integer add(String path, String link) {
+    public Integer add(String path, String link, String description) {
         IndexLogo indexLogo = new IndexLogo();
         indexLogo.setPath(path);
         indexLogo.setLink(link);
+        indexLogo.setDescription(description);
 
         Integer maxRanking = getMaxRanking();
         if (IntegerUtils.isPositive(maxRanking)) {

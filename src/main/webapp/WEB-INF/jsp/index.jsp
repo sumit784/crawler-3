@@ -13,20 +13,16 @@
     </form>
 </div>
 <div class="links">
-    <table>
-        <c:forEach var="image" items="${images}" varStatus="status">
-            <c:if test="${status.index % 6 == 0}"><tr></c:if>
-            <td>
-                <div>
-                    <img class="link" src="${image.src}">
+    <c:forEach var="indexLogo" items="${indexLogos}">
+        <div class="logoGroup">
+            <a href="${fn:length(indexLogo.link)>0?indexLogo.link:'javascript:void(0)'}">
+                <img src="${indexLogo.path}">
+            </a>
 
-                    <div class="text">${image.text}</div>
-                    <div class="cover deepTransparent"></div>
-                </div>
-            </td>
-            <c:if test="${status.index % 6 == 5}"></tr></c:if>
-        </c:forEach>
-    </table>
+            <div class="text">${indexLogo.description}</div>
+            <div class="cover deepTransparent"></div>
+        </div>
+    </c:forEach>
 </div>
 <%@include file="footer.jsp" %>
 

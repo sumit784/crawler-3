@@ -5,3 +5,5 @@ create table index_logo(
   link char(50),
   ranking int unique
 )ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+alter table index_logo add column description char(50);
