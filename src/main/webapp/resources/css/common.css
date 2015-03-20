@@ -169,3 +169,7 @@ img.branch-logo {
     width: 82px;
     height: 38px;
 }
+
+div.content form span.required {
+    color: #C00000;
+}

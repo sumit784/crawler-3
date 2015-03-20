@@ -5,8 +5,10 @@ import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.core.image.ImageSize;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.core.image.ThumbnailType;
+import com.qinyuan15.crawler.core.index.IndexLogoUrlAdapter;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.CommodityPicture;
+import com.qinyuan15.crawler.dao.IndexLogo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +44,10 @@ public class ImageController extends BaseController {
 
     protected BranchUrlAdapter getBranchUrlAdapter() {
         return new BranchUrlAdapter(imageDownloader, getLocalAddress());
+    }
+
+    protected List<IndexLogo> adjustIndexLogos(List<IndexLogo> indexLogos) {
+        return new IndexLogoUrlAdapter(imageDownloader, getLocalAddress()).adjust(indexLogos);
     }
 
     protected List<Branch> adjustBranches(List<Branch> branches) {

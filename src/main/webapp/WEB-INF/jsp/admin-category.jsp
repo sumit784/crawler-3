@@ -17,7 +17,10 @@
                 <td class="name">${category.name}</td>
                 <td class="parent" data-options="parentId: ${category.parentId}">${category.parentName}</td>
                 <td>
-                    <jsp:include page="widget-edit-delete.jsp"/>
+                    <jsp:include page="widget-edit-delete.jsp">
+                        <jsp:param name="editAction" value="editCategory($event)"/>
+                        <jsp:param name="deleteAction" value="deleteCategory($event)"/>
+                    </jsp:include>
                 </td>
             </tr>
         </c:forEach>

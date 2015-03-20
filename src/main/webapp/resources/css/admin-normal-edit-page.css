@@ -1,0 +1,11 @@
+div.content > div:first-child {
+    padding: 50px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+div.content form {
+    background-color: #D3E6E2;
+    overflow: hidden;
+    font-size: 11pt;
+}

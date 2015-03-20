@@ -33,6 +33,7 @@ public class AdminBranchController extends ImageController {
     public String index(ModelMap model) {
         List<Branch> branches = new BranchDao().getInstances();
         model.addAttribute("branches", adjustBranches(branches));
+        addCssAndJs("admin-normal-edit-page");
         setTitle("编辑品牌");
         return "admin-branch";
     }

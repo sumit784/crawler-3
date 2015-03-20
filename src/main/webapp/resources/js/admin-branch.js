@@ -3,16 +3,8 @@
     var $branchForm = $('#branchForm');
     var $addSubmit = $('#addSubmit');
     var $editSubmit = $('#editSubmit');
-    var $name = $('#name');
-    var $firstLetter = $('#firstLetter');
 
-    $branchForm.ajaxForm(function (data) {
-        if (data.success) {
-            location.reload();
-        } else {
-            alert(data.detail);
-        }
-    });
+    $branchForm.ajaxForm(normalSubmitCallback);
     var input = {
         get$Id: function () {
             return $branchForm.find('input[name=id]');
@@ -78,22 +70,18 @@
             return true;
         }
     };
-    $name.keyup(function () {
+    input.get$Name().keyup(function () {
         var name = $(this).val();
         if (name != '') {
             $.post('chinese-letter.json?string=' + name, function (data) {
                 if (data.result) {
-                    $firstLetter.val(data.result);
+                    input.get$FirstLetter().val(data.result);
                 }
             });
         } else {
-            $firstLetter.val("");
+            input.get$FirstLetter().val("");
         }
     });
-    function getBranchIdByImgElement(image) {
-        var $tr = getParent($(image), "tr");
-        return $tr.attr('id').replace(/\D/g, '');
-    }
 
     angularUtils.controller(function ($scope) {
         $scope.validateInput = function (event) {
@@ -139,14 +127,8 @@
         };
         $scope.deleteBranch = function (event) {
             $.post('admin-branch-delete', {
-                id: getBranchIdByImgElement(event.target)
-            }, function (data) {
-                if (data.success) {
-                    location.reload();
-                } else {
-                    alert(data.detail);
-                }
-            });
+                id: getTableRowIdByImgElement(event.target)
+            }, normalSubmitCallback);
         };
         $scope.shoppes = [];
         $scope.addShoppe = function () {

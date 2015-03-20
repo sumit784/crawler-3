@@ -1,9 +1,3 @@
-div.content > div:first-child {
-    padding: 50px;
-    background-color: #ffffff;
-    overflow: hidden;
-}
-
 div.content table {
     margin-bottom: 20px;
 }
@@ -32,9 +26,6 @@ div.content table col.slogan {
 
 div.content form {
     padding: 5px;
-    background-color: #D3E6E2;
-    overflow: hidden;
-    font-size: 11pt;
 }
 
 div.content form div.basic input {
@@ -44,10 +35,6 @@ div.content form div.basic input {
 
 div.content form div.basic select {
     margin-left: 5px;
-}
-
-div.content form span.required {
-    color: #C00000;
 }
 
 div.content form div.logo input[type="file"] {

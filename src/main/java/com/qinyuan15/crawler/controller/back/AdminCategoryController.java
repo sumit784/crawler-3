@@ -24,6 +24,7 @@ public class AdminCategoryController extends BaseController {
         CategoryDao categoryDao = new CategoryDao();
         model.addAttribute("categories", categoryDao.getInstances());
         model.addAttribute("rootCategories", categoryDao.getRootInstances());
+        addCssAndJs("admin-normal-edit-page");
 
         setTitle("编辑商品分类");
         return "admin-category";

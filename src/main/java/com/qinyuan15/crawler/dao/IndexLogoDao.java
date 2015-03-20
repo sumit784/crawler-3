@@ -9,10 +9,11 @@ import java.util.List;
  * Created by qinyuan on 15-3-19.
  */
 public class IndexLogoDao {
-    private final static String ORDER_CLAUSE = " ORDER BY ranking DESC";
+    private final static String ASC_ORDER = " ORDER BY ranking ASC";
+    private final static String DESC_ORDER = " ORDER BY ranking DESC";
 
     public List<IndexLogo> getInstances() {
-        return HibernateUtil.getList(IndexLogo.class, ORDER_CLAUSE);
+        return HibernateUtil.getList(IndexLogo.class, ASC_ORDER);
     }
 
     public Integer add(String path, String link) {
@@ -79,11 +80,11 @@ public class IndexLogoDao {
         if (indexLogo == null) {
             return null;
         }
-        return getInstance("ranking>" + indexLogo.getRanking());
+        return getInstance("ranking>" + indexLogo.getRanking(), ASC_ORDER);
     }
 
-    private IndexLogo getInstance(String whereClause) {
-        String hql = "FROM IndexLogo WHERE " + whereClause + ORDER_CLAUSE;
+    private IndexLogo getInstance(String whereClause, String orderClause) {
+        String hql = "FROM IndexLogo WHERE " + whereClause + orderClause;
         @SuppressWarnings("unchecked")
         List<IndexLogo> previousInstances = HibernateUtil.getList(hql, 0, 1);
         return previousInstances.size() == 0 ? null : previousInstances.get(0);
@@ -93,7 +94,7 @@ public class IndexLogoDao {
         if (indexLogo == null) {
             return null;
         }
-        return getInstance("ranking<" + indexLogo.getRanking());
+        return getInstance("ranking<" + indexLogo.getRanking(), DESC_ORDER);
     }
 
     public Integer getMaxRanking() {
