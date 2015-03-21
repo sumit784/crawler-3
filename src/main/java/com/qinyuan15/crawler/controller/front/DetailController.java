@@ -1,8 +1,7 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.ImageController;
-import com.qinyuan15.crawler.core.image.PictureUrlConverter;
-import com.qinyuan15.crawler.core.image.ThumbnailType;
+import com.qinyuan15.crawler.core.image.ThumbnailBuilder;
 import com.qinyuan15.crawler.core.share.ShareLinks;
 import com.qinyuan15.crawler.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,13 +79,14 @@ public class DetailController extends ImageController {
             List<Commodity> commodities) {
         List<RelatedCommodityWrapper> wrappers = new ArrayList<>();
         CommodityPictureDao pictureDao = new CommodityPictureDao();
-        PictureUrlConverter urlConverter = new PictureUrlConverter(imageDownloader, getLocalAddress())
-                .setThumbnailType(ThumbnailType.MIDDLE);
+
+        ThumbnailBuilder thumbnailBuilder = new ThumbnailBuilder();
         for (Commodity commodity : commodities) {
             CommodityPicture picture = pictureDao.getFirstInstance(commodity.getId());
             RelatedCommodityWrapper wrapper = new RelatedCommodityWrapper();
             wrapper.id = commodity.getId();
-            wrapper.picture = urlConverter.pathToUrl(picture.getUrl());
+            wrapper.picture = this.pictureUrlConverter.pathToUrl(
+                    thumbnailBuilder.getMiddle(picture.getUrl()));
             wrapper.price = commodity.getPrice();
             wrappers.add(wrapper);
         }

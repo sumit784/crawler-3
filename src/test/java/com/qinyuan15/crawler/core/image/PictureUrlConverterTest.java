@@ -1,11 +1,12 @@
 package com.qinyuan15.crawler.core.image;
 
+import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Test PictureUrlConverter
@@ -16,10 +17,10 @@ public class PictureUrlConverterTest {
 
     @Before
     public void setUp() throws Exception {
-        String localAddress = "127.0.0.1";
-        ImageDownloader imageDownloader = mock(ImageDownloader.class);
-        when(imageDownloader.getSaveDir()).thenReturn("/var/ftp");
-        pictureUrlConverter = new PictureUrlConverter(imageDownloader, localAddress);
+        pictureUrlConverter = new PictureUrlConverter();
+        pictureUrlConverter.setUrlPrefix("ftp://127.0.0.1");
+        pictureUrlConverter.setPathPrefix("/var/ftp");
+        pictureUrlConverter.setOtherPathPrefixes(Lists.newArrayList("/var/www/html/images"));
     }
 
     @Test
@@ -30,16 +31,23 @@ public class PictureUrlConverterTest {
         testUrl = "http://127.0.0.1/hello/World.png";
         assertThat(pictureUrlConverter.urlToPath(testUrl)).isEqualTo("http://127.0.0.1/hello/World.png");
 
-        pictureUrlConverter.setUrlPrefix("http://");
+        pictureUrlConverter.setUrlPrefix("http://127.0.0.1");
         assertThat(pictureUrlConverter.urlToPath(testUrl)).isEqualTo("/var/ftp/hello/World.png");
     }
 
     @Test
-    public void testPathToUrl() throws Exception {
+    public void testPathToUrl() {
         String testPath = "/var/ftp/hello/world.png";
         assertThat(pictureUrlConverter.pathToUrl(testPath)).isEqualTo("ftp://127.0.0.1/hello/world.png");
 
         testPath = "http://hello/world.png";
         assertThat(pictureUrlConverter.pathToUrl(testPath)).isEqualTo("http://hello/world.png");
+    }
+
+    @Test
+    public void testPathsToUrls() {
+        List<String> testPaths = Lists.newArrayList("/var/ftp/hello", "/var/www/html/images/test");
+        List<String> urls = pictureUrlConverter.pathsToUrls(testPaths);
+        assertThat(urls).containsExactly("ftp://127.0.0.1/hello", "ftp://127.0.0.1/test");
     }
 }

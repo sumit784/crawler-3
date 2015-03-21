@@ -17,10 +17,16 @@ import java.util.List;
 public class CommodityPictureDownloader {
     private final static Logger LOGGER = LoggerFactory.getLogger(CommodityPictureDownloader.class);
     private ImageDownloader imageDownloader;
+    private PictureUrlConverter pictureUrlConverter;
     private PictureUrlValidator urlValidator;
 
     public CommodityPictureDownloader(ImageDownloader imageDownloader) {
+        this(imageDownloader, null);
+    }
+
+    public CommodityPictureDownloader(ImageDownloader imageDownloader, PictureUrlConverter pictureUrlConverter) {
         this.imageDownloader = imageDownloader;
+        this.pictureUrlConverter = pictureUrlConverter;
     }
 
     public void setLocalAddress(String localAddress) {
@@ -50,11 +56,11 @@ public class CommodityPictureDownloader {
     }
 
     private List<String> download(List<String> imageUrls) {
-        List<String> paths = new ArrayList<String>();
+        List<String> paths = new ArrayList<>();
         for (String imageUrl : imageUrls) {
-            if (urlValidator != null && urlValidator.isLocal(imageUrl)) {
-                String path = new PictureUrlConverter(imageDownloader, urlValidator.getLocalAddress())
-                        .urlToPath(imageUrl);
+            if (this.urlValidator != null && this.pictureUrlConverter != null
+                    && this.urlValidator.isLocal(imageUrl)) {
+                String path = pictureUrlConverter.urlToPath(imageUrl);
                 paths.add(path);
             } else {
                 try {

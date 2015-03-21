@@ -1,10 +1,8 @@
 package com.qinyuan15.crawler.controller;
 
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
-import com.qinyuan15.crawler.core.image.ImageSize;
-import com.qinyuan15.crawler.core.image.PictureUrlConverter;
-import com.qinyuan15.crawler.core.image.ThumbnailType;
+import com.qinyuan15.crawler.core.commodity.CommodityPictureUtils;
+import com.qinyuan15.crawler.core.image.*;
 import com.qinyuan15.crawler.core.index.IndexLogoUrlAdapter;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.CommodityPicture;
@@ -23,31 +21,39 @@ public class ImageController extends BaseController {
     @Autowired
     protected ImageDownloader imageDownloader;
 
+    @Autowired
+    protected PictureUrlConverter pictureUrlConverter;
+
+    private ImageFilter commodityPictureFilter = new ImageFilter().setFilterSize(ImageSize.VERY_SMALL);
+
+    private List<String> getCommodityPictureUrils(List<CommodityPicture> commodityPictures) {
+        List<String> paths = CommodityPictureUtils.getUrls(commodityPictures);
+        return commodityPictureFilter.filterSize(paths);
+
+    }
+
     protected List<String> parseCommodityPictureUrls(List<CommodityPicture> commodityPictures) {
-        return getPictureUrlConverter().setFilterSize(ImageSize.VERY_SMALL)
-                .pathsToUrls(commodityPictures);
+        return pictureUrlConverter.pathsToUrls(getCommodityPictureUrils(commodityPictures));
     }
 
     protected List<String> parseCommodityPictureMiddleUrls(List<CommodityPicture> commodityPictures) {
-        return getPictureUrlConverter().setFilterSize(ImageSize.VERY_SMALL)
-                .setThumbnailType(ThumbnailType.MIDDLE).pathsToUrls(commodityPictures);
+        List<String> paths = getCommodityPictureUrils(commodityPictures);
+        paths = new ThumbnailsBuilder().getMiddle(paths);
+        return pictureUrlConverter.pathsToUrls(paths);
     }
 
     protected List<String> parseCommodityPictureSmallUrls(List<CommodityPicture> commodityPictures) {
-        return getPictureUrlConverter().setFilterSize(ImageSize.VERY_SMALL)
-                .setThumbnailType(ThumbnailType.SMALL).pathsToUrls(commodityPictures);
-    }
-
-    protected PictureUrlConverter getPictureUrlConverter() {
-        return new PictureUrlConverter(imageDownloader, getLocalAddress());
+        List<String> paths = getCommodityPictureUrils(commodityPictures);
+        paths = new ThumbnailsBuilder().getSmall(paths);
+        return pictureUrlConverter.pathsToUrls(paths);
     }
 
     protected BranchUrlAdapter getBranchUrlAdapter() {
-        return new BranchUrlAdapter(imageDownloader, getLocalAddress());
+        return new BranchUrlAdapter(pictureUrlConverter);
     }
 
     protected List<IndexLogo> adjustIndexLogos(List<IndexLogo> indexLogos) {
-        return new IndexLogoUrlAdapter(imageDownloader, getLocalAddress()).adjust(indexLogos);
+        return new IndexLogoUrlAdapter(pictureUrlConverter).adjust(indexLogos);
     }
 
     protected List<Branch> adjustBranches(List<Branch> branches) {

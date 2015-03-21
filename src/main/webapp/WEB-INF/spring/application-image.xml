@@ -8,7 +8,16 @@
            http://www.springframework.org/schema/task/spring-task.xsd">
 
     <bean id="imageDownloader" class="com.qinyuan15.crawler.core.image.ImageDownloader">
-        <constructor-arg value="/var/ftp"/>
+        <constructor-arg value="/var/www/html/images"/>
+    </bean>
+    <bean id="pictureUrlConverter" class="com.qinyuan15.crawler.core.image.PictureUrlConverter">
+        <property name="urlPrefix" value="http://127.0.0.1/images"/>
+        <property name="pathPrefix" value="/var/www/html/images"/>
+        <property name="otherPathPrefixes">
+            <list>
+                <value>/var/ftp</value>
+            </list>
+        </property>
     </bean>
 
     <bean id="redundantImageValidator" class="com.qinyuan15.crawler.core.image.DatabaseRedundantImageValidator">
@@ -25,7 +34,7 @@
 
     <bean id="imageCleaner" class="com.qinyuan15.crawler.core.image.RedundantImageCleaner">
         <!--<property name="debugMode" value="true"/>-->
-        <property name="baseDir" value="/var/ftp"/>
+        <property name="baseDir" value="/var/www/html/images"/>
         <property name="redundantImageValidator" ref="redundantImageValidator"/>
     </bean>
     <task:scheduled-tasks>

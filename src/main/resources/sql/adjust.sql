@@ -1,9 +1,11 @@
-drop table if exists index_logo;
-create table index_logo(
-  id int primary key auto_increment,
-  path char(100) not null,
-  link char(50),
-  ranking int unique
-)ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*update branch set logo=replace(logo, '/var/ftp/','/var/www/html/images/');
+update branch set square_logo=replace(square_logo, '/var/ftp/','/var/www/html/images/');
+update branch set poster=replace(poster, '/var/ftp/','/var/www/html/images/');
+update commodity_picture set url=replace(url, '/var/ftp/','/var/www/html/images/');
+update index_logo set path=replace(path, '/var/ftp/','/var/www/html/images/');*/
 
-alter table index_logo add column description char(50);
+
+update branch set logo=replace(logo, '/var/www/html/images','/var/www/html/images/');
+update branch set square_logo=replace(square_logo, '/var/www/html/images', '/var/www/html/images/');
+update branch set poster=replace(poster, '/var/www/html/images','/var/www/html/images/');
+update commodity_picture set url=replace(url,'/var/www/html/images' ,'/var/www/html/images/');

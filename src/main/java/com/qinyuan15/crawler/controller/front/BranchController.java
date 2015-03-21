@@ -1,15 +1,12 @@
 package com.qinyuan15.crawler.controller.front;
 
-import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.branch.BranchGrouper;
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,13 +20,10 @@ import java.util.Map;
  * Created by qinyuan on 15-2-14.
  */
 @Controller
-public class BranchController extends BaseController {
-
-    @Autowired
-    private ImageDownloader imageDownloader;
+public class BranchController extends ImageController {
 
     @RequestMapping("/branch")
-    public String index(ModelMap model) {
+    public String index() {
         setTitle("品牌大全");
         return "branch";
     }
@@ -47,7 +41,7 @@ public class BranchController extends BaseController {
     public String query(@RequestParam(value = "parentId", required = false) Integer parentId,
                         @RequestParam(value = "categoryId", required = false) Integer categoryId) {
         BranchDao dao = new BranchDao();
-        BranchUrlAdapter urlAdapter = new BranchUrlAdapter(imageDownloader, getLocalAddress());
+        BranchUrlAdapter urlAdapter = getBranchUrlAdapter();
         if (isPositive(categoryId)) {
             return toJson(urlAdapter.adjust(dao.getInstancesByCategoryId(categoryId)));
         }
@@ -67,7 +61,7 @@ public class BranchController extends BaseController {
     public String queryGroupedBranches() {
         List<Branch> branches = new BranchDao().getInstances();
         BranchGrouper branchGrouper = new BranchGrouper();
-        BranchUrlAdapter urlAdapter = new BranchUrlAdapter(imageDownloader, getLocalAddress());
+        BranchUrlAdapter urlAdapter = getBranchUrlAdapter();
         return toJson(branchGrouper.groupByLetter(urlAdapter.adjust(branches)));
     }
 

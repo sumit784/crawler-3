@@ -1,7 +1,6 @@
 package com.qinyuan15.crawler.core.commodity;
 
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.Commodity;
@@ -16,14 +15,11 @@ public class CommoditySnapshot extends CommoditySimpleSnapshot {
     private Double price;
     private Branch branch;
 
-    public CommoditySnapshot(Commodity commodity, ImageDownloader imageDownloader,
-                             String localAddress) {
-        super(commodity, imageDownloader, localAddress);
+    public CommoditySnapshot(Commodity commodity, PictureUrlConverter pictureUrlConverter) {
+        super(commodity, pictureUrlConverter);
         this.price = new CommodityPriceDao().getCurrentPrice(commodity.getId());
         this.branch = HibernateUtil.get(Branch.class, commodity.getBranchId());
-
-        BranchUrlAdapter adapter = new BranchUrlAdapter(
-                new PictureUrlConverter(imageDownloader, localAddress));
+        BranchUrlAdapter adapter = new BranchUrlAdapter(pictureUrlConverter);
         adapter.adjust(this.branch);
     }
 

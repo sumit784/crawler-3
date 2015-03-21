@@ -39,7 +39,7 @@ public class CommodityCrawlerController extends BaseController {
             CommodityJson json = new CommodityJson();
             json.name = pageParser.getName();
             // TODO method to calculate buy url should be improved
-            json.buyUrl = url.replace(".html", "").replaceFirst("http://s.etao.com/detail/",
+            json.buyUrl = url.replace(".html", "").replace("http://s.etao.com/detail/",
                     "http://detail.tmall.com/item.htm?id=");
             json.imageUrls = pageParser.getImageUrls();
             json.detailImageUrls = pageParser.getDetailImagesUrls();

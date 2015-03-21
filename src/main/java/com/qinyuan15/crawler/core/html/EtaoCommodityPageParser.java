@@ -173,7 +173,7 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
     }
 
     private List<String> parseDetailImageUrls(String content) {
-        content = content.trim().replaceFirst("var desc='", "").replace("';", "");
+        content = content.trim().replace("var desc='", "").replace("';", "");
         HtmlParser parser = new HtmlParser(content);
         List<String> urls = new ArrayList<String>();
         for (Element element : parser.getElements("img")) {

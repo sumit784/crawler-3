@@ -1,4 +1,4 @@
 #!/bin/bash
 
 sudo service mysqld start
-sudo service vsftpd start
+sudo service httpd start

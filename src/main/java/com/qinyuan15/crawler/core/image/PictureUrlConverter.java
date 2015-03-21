@@ -1,8 +1,5 @@
 package com.qinyuan15.crawler.core.image;
 
-import com.qinyuan15.crawler.dao.CommodityPicture;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -13,16 +10,23 @@ import java.util.List;
  * Created by qinyuan on 15-2-24.
  */
 public class PictureUrlConverter {
-    private final static Logger LOGGER = LoggerFactory.getLogger(PictureUrlConverter.class);
-    private ImageDownloader imageDownloader;
-    private String localAddress;
-    private String urlPrefix = "ftp://";
-    private ThumbnailType thumbnailType = ThumbnailType.NONE;
-    private ImageSize filterSize;
+    //private final static Logger LOGGER = LoggerFactory.getLogger(PictureUrlConverter.class);
+    private String urlPrefix;
+    private String pathPrefix;
+    private List<String> otherPathPrefixes;
+/*
+    public PictureUrlConverter(String urlPrefix, String pathPrefix) {
+        this.urlPrefix = urlPrefix;
+        this.pathPrefix = pathPrefix;
+    }*/
 
-    public PictureUrlConverter(ImageDownloader imageDownloader, String localAddress) {
-        this.imageDownloader = imageDownloader;
-        this.localAddress = localAddress;
+    public void setPathPrefix(String pathPrefix) {
+        this.pathPrefix = pathPrefix;
+    }
+
+    public PictureUrlConverter setOtherPathPrefixes(List<String> otherPathPrefixes) {
+        this.otherPathPrefixes = otherPathPrefixes;
+        return this;
     }
 
     public PictureUrlConverter setUrlPrefix(String urlPrefix) {
@@ -30,61 +34,71 @@ public class PictureUrlConverter {
         return this;
     }
 
-    public PictureUrlConverter setFilterSize(ImageSize filterSize) {
-        this.filterSize = filterSize;
-        return this;
-    }
-
-    public PictureUrlConverter setThumbnailType(ThumbnailType thumbnailType) {
-        this.thumbnailType = thumbnailType;
-        return this;
-    }
-
     public String urlToPath(String url) {
-        if (!StringUtils.hasText(url) || !url.startsWith(this.urlPrefix + this.localAddress)) {
+        if (!StringUtils.hasText(url) || !url.startsWith(this.urlPrefix)) {
             return url;
         }
 
-        return url.replaceFirst(this.urlPrefix + this.localAddress, this.imageDownloader.getSaveDir());
+        return url.replace(this.urlPrefix, pathPrefix);
+    }
+
+    private boolean isLocal(String path) {
+        if (!StringUtils.hasText(path)) {
+            return false;
+        }
+
+        if (path.startsWith(this.pathPrefix)) {
+            return true;
+        }
+
+        if (this.otherPathPrefixes != null) {
+            for (String otherPathPrefix : this.otherPathPrefixes) {
+                if (path.startsWith(otherPathPrefix)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public String pathToUrl(String path) {
-        if (!StringUtils.hasText(path) || !path.startsWith(imageDownloader.getSaveDir())) {
+        if (!isLocal(path)) {
             return path;
         }
 
-
-        try {
-            if (this.filterSize != null) {
-                ImageParser imageParser = new ImageParser(path);
-                if (imageParser.getHeight() < this.filterSize.height &&
-                        imageParser.getWidth() < filterSize.width) {
-                    return null;
-                }
+        path = path.replace(this.pathPrefix, "");
+        if (this.otherPathPrefixes != null) {
+            for (String prefix : this.otherPathPrefixes) {
+                path = path.replace(prefix, "");
             }
-
-            Thumbnail thumbnail = new Thumbnail();
-            switch (this.thumbnailType) {
-                case SMALL:
-                    path = thumbnail.getSmall(path);
-                    break;
-                case MIDDLE:
-                    path = thumbnail.getMiddle(path);
-                    break;
-            }
-        } catch (Exception e) {
-            LOGGER.error("fail to convert path {} to url, info: {}", path, e);
-            return null;
         }
 
-        path = path.replaceFirst(imageDownloader.getSaveDir(), "");
-        if (!path.startsWith("/")) {
-            path += "/" + path;
+        if (this.urlPrefix.endsWith("/") && path.startsWith("/")) {
+            path = path.substring(1);
         }
-        return this.urlPrefix + this.localAddress + path;
+        if (!this.urlPrefix.endsWith("/") && !path.startsWith("/")) {
+            path = "/" + path;
+        }
+
+        return this.urlPrefix + path;
     }
 
-    public List<String> pathsToUrls(List<CommodityPicture> commodityPictures) {
+    public List<String> pathsToUrls(List<String> paths) {
+        List<String> urls = new ArrayList<>();
+        for (String path : paths) {
+            String url = this.pathToUrl(path);
+            if (url != null) {
+                urls.add(url);
+            }
+        }
+        return urls;
+    }
+
+
+    /*
+    public List<String> pathsToUrls(List<CommodityPicture> commodityPictures,
+                                    ImageSize imageSize) {
         List<String> pictures = new ArrayList<>();
         for (CommodityPicture commodityPicture : commodityPictures) {
             String url = this.pathToUrl(commodityPicture.getUrl());
@@ -94,4 +108,5 @@ public class PictureUrlConverter {
         }
         return pictures;
     }
+    */
 }

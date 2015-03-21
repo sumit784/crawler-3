@@ -46,7 +46,7 @@ public class CommoditySnapshotController extends ImageController {
 
         List<Commodity> commodities = factory.getInstances();
         List<CommoditySnapshot> snapshots = new CommoditySnapshotBuilder().build(
-                commodities, imageDownloader, request.getLocalAddr());
+                commodities, pictureUrlConverter);
         return toJson(snapshots);
     }
 }

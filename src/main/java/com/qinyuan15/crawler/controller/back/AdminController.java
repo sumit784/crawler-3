@@ -30,7 +30,7 @@ public class AdminController extends ImageController {
 
         List<Commodity> commodities = factory.getInstances();
         List<CommoditySimpleSnapshot> snapshots = new CommoditySimpleSnapshotBuilder().build(
-                commodities, imageDownloader, getLocalAddress());
+                commodities, pictureUrlConverter);
         model.addAttribute("commodities", snapshots);
         setTitle("商品管理");
 

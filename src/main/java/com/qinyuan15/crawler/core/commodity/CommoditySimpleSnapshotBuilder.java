@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.commodity;
 
-import com.qinyuan15.crawler.core.image.ImageDownloader;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.Commodity;
 
 import java.util.ArrayList;
@@ -13,12 +13,11 @@ import java.util.List;
 public class CommoditySimpleSnapshotBuilder {
 
     public List<CommoditySimpleSnapshot> build(List<Commodity> commodities,
-                                                       ImageDownloader imageDownloader,
-                                                       String localAddress) {
-        List<CommoditySimpleSnapshot> snapshots = new ArrayList<CommoditySimpleSnapshot>();
+                                               PictureUrlConverter pictureUrlConverter) {
+        List<CommoditySimpleSnapshot> snapshots = new ArrayList<>();
         for (Commodity commodity : commodities) {
             CommoditySimpleSnapshot snapshot = new CommoditySimpleSnapshot(
-                    commodity, imageDownloader, localAddress);
+                    commodity, pictureUrlConverter);
             snapshots.add(snapshot);
         }
         return snapshots;

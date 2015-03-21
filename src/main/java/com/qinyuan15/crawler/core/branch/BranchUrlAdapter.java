@@ -1,6 +1,5 @@
 package com.qinyuan15.crawler.core.branch;
 
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.Branch;
 
@@ -15,10 +14,6 @@ public class BranchUrlAdapter {
 
     public BranchUrlAdapter(PictureUrlConverter pictureUrlConverter) {
         this.pictureUrlConverter = pictureUrlConverter;
-    }
-
-    public BranchUrlAdapter(ImageDownloader imageDownloader, String localAddress) {
-        this(new PictureUrlConverter(imageDownloader, localAddress));
     }
 
     public List<Branch> adjust(List<Branch> branches) {

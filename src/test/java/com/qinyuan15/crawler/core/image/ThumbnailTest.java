@@ -7,7 +7,7 @@ import org.junit.Test;
  * Created by qinyuan on 15-3-10.
  */
 public class ThumbnailTest {
-    private Thumbnail thumbnail = new Thumbnail();
+    private ThumbnailBuilder thumbnail = new ThumbnailBuilder();
 
     @Test
     public void testGetSmall() throws Exception {

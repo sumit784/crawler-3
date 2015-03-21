@@ -6,7 +6,7 @@ import java.io.File;
  * Class about image thumbnail
  * Created by qinyuan on 15-3-10.
  */
-public class Thumbnail {
+public class ThumbnailBuilder {
     public String buildSmall(String imagePath) {
         String path = getPath(imagePath, ThumbnailSuffix.SMALL_SUFFIX);
         return buildThumbnail(imagePath, path, ImageSize.SMALL);

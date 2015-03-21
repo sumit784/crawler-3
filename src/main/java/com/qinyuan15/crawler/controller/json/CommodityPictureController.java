@@ -20,12 +20,12 @@ import java.util.Map;
 public class CommodityPictureController extends ImageController {
     @ResponseBody
     @RequestMapping("/commodityPicture.json")
-    public String get(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
+    public String index(@RequestParam(value = "commodityId", required = true) Integer commodityId) {
         CommodityPictureDao dao = new CommodityPictureDao();
         List<CommodityPicture> pictures = dao.getInstances(commodityId);
         List<CommodityPicture> detailPictures = dao.getDetailInstances(commodityId);
 
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("pictures", parseCommodityPictureSmallUrls(pictures));
         jsonMap.put("originalPictures", parseCommodityPictureUrls(pictures));
         jsonMap.put("detailPictures", parseCommodityPictureSmallUrls(detailPictures));

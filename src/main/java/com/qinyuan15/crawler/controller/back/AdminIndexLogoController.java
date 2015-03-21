@@ -41,7 +41,7 @@ public class AdminIndexLogoController extends ImageController {
     private String getImageUrl(String imageUrl, MultipartFile imageFile) throws IOException {
         if (imageFile == null) {
             if (new PictureUrlValidator(getLocalAddress()).isLocal(imageUrl)) {
-                return getPictureUrlConverter().urlToPath(imageUrl);
+                return pictureUrlConverter.urlToPath(imageUrl);
             } else {
                 String filePath = imageDownloader.save(imageUrl);
                 LOGGER.info("save upload image to {}", filePath);

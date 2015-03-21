@@ -1,6 +1,5 @@
 package com.qinyuan15.crawler.core.index;
 
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.IndexLogo;
 
@@ -15,10 +14,6 @@ public class IndexLogoUrlAdapter {
 
     public IndexLogoUrlAdapter(PictureUrlConverter pictureUrlConverter) {
         this.pictureUrlConverter = pictureUrlConverter;
-    }
-
-    public IndexLogoUrlAdapter(ImageDownloader imageDownloader, String localAddress) {
-        this(new PictureUrlConverter(imageDownloader, localAddress));
     }
 
     public List<IndexLogo> adjust(List<IndexLogo> indexLogos) {
