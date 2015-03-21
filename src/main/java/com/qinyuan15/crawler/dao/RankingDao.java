@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
 import com.qinyuan15.crawler.core.IntegerUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * Dao about Ranking Persist Object
@@ -33,23 +34,39 @@ public class RankingDao {
         HibernateUtil.update(ranking2);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends Ranking> T getPrevious(T ranking) {
-        if (ranking == null) {
-            return null;
-        }
-        String hql = "FROM " + ranking.getClass().getSimpleName() +
-                " WHERE ranking<" + ranking.getRanking() + DESC_ORDER;
-        return (T) HibernateUtil.getFirstItem(hql);
+        return getPrevious(ranking, null);
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends Ranking> T getNext(T ranking) {
+    public <T extends Ranking> T getPrevious(T ranking, String whereClause) {
         if (ranking == null) {
             return null;
         }
         String hql = "FROM " + ranking.getClass().getSimpleName() +
-                " WHERE ranking>" + ranking.getRanking() + ASC_ORDER;
+                " WHERE ranking<" + ranking.getRanking();
+        if (StringUtils.hasText(whereClause)) {
+            hql += " AND " + whereClause;
+        }
+        hql += DESC_ORDER;
+        return (T) HibernateUtil.getFirstItem(hql);
+    }
+
+    public <T extends Ranking> T getNext(T ranking) {
+        return getNext(ranking, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Ranking> T getNext(T ranking, String whereClause) {
+        if (ranking == null) {
+            return null;
+        }
+        String hql = "FROM " + ranking.getClass().getSimpleName() +
+                " WHERE ranking>" + ranking.getRanking();
+        if (StringUtils.hasText(whereClause)) {
+            hql += " AND " + whereClause;
+        }
+        hql += ASC_ORDER;
         return (T) HibernateUtil.getFirstItem(hql);
     }
 

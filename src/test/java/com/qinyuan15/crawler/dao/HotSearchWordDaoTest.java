@@ -9,10 +9,32 @@ import java.util.List;
  * Created by qinyuan on 15-2-28.
  */
 public class HotSearchWordDaoTest {
+    private HotSearchWordDao dao = new HotSearchWordDao();
+
     @Test
-    public void testGetInstances() throws Exception {
-        HotSearchWordDao dao = new HotSearchWordDao();
+    public void testGetInstances() {
         List<HotSearchWord> hotSearchWords = dao.getInstances(5);
         System.out.println(hotSearchWords.size());
+    }
+
+    @Test
+    public void testAdd() {
+        //dao.add("helloWorld", 5, true);
+        //dao.add("helloWorldAgain", 5, true);
+    }
+
+    @Test
+    public void testUpdate() {
+        //dao.update(1, "helloWorld", 5, false);
+    }
+
+    @Test
+    public void testRankUp() {
+        dao.rankUp(1);
+    }
+
+    @Test
+    public void testRankDown() {
+        dao.rankDown(1);
     }
 }
