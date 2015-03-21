@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.core.commodity;
 
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
+import com.qinyuan15.crawler.core.image.ThumbnailBuilder;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityPicture;
 import com.qinyuan15.crawler.dao.CommodityPictureDao;
@@ -19,9 +20,11 @@ public class CommoditySimpleSnapshot {
         this.id = commodity.getId();
         this.name = commodity.getName();
         this.active = commodity.getActive();
+        ThumbnailBuilder thumbnailBuilder = new ThumbnailBuilder();
         CommodityPicture commodityPicture = new CommodityPictureDao().getFirstInstance(commodity.getId());
         if (commodityPicture != null) {
-            this.picture = pictureUrlConverter.pathToUrl(commodityPicture.getUrl());
+            String path = thumbnailBuilder.getMiddle(commodityPicture.getUrl());
+            this.picture = pictureUrlConverter.pathToUrl(path);
         }
     }
 

@@ -8,7 +8,6 @@
     });
 
     // foot image
-    console.log($linksDiv.height());
     $('<div></div>').addClass('footImage')
         .append('<img class="link" src="resources/css/images/index/footer.png"/>').css({
             top: $linksDiv.height() + 370

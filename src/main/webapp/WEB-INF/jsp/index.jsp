@@ -18,7 +18,12 @@
             <div class="logoGroup">
                 <img src="${indexLogo.path}">
 
-                <div class="text">${indexLogo.description}</div>
+                <div class="text">
+                    <div class="back deepTransparent"></div>
+                    <c:if test="${fn:length(indexLogo.description)>0}">
+                        <div class="logoDesc">${indexLogo.description}</div>
+                    </c:if>
+                </div>
                 <div class="cover deepTransparent"></div>
             </div>
         </a>
