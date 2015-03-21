@@ -23,6 +23,24 @@ function getParent($element, parentTagName) {
     }
 }
 
+function initLimitSizeElements() {
+    $('.limit-size').each(function () {
+        var limitSize = 20; // default limit size
+
+        var $this = $(this);
+        var dataOptions = $this.dataOptions();
+        if (dataOptions && dataOptions['limit']) {
+            limitSize = dataOptions['limit'];
+        }
+
+        var text = $this.text();
+        $this.attr('title', text);
+        if (text.length > limitSize) {
+            $this.text(text.substr(0, limitSize) + '...');
+        }
+    });
+}
+
 var transparentBackground = {
     _getDiv: function () {
         var $transparentBackground = $('#transparentBackground');
@@ -57,6 +75,20 @@ function setHoverColor($element, color) {
     }, function () {
         $(this).css('color', this['data-options']['original-color']);
     });
+}
+
+function buildSubmitCallback(successCallback, failCallback) {
+    return function (data) {
+        if (data.success) {
+            successCallback();
+        } else {
+            if (failCallback) {
+                failCallback();
+            } else {
+                alert(data.detail);
+            }
+        }
+    };
 }
 
 function normalSubmitCallback(data) {
@@ -190,19 +222,5 @@ var angularUtils = {
         });
     }, 500);
 
-    $('.limit-size').each(function () {
-        var limitSize = 20; // default limit size
-
-        var $this = $(this);
-        var dataOptions = $this.dataOptions();
-        if (dataOptions && dataOptions['limit']) {
-            limitSize = dataOptions['limit'];
-        }
-
-        var text = $this.text();
-        $this.attr('title', text);
-        if (text.length > limitSize) {
-            $this.text(text.substr(0, limitSize) + '...');
-        }
-    });
+    initLimitSizeElements();
 })();

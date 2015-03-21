@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,8 +30,7 @@ public class AdminIndexLogoController extends ImageController {
 
     @RequestMapping("/admin-index-logo")
     public String index(ModelMap model) {
-        List<IndexLogo> indexLogos = new IndexLogoDao().getInstances();
-        model.addAttribute("indexLogos", adjustIndexLogos(indexLogos));
+        model.addAttribute("indexLogos", adjustIndexLogos(new IndexLogoDao().getInstances()));
         addCssAndJs("admin-normal-edit-page");
         setTitle("编辑主页Logo");
         return "admin-index-logo";

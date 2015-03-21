@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
-import java.io.Serializable;
 import java.util.List;
 
 
@@ -150,6 +149,11 @@ public class HibernateUtil {
 
     public static List getList(String hql) {
         return getList(hql, -1, -1);
+    }
+
+    public static Object getFirstItem(String hql) {
+        List list = getList(hql, 0, 1);
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     public static List getList(String hql, int firstResult, int maxResults) {

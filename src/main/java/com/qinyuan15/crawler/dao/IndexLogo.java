@@ -4,7 +4,7 @@ package com.qinyuan15.crawler.dao;
  * Persist Object of IndexLogo
  * Created by qinyuan on 15-2-18.
  */
-public class IndexLogo extends PersistObject {
+public class IndexLogo extends PersistObject implements Ranking {
     private String path;
     private String link;
     private Integer ranking;

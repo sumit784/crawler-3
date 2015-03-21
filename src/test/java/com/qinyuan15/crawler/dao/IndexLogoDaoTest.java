@@ -15,17 +15,6 @@ public class IndexLogoDaoTest {
     }
 
     @Test
-    public void testGetPrevious() {
-        IndexLogo previous = dao.getPrevious(dao.getInstance(6));
-        System.out.println(previous == null);
-        if (previous != null) {
-            System.out.println(previous.getId());
-        }
-
-        System.out.println(dao.getPrevious(dao.getInstance(5)) == null);
-    }
-
-    @Test
     public void testRankUp() {
         dao.rankUp(5);
         //dao.rankUp(6);

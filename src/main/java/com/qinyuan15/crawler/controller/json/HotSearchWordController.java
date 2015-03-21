@@ -14,17 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HotSearchWordController extends BaseController {
 
-    private final static int DEFAULT_QUERY_SIZE = 8;
-
     @ResponseBody
     @RequestMapping("/json/hotSearchWord.json")
-    public String index(@RequestParam(value = "categoryId", required = false) Integer categoryId,
-                        @RequestParam(value = "size", required = false) Integer size) {
-        if (!isPositive(size)) {
-            size = DEFAULT_QUERY_SIZE;
-        }
-
+    public String index(@RequestParam(value = "categoryId", required = true) Integer categoryId) {
         HotSearchWordDao dao = new HotSearchWordDao();
-        return toJson(dao.getInstances(categoryId, size));
+        return toJson(dao.getInstances(categoryId));
     }
 }

@@ -10,7 +10,7 @@
         </id>
         <property name="content"/>
         <property name="categoryId" column="category_id"/>
-        <property name="searchCount" column="search_count"/>
-        <property name="lastTime" column="last_time"/>
+        <property name="ranking"/>
+        <property name="hot"/>
     </class>
 </hibernate-mapping>

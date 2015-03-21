@@ -18,7 +18,7 @@
         get$LogoFile: function () {
             return $indexLogoForm.find('input[name=logoFile]');
         },
-        get$Description: function(){
+        get$Description: function () {
             return $indexLogoForm.find('input[name=description]');
         },
         validate: function () {
@@ -51,26 +51,47 @@
 
             input.get$Id().val(id);
             input.get$link().val(link);
-            input.get$Logo().val(path);
+            input.get$Logo().val(path).focusOrSelect();
             input.get$Description().val(description);
 
             $addSubmit.attr('disabled', true);
             $editSubmit.attr('disabled', false);
         };
         $scope.deleteIndexLogo = function (event) {
+            var target = event.target;
             $.post('admin-index-logo-delete', {
-                id: getTableRowIdByImgElement(event.target)
-            }, normalSubmitCallback);
+                id: getTableRowIdByImgElement(target)
+            }, buildSubmitCallback(function () {
+                setTimeout(function () {
+                    getParent($(target), 'tr').remove();
+                }, 500);
+            }));
         };
         $scope.upIndexLogo = function (event) {
+            var target = event.target;
             $.post('admin-index-logo-rank-up', {
-                id: getTableRowIdByImgElement(event.target)
-            }, normalSubmitCallback);
+                id: getTableRowIdByImgElement(target)
+            }, buildSubmitCallback(function () {
+                var $tr = getParent($(target), 'tr');
+                var $prevTr = $tr.prev();
+                if ($prevTr.size() > 0) {
+                    $tr.insertBefore($prevTr);
+                }
+            }));
         };
         $scope.downIndexLogo = function (event) {
+            var target = event.target;
             $.post('admin-index-logo-rank-down', {
-                id: getTableRowIdByImgElement(event.target)
-            }, normalSubmitCallback);
+                id: getTableRowIdByImgElement(target)
+            }, buildSubmitCallback(function () {
+                var $tr = getParent($(target), 'tr');
+                var $nextTr = $tr.next();
+                if ($nextTr.size() > 0) {
+                    $tr.insertAfter($nextTr);
+                }
+            }));
         };
     });
+
+    input.get$Logo().focus();
 })();

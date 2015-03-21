@@ -1,46 +1,44 @@
 package com.qinyuan15.crawler.dao;
 
-import java.sql.Date;
-
 /**
  * Persist object of hot search word
  * Created by qinyuan on 15-2-28.
  */
-public class HotSearchWord extends PersistObject {
+public class HotSearchWord extends PersistObject implements Ranking {
     private String content;
     private Integer categoryId;
-    private Integer searchCount;
-    private Date lastTime;
+    private Integer ranking;
+    private Boolean hot;
 
     public String getContent() {
         return content;
+    }
+
+    public Integer getRanking() {
+        return ranking;
+    }
+
+    public Boolean getHot() {
+        return hot;
     }
 
     public Integer getCategoryId() {
         return categoryId;
     }
 
-    public Integer getSearchCount() {
-        return searchCount;
-    }
-
-    public Date getLastTime() {
-        return lastTime;
-    }
-
     public void setContent(String content) {
         this.content = content;
     }
 
+    public void setRanking(Integer ranking) {
+        this.ranking = ranking;
+    }
+
+    public void setHot(Boolean hot) {
+        this.hot = hot;
+    }
+
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public void setSearchCount(Integer searchCount) {
-        this.searchCount = searchCount;
-    }
-
-    public void setLastTime(Date lastTime) {
-        this.lastTime = lastTime;
     }
 }

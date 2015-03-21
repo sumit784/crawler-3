@@ -13,35 +13,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="indexLogo" items="${indexLogos}" varStatus="status">
-            <tr id="indexLogo_${indexLogo.id}">
-                <td class="index">${status.index+1}</td>
-                <td class="path">
-                    <a class="limit-size" href="${indexLogo.path}" title="${indexLogo.path}" target="_blank"
-                       data-options="limit:26">${indexLogo.path}</a>
-                </td>
-                <td class="link">
-                    <a class="limit-size" href="${indexLogo.link}" title="${indexLogo.link}" target="_blank"
-                       data-options="limit:26">${indexLogo.link}</a>
-                </td>
-                <td class="description">${indexLogo.description}</td>
-                <td class="thumbnail">
-                    <a href="${indexLogo.path}" target="_blank">
-                        <img src="${indexLogo.path}"/>
-                    </a>
-                </td>
-                <td>
-                    <jsp:include page="widget-edit-delete.jsp">
-                        <jsp:param name="editAction" value="editIndexLogo($event)"/>
-                        <jsp:param name="deleteAction" value="deleteIndexLogo($event)"/>
-                    </jsp:include>
-                    <jsp:include page="widget-ranking.jsp">
-                        <jsp:param name="upAction" value="upIndexLogo($event)"/>
-                        <jsp:param name="downAction" value="downIndexLogo($event)"/>
-                    </jsp:include>
-                </td>
-            </tr>
-        </c:forEach>
+        <%@include file="admin-index-logo-table-body.jsp" %>
         </tbody>
     </table>
     <form id="indexLogoForm" method="post" action="admin-index-logo-add-update"

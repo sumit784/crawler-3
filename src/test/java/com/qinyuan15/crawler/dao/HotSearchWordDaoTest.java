@@ -12,10 +12,7 @@ public class HotSearchWordDaoTest {
     @Test
     public void testGetInstances() throws Exception {
         HotSearchWordDao dao = new HotSearchWordDao();
-        List<HotSearchWord> hotSearchWords = dao.getInstances(null, 5);
+        List<HotSearchWord> hotSearchWords = dao.getInstances(5);
         System.out.println(hotSearchWords.size());
-        for(HotSearchWord hotSearchWord:hotSearchWords) {
-            System.out.println(hotSearchWord.getContent());
-        }
     }
 }
