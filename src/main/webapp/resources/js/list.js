@@ -69,8 +69,9 @@
         $(this).removeClass('deepTransparent');
     });
     angularUtils.controller(function ($scope, $http) {
+        var $categoryId = $('#categoryId');
         $scope.inLowPrice = true;
-        $scope.categoryId = $('#categoryId').val();
+        $scope.categoryId = $categoryId.val();
         initBranch();
         initSnapshot($scope, $http);
         $scope.showMore = function () {
@@ -100,11 +101,14 @@
         };
         $scope.selectSubCategory = function (event) {
             var $this = $(event.target);
-            $scope.categoryId = $this.dataOptions()['id'];
+            if ($this.hasClass('selected')) {
+                $scope.categoryId = $categoryId.val();
+            } else {
+                $scope.categoryId = $this.dataOptions()['id'];
+            }
             loadHotWord();
             loadSnapshot($scope, $http);
             subCategoryLinks.click($this);
-            event.stopPropagation();
         };
 
         function get$HideBranch() {
