@@ -23,8 +23,8 @@
                 <jsp:param name="deleteAction" value="deleteIndexLogo($event)"/>
             </jsp:include>
             <jsp:include page="widget-ranking.jsp">
-                <jsp:param name="upAction" value="upIndexLogo($event)"/>
-                <jsp:param name="downAction" value="downIndexLogo($event)"/>
+                <jsp:param name="upAction" value="rankUpIndexLogo($event)"/>
+                <jsp:param name="downAction" value="rankDownIndexLogo($event)"/>
             </jsp:include>
         </td>
     </tr>

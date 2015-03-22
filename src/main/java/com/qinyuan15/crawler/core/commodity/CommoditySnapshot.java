@@ -5,7 +5,7 @@ import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityPriceDao;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 
 /**
  * Snapshot class of Commodity
@@ -18,7 +18,7 @@ public class CommoditySnapshot extends CommoditySimpleSnapshot {
     public CommoditySnapshot(Commodity commodity, PictureUrlConverter pictureUrlConverter) {
         super(commodity, pictureUrlConverter);
         this.price = new CommodityPriceDao().getCurrentPrice(commodity.getId());
-        this.branch = HibernateUtil.get(Branch.class, commodity.getBranchId());
+        this.branch = HibernateUtils.get(Branch.class, commodity.getBranchId());
         BranchUrlAdapter adapter = new BranchUrlAdapter(pictureUrlConverter);
         adapter.adjust(this.branch);
     }

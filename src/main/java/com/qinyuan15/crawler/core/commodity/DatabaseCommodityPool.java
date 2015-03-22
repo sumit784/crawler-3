@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.core.commodity;
 
 import com.qinyuan15.crawler.dao.Commodity;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class DatabaseCommodityPool implements CommodityPool {
         }
 
         if (pointer % PAGE_SIZE == 0) {
-            this.commodities = HibernateUtil.getList("FROM Commodity WHERE active=true ORDER BY id",
+            this.commodities = HibernateUtils.getList("FROM Commodity WHERE active=true ORDER BY id",
                     pointer, PAGE_SIZE);
         }
 
@@ -38,7 +38,7 @@ public class DatabaseCommodityPool implements CommodityPool {
     }
 
     public long size() {
-        return HibernateUtil.getCount(Commodity.class, "active=true");
+        return HibernateUtils.getCount(Commodity.class, "active=true");
     }
 
     @Override

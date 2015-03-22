@@ -12,11 +12,11 @@ public class UserLogDao {
     private final static String ORDER_CLAUSE = "ORDER BY logTime DESC";
 
     public List<UserLog> getInstances() {
-        return HibernateUtil.getList(UserLog.class, ORDER_CLAUSE);
+        return HibernateUtils.getList(UserLog.class, ORDER_CLAUSE);
     }
 
     public List<UserLog> getInstancesByUserId(Integer userId) {
-        return HibernateUtil.getList(UserLog.class, "userId=" + userId + " " + ORDER_CLAUSE);
+        return HibernateUtils.getList(UserLog.class, "userId=" + userId + " " + ORDER_CLAUSE);
     }
 
     public void save(Integer userId, String action) {
@@ -24,6 +24,6 @@ public class UserLogDao {
         userLog.setUserId(userId);
         userLog.setAction(action);
         userLog.setLogTime(DateUtils.nowString());
-        HibernateUtil.save(userLog);
+        HibernateUtils.save(userLog);
     }
 }

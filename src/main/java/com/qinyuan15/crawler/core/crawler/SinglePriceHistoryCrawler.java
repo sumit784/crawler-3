@@ -88,7 +88,7 @@ class SinglePriceHistoryCrawler {
             record.setPrice(price);
             record.setCommodityId(commodityId);
             record.setGrabTime(DateUtils.now());
-            HibernateUtil.save(record);
+            HibernateUtils.save(record);
         }
     }
 }

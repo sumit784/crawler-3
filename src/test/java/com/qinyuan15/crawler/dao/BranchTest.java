@@ -15,7 +15,7 @@ public class BranchTest {
     public void test() throws Exception {
         for (int i = 0; i < 50; i++) {
             @SuppressWarnings("unchecked")
-            List<Branch> branches = HibernateUtil.getList("Branch");
+            List<Branch> branches = HibernateUtils.getList("Branch");
             for (Branch branch : branches) {
                 assertThat(branch).isNotNull();
             }

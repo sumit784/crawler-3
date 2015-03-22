@@ -26,31 +26,31 @@ public class CommodityDao {
     }
 
     public List<Commodity> getInstancesByShowId(String showId) {
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         String hql = "FROM Commodity WHERE showId=:showId";
         @SuppressWarnings("unchecked")
         List<Commodity> commodities = session.createQuery(hql).setString("showId", showId).list();
-        HibernateUtil.commit(session);
+        HibernateUtils.commit(session);
         return commodities;
     }
 
     public void delete(int id) {
-        HibernateUtil.delete(Commodity.class, id);
+        HibernateUtils.delete(Commodity.class, id);
     }
 
     public void deactivate(int id) {
-        Commodity commodity = HibernateUtil.get(Commodity.class, id);
+        Commodity commodity = HibernateUtils.get(Commodity.class, id);
         if (commodity != null) {
             commodity.setActive(false);
-            HibernateUtil.update(commodity);
+            HibernateUtils.update(commodity);
         }
     }
 
     public void activate(int id) {
-        Commodity commodity = HibernateUtil.get(Commodity.class, id);
+        Commodity commodity = HibernateUtils.get(Commodity.class, id);
         if (commodity != null) {
             commodity.setActive(true);
-            HibernateUtil.update(commodity);
+            HibernateUtils.update(commodity);
         }
     }
 
@@ -61,7 +61,7 @@ public class CommodityDao {
 
         Commodity commodity = getInstance(id);
         commodity.setSales(sales);
-        HibernateUtil.update(commodity);
+        HibernateUtils.update(commodity);
     }
 
     public void updatePrice(int id) {
@@ -69,7 +69,7 @@ public class CommodityDao {
         if (currentPrice != null) {
             Commodity commodity = getInstance(id);
             commodity.setPrice(currentPrice);
-            HibernateUtil.update(commodity);
+            HibernateUtils.update(commodity);
         }
     }
 
@@ -81,7 +81,7 @@ public class CommodityDao {
 
         Commodity commodity = getInstance(id);
         commodity.setOnShelfTime(firstPriceRecord.getRecordTime().toString());
-        HibernateUtil.update(commodity);
+        HibernateUtils.update(commodity);
     }
 
     public static Factory factory() {
@@ -277,13 +277,13 @@ public class CommodityDao {
 
         public long getCount() {
             @SuppressWarnings("unchecked")
-            List<Long> list = HibernateUtil.getList("SELECT COUNT(*) " + getHQL());
+            List<Long> list = HibernateUtils.getList("SELECT COUNT(*) " + getHQL());
             return list.get(0);
         }
 
         public List<Commodity> getInstances() {
             @SuppressWarnings("unchecked")
-            List<Commodity> commodities = HibernateUtil.getList(getHQL());
+            List<Commodity> commodities = HibernateUtils.getList(getHQL());
 
             if (!inLowPrice) {
                 return commodities;

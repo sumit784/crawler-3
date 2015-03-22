@@ -12,7 +12,7 @@ public class HotSearchWordTest {
 
     @Test
     public void test() throws Exception {
-        for (HotSearchWord hotSearchWord : HibernateUtil.getList(HotSearchWord.class)) {
+        for (HotSearchWord hotSearchWord : HibernateUtils.getList(HotSearchWord.class)) {
             assertThat(hotSearchWord.getId()).isGreaterThan(0);
         }
     }

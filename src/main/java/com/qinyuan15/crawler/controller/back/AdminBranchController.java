@@ -121,10 +121,10 @@ public class AdminBranchController extends ImageController {
 
         // save or update branch
         if (isPositive(id)) {
-            HibernateUtil.update(branch);
+            HibernateUtils.update(branch);
             logAction("更新品牌'%s'", branch.getName());
         } else {
-            id = (Integer) HibernateUtil.save(branch);
+            id = (Integer) HibernateUtils.save(branch);
             logAction("添加品牌'%s'", branch.getName());
         }
 

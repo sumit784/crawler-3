@@ -3,7 +3,7 @@ package com.qinyuan15.crawler.controller.json;
 import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.dao.Category;
 import com.qinyuan15.crawler.dao.CategoryDao;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,13 +40,13 @@ public class CategoryController extends BaseController {
     @ResponseBody
     @RequestMapping("/json/parentCategory.json")
     public String queryParent(@RequestParam(value = "categoryId", required = true) Integer categoryId) {
-        Category category = HibernateUtil.get(Category.class, categoryId);
+        Category category = HibernateUtils.get(Category.class, categoryId);
         if (category == null) {
             return createParentResult(categoryId, null);
         }
 
         Integer parentCategoryId = category.getParentId();
-        Category parentCategory = HibernateUtil.get(Category.class, parentCategoryId);
+        Category parentCategory = HibernateUtils.get(Category.class, parentCategoryId);
         if (parentCategory == null) {
             return createParentResult(categoryId, null);
         }

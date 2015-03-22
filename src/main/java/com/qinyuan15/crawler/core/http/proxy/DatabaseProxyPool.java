@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.http.proxy;
 
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import com.qinyuan15.crawler.dao.Proxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class DatabaseProxyPool implements ProxyPool {
 
     @SuppressWarnings("unchecked")
     private void load() {
-        this.proxies = HibernateUtil.getList("FROM Proxy ORDER BY speed asc, id desc");
+        this.proxies = HibernateUtils.getList("FROM Proxy ORDER BY speed asc, id desc");
         this.pointer = 0;
     }
 

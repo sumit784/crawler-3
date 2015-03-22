@@ -77,14 +77,14 @@ public class PriceRecordDao {
 
         @SuppressWarnings("unchecked")
         public List<PriceRecord> getInstances() {
-            return HibernateUtil.getList(getHQL());
+            return HibernateUtils.getList(getHQL());
         }
 
         public PriceRecord getLastInstance() {
             String hql = getHQL() + " ORDER BY recordTime DESC";
 
             @SuppressWarnings("unchecked")
-            List<PriceRecord> priceRecords = HibernateUtil.getList(hql, 0, 1);
+            List<PriceRecord> priceRecords = HibernateUtils.getList(hql, 0, 1);
             return priceRecords.size() == 0 ? null : priceRecords.get(0);
         }
 
@@ -92,7 +92,7 @@ public class PriceRecordDao {
             String hql = getHQL() + " ORDER BY recordTime ASC";
 
             @SuppressWarnings("unchecked")
-            List<PriceRecord> priceRecords = HibernateUtil.getList(hql, 0, 1);
+            List<PriceRecord> priceRecords = HibernateUtils.getList(hql, 0, 1);
             return priceRecords.size() == 0 ? null : priceRecords.get(0);
         }
 

@@ -42,7 +42,7 @@ public class CommodityPictureDao {
      */
     public void save(Integer commodityId, List<String> urls, boolean detail) {
         for (String url : urls) {
-            if (HibernateUtil.getCount(CommodityPicture.class,
+            if (HibernateUtils.getCount(CommodityPicture.class,
                     "commodityId=" + commodityId + " AND url='" + url + "'") > 0) {
                 LOGGER.warn("picture {} of commodityId {} already exists, give up saving it to database",
                         url, commodityId);
@@ -53,7 +53,7 @@ public class CommodityPictureDao {
             picture.setUrl(url);
             picture.setDetail(detail);
             try {
-                HibernateUtil.save(picture);
+                HibernateUtils.save(picture);
                 LOGGER.info("save picture {} of commodityId {} to database",
                         url, commodityId);
             } catch (Exception e) {
@@ -70,7 +70,7 @@ public class CommodityPictureDao {
     @SuppressWarnings("unchecked")
     private List<CommodityPicture> getInstances(Integer commodityId, boolean detail) {
         String hql = "FROM CommodityPicture WHERE commodityId=" + commodityId + " AND detail=" + detail;
-        return HibernateUtil.getList(hql);
+        return HibernateUtils.getList(hql);
     }
 
     public List<CommodityPicture> getInstances(Integer commodityId) {
@@ -80,7 +80,7 @@ public class CommodityPictureDao {
     public CommodityPicture getFirstInstance(Integer commodityId) {
         String hql = "FROM CommodityPicture WHERE commodityId=" + commodityId + " ORDER BY id ASC";
         @SuppressWarnings("unchecked")
-        List<CommodityPicture> pictures = HibernateUtil.getList(hql, 0, 1);
+        List<CommodityPicture> pictures = HibernateUtils.getList(hql, 0, 1);
         return pictures.size() == 0 ? null : pictures.get(0);
     }
 
@@ -97,7 +97,7 @@ public class CommodityPictureDao {
     }
 
     public void deleteInstances(Integer commodityId, boolean detail) {
-        HibernateUtil.delete(CommodityPicture.class,
+        HibernateUtils.delete(CommodityPicture.class,
                 "commodityId=" + commodityId + " AND detail=" + detail);
     }
 
@@ -112,6 +112,6 @@ public class CommodityPictureDao {
      * @return if has picture, return true, else return false
      */
     public boolean hasPicture(Integer commodityId) {
-        return HibernateUtil.getCount(CommodityPicture.class, "commodityId=" + commodityId) > 0;
+        return HibernateUtils.getCount(CommodityPicture.class, "commodityId=" + commodityId) > 0;
     }
 }

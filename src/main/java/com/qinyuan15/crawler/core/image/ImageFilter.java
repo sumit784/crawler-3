@@ -1,5 +1,8 @@
 package com.qinyuan15.crawler.core.image;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +11,7 @@ import java.util.List;
  * Created by qinyuan on 15-3-21.
  */
 public class ImageFilter {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ImageFilter.class);
     private ImageSize filterSize;
 
     public ImageFilter setFilterSize(ImageSize filterSize) {
@@ -20,9 +24,14 @@ public class ImageFilter {
             return true;
         }
 
-        ImageParser imageParser = new ImageParser(path);
-        return imageParser.getHeight() > this.filterSize.height ||
-                imageParser.getWidth() > this.filterSize.width;
+        try {
+            ImageParser imageParser = new ImageParser(path);
+            return imageParser.getHeight() > this.filterSize.height ||
+                    imageParser.getWidth() > this.filterSize.width;
+        } catch (Exception e) {
+            LOGGER.error("Fail to get size of image {}: {}", path, e);
+            return true;
+        }
     }
 
 

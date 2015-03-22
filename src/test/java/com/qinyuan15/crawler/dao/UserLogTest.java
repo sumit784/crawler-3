@@ -9,6 +9,6 @@ import org.junit.Test;
 public class UserLogTest {
     @Test
     public void test() throws Exception {
-        System.out.println(HibernateUtil.getList(UserLog.class).size());
+        System.out.println(HibernateUtils.getList(UserLog.class).size());
     }
 }

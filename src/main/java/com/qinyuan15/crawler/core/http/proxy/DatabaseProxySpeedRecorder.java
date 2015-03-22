@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.http.proxy;
 
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import com.qinyuan15.crawler.dao.Proxy;
 
 /**
@@ -12,7 +12,7 @@ public class DatabaseProxySpeedRecorder implements ProxySpeedRecorder {
     public void recordSpeed(Proxy proxy, int speed) {
         if (proxy != null && speed > 0) {
             proxy.setSpeed(speed);
-            HibernateUtil.update(proxy);
+            HibernateUtils.update(proxy);
         }
     }
 }

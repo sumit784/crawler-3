@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class HotSearchWordDao {
     public void delete(Integer id) {
-        HibernateUtil.delete(HotSearchWord.class, id);
+        HibernateUtils.delete(HotSearchWord.class, id);
     }
 
     public Integer add(String content, Integer categoryId, Boolean hot) {
@@ -32,19 +32,19 @@ public class HotSearchWordDao {
             hotSearchWord.setCategoryId(categoryId);
         }
 
-        HibernateUtil.update(hotSearchWord);
+        HibernateUtils.update(hotSearchWord);
     }
 
     public HotSearchWord getInstance(Integer id) {
-        return HibernateUtil.get(HotSearchWord.class, id);
+        return HibernateUtils.get(HotSearchWord.class, id);
     }
 
     public List<HotSearchWord> getInstances(Integer categoryId) {
-        return HibernateUtil.getList(HotSearchWord.class, "categoryId=" + categoryId + " ORDER BY ranking ASC");
+        return HibernateUtils.getList(HotSearchWord.class, "categoryId=" + categoryId + " ORDER BY ranking ASC");
     }
 
     public void clear(int categoryId) {
-        HibernateUtil.delete(HotSearchWord.class, "categoryId=" + categoryId);
+        HibernateUtils.delete(HotSearchWord.class, "categoryId=" + categoryId);
     }
 
     public void rankUp(int id) {

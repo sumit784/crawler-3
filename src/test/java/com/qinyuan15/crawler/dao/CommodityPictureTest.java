@@ -14,7 +14,7 @@ public class CommodityPictureTest {
         commodityPicture.setCommodityId(1);
         commodityPicture.setUrl("www.baidu.com");
 
-        HibernateUtil.save(commodityPicture);
-        HibernateUtil.delete(CommodityPicture.class, 1);
+        HibernateUtils.save(commodityPicture);
+        HibernateUtils.delete(CommodityPicture.class, 1);
     }
 }

@@ -48,12 +48,12 @@ public class CommodityPriceDao {
 
         public Double getMax() {
             String hql = "SELECT MAX(price) " + getHQL();
-            return (Double) HibernateUtil.getList(hql).get(0);
+            return (Double) HibernateUtils.getList(hql).get(0);
         }
 
         public Double getMin() {
             String hql = "SELECT MIN(price) " + getHQL();
-            return (Double) HibernateUtil.getList(hql).get(0);
+            return (Double) HibernateUtils.getList(hql).get(0);
         }
     }
 

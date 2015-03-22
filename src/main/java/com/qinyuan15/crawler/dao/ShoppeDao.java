@@ -11,18 +11,18 @@ import java.util.List;
 public class ShoppeDao {
 
     public List<Shoppe> getInstances(int branchId) {
-        return HibernateUtil.getList(Shoppe.class, "WHERE branchId=" + branchId);
+        return HibernateUtils.getList(Shoppe.class, "WHERE branchId=" + branchId);
     }
 
     public void clear(int branchId) {
-        HibernateUtil.delete(Shoppe.class, "branchId=" + branchId);
+        HibernateUtils.delete(Shoppe.class, "branchId=" + branchId);
     }
 
     public void save(List<Shoppe> shoppes) {
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         for (Shoppe shoppe : shoppes) {
             session.save(shoppe);
         }
-        HibernateUtil.commit(session);
+        HibernateUtils.commit(session);
     }
 }

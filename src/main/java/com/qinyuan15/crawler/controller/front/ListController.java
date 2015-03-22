@@ -3,7 +3,7 @@ package com.qinyuan15.crawler.controller.front;
 import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.dao.Category;
 import com.qinyuan15.crawler.dao.CategoryDao;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class ListController extends BaseController {
     public String index(ModelMap model, @RequestParam(value = "id", required = false) Integer id) {
         CategoryDao dao = new CategoryDao();
 
-        Category category = HibernateUtil.get(Category.class, id);
+        Category category = HibernateUtils.get(Category.class, id);
         if (category == null) {
             category = dao.getFirstInstance();
         }

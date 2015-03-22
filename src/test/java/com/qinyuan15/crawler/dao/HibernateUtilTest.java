@@ -15,7 +15,7 @@ public class HibernateUtilTest {
     public void test() {
         int testTimes = 200;
         for (int i = 0; i < testTimes; i++) {
-            Session session = HibernateUtil.getSession();
+            Session session = HibernateUtils.getSession();
             assertThat(session).isNotNull();
 
             Proxy proxy = new Proxy();
@@ -26,13 +26,13 @@ public class HibernateUtilTest {
             proxy.setId(id);
             session.delete(proxy);
 
-            HibernateUtil.commit(session);
+            HibernateUtils.commit(session);
         }
     }
 
     @Test
     public void testGetCount() {
-        long count = HibernateUtil.getCount("Commodity");
-        assertThat(HibernateUtil.getCount("Commodity", "id>0")).isEqualTo(count);
+        long count = HibernateUtils.getCount("Commodity");
+        assertThat(HibernateUtils.getCount("Commodity", "id>0")).isEqualTo(count);
     }
 }

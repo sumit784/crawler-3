@@ -12,31 +12,31 @@ import java.util.List;
 public class BranchDao {
 
     public Branch getInstance(Integer id) {
-        return HibernateUtil.get(Branch.class, id);
+        return HibernateUtils.get(Branch.class, id);
     }
 
     public boolean isUsed(Integer id) {
-        return HibernateUtil.getCount(Commodity.class, "branchId=" + id) > 0 ||
-                HibernateUtil.getCount(Branch.class, "parentId=" + id) > 0;
+        return HibernateUtils.getCount(Commodity.class, "branchId=" + id) > 0 ||
+                HibernateUtils.getCount(Branch.class, "parentId=" + id) > 0;
     }
 
     public void delete(Integer id) {
         if (!isUsed(id)) {
             new ShoppeDao().clear(id);
-            HibernateUtil.delete(Branch.class, id);
+            HibernateUtils.delete(Branch.class, id);
         }
     }
 
     public List<Branch> getInstances() {
-        return HibernateUtil.getList(Branch.class);
+        return HibernateUtils.getList(Branch.class);
     }
 
     public List<Branch> getRootInstances() {
-        return HibernateUtil.getList(Branch.class, "parentId IS NULL OR parentId<=0");
+        return HibernateUtils.getList(Branch.class, "parentId IS NULL OR parentId<=0");
     }
 
     public List<Branch> getSubInstances(int parentId) {
-        return HibernateUtil.getList(Branch.class, "parentId=" + parentId);
+        return HibernateUtils.getList(Branch.class, "parentId=" + parentId);
     }
 
     public List<Branch> getAllSubInstances(int parentId) {
@@ -65,6 +65,6 @@ public class BranchDao {
     public List<Branch> getInstancesByCategoryId(int categoryId) {
         String subHql = "SELECT branchId FROM Commodity WHERE categoryId IN ("
                 + new CategoryDao().getSubInstancesAndSelfIdsString(categoryId) + ")";
-        return HibernateUtil.getList(Branch.class, "WHERE id IN (" + subHql + ")");
+        return HibernateUtils.getList(Branch.class, "WHERE id IN (" + subHql + ")");
     }
 }

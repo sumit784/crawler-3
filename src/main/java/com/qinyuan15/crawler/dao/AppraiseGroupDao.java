@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class AppraiseGroupDao {
     public List<AppraiseGroup> getInstancesByCommodityId(int commodityId) {
-        return HibernateUtil.getList(AppraiseGroup.class, "commodityId=" + commodityId);
+        return HibernateUtils.getList(AppraiseGroup.class, "commodityId=" + commodityId);
     }
 
     public List<AppraiseGroup> getInstancesByCommodityId(int commodityId, boolean positive) {
-        return HibernateUtil.getList(AppraiseGroup.class, "commodityId=" + commodityId +
+        return HibernateUtils.getList(AppraiseGroup.class, "commodityId=" + commodityId +
                 " AND positive=" + positive);
     }
 
@@ -27,11 +27,11 @@ public class AppraiseGroupDao {
     }
 
     public void clear(int commodityId) {
-        HibernateUtil.delete(AppraiseGroup.class, "commodityId=" + commodityId);
+        HibernateUtils.delete(AppraiseGroup.class, "commodityId=" + commodityId);
     }
 
     public void clear(int commodityId, boolean positive) {
-        HibernateUtil.delete(AppraiseGroup.class,
+        HibernateUtils.delete(AppraiseGroup.class,
                 "commodityId=" + commodityId + " AND positive=" + positive);
     }
 
@@ -45,7 +45,7 @@ public class AppraiseGroupDao {
             return;
         }
 
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         for (String content : contents) {
             AppraiseGroup appraiseGroup = new AppraiseGroup();
             appraiseGroup.setCommodityId(commodityId);
@@ -53,6 +53,6 @@ public class AppraiseGroupDao {
             appraiseGroup.setPositive(positive);
             session.save(appraiseGroup);
         }
-        HibernateUtil.commit(session);
+        HibernateUtils.commit(session);
     }
 }

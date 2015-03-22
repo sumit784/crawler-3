@@ -8,11 +8,11 @@ import java.util.List;
  */
 public class IndexLogoDao {
     public List<IndexLogo> getInstances() {
-        return HibernateUtil.getList(IndexLogo.class, RankingDao.ASC_ORDER);
+        return HibernateUtils.getList(IndexLogo.class, RankingDao.ASC_ORDER);
     }
 
     public void delete(Integer id) {
-        HibernateUtil.delete(IndexLogo.class, id);
+        HibernateUtils.delete(IndexLogo.class, id);
     }
 
     public Integer add(String path, String link, String description) {
@@ -24,7 +24,7 @@ public class IndexLogoDao {
     }
 
     public IndexLogo getInstance(int id) {
-        return HibernateUtil.get(IndexLogo.class, id);
+        return HibernateUtils.get(IndexLogo.class, id);
     }
 
     public void rankUp(int id) {

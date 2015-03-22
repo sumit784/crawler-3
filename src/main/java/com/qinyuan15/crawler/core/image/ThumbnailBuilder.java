@@ -1,5 +1,8 @@
 package com.qinyuan15.crawler.core.image;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 
 /**
@@ -7,6 +10,8 @@ import java.io.File;
  * Created by qinyuan on 15-3-10.
  */
 public class ThumbnailBuilder {
+    private final static Logger LOGGER = LoggerFactory.getLogger(ThumbnailBuilder.class);
+
     public String buildSmall(String imagePath) {
         String path = getPath(imagePath, ThumbnailSuffix.SMALL_SUFFIX);
         return buildThumbnail(imagePath, path, ImageSize.SMALL);
@@ -19,8 +24,12 @@ public class ThumbnailBuilder {
 
     private String buildThumbnail(String imagePath, String targetPath, ImageSize size) {
         if (new File(imagePath).isFile()) {
-            ImageCompressor compressor = new ImageCompressor(imagePath);
-            compressor.compress(targetPath, size);
+            try {
+                ImageCompressor compressor = new ImageCompressor(imagePath);
+                compressor.compress(targetPath, size);
+            } catch (Exception e) {
+                LOGGER.error("fail to compress image {}: {}", imagePath, e);
+            }
         }
         return targetPath;
     }

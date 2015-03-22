@@ -5,7 +5,7 @@ import com.qinyuan15.crawler.core.branch.BranchGrouper;
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.BranchDao;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,19 +68,19 @@ public class BranchController extends ImageController {
     @ResponseBody
     @RequestMapping("/json/parentBranch.json")
     public String queryParent(@RequestParam(value = "branchId", required = true) Integer branchId) {
-        Branch branch = HibernateUtil.get(Branch.class, branchId);
+        Branch branch = HibernateUtils.get(Branch.class, branchId);
         if (branch == null) {
             return createParentResult(branchId, null, null);
         }
 
         Integer parentBranchId = branch.getParentId();
-        Branch parentBranch = HibernateUtil.get(Branch.class, parentBranchId);
+        Branch parentBranch = HibernateUtils.get(Branch.class, parentBranchId);
         if (parentBranch == null) {
             return createParentResult(branchId, null, null);
         }
 
         Integer grandBranchId = parentBranch.getParentId();
-        Branch grandBranch = HibernateUtil.get(Branch.class, parentBranch.getParentId());
+        Branch grandBranch = HibernateUtils.get(Branch.class, parentBranch.getParentId());
         if (grandBranch == null) {
             return createParentResult(parentBranchId, branchId, null);
         }

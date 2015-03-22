@@ -1,6 +1,5 @@
 package com.qinyuan15.crawler.controller.back;
 
-import com.qinyuan15.crawler.dao.HibernateUtil;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
 

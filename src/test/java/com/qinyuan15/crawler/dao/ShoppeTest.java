@@ -9,6 +9,6 @@ import org.junit.Test;
 public class ShoppeTest {
     @Test
     public void test() {
-        System.out.println(HibernateUtil.getList(Shoppe.class).size());
+        System.out.println(HibernateUtils.getList(Shoppe.class).size());
     }
 }

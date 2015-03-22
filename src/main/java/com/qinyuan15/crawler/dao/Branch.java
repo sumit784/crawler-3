@@ -64,7 +64,7 @@ public class Branch extends PersistObject {
 
     public synchronized String getParentName() {
         if (!parentNameInit) {
-            Branch parent = HibernateUtil.get(Branch.class, this.parentId);
+            Branch parent = HibernateUtils.get(Branch.class, this.parentId);
             parentName = parent == null ? null : parent.getName();
             parentNameInit = true;
         }

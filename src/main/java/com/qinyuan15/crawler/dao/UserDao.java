@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class UserDao {
     public User getInstance(Integer userId) {
-        return HibernateUtil.get(User.class, userId);
+        return HibernateUtils.get(User.class, userId);
     }
 
     public User getInstanceByName(String username) {
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         List list = session.createQuery("FROM User WHERE username=:username")
                 .setString("username", username).list();
         User user = list.size() == 0 ? null : (User) list.get(0);
-        HibernateUtil.commit(session);
+        HibernateUtils.commit(session);
         return user;
     }
 

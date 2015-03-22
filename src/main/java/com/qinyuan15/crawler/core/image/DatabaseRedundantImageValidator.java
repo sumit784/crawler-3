@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.image;
 
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +47,7 @@ public class DatabaseRedundantImageValidator implements RedundantImageValidator 
         }
 
         for (ImageColumn column : this.columns) {
-            long count = HibernateUtil.getCount(column.table,
+            long count = HibernateUtils.getCount(column.table,
                     column.column + "='" + StringEscapeUtils.escapeSql(imagePath) + "'");
             if (count > 0) {
                 return false;

@@ -17,8 +17,8 @@ import java.util.List;
  * Util class for Hibernate
  * Created by qinyuan on 14-12-26.
  */
-public class HibernateUtil {
-    private final static Logger LOGGER = LoggerFactory.getLogger(HibernateUtil.class);
+public class HibernateUtils {
+    private final static Logger LOGGER = LoggerFactory.getLogger(HibernateUtils.class);
 
     public static String CONFIG_FILE = "hibernate.cfg.xml";
     private final static SessionFactory sessionFactory = buildSessionFactory();
@@ -89,11 +89,11 @@ public class HibernateUtil {
     }
 
     public static void delete(Class<?> clazz, String whereClause) {
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         String hql = "DELETE FROM " + clazz.getSimpleName() + " " +
                 adjustWhereClause(whereClause);
         session.createQuery(hql).executeUpdate();
-        HibernateUtil.commit(session);
+        HibernateUtils.commit(session);
     }
 
     private static String adjustWhereClause(String whereClause) {
@@ -110,7 +110,7 @@ public class HibernateUtil {
     }
 
     public static void delete(Class clazz, Integer id) {
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         try {
             Object object = session.get(clazz, id);
             if (object != null) {
@@ -129,7 +129,7 @@ public class HibernateUtil {
             return null;
         }
 
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         @SuppressWarnings("unchecked")
         T object = (T) session.get(clazz, id);
         session.close();
@@ -157,7 +157,7 @@ public class HibernateUtil {
     }
 
     public static List getList(String hql, int firstResult, int maxResults) {
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         try {
             hql = hql.trim();
             if (!hql.toLowerCase().startsWith("from") &&

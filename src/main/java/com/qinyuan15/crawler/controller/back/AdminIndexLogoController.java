@@ -2,7 +2,7 @@ package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.image.PictureUrlValidator;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import com.qinyuan15.crawler.dao.IndexLogo;
 import com.qinyuan15.crawler.dao.IndexLogoDao;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -83,7 +83,7 @@ public class AdminIndexLogoController extends ImageController {
             indexLogo.setPath(logoUrl);
             indexLogo.setLink(link);
             indexLogo.setDescription(description);
-            HibernateUtil.update(indexLogo);
+            HibernateUtils.update(indexLogo);
             logAction("更新主页Logo'%s'", description);
         } else {
             dao.add(logoUrl, link, description);

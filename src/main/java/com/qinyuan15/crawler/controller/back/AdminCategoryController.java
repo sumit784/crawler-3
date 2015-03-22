@@ -4,7 +4,7 @@ import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.core.category.HotSearchWordGroup;
 import com.qinyuan15.crawler.dao.Category;
 import com.qinyuan15.crawler.dao.CategoryDao;
-import com.qinyuan15.crawler.dao.HibernateUtil;
+import com.qinyuan15.crawler.dao.HibernateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,10 +44,10 @@ public class AdminCategoryController extends BaseController {
 
         // save or update
         if (isPositive(id)) {
-            HibernateUtil.update(category);
+            HibernateUtils.update(category);
             logAction("更新商品分类'%s'", category.getName());
         } else {
-            HibernateUtil.save(category);
+            HibernateUtils.save(category);
             logAction("添加商品分类'%s'", category.getName());
         }
         return SUCCESS;

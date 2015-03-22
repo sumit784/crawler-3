@@ -25,7 +25,7 @@ public class Category extends PersistObject {
     }
 
     public String getParentName() {
-        Category category = HibernateUtil.get(Category.class, this.parentId);
+        Category category = HibernateUtils.get(Category.class, this.parentId);
         return category == null ? null : category.getName();
     }
 }

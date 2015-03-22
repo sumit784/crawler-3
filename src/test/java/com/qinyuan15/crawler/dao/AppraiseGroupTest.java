@@ -14,7 +14,7 @@ public class AppraiseGroupTest {
     @Test
     public void test() {
         @SuppressWarnings("unchecked")
-        List<AppraiseGroup> list = HibernateUtil.getList("AppraiseGroup");
+        List<AppraiseGroup> list = HibernateUtils.getList("AppraiseGroup");
         for (AppraiseGroup appraiseGroup : list) {
             assertThat(appraiseGroup).isNotNull();
         }

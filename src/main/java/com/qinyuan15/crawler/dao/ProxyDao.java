@@ -15,7 +15,7 @@ public class ProxyDao {
     private final static Logger LOGGER = LoggerFactory.getLogger(ProxyDao.class);
 
     public void save(List<Proxy> proxies) {
-        Session session = HibernateUtil.getSession();
+        Session session = HibernateUtils.getSession();
         try {
             Query query = session.createQuery("FROM Proxy WHERE host=:host and port=:port");
             for (Proxy proxy : proxies) {
@@ -31,7 +31,7 @@ public class ProxyDao {
             LOGGER.error("fail to save: {}", e);
             throw new RuntimeException(e);
         } finally {
-            HibernateUtil.commit(session);
+            HibernateUtils.commit(session);
         }
     }
 }

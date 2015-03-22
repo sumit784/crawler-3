@@ -13,7 +13,7 @@ public class RankingDao {
     public final static String DESC_ORDER = " ORDER BY ranking DESC";
 
     public Integer getMaxRanking(Class<? extends Ranking> clazz) {
-        return (Integer) HibernateUtil.getFirstItem("SELECT MAX(ranking) FROM " + clazz.getSimpleName());
+        return (Integer) HibernateUtils.getFirstItem("SELECT MAX(ranking) FROM " + clazz.getSimpleName());
     }
 
     public void switchRanking(Ranking ranking1, Ranking ranking2) {
@@ -25,13 +25,13 @@ public class RankingDao {
         Integer rankingValue2 = ranking2.getRanking();
 
         ranking2.setRanking(-1 * rankingValue2);
-        HibernateUtil.update(ranking2);
+        HibernateUtils.update(ranking2);
 
         ranking1.setRanking(rankingValue2);
-        HibernateUtil.update(ranking1);
+        HibernateUtils.update(ranking1);
 
         ranking2.setRanking(rankingValue1);
-        HibernateUtil.update(ranking2);
+        HibernateUtils.update(ranking2);
     }
 
     public <T extends Ranking> T getPrevious(T ranking) {
@@ -49,7 +49,7 @@ public class RankingDao {
             hql += " AND " + whereClause;
         }
         hql += DESC_ORDER;
-        return (T) HibernateUtil.getFirstItem(hql);
+        return (T) HibernateUtils.getFirstItem(hql);
     }
 
     public <T extends Ranking> T getNext(T ranking) {
@@ -67,7 +67,7 @@ public class RankingDao {
             hql += " AND " + whereClause;
         }
         hql += ASC_ORDER;
-        return (T) HibernateUtil.getFirstItem(hql);
+        return (T) HibernateUtils.getFirstItem(hql);
     }
 
     public Integer add(Ranking ranking) {
@@ -77,6 +77,6 @@ public class RankingDao {
         } else {
             ranking.setRanking(1);
         }
-        return HibernateUtil.save(ranking);
+        return HibernateUtils.save(ranking);
     }
 }
