@@ -77,6 +77,11 @@ public class AdminIndexLogoController extends ImageController {
             return createFailResult("矩形Logo文件处理失败!");
         }
 
+        // adjust link
+        if (link != null && link.startsWith("www.")) {
+            link = "http://" + link;
+        }
+
         IndexLogoDao dao = new IndexLogoDao();
         if (isPositive(id)) {
             IndexLogo indexLogo = dao.getInstance(id);

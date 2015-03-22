@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.core.image;
 
+import com.qinyuan15.crawler.core.file.FileType;
+import com.qinyuan15.crawler.core.file.FileTypeJudge;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
 
@@ -46,8 +48,6 @@ public class ImageParser {
     }
 
     private static boolean isJPG(String sourcePath) {
-        sourcePath = sourcePath.toLowerCase();
-        return sourcePath.endsWith(".jpg") || sourcePath.endsWith(".jpeg")
-                || sourcePath.endsWith(".jpe");
+        return new FileTypeJudge().getType(sourcePath).equals(FileType.JPEG);
     }
 }
