@@ -7,6 +7,10 @@ import java.util.List;
  * Created by qinyuan on 15-2-28.
  */
 public class HotSearchWordDao {
+    public void delete(Integer id) {
+        HibernateUtil.delete(HotSearchWord.class, id);
+    }
+
     public Integer add(String content, Integer categoryId, Boolean hot) {
         HotSearchWord hotSearchWord = new HotSearchWord();
         hotSearchWord.setContent(content);

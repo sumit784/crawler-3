@@ -96,7 +96,9 @@ public class AdminIndexLogoController extends ImageController {
     @RequestMapping(value = "/admin-index-logo-delete", method = RequestMethod.POST)
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
         if (isPositive(id)) {
-            HibernateUtil.delete(IndexLogo.class, id);
+            IndexLogoDao dao = new IndexLogoDao();
+            logAction("删除主页Logo'%s'", dao.getInstance(id).getDescription());
+            dao.delete(id);
         }
         return SUCCESS;
     }
@@ -105,7 +107,9 @@ public class AdminIndexLogoController extends ImageController {
     @RequestMapping(value = "/admin-index-logo-rank-up", method = RequestMethod.POST)
     public Map<String, Object> rankUp(@RequestParam(value = "id", required = true) Integer id) {
         if (isPositive(id)) {
-            new IndexLogoDao().rankUp(id);
+            IndexLogoDao dao = new IndexLogoDao();
+            logAction("上移主页Logo'%s'的排序", dao.getInstance(id).getDescription());
+            dao.rankUp(id);
         }
         return SUCCESS;
     }
@@ -114,7 +118,9 @@ public class AdminIndexLogoController extends ImageController {
     @RequestMapping(value = "/admin-index-logo-rank-down", method = RequestMethod.POST)
     public Map<String, Object> rankDown(@RequestParam(value = "id", required = true) Integer id) {
         if (isPositive(id)) {
-            new IndexLogoDao().rankDown(id);
+            IndexLogoDao dao = new IndexLogoDao();
+            logAction("下移主页Logo'%s'的排序", dao.getInstance(id).getDescription());
+            dao.rankDown(id);
         }
         return SUCCESS;
     }

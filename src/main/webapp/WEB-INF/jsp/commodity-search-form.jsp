@@ -34,8 +34,8 @@
     </div>
     <div class="hotWords">
         <span ng-repeat="hotWord in hotWords">
-             <a class="noLineAnchor {{hotWord.color}}" href="javascript:void(0)"
-                ng-href="search?keyWord={{hotWord.content}}" target="_blank">
+             <a class="{{hotWord.style}}" href="javascript:void(0)"
+                ng-href="search?keyWord={{hotWord.content}}&categoryId={{categoryId}}" target="_blank">
                  {{hotWord.content}}
              </a>
         </span>

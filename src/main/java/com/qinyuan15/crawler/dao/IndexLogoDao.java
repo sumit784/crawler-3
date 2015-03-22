@@ -11,6 +11,10 @@ public class IndexLogoDao {
         return HibernateUtil.getList(IndexLogo.class, RankingDao.ASC_ORDER);
     }
 
+    public void delete(Integer id) {
+        HibernateUtil.delete(IndexLogo.class, id);
+    }
+
     public Integer add(String path, String link, String description) {
         IndexLogo indexLogo = new IndexLogo();
         indexLogo.setPath(path);

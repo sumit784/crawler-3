@@ -2,6 +2,11 @@ div.content table {
     float: left;
 }
 
+div.content table.normal th.hotSearchWord,
+div.content table.normal td.hotSearchWord {
+    padding-left: 40px;
+}
+
 div.content form {
     float: right;
 }
@@ -23,7 +28,6 @@ div.content table.inner {
     float: none;
 }
 
-div.content table.normal th.hotSearchWord,
-div.content table.normal td.hotSearchWord {
-    padding-left: 40px;
+div.content table.inner td.content span.hot {
+    color: red;
 }

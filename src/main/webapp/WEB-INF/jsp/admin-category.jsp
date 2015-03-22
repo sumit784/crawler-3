@@ -37,16 +37,16 @@
                     <table class="inner">
                         <tbody>
                         <c:forEach var="searchWord" items="${hotSearchWords}">
-                            <tr>
-                                <td>${searchWord.content}</td>
+                            <tr id="hotSearchWord_${searchWord.id}">
+                                <td class="content"><span <c:if test="${searchWord.hot}">class="hot"</c:if>>${searchWord.content}</span></td>
                                 <td>
                                     <jsp:include page="widget-edit-delete.jsp">
                                         <jsp:param name="editAction" value="editSearchWord($event)"/>
                                         <jsp:param name="deleteAction" value="deleteSearchWord($event)"/>
                                     </jsp:include>
                                     <jsp:include page="widget-ranking.jsp">
-                                        <jsp:param name="upAction" value="upSearchWord($event)"/>
-                                        <jsp:param name="downAction" value="downSearchWord($event)"/>
+                                        <jsp:param name="upAction" value="rankUpSearchWord($event)"/>
+                                        <jsp:param name="downAction" value="rankDownSearchWord($event)"/>
                                     </jsp:include>
                                 </td>
                             </tr>
@@ -75,11 +75,11 @@
         </div>
         <div>
             <button id="addSubmit" type="submit" class="btn btn-success"
-                ng-click="validateInput($event)">
+                    ng-click="validateInput($event)">
                 添加
             </button>
             <button id="editSubmit" type="submit" class="btn btn-success" disabled
-                ng-click="validateInput($event)">
+                    ng-click="validateInput($event)">
                 修改
             </button>
         </div>

@@ -135,15 +135,13 @@
             var url = 'json/hotSearchWord.json?size=8&categoryId=' + $scope.categoryId;
             $http.get(url).success(function (data) {
                 $scope.hotWords = data;
-                if (data[0]) {
-                    data[0].color = 'red';
-                }
-                if (data[3]) {
-                    data[3].color = 'red';
-                }
-                if (data[7]) {
-                    data[7].color = 'red';
-                }
+                $.each($scope.hotWords, function () {
+                    if (this['hot']) {
+                        this.style = 'noLineAnchor red';
+                    } else {
+                        this.style = 'noLineAnchor';
+                    }
+                });
             });
         }
     });

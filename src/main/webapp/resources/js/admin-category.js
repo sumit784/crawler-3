@@ -53,7 +53,11 @@
             this.get$Id().val(id);
             this.get$CategoryId().val(categoryId);
             this.get$Content().val(content);
-            this.get$Hot().val(hot);
+            if (hot) {
+                this.get$Hot().attr('checked', 'checked');
+            } else {
+                this.get$Hot().attr('checked', null);
+            }
             transparentBackground.show();
             this.$form.show();
             this.get$Content().focusOrSelect();
@@ -76,12 +80,18 @@
     searchWordInput.$form.ajaxForm(normalSubmitCallback);
 
     angularUtils.controller(function ($scope) {
+        // actions about validation
         $scope.validateInput = buildNormalValidationCallback(input);
         $scope.validateSearchWordInput = buildNormalValidationCallback(searchWordInput);
+
+        // actions about category
         $scope.deleteCategory = function (event) {
+            var target = event.target;
             $.post('admin-category-delete', {
-                id: getTableRowIdByImgElement(event.target)
-            }, normalSubmitCallback);
+                id: getTableRowIdByImgElement(target)
+            }, buildSubmitCallback(function () {
+                removeTableRow(target);
+            }));
         };
         $scope.editCategory = function (event) {
             var $this = $(event.target);
@@ -96,14 +106,52 @@
             input.get$AddSubmit().attr('disabled', true);
             input.get$EditSubmit().attr('disabled', false);
         };
+
+        // actions about search word
         $scope.cancelSearchWordInput = function () {
             searchWordInput.hide();
+        };
+        $scope.deleteSearchWord = function (event) {
+            var target = event.target;
+            $.post('admin-hot-search-word-delete', {
+                id: getTableRowIdByImgElement(target)
+            }, buildSubmitCallback(function () {
+                removeTableRow(target);
+            }));
         };
         $scope.addSearchWord = function (event) {
             var categoryId = getTableRowIdByImgElement(event.target);
             searchWordInput.get$EditSubmit().hide();
             searchWordInput.get$AddSubmit().show();
             searchWordInput.show(-1, categoryId, '', false);
-        }
+        };
+        $scope.editSearchWord = function (event) {
+            var $this = $(event.target);
+            var $tr = getParent($this, 'tr');
+            var id = $tr.attr('id').replace(/\D/g, '');
+            var content = $.trim($tr.find('td.content').text());
+            var hot = $tr.find('td.content span').hasClass('hot');
+            var categoryId = getParent($tr, 'tr').attr('id').replace(/\D/g, '');
+
+            searchWordInput.get$EditSubmit().show();
+            searchWordInput.get$AddSubmit().hide();
+            searchWordInput.show(id, categoryId, content, hot);
+        };
+        $scope.rankUpSearchWord = function (event) {
+            var target = event.target;
+            $.post('admin-hot-search-word-rank-up', {
+                id: getTableRowIdByImgElement(target)
+            }, buildSubmitCallback(function () {
+                moveUpTableRow(target);
+            }));
+        };
+        $scope.rankDownSearchWord = function (event) {
+            var target = event.target;
+            $.post('admin-hot-search-word-rank-down', {
+                id: getTableRowIdByImgElement(target)
+            }, buildSubmitCallback(function () {
+                moveDownTableRow(target);
+            }));
+        };
     });
 })();

@@ -55,33 +55,23 @@
             $.post('admin-index-logo-delete', {
                 id: getTableRowIdByImgElement(target)
             }, buildSubmitCallback(function () {
-                setTimeout(function () {
-                    getParent($(target), 'tr').remove();
-                }, 500);
+                removeTableRow(target);
             }));
         };
-        $scope.upIndexLogo = function (event) {
+        $scope.rankUpIndexLogo = function (event) {
             var target = event.target;
             $.post('admin-index-logo-rank-up', {
                 id: getTableRowIdByImgElement(target)
             }, buildSubmitCallback(function () {
-                var $tr = getParent($(target), 'tr');
-                var $prevTr = $tr.prev();
-                if ($prevTr.size() > 0) {
-                    $tr.insertBefore($prevTr);
-                }
+                moveUpTableRow(target);
             }));
         };
-        $scope.downIndexLogo = function (event) {
+        $scope.rankDownIndexLogo = function (event) {
             var target = event.target;
             $.post('admin-index-logo-rank-down', {
                 id: getTableRowIdByImgElement(target)
             }, buildSubmitCallback(function () {
-                var $tr = getParent($(target), 'tr');
-                var $nextTr = $tr.next();
-                if ($nextTr.size() > 0) {
-                    $tr.insertAfter($nextTr);
-                }
+                moveDownTableRow(target);
             }));
         };
     });

@@ -1,7 +1,6 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.HotSearchWordDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +22,7 @@ public class AdminHotSearchWordController extends BaseController {
                                          @RequestParam(value = "content", required = true) String content,
                                          @RequestParam(value = "hot", required = false) Boolean hot,
                                          @RequestParam(value = "categoryId", required = true) Integer categoryId) {
-
-        if (hot == null) {
-            hot = false;
-        }
+        hot = (hot != null);
 
         HotSearchWordDao dao = new HotSearchWordDao();
         if (isPositive(id)) {
@@ -43,13 +39,33 @@ public class AdminHotSearchWordController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/admin-hot-search-word-delete", method = RequestMethod.POST)
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
-        CategoryDao dao = new CategoryDao();
-        if (dao.isUsed(id)) {
-            return createFailResult("该商品分类已经被某些商品或其他分类使用，不能删除");
-        } else {
-            logAction("删除商品分类'%s'", dao.getInstance(id).getName());
+        if (isPositive(id)) {
+            HotSearchWordDao dao = new HotSearchWordDao();
+            logAction("删除搜索关键词'%s'", dao.getInstance(id).getContent());
             dao.delete(id);
-            return SUCCESS;
         }
+        return SUCCESS;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin-hot-search-word-rank-up", method = RequestMethod.POST)
+    public Map<String, Object> rankUp(@RequestParam(value = "id", required = true) Integer id) {
+        if (isPositive(id)) {
+            HotSearchWordDao dao = new HotSearchWordDao();
+            logAction("上移搜索关键词'%s'的排序", dao.getInstance(id).getContent());
+            dao.rankUp(id);
+        }
+        return SUCCESS;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin-hot-search-word-rank-down", method = RequestMethod.POST)
+    public Map<String, Object> rankDown(@RequestParam(value = "id", required = true) Integer id) {
+        if (isPositive(id)) {
+            HotSearchWordDao dao = new HotSearchWordDao();
+            logAction("下移搜索关键词'%s'的排序", dao.getInstance(id).getContent());
+            dao.rankDown(id);
+        }
+        return SUCCESS;
     }
 }
