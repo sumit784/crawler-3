@@ -36,6 +36,10 @@ public class BaseController {
     @Autowired
     protected HttpServletRequest request;
 
+    protected String redirect(String page) {
+        return "redirect:" + page;
+    }
+
     protected String getParameter(String name) {
         try {
             request.setCharacterEncoding("utf-8");

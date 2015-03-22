@@ -105,6 +105,10 @@
     $elements.enlargeIcon.click(function () {
         transparentBackground.show();
         $elements.enlargeImage.fadeIn(250);
+    }).hover(function(){
+        $(this).removeClass('mediumTransparent');
+    }, function(){
+        $(this).addClass('mediumTransparent');
     });
     $elements.closeLargeImageLink.click(function () {
         $elements.enlargeImage.fadeOut(250);

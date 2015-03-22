@@ -27,7 +27,6 @@ public class AdminEditCommodityController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminEditCommodityController.class);
 
     private final static String INDEX = "admin";
-    private final static String REDIRECT_INDEX = "redirect:" + INDEX;
     private final static String EDIT_PAGE = "admin-edit-commodity";
 
     @RequestMapping("/admin-edit-commodity")
@@ -77,19 +76,19 @@ public class AdminEditCommodityController extends ImageController {
                 logAction("彻底删除商品'%s'", commodityDao.getNameById(id));
                 commodityDao.delete(id);
             }
-            return INDEX;
+            return redirect(INDEX);
         } else if (activateSubmit != null) {
             if (isPositive(id)) {
                 logAction("激活商品'%s'", commodityDao.getNameById(id));
                 commodityDao.activate(id);
             }
-            return INDEX;
+            return redirect(INDEX);
         } else if (deactivateSubmit != null) {
             if (isPositive(id)) {
                 logAction("删除商品'%s'", commodityDao.getNameById(id));
                 commodityDao.deactivate(id);
             }
-            return INDEX;
+            return redirect(INDEX);
         }
 
 
@@ -143,7 +142,7 @@ public class AdminEditCommodityController extends ImageController {
             logAction("更新商品'%s'", commodity.getName());
             LOGGER.info("Update Commodity {}", commodity.getId());
         } else {
-            id = (Integer) HibernateUtils.save(commodity);
+            id = HibernateUtils.save(commodity);
             logAction("添加商品'%s'", commodity.getName());
             LOGGER.info("Insert new Commodity {}", id);
         }
@@ -165,7 +164,7 @@ public class AdminEditCommodityController extends ImageController {
             LOGGER.info("complete saving detail images");
         }
 
-        return "redirect:" + INDEX;
+        return redirect(INDEX);
     }
 
     private String toEditPage(String errorInfo) {

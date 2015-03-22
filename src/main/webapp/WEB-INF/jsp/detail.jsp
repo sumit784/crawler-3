@@ -18,7 +18,7 @@
                              <c:if test="${status.index >0 }">style="display: none;"</c:if>/>
                     </c:forEach>
 
-                    <div class="enlarge"></div>
+                    <div class="enlarge mediumTransparent"></div>
                     <div class="enlargeImage">
                         <c:forEach var="picture" items="${pictures}" varStatus="status">
                             <img src="${picture}"/>
@@ -78,13 +78,13 @@
             </div>
             <div class="buySubmit">
                 <c:if test="${fn:length(branch.shoppes)>0}">
-                    <a id="couponLink" class="noLineAnchor" href="javascript:void(0)">
+                    <span id="couponLink" class="noLineAnchor" href="javascript:void(0)">
                         别忘了领取
-                        <a href="${branch.shoppes[0].url}" target="_blank">
+                        <a class="noLineAnchor" href="${branch.shoppes[0].url}" target="_blank">
                             <img src="resources/css/images/edit-commodity/coupon.png"/>
                         </a>
                         哦
-                    </a>
+                    </span>
                 </c:if>
                 <a href="${commodity.buyUrl}" target="_blank">
                     <button id="buySubmit" class="orangeButton">去购买</button>
@@ -146,6 +146,8 @@
         </div>
     </div>
     <div class="text">
+        <%@include file="widget-detail-text.jsp"%>
+        <!--
         <div style="font-size:10pt;color:#a16b4e;margin: 12px 15px;">
             无非就是买买买，何必等到又十一
         </div>
@@ -155,6 +157,7 @@
         <div style="font-size:10pt;margin:12px 15px;text-align:right;">
             ......（<span style="color:#a16b4e;">更多</span>）
         </div>
+        -->
         <div style="margin: 5px 5px 5px -5px;">
             <img src="resources/css/images/detail/other11.png"/>
         </div>
@@ -170,7 +173,7 @@
         </div>
     </div>
     <div class="advice">
-        <a href="javascript:void(0)">我想给你们些建议</a>
+        <a target="_blank" href="company-info?tab=2">我想给你们些建议</a>
     </div>
 </div>
 <%@include file="footer.jsp" %>

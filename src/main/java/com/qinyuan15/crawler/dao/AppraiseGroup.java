@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
 /**
- * Persist Object of Branch
+ * Persist Object of AppraiseGroup
  * Created by qinyuan on 15-2-18.
  */
 public class AppraiseGroup extends PersistObject {

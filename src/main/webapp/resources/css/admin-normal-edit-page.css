@@ -9,3 +9,16 @@ div.content form {
     overflow: hidden;
     font-size: 11pt;
 }
+
+form.fixedForm {
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    background-color: #D3E6E2;
+    z-index: 10;
+    display: none;
+    padding: 0;
+}
+form.fixedForm > div{
+    margin: 20px;
+}

@@ -1,0 +1,10 @@
+#detailForm {
+    padding: 20px;
+    width: 550px;
+    float: left;
+}
+
+div.content fieldset {
+    float: right;
+    width: 250px;
+}

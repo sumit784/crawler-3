@@ -61,12 +61,14 @@ div.content div.left div.commodity,
 div.content div.left div.log,
 div.content div.left div.branch,
 div.content div.left div.category,
-div.content div.left div.index-logo {
+div.content div.left div.index-logo,
+div.content div.left div.detail {
     font-size: 9pt;
 }
 
 div.content div.left div.branch,
-div.content div.left div.category {
+div.content div.left div.category,
+div.content div.left div.index-logo {
     padding-bottom: 0;
 }
 

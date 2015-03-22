@@ -38,7 +38,9 @@
                         <tbody>
                         <c:forEach var="searchWord" items="${hotSearchWords}">
                             <tr id="hotSearchWord_${searchWord.id}">
-                                <td class="content"><span <c:if test="${searchWord.hot}">class="hot"</c:if>>${searchWord.content}</span></td>
+                                <td class="content"><span
+                                        <c:if test="${searchWord.hot}">class="hot"</c:if>>${searchWord.content}</span>
+                                </td>
                                 <td>
                                     <jsp:include page="widget-edit-delete.jsp">
                                         <jsp:param name="editAction" value="editSearchWord($event)"/>
@@ -59,8 +61,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <form id="categoryForm" method="post" action="admin-category-add-update"
-          enctype="multipart/form-data">
+    <form id="categoryForm" method="post" action="admin-category-add-update">
         <input type="hidden" name="id"/>
 
         <div>
@@ -84,7 +85,8 @@
             </button>
         </div>
     </form>
-    <form id="searchWordForm" method="post" action="admin-hot-search-word-add-update">
+    <form class="fixedForm" id="searchWordForm" method="post"
+          action="admin-hot-search-word-add-update">
         <input type="hidden" name="id"/>
         <input type="hidden" name="categoryId"/>
 
