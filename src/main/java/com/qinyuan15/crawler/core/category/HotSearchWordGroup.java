@@ -13,40 +13,31 @@ import java.util.List;
  * Created by qinyuan on 15-3-21.
  */
 public class HotSearchWordGroup {
-    private Integer categoryId;
-    private String categoryName;
-    private int categoryLevel;
+    private Category category;
     private List<HotSearchWord> hotSearchWords;
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public void setCategoryLevel(int categoryLevel) {
-        this.categoryLevel = categoryLevel;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
+    private Integer categoryLevel;
 
     public void setHotSearchWords(List<HotSearchWord> hotSearchWords) {
         this.hotSearchWords = hotSearchWords;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public void setCategoryLevel(Integer categoryLevel) {
+        this.categoryLevel = categoryLevel;
     }
 
     public List<HotSearchWord> getHotSearchWords() {
         return hotSearchWords;
     }
 
-    public int getCategoryLevel() {
+    public Category getCategory() {
+        return category;
+    }
+
+    public Integer getCategoryLevel() {
         return categoryLevel;
     }
 
@@ -68,8 +59,7 @@ public class HotSearchWordGroup {
     private static HotSearchWordGroup getInstance(Category category, int categoryLevel) {
         HotSearchWordGroup hotSearchWordGroup = new HotSearchWordGroup();
 
-        hotSearchWordGroup.setCategoryId(category.getId());
-        hotSearchWordGroup.setCategoryName(category.getName());
+        hotSearchWordGroup.setCategory(category);
         hotSearchWordGroup.setCategoryLevel(categoryLevel);
         hotSearchWordGroup.setHotSearchWords(new HotSearchWordDao().getInstances(category.getId()));
 

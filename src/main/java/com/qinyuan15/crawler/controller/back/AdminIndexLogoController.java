@@ -84,8 +84,10 @@ public class AdminIndexLogoController extends ImageController {
             indexLogo.setLink(link);
             indexLogo.setDescription(description);
             HibernateUtil.update(indexLogo);
+            logAction("更新主页Logo'%s'", description);
         } else {
             dao.add(logoUrl, link, description);
+            logAction("添加主页Logo'%s'", description);
         }
         return SUCCESS;
     }

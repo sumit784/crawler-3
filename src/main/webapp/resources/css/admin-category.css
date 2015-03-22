@@ -9,3 +9,21 @@ div.content form {
 div.content form > div {
     margin: 20px;
 }
+
+#searchWordForm {
+    position: fixed;
+    top: 40%;
+    left: 40%;
+    background-color: #D3E6E2;
+    z-index: 10;
+    display: none;
+}
+
+div.content table.inner {
+    float: none;
+}
+
+div.content table.normal th.hotSearchWord,
+div.content table.normal td.hotSearchWord {
+    padding-left: 40px;
+}

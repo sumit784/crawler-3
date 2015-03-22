@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.core.category.HotSearchWordGroup;
 import com.qinyuan15.crawler.dao.Category;
 import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.HibernateUtil;
@@ -21,9 +22,10 @@ import java.util.Map;
 public class AdminCategoryController extends BaseController {
     @RequestMapping("/admin-category")
     public String index(ModelMap model) {
+        //model.addAttribute("categories", categoryDao.getInstances());
         CategoryDao categoryDao = new CategoryDao();
-        model.addAttribute("categories", categoryDao.getInstances());
         model.addAttribute("rootCategories", categoryDao.getRootInstances());
+        model.addAttribute("searchWordGroups", HotSearchWordGroup.getInstances());
         addCssAndJs("admin-normal-edit-page");
 
         setTitle("编辑商品分类");

@@ -84,14 +84,7 @@
     });
 
     angularUtils.controller(function ($scope) {
-        $scope.validateInput = function (event) {
-            if (!input.validate()) {
-                event.preventDefault();
-                return false;
-            } else {
-                return true;
-            }
-        };
+        $scope.validateInput = buildNormalValidationCallback(input);
         $scope.editBranch = function (event) {
             var $tr = getParent($(event.target), 'tr');
             var id = $tr.attr('id').replace(/\D/g, '');
