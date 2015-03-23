@@ -40,29 +40,31 @@
         }
     };
 
+    imageInput.$form.ajaxForm(normalSubmitCallback);
+
     angularUtils.controller(function ($scope) {
         $scope.validateImageInput = buildNormalValidationCallback(imageInput);
         $scope.cancelImageInput = function () {
             imageInput.hide();
         };
-        $scope.addImage = function (event) {
+        $scope.addImage = function () {
             imageInput.get$EditSubmit().hide();
             imageInput.get$AddSubmit().show();
             imageInput.show(-1, '');
         };
-        /*
-        $scope.editSearchWord = function (event) {
+        $scope.editImage = function (event) {
             var $this = $(event.target);
             var $tr = getParent($this, 'tr');
             var id = $tr.attr('id').replace(/\D/g, '');
-            var content = $.trim($tr.find('td.content').text());
-            var hot = $tr.find('td.content span').hasClass('hot');
-            var categoryId = getParent($tr, 'tr').attr('id').replace(/\D/g, '');
-
-            searchWordInput.get$EditSubmit().show();
-            searchWordInput.get$AddSubmit().hide();
-            searchWordInput.show(id, categoryId, content, hot);
+            var url = $.trim($tr.find('a:eq(0)').attr('title'));
+            imageInput.get$EditSubmit().show();
+            imageInput.get$AddSubmit().hide();
+            imageInput.show(id, url);
         };
-        */
+        $scope.deleteImage = function (event) {
+            $.post('admin-detail-image-delete', {
+                id: getTableRowIdByImgElement(event.target)
+            }, normalSubmitCallback);
+        };
     });
 })();

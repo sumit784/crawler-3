@@ -1,11 +1,9 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
-import com.qinyuan15.crawler.core.image.PictureUrlValidator;
 import com.qinyuan15.crawler.dao.HibernateUtils;
 import com.qinyuan15.crawler.dao.IndexLogo;
 import com.qinyuan15.crawler.dao.IndexLogoDao;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -27,6 +23,7 @@ import java.util.Map;
 @Controller
 public class AdminIndexLogoController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminIndexLogoController.class);
+    private final static String SAVE_PATH_PREFIX = "mall/indexLogo/logo/";
 
     @RequestMapping("/admin-index-logo")
     public String index(ModelMap model) {
@@ -34,30 +31,6 @@ public class AdminIndexLogoController extends ImageController {
         addCssAndJs("admin-normal-edit-page");
         setTitle("编辑主页Logo");
         return "admin-index-logo";
-    }
-
-    private String getImageUrl(String imageUrl, MultipartFile imageFile) throws IOException {
-        if (imageFile == null) {
-            if (new PictureUrlValidator(getLocalAddress()).isLocal(imageUrl)) {
-                return pictureUrlConverter.urlToPath(imageUrl);
-            } else {
-                String filePath = imageDownloader.save(imageUrl);
-                LOGGER.info("save upload image to {}", filePath);
-                return filePath;
-            }
-        } else {
-            String relativePath = "mall/indexLogo/logo/" + RandomStringUtils.randomAlphabetic(20)
-                    + "_" + imageFile.getOriginalFilename();
-            String filePath = imageDownloader.getSaveDir() + "/" + relativePath;
-            File file = new File(filePath);
-            File parent = file.getParentFile();
-            if (!parent.isDirectory() && !parent.mkdirs()) {
-                LOGGER.error("fail to create directory {}", parent.getAbsolutePath());
-            }
-            imageFile.transferTo(file);
-            LOGGER.info("save upload image to {}", filePath);
-            return filePath;
-        }
     }
 
     @ResponseBody
@@ -70,7 +43,7 @@ public class AdminIndexLogoController extends ImageController {
         // deal with logUrl
         String logoUrl;
         try {
-            logoUrl = getImageUrl(logo, logoFile);
+            logoUrl = getSavePath(logo, logoFile, SAVE_PATH_PREFIX);
         } catch (Exception e) {
             LOGGER.error("fail to deal with logoUrl, logo:{}, logoFile:{}, error:{}"
                     , logo, logoFile, e);

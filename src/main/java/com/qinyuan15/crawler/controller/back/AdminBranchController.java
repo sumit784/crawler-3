@@ -1,9 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
-import com.qinyuan15.crawler.core.image.PictureUrlValidator;
 import com.qinyuan15.crawler.dao.*;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +24,7 @@ import java.util.Map;
 @Controller
 public class AdminBranchController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminBranchController.class);
+    private final static String SAVE_PATH_PREFIX = "mall/branch/logo/";
 
     @RequestMapping("/admin-branch")
     public String index(ModelMap model) {
@@ -36,30 +33,6 @@ public class AdminBranchController extends ImageController {
         addCssAndJs("admin-normal-edit-page");
         setTitle("编辑品牌");
         return "admin-branch";
-    }
-
-    private String getImageUrl(String imageUrl, MultipartFile imageFile) throws IOException {
-        if (imageFile == null) {
-            if (new PictureUrlValidator(getLocalAddress()).isLocal(imageUrl)) {
-                return pictureUrlConverter.urlToPath(imageUrl);
-            } else {
-                String filePath = imageDownloader.save(imageUrl);
-                LOGGER.info("save upload image to {}", filePath);
-                return filePath;
-            }
-        } else {
-            String relativePath = "mall/branch/logo/" + RandomStringUtils.randomAlphabetic(20)
-                    + "_" + imageFile.getOriginalFilename();
-            String filePath = imageDownloader.getSaveDir() + "/" + relativePath;
-            File file = new File(filePath);
-            File parent = file.getParentFile();
-            if (!parent.isDirectory() && !parent.mkdirs()) {
-                LOGGER.error("fail to create directory {}", parent.getAbsolutePath());
-            }
-            imageFile.transferTo(file);
-            LOGGER.info("save upload image to {}", filePath);
-            return filePath;
-        }
     }
 
     @ResponseBody
@@ -80,7 +53,7 @@ public class AdminBranchController extends ImageController {
         // deal with logUrl
         String logoUrl;
         try {
-            logoUrl = getImageUrl(logo, logoFile);
+            logoUrl = getSavePath(logo, logoFile, SAVE_PATH_PREFIX);
         } catch (Exception e) {
             LOGGER.error("fail to deal with logoUrl, logo:{}, logoFile:{}, error:{}"
                     , logo, logoFile, e);
@@ -90,7 +63,7 @@ public class AdminBranchController extends ImageController {
         // deal with squareLogoUrl
         String squareLogoUrl;
         try {
-            squareLogoUrl = getImageUrl(squareLogo, squareLogoFile);
+            squareLogoUrl = getSavePath(squareLogo, squareLogoFile, SAVE_PATH_PREFIX);
         } catch (Exception e) {
             LOGGER.error("fail to deal with squareLogoUrl, squareLogo:{}, squareLogoFile:{}, error:{}"
                     , logo, logoFile, e);
@@ -100,7 +73,7 @@ public class AdminBranchController extends ImageController {
         // deal with poster
         String posterUrl;
         try {
-            posterUrl = getImageUrl(poster, posterFile);
+            posterUrl = getSavePath(poster, posterFile, SAVE_PATH_PREFIX);
         } catch (Exception e) {
             LOGGER.error("fail to deal with posterUrl, poster:{}, posterFile:{}, error:{}"
                     , poster, posterFile, e);
@@ -124,7 +97,7 @@ public class AdminBranchController extends ImageController {
             HibernateUtils.update(branch);
             logAction("更新品牌'%s'", branch.getName());
         } else {
-            id = (Integer) HibernateUtils.save(branch);
+            id = HibernateUtils.save(branch);
             logAction("添加品牌'%s'", branch.getName());
         }
 

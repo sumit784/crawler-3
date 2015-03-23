@@ -147,6 +147,7 @@
     </div>
     <div class="text">
         <%@include file="widget-detail-text.jsp"%>
+        <%@include file="widget-detail-images.jsp" %>
         <!--
         <div style="font-size:10pt;color:#a16b4e;margin: 12px 15px;">
             无非就是买买买，何必等到又十一
@@ -158,12 +159,14 @@
             ......（<span style="color:#a16b4e;">更多</span>）
         </div>
         -->
+        <!--
         <div style="margin: 5px 5px 5px -5px;">
             <img src="resources/css/images/detail/other11.png"/>
         </div>
         <div style="margin: 5px 5px 5px -5px;">
             <img src="resources/css/images/detail/other11.png"/>
         </div>
+        -->
     </div>
     <div class="attention">
         <div class="title">关注我们</div>

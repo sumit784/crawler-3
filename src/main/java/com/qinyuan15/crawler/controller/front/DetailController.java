@@ -67,7 +67,9 @@ public class DetailController extends ImageController {
         model.put("share", shareLinks);
 
         // AppConfig
-        model.put("appConfig", new AppConfigDao().getInstance());
+        AppConfig appConfig = new AppConfigDao().getInstance();
+        model.addAttribute("detailText", appConfig.getDetailText());
+        model.addAttribute("detailImages", pictureUrlConverter.pathsToUrls(appConfig.getDetailImagesList()));
 
         addJs("commodity-parameters");
         addJs("lib/linecharts/raphael-min");

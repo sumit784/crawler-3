@@ -2,9 +2,7 @@
 <%@include file="header.jsp" %>
 <div class="boxShadow">
     <form id="detailForm" method="post" action="admin-detail-update">
-        <%@include file="admin-detail-app-config-id.jsp" %>
-
-        <textarea class="ckeditor" name="detailText">${appConfig.detailText}</textarea>
+        <textarea class="ckeditor" name="detailText">${detailText}</textarea>
 
         <div>
             <button id="editSubmit" type="submit" class="btn btn-success">
@@ -13,6 +11,24 @@
         </div>
 
         <div class="image">
+            <table class="normal">
+                <tbody>
+                <c:forEach var="detailImage" items="${detailImages}" varStatus="status">
+                    <tr id="detailImage_${status.index}">
+                        <td>
+                            <a class="limit-size" data-options="limit:50" href="${detailImage}"
+                               target="_blank" title="${detailImage}">${detailImage}</a>
+                        </td>
+                        <td>
+                            <jsp:include page="widget-edit-delete.jsp">
+                                <jsp:param name="editAction" value="editImage($event)"/>
+                                <jsp:param name="deleteAction" value="deleteImage($event)"/>
+                            </jsp:include>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
         <div>
             <button id="addImage" ng-click="addImage()" type="button" class="btn btn-default">
@@ -24,11 +40,12 @@
         <legend>效果</legend>
         <div class="effect">
             <%@include file="widget-detail-text.jsp" %>
+            <%@include file="widget-detail-images.jsp" %>
         </div>
     </fieldset>
-    <form class="fixedForm" id="imageForm" method="post" action="admin-detail-add-image"
+    <form class="fixedForm" id="imageForm" method="post" action="admin-detail-image-add-update"
           enctype="multipart/form-data">
-        <%@include file="admin-detail-app-config-id.jsp"%>
+        <input type="hidden" name="id"/>
 
         <div>
             <label>(url或上传图片)</label><span class="required">*</span><br/>

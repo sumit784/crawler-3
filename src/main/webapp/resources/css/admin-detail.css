@@ -8,3 +8,11 @@ div.content fieldset {
     float: right;
     width: 250px;
 }
+
+#detailForm div.image {
+    margin-top: 30px;
+}
+
+#detailForm div.image table td {
+    padding-right: 20px;
+}

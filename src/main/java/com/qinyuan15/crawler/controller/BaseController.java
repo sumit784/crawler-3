@@ -23,7 +23,7 @@ public class BaseController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
-    protected final static Map<String, String> EMPTY_MAP = new HashMap<String, String>();
+    protected final static Map<String, String> EMPTY_MAP = new HashMap<>();
 
     protected final static Map<String, Object> SUCCESS = createResultMap(true, null);
 
@@ -118,13 +118,13 @@ public class BaseController {
     }
 
     protected Map<String, Object> createSimpleMap(String key, Object value) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put(key, value);
         return map;
     }
 
     protected static Map<String, Object> createResultMap(boolean success, Object detail) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("success", success);
         map.put("detail", detail);
         return map;

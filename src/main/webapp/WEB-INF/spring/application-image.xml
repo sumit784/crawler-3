@@ -37,8 +37,10 @@
         <property name="baseDir" value="/var/www/html/images"/>
         <property name="redundantImageValidator" ref="redundantImageValidator"/>
     </bean>
+    <!--
     <task:scheduled-tasks>
         <task:scheduled ref="imageCleaner" method="clean" cron="0 0 0 * * ?"/>
     </task:scheduled-tasks>
+    -->
 
 </beans>
