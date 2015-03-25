@@ -115,3 +115,13 @@ div.rightFloat div.split {
     height: 7px;
     background: url("images/rightFloat.gif") repeat-y;
 }
+
+div.content div.goods > div.images > div.no-found {
+    padding-top: 40px;
+    padding-bottom: 50px;
+    text-align: center;
+    width: 950px;
+}
+div.content div.goods > div.images > div.no-found img{
+    margin-bottom: 30px;
+}

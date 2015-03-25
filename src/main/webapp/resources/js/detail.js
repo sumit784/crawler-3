@@ -56,7 +56,8 @@
     var $elements = {
         smallImages: $('div.snapshot div.left div.smallImage img'),
         trendChart: $('#trendChart'),
-        trendImage: $('#trendImage'),
+        trendDiv: $('div.content > div.left div.snapshot div.right div.price div.trend'),
+        trendTextDiv: $('div.content > div.left div.snapshot div.right div.price div.trend div.text'),
         priceHistory: $('div.content > div.left div.snapshot div.right div.priceHistory'),
         descriptionTitles: $('div.description div.title span'),
         descriptionDetail: $('div.description div.detail'),
@@ -79,13 +80,14 @@
         $elements.largeImage.find('img.boxShadow').hide().eq(index).show();
         $elements.enlargeImage.find('img').hide().eq(index).show();
     });
-    $elements.trendImage.hover(function () {
+    $elements.trendDiv.hover(function () {
         historyTrend.show();
     }, function () {
-    });
-    $elements.priceHistory.hover(function () {
-    }, function () {
         historyTrend.hide();
+    });
+    $elements.trendTextDiv.hover(function () {
+        historyTrend.show();
+    }, function(){
     });
     $elements.descriptionTitles.mouseover(function () {
         $elements.descriptionTitles.filter('.selected').removeClass('selected');

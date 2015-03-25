@@ -20,6 +20,13 @@
             </a>
         </div>
     </div>
+    <div ng-show="(snapshots.length==0)" style="display: none;" class="no-found boxShadow">
+        <img src="resources/css/images/list/no-found.png"/>
+
+        <p>对不起，没有处于最低的商品</p>
+
+        <p>您可以再看看其他类别的商品</p>
+    </div>
 </div>
 <div class="loading">
     <span>加载中，请稍候...</span>

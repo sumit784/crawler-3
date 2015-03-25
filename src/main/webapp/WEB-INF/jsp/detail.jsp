@@ -46,34 +46,38 @@
                     最高售价： <span class="highestPrice">￥${highPrice}</span>
                     上架时间： <span class="releaseDate">${commodity.onShelfTime}</span>
                 </div>
-                <div>
-                    <span class="trend" id="trendImage">相关评价 和 历史价格走势
-                    <img class="link" src="resources/css/images/detail/trend.png"/></span>
-                </div>
-                <div class="priceHistory boxShadow">
-                    <div id="trendChart"></div>
-                    <div class="triangle-border tb-border"></div>
-                    <div class="triangle-border tb-background"></div>
-                    <c:if test="${fn:length(positiveAppraiseGroups)>0 || fn:length(negativeAppraiseGroups)>0}">
-                        <div class="comments">
-                            <div class="appraiseGroups">
-                                <c:forEach var="appraiseGroup" items="${positiveAppraiseGroups}">
-                                    <div class="appraiseGroup">
-                                        <a class="noLineAnchor positive"
-                                           href="javascript:void(0)">${appraiseGroup.content}</a>
-                                    </div>
-                                </c:forEach>
+                <div class="trend">
+                    <div class="text">
+                        <span>
+                            相关评价 和 历史价格走势
+                            <img class="link" src="resources/css/images/detail/trend.png"/>
+                        </span>
+                    </div>
+                    <div class="priceHistory boxShadow">
+                        <div id="trendChart"></div>
+                        <div class="triangle-border tb-border"></div>
+                        <div class="triangle-border tb-background"></div>
+                        <c:if test="${fn:length(positiveAppraiseGroups)>0 || fn:length(negativeAppraiseGroups)>0}">
+                            <div class="comments">
+                                <div class="appraiseGroups">
+                                    <c:forEach var="appraiseGroup" items="${positiveAppraiseGroups}">
+                                        <div class="appraiseGroup">
+                                            <a class="noLineAnchor positive"
+                                               href="javascript:void(0)">${appraiseGroup.content}</a>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                                <div class="appraiseGroups">
+                                    <c:forEach var="appraiseGroup" items="${negativeAppraiseGroups}">
+                                        <div class="appraiseGroup">
+                                            <a class="noLineAnchor negative"
+                                               href="javascript:void(0)">${appraiseGroup.content}</a>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                             </div>
-                            <div class="appraiseGroups">
-                                <c:forEach var="appraiseGroup" items="${negativeAppraiseGroups}">
-                                    <div class="appraiseGroup">
-                                        <a class="noLineAnchor negative"
-                                           href="javascript:void(0)">${appraiseGroup.content}</a>
-                                    </div>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </c:if>
+                        </c:if>
+                    </div>
                 </div>
             </div>
             <div class="buySubmit">
@@ -120,9 +124,10 @@
             </div>
         </div>
     </div>
+    <script src="resources/js/image-adjust.js"></script>
     <c:forEach var="detailPicture" items="${detailPictures}">
         <div class="detailImage boxShadow">
-            <img src="${detailPicture}"/>
+            <img src="${detailPicture}" onload="adjustImageWidth(this, 670)"/>
         </div>
     </c:forEach>
 </div>
@@ -146,9 +151,9 @@
         </div>
     </div>
     <div class="text">
-        <%@include file="widget-detail-text.jsp"%>
+        <%@include file="widget-detail-text.jsp" %>
         <%@include file="widget-detail-images.jsp" %>
-        <!--
+        <%--
         <div style="font-size:10pt;color:#a16b4e;margin: 12px 15px;">
             无非就是买买买，何必等到又十一
         </div>
@@ -166,7 +171,7 @@
         <div style="margin: 5px 5px 5px -5px;">
             <img src="resources/css/images/detail/other11.png"/>
         </div>
-        -->
+        --%>
     </div>
     <div class="attention">
         <div class="title">关注我们</div>

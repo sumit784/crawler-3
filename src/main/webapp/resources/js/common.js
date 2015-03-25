@@ -150,6 +150,7 @@ var angularUtils = {
         $http.get("json/category.json").success(function (data) {
             var selectedCategoryIndex;
             var href = location.href.toString();
+            href = href.replace('.html', '');
             if (href.indexOf('/list?') > 0 || href.substr(href.length - 5) == '/list') {
                 var categoryId = $.url.param('id');
                 if (!categoryId) {
