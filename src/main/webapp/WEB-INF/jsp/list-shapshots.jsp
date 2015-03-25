@@ -2,7 +2,7 @@
 <div class="images">
     <div ng-repeat="snapshot in snapshots" class="boxShadow">
         <div class="image">
-            <a href="detail?id={{snapshot.id}}" target="_blank">
+            <a href="detail.html?id={{snapshot.id}}" target="_blank">
                 <div style="background-image:url({{snapshot.picture}})"></div>
             </a>
         </div>

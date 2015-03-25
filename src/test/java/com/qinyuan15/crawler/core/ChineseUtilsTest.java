@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class ChineseUtilsTest {
     @Test
-    public void testGetPhoneticLetter() throws Exception {
+    public void testGetPhoneticLetter() {
         String testString = "我的奋斗";
         String result = ChineseUtils.getPhoneticLetter(testString);
         assertThat(result).isEqualTo("WDFD");

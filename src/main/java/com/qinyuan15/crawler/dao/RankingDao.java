@@ -2,7 +2,7 @@ package com.qinyuan15.crawler.dao;
 
 import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.core.IntegerUtils;
-import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -118,7 +118,12 @@ public class RankingDao {
 
     private String getLimitFieldCondition(Object bean, String limitField) {
         try {
-            return limitField + "=" + BeanUtils.getProperty(bean, limitField);
+            Object value = PropertyUtils.getProperty(bean, limitField);
+            if (value == null || (value instanceof Integer && (Integer) value <= 0)) {
+                return limitField + " IS null";
+            } else {
+                return limitField + "=" + value;
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

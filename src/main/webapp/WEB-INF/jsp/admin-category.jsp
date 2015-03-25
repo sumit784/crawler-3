@@ -8,6 +8,7 @@
             <col class="parent">
             <col class="action">
             <col class="hotSearchWord">
+            <col class="branch">
         </colgroup>
         <thead>
         <tr>
@@ -16,6 +17,7 @@
             <th class="parent">父分类</th>
             <th class="action"></th>
             <th class="hotSearchWord">搜索关键词</th>
+            <th class="branch">关联品牌</th>
         </tr>
         </thead>
         <tbody>
