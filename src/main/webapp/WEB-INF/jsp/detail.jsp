@@ -124,7 +124,6 @@
             </div>
         </div>
     </div>
-    <script src="resources/js/image-adjust.js"></script>
     <c:forEach var="detailPicture" items="${detailPictures}">
         <div class="detailImage boxShadow">
             <img src="${detailPicture}" onload="adjustImageWidth(this, 670)"/>

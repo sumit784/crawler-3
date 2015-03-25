@@ -15,6 +15,9 @@
     </c:forEach>
     <link rel="stylesheet"
           href="resources/css/<%=request.getRequestURI().replaceAll("^.*/","").replace(".jsp",".css")%>">
+    <c:forEach var="js" items="${headJs}">
+        <script src="resources/js/${js}.js"></script>
+    </c:forEach>
 </head>
 <body class="ng-app:main" ng-app="main" id="ng-app">
 <div class="header">

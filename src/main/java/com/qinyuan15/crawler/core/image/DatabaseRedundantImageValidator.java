@@ -48,7 +48,7 @@ public class DatabaseRedundantImageValidator implements RedundantImageValidator 
 
         for (ImageColumn column : this.columns) {
             long count = HibernateUtils.getCount(column.table,
-                    column.column + "='" + StringEscapeUtils.escapeSql(imagePath) + "'");
+                    column.column + " LIKE '%" + StringEscapeUtils.escapeSql(imagePath) + "%'");
             if (count > 0) {
                 return false;
             }

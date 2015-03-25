@@ -42,7 +42,9 @@ public class RedundantImageCleaner {
             LOGGER.error("redundantImageValidator is not set, give up cleaning redundant images");
         }
 
+        LOGGER.info("Prepare to clean directory {}", root.getAbsolutePath());
         cleanDirectory(root);
+        LOGGER.info("Finish cleaning directory {}", root.getAbsolutePath());
     }
 
     private void cleanDirectory(File dir) {

@@ -71,9 +71,11 @@ public class DetailController extends ImageController {
         model.addAttribute("detailText", appConfig.getDetailText());
         model.addAttribute("detailImages", pictureUrlConverter.pathsToUrls(appConfig.getDetailImagesList()));
 
+        // JavaScript files
         addJs("commodity-parameters");
         addJs("lib/linecharts/raphael-min");
         addJs("lib/linecharts/linecharts");
+        addHeadJs("image-adjust");
 
         setTitle("商品明细");
 
