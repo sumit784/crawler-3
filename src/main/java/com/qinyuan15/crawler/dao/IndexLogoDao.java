@@ -28,16 +28,10 @@ public class IndexLogoDao {
     }
 
     public void rankUp(int id) {
-        IndexLogo current = getInstance(id);
-        RankingDao rankingDao = new RankingDao();
-        IndexLogo previous = rankingDao.getPrevious(current);
-        rankingDao.switchRanking(current, previous);
+        new RankingDao().rankUp(IndexLogo.class, id);
     }
 
     public void rankDown(int id) {
-        IndexLogo current = getInstance(id);
-        RankingDao rankingDao = new RankingDao();
-        IndexLogo next = rankingDao.getNext(current);
-        rankingDao.switchRanking(current, next);
+        new RankingDao().rankDown(IndexLogo.class, id);
     }
 }

@@ -7,6 +7,8 @@ import java.util.List;
  * Created by qinyuan on 15-2-28.
  */
 public class HotSearchWordDao {
+    private final static String CATEGORY_ID = "categoryId";
+
     public void delete(Integer id) {
         HibernateUtils.delete(HotSearchWord.class, id);
     }
@@ -40,24 +42,19 @@ public class HotSearchWordDao {
     }
 
     public List<HotSearchWord> getInstances(Integer categoryId) {
-        return HibernateUtils.getList(HotSearchWord.class, "categoryId=" + categoryId + " ORDER BY ranking ASC");
+        return HibernateUtils.getList(HotSearchWord.class,
+                CATEGORY_ID + "=" + categoryId + RankingDao.ASC_ORDER);
     }
 
     public void clear(int categoryId) {
-        HibernateUtils.delete(HotSearchWord.class, "categoryId=" + categoryId);
+        HibernateUtils.delete(HotSearchWord.class, CATEGORY_ID + "=" + categoryId);
     }
 
     public void rankUp(int id) {
-        HotSearchWord current = getInstance(id);
-        RankingDao rankingDao = new RankingDao();
-        HotSearchWord previous = rankingDao.getPrevious(current, "categoryId=" + current.getCategoryId());
-        rankingDao.switchRanking(current, previous);
+        new RankingDao().rankUp(HotSearchWord.class, id, CATEGORY_ID);
     }
 
     public void rankDown(int id) {
-        HotSearchWord current = getInstance(id);
-        RankingDao rankingDao = new RankingDao();
-        HotSearchWord next = rankingDao.getNext(current, "categoryId=" + current.getCategoryId());
-        rankingDao.switchRanking(current, next);
+        new RankingDao().rankDown(HotSearchWord.class, id, CATEGORY_ID);
     }
 }

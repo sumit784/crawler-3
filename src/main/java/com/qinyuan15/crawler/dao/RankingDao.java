@@ -1,7 +1,11 @@
 package com.qinyuan15.crawler.dao;
 
+import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.core.IntegerUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * Dao about Ranking Persist Object
@@ -68,6 +72,56 @@ public class RankingDao {
         }
         hql += ASC_ORDER;
         return (T) HibernateUtils.getFirstItem(hql);
+    }
+
+
+    public <T extends Ranking> void rankUp(Class<T> clazz, int id) {
+        this.rankUp(clazz, id, "");
+    }
+
+    public <T extends Ranking> void rankUp(Class<T> clazz, int id, String limitField) {
+        this.rankUp(clazz, id, Lists.newArrayList(limitField));
+    }
+
+    public <T extends Ranking> void rankUp(Class<T> clazz, int id, List<String> limitFields) {
+        T current = HibernateUtils.get(clazz, id);
+        T previous = this.getPrevious(current, getWhereClauseByLimitFields(current, limitFields));
+        this.switchRanking(current, previous);
+    }
+
+    public <T extends Ranking> void rankDown(Class<T> clazz, int id) {
+        this.rankDown(clazz, id, "");
+    }
+
+    public <T extends Ranking> void rankDown(Class<T> clazz, int id, String limitField) {
+        this.rankDown(clazz, id, Lists.newArrayList(limitField));
+    }
+
+    public <T extends Ranking> void rankDown(Class<T> clazz, int id, List<String> limitFields) {
+        T current = HibernateUtils.get(clazz, id);
+        T next = this.getNext(current, getWhereClauseByLimitFields(current, limitFields));
+        this.switchRanking(current, next);
+    }
+
+    private String getWhereClauseByLimitFields(Object bean, List<String> limitFields) {
+        String whereClause = "";
+        for (String limitField : limitFields) {
+            if (StringUtils.hasText(limitField)) {
+                if (StringUtils.hasText(whereClause)) {
+                    whereClause += " AND ";
+                }
+                whereClause += getLimitFieldCondition(bean, limitField);
+            }
+        }
+        return whereClause;
+    }
+
+    private String getLimitFieldCondition(Object bean, String limitField) {
+        try {
+            return limitField + "=" + BeanUtils.getProperty(bean, limitField);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Integer add(Ranking ranking) {

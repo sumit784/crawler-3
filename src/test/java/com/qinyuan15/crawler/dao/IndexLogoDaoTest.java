@@ -16,13 +16,14 @@ public class IndexLogoDaoTest {
 
     @Test
     public void testRankUp() {
-        dao.rankUp(5);
+        //dao.rankUp(5);
         //dao.rankUp(6);
     }
 
     @Test
     public void testRankDown(){
-        dao.rankDown(6);
+        //dao.rankDown(5);
+        //dao.rankDown(6);
     }
 
     @Test
