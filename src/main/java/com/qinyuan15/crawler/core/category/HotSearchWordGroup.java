@@ -1,9 +1,6 @@
 package com.qinyuan15.crawler.core.category;
 
-import com.qinyuan15.crawler.dao.Category;
-import com.qinyuan15.crawler.dao.CategoryDao;
-import com.qinyuan15.crawler.dao.HotSearchWord;
-import com.qinyuan15.crawler.dao.HotSearchWordDao;
+import com.qinyuan15.crawler.dao.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +12,15 @@ import java.util.List;
 public class HotSearchWordGroup {
     private Category category;
     private List<HotSearchWord> hotSearchWords;
+    private List<Branch> branches;
     private Integer categoryLevel;
 
     public void setHotSearchWords(List<HotSearchWord> hotSearchWords) {
         this.hotSearchWords = hotSearchWords;
+    }
+
+    public void setBranches(List<Branch> branches) {
+        this.branches = branches;
     }
 
     public void setCategory(Category category) {
@@ -31,6 +33,10 @@ public class HotSearchWordGroup {
 
     public List<HotSearchWord> getHotSearchWords() {
         return hotSearchWords;
+    }
+
+    public List<Branch> getBranches() {
+        return branches;
     }
 
     public Category getCategory() {
@@ -62,6 +68,7 @@ public class HotSearchWordGroup {
         hotSearchWordGroup.setCategory(category);
         hotSearchWordGroup.setCategoryLevel(categoryLevel);
         hotSearchWordGroup.setHotSearchWords(new HotSearchWordDao().getInstances(category.getId()));
+        hotSearchWordGroup.setBranches(new BranchDao().getInstancesByCategoryId(category.getId()));
 
         return hotSearchWordGroup;
     }

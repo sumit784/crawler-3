@@ -63,8 +63,10 @@ public class BranchDao {
     }
 
     public List<Branch> getInstancesByCategoryId(int categoryId) {
-        String subHql = "SELECT branchId FROM Commodity WHERE categoryId IN ("
-                + new CategoryDao().getSubInstancesAndSelfIdsString(categoryId) + ")";
-        return HibernateUtils.getList(Branch.class, "WHERE id IN (" + subHql + ")");
+        List<Branch> branches = new ArrayList<>();
+        for (CategoryBranch categoryBranch : new CategoryBranchDao().getInstances(categoryId)) {
+            branches.add(this.getInstance(categoryBranch.getBranchId()));
+        }
+        return branches;
     }
 }

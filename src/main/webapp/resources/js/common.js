@@ -7,6 +7,14 @@ function scrollTop($targetElement) {
     }
 }
 
+function getTotalHeight(){
+    return window.screen.availHeight;
+}
+
+function getTotalWidth(){
+    return document.body.clientWidth;
+}
+
 function getParent($element, parentTagName) {
     if (!parentTagName) {
         parentTagName = 'div';

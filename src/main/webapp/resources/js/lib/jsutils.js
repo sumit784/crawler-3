@@ -121,6 +121,15 @@ jQuery.fn.dataOptions = function () {
     }
 };
 
+jQuery.fn.parseIntegerInId = function () {
+    var id = this.attr('id');
+    if (id) {
+        return parseInt(id.replace(/\D/g, ''));
+    } else {
+        return null;
+    }
+};
+
 jQuery.fn.focusOrSelect = function () {
     var value = this.val();
     if (value != null && value != '') {

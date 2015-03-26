@@ -76,15 +76,83 @@
             }
         }
     };
-
     searchWordInput.$form.ajaxForm(normalSubmitCallback);
 
+    var branchInput = {
+        $form: $('#branchForm'),
+        get$CategoryId: function () {
+            return this.$form.find('input[name=categoryId]');
+        },
+        get$AddSubmit: function () {
+            return $('#addBranchSubmit');
+        },
+        get$BranchLogos: function () {
+            return this.$form.find('img.branch-logo');
+        },
+        _get$BranchIds: function () {
+            return this.$form.find('input[name=branchIds]');
+        },
+        _insertInput: function ($branchDiv, branchId) {
+            $branchDiv.append('<input type="hidden" name="branchIds" value="' + branchId + '"/>');
+        },
+        _removeInput: function ($branchDiv) {
+            $branchDiv.find('input').remove();
+        },
+        selectBranch: function (target) {
+            var $target = $(target);
+            var selectedClass = 'selected';
+            if ($target.hasClass(selectedClass)) {
+                $target.removeClass(selectedClass);
+                this._removeInput($(target).parent());
+            } else {
+                $target.addClass(selectedClass);
+                this._insertInput($(target).parent(), $target.dataOptions()['id']);
+            }
+        },
+        show: function (categoryId, excludeBranchIds) {
+            this.$form.css({
+                top: '5%',
+                height: '90%',
+                left: '30%',
+                width: '40%',
+                overflow: 'auto'
+            });
+            this.get$CategoryId().val(categoryId);
+            var self = this;
+            this.get$BranchLogos().each(function () {
+                var $this = $(this);
+                var id = parseInt($this.dataOptions()['id']);
+                var $branchDiv = $this.parent();
+                if (_.indexOf(excludeBranchIds, id) >= 0) {
+                    $branchDiv.hide();
+                } else {
+                    $branchDiv.show();
+                }
+                self._removeInput($branchDiv);
+            });
+            transparentBackground.show();
+            this.$form.show();
+        },
+        hide: function () {
+            this.$form.hide();
+            transparentBackground.hide();
+        },
+        validate: function () {
+            if (this._get$BranchIds().size() == 0) {
+                alert('未选择品牌');
+                return false;
+            } else {
+                return true;
+            }
+        }
+    };
+    branchInput.$form.ajaxForm(normalSubmitCallback);
+
     angularUtils.controller(function ($scope) {
-        // actions about validation
-        $scope.validateInput = buildNormalValidationCallback(input);
-        $scope.validateSearchWordInput = buildNormalValidationCallback(searchWordInput);
+
 
         // actions about category
+        $scope.validateInput = buildNormalValidationCallback(input);
         $scope.deleteCategory = function (event) {
             var target = event.target;
             $.post('admin-category-delete', {
@@ -108,7 +176,9 @@
         };
 
         // actions about search word
+        $scope.validateSearchWordInput = buildNormalValidationCallback(searchWordInput);
         $scope.cancelSearchWordInput = function () {
+            console.log('aa');
             searchWordInput.hide();
         };
         $scope.deleteSearchWord = function (event) {
@@ -128,10 +198,10 @@
         $scope.editSearchWord = function (event) {
             var $this = $(event.target);
             var $tr = getParent($this, 'tr');
-            var id = $tr.attr('id').replace(/\D/g, '');
+            var id = $tr.parseIntegerInId();
             var content = $.trim($tr.find('td.content').text());
             var hot = $tr.find('td.content span').hasClass('hot');
-            var categoryId = getParent($tr, 'tr').attr('id').replace(/\D/g, '');
+            var categoryId = getParent($tr, 'tr').parseIntegerInId();
 
             searchWordInput.get$EditSubmit().show();
             searchWordInput.get$AddSubmit().hide();
@@ -153,5 +223,61 @@
                 moveDownTableRow(target);
             }));
         };
+
+        // actions about branches
+        $scope.validateBranchInput = buildNormalValidationCallback(branchInput);
+        $scope.addBranch = function (event) {
+            var $tr = getParent($(event.target), 'tr');
+            var categoryId = $tr.parseIntegerInId();
+            var branchIds = [];
+            $tr.find('td.branch tr').each(function () {
+                branchIds.push($(this).parseIntegerInId());
+            });
+            branchInput.show(categoryId, branchIds);
+        };
+        $scope.deleteBranch = function (event) {
+            var target = event.target;
+            $.post('admin-category-branch-delete', getCategoryBranchParam(target),
+                buildSubmitCallback(function () {
+                    removeTableRow(target);
+                }));
+        };
+        $scope.selectBranch = function (event) {
+            branchInput.selectBranch(event.target);
+        };
+        $scope.cancelBranchInput = function () {
+            branchInput.hide();
+        };
+        $scope.rankUpBranch = function (event) {
+            var target = event.target;
+            $.post('admin-category-branch-rank-up', getCategoryBranchParam(target),
+                buildSubmitCallback(function () {
+                    moveUpTableRow(target);
+                }));
+        };
+        $scope.rankDownBranch = function (event) {
+            var target = event.target;
+            $.post('admin-category-branch-rank-down', getCategoryBranchParam(target),
+                buildSubmitCallback(function () {
+                    moveDownTableRow(target);
+                }));
+        };
+
+        function getCategoryBranchParam(target) {
+            return  {
+                'branchId': getInnerRowId(target),
+                'categoryId': getOuterRowId(target)
+            }
+        }
+
+        function getOuterRowId(target) {
+            var $this = $(target);
+            return getParent(getParent($this, 'tr'), 'tr').parseIntegerInId();
+        }
+
+        function getInnerRowId(target) {
+            var $this = $(target);
+            return getParent($this, 'tr').parseIntegerInId();
+        }
     });
 })();

@@ -107,7 +107,7 @@
                 var $targetImage = $targetDiv.find('img').eq(index).show();
                 var imageWidth = images.getWidth($targetImage);
                 var imageHeight = images.getHeight($targetImage);
-                var totalHeight = window.screen.availHeight - 120;
+                var totalHeight = getTotalHeight() - 120;
                 if (imageHeight > totalHeight) {
                     imageWidth = imageWidth * totalHeight / imageHeight;
                     imageHeight = totalHeight;
@@ -119,7 +119,7 @@
 
                 var pageX = event.clientX;
                 var pageY = event.clientY;
-                var totalWidth = document.body.clientWidth;
+                var totalWidth = getTotalWidth();
                 var x, y;
                 if (pageX > totalWidth / 2) {
                     x = pageX - imageWidth - 100;

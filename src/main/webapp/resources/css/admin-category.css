@@ -22,3 +22,25 @@ div.content table.inner {
 div.content table.inner td.content span.hot {
     color: red;
 }
+
+div.content form div.branchGroup div.branch {
+    float: left;
+    margin: 10px;
+}
+
+div.content form div.branchGroup div.branch img {
+    margin-bottom: 5px;
+    border: 3px solid transparent;
+}
+
+div.content form div.branchGroup {
+    overflow: hidden;
+}
+
+div.content form div.branchGroup div.branch img.selected {
+    border: 3px solid #00C000;
+}
+
+#branchForm {
+    text-align: center;
+}

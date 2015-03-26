@@ -23,7 +23,6 @@
         <tbody>
         <c:forEach var="searchWordGroup" items="${searchWordGroups}" varStatus="status">
             <c:set var="category" value="${searchWordGroup.category}"/>
-            <c:set var="hotSearchWords" value="${searchWordGroup.hotSearchWords}"/>
             <tr id="category_${category.id}">
                 <td class="index">${status.index+1}</td>
                 <td class="name"><c:if test="${searchWordGroup.categoryLevel>0}">&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
@@ -38,10 +37,10 @@
                 <td class="hotSearchWord">
                     <table class="inner">
                         <tbody>
-                        <c:forEach var="searchWord" items="${hotSearchWords}">
+                        <c:forEach var="searchWord" items="${searchWordGroup.hotSearchWords}">
                             <tr id="hotSearchWord_${searchWord.id}">
-                                <td class="content"><span
-                                        <c:if test="${searchWord.hot}">class="hot"</c:if>>${searchWord.content}</span>
+                                <td class="content">
+                                    <span <c:if test="${searchWord.hot}">class="hot"</c:if>>${searchWord.content}</span>
                                 </td>
                                 <td>
                                     <jsp:include page="widget-edit-delete.jsp">
@@ -58,6 +57,27 @@
                         </tbody>
                     </table>
                     <div><img class="link" ng-click="addSearchWord($event)" src="resources/css/images/add.png"/></div>
+                </td>
+                <td class="branch">
+                    <table class="inner">
+                        <tbody>
+                        <c:forEach var="branch" items="${searchWordGroup.branches}">
+                            <tr id="branch_${branch.id}">
+                                <td><img class="branch-logo" src="${branch.logo}"/></td>
+                                <td>
+                                    <jsp:include page="widget-delete.jsp">
+                                        <jsp:param name="deleteAction" value="deleteBranch($event)"/>
+                                    </jsp:include>
+                                    <jsp:include page="widget-ranking.jsp">
+                                        <jsp:param name="upAction" value="rankUpBranch($event)"/>
+                                        <jsp:param name="downAction" value="rankDownBranch($event)"/>
+                                    </jsp:include>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                    <div><img class="link" ng-click="addBranch($event)" src="resources/css/images/add.png"/></div>
                 </td>
             </tr>
         </c:forEach>
@@ -106,8 +126,29 @@
                     ng-click="validateSearchWordInput($event)">
                 修改
             </button>
-            <button ng-click="cancelSearchWordInput()" id="cancelSearchWordSubmit" type="button"
-                    class="btn btn-default">
+            <button ng-click="cancelSearchWordInput()" type="button" class="btn btn-default">
+                取消
+            </button>
+        </div>
+    </form>
+    <form class="fixedForm" id="branchForm" method="post" action="admin-category-branch-add">
+        <input type="hidden" name="categoryId"/>
+
+        <div class="branchGroup">
+            <c:forEach var="branch" items="${branches}">
+                <div class="branch">
+                    <img class="branch-logo link" src="${branch.logo}" ng-click="selectBranch($event)"
+                         data-options="id:${branch.id}"/><br/>
+                    <span>${branch.name}</span>
+                </div>
+            </c:forEach>
+        </div>
+        <div>
+            <button id="addBranchSubmit" type="submit" class="btn btn-success"
+                    ng-click="validateBranchInput($event)">
+                添加
+            </button>
+            <button ng-click="cancelBranchInput()" type="button" class="btn btn-default">
                 取消
             </button>
         </div>

@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,10 +9,29 @@ import java.util.List;
  */
 public class CategoryBranchDao {
     private final static String CATEGORY_ID = "categoryId";
+    private final static String BRANCH_ID = "branchId";
 
     public List<CategoryBranch> getInstances(int categoryId) {
         return HibernateUtils.getList(CategoryBranch.class,
                 CATEGORY_ID + "=" + categoryId + RankingDao.ASC_ORDER);
+    }
+
+    public CategoryBranch getInstance(int categoryId, int branchId) {
+        return (CategoryBranch) HibernateUtils.getFirstItem(
+                "FROM " + CategoryBranch.class.getSimpleName() +
+                        " WHERE " + CATEGORY_ID + "=" + categoryId +
+                        " AND " + BRANCH_ID + "=" + branchId + RankingDao.ASC_ORDER
+        );
+    }
+
+    public List<Integer> add(Integer categoryId, List<Integer> branchIds) {
+        List<Integer> ids = new ArrayList<>();
+        for (Integer branchId : branchIds) {
+            if (this.getInstance(categoryId, branchId) == null) {
+                ids.add(this.add(categoryId, branchId));
+            }
+        }
+        return ids;
     }
 
     public Integer add(Integer categoryId, Integer branchId) {

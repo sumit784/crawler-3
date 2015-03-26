@@ -1,7 +1,8 @@
 package com.qinyuan15.crawler.controller.back;
 
-import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.category.HotSearchWordGroup;
+import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.Category;
 import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.HibernateUtils;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,13 +21,19 @@ import java.util.Map;
  * Created by qinyuan on 15-2-19.
  */
 @Controller
-public class AdminCategoryController extends BaseController {
+public class AdminCategoryController extends ImageController {
     @RequestMapping("/admin-category")
     public String index(ModelMap model) {
         //model.addAttribute("categories", categoryDao.getInstances());
         CategoryDao categoryDao = new CategoryDao();
         model.addAttribute("rootCategories", categoryDao.getRootInstances());
-        model.addAttribute("searchWordGroups", HotSearchWordGroup.getInstances());
+
+        List<HotSearchWordGroup> hotSearchWordGroups = HotSearchWordGroup.getInstances();
+        for (HotSearchWordGroup hotSearchWordGroup : hotSearchWordGroups) {
+            adjustBranches(hotSearchWordGroup.getBranches());
+        }
+        model.addAttribute("searchWordGroups", hotSearchWordGroups);
+        model.addAttribute("branches", adjustBranches(new BranchDao().getInstances()));
         addCssAndJs("admin-normal-edit-page");
 
         setTitle("编辑商品分类");

@@ -32,4 +32,28 @@ public class CategoryBranch extends PersistObject implements Ranking {
     public void setRanking(Integer ranking) {
         this.ranking = ranking;
     }
+
+    private boolean categoryNameInit = false;
+    private String categoryName;
+
+    public synchronized String getCategoryName() {
+        if (!this.categoryNameInit) {
+            Category category = new CategoryDao().getInstance(this.categoryId);
+            this.categoryName = category == null ? null : category.getName();
+            this.categoryNameInit = true;
+        }
+        return this.categoryName;
+    }
+
+    private boolean branchNameInit = false;
+    private String branchName;
+
+    public synchronized String getBranchName() {
+        if (!this.branchNameInit) {
+            Branch branch = new BranchDao().getInstance(this.branchId);
+            this.branchName = branch == null ? null : branch.getName();
+            this.branchNameInit = true;
+        }
+        return this.branchName;
+    }
 }

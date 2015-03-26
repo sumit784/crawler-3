@@ -19,6 +19,7 @@ form.fixedForm {
     display: none;
     padding: 0;
 }
-form.fixedForm > div{
+
+form.fixedForm > div {
     margin: 20px;
 }
