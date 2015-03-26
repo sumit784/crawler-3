@@ -47,16 +47,6 @@ div.content > div.left div.snapshot div.left div.enlargeImage {
     display: none;
 }
 
-div.content > div.left div.snapshot div.left div.enlargeImage div.closeEnlargeIcon {
-    position: absolute;
-    right: -20px;
-    top: -20px;
-    width: 48px;
-    height: 48px;
-    background-image: url('images/detail/close.png');
-    cursor: pointer;
-}
-
 div.content > div.left div.snapshot div.left div.smallImage {
     padding-left: 10px;
     padding-bottom: 20px;

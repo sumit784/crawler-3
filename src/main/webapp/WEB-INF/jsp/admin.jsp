@@ -27,12 +27,12 @@
     <c:forEach var="commodity" items="${commodities}">
         <div class="boxShadow ${commodity.active ? 'active' : 'inactive'}">
             <div class="image">
-                <a href="admin-edit-commodity?id=${commodity.id}">
+                <a href="admin-edit-commodity.html?id=${commodity.id}">
                     <img class="link" src="${commodity.picture}"/>
                 </a>
             </div>
             <div class="description">
-                <a href="admin-edit-commodity?id=${commodity.id}"
+                <a href="admin-edit-commodity.html?id=${commodity.id}"
                    class="noLineAnchor limit-size" data-options="limit:25">${commodity.name}</a>
             </div>
         </div>

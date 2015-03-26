@@ -153,17 +153,14 @@ div.content div.link div.images div.commodityImage {
 }
 
 #enlargeImage {
-    position: fixed;
-    left: 300px;
-    top: 0;
+    position: absolute;
+    left: 0;
+    top: 500px;
     z-index: 10;
     display: none;
 }
 
-#enlargeImage div {
-    position: absolute;
-    top: 0;
-    left: 0;
+#enlargeImage div.normal, #enlargeImage div.detail {
     margin: 0;
     padding: 0;
     border: 2px solid #2B2C30;

@@ -7,11 +7,11 @@ function scrollTop($targetElement) {
     }
 }
 
-function getTotalHeight(){
+function getTotalHeight() {
     return window.screen.availHeight;
 }
 
-function getTotalWidth(){
+function getTotalWidth() {
     return document.body.clientWidth;
 }
 
@@ -50,10 +50,10 @@ function initLimitSizeElements() {
 }
 
 var transparentBackground = {
-    _getDiv: function () {
+    _getDiv: function (zIndex) {
         var $transparentBackground = $('#transparentBackground');
         if ($transparentBackground.size() == 0) {
-            return $('<div></div>').attr('id', 'transparentBackground').css({
+            var style = {
                 'position': 'fixed',
                 'width': '100%',
                 'height': '100%',
@@ -61,16 +61,21 @@ var transparentBackground = {
                 'left': 0,
                 'display': 'none',
                 'background-color': '#000000'
-            }).addClass('deepTransparent').appendTo('body');
+            };
+            if (zIndex) {
+                style['z-index'] = zIndex;
+            }
+            return $('<div></div>').attr('id', 'transparentBackground').css(style)
+                .addClass('deepTransparent').appendTo('body');
         } else {
             return $transparentBackground;
         }
     },
-    show: function () {
-        this._getDiv().show();
+    show: function (zIndex) {
+        this._getDiv(zIndex).show();
     },
-    hide: function () {
-        this._getDiv().hide();
+    hide: function (zIndex) {
+        this._getDiv(zIndex).hide();
     }
 };
 

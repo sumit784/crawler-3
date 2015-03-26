@@ -7,7 +7,44 @@
     var $showId = $('input[name=showId]');
     var $initBranchId = $('#initBranchId');
     var $initCategoryId = $('#initCategoryId');
-    var $enlargeImage = $('#enlargeImage');
+
+    var enlargeImage = {
+        $div: $('#enlargeImage'),
+        get$SubDiv: function (className) {
+            return this.$div.find('div.' + className);
+        },
+        get$Images: function () {
+            return this.$div.find('img');
+        },
+        get$NormalDiv: function () {
+            return this.get$SubDiv('normal');
+        },
+        get$DetailDiv: function () {
+            return this.get$SubDiv('detail');
+        },
+        hideAll: function () {
+            this.get$Images().hide();
+            this.get$NormalDiv().hide();
+            this.get$DetailDiv().hide();
+        },
+        show$Image: function (type, index) {
+            var $subDiv = this.get$SubDiv(type).eq(index).show();
+            return $subDiv.find('img').show();
+        },
+        adjustImagePosition: function ($image) {
+            var totalWidth = this.$div.parent().width();
+            var x = (totalWidth - images.getWidth($image)) / 2;
+            this.$div.css('left', x);
+        },
+        show: function () {
+            transparentBackground.show(5);
+            this.$div.show();
+        },
+        hide: function () {
+            this.$div.hide();
+            transparentBackground.hide(5);
+        }
+    };
 
     $selectButtons.click(function () {
         $(this).css({
@@ -82,7 +119,6 @@
                         $scope.originalDetailImageUrls = JSUtils.copyArray(data['detailImageUrls']);
                         $scope.showCrawlerInfo = false;
                     });
-
                 }
             });
         };
@@ -101,43 +137,14 @@
                 JSUtils.removeArrayItem($scope.originalDetailImageUrls, index);
             };
             $scope.enlargeImage = function (index, event, type) {
-                $enlargeImage.find('img').hide();
-                $enlargeImage.find('div').hide();
-                var $targetDiv = $enlargeImage.find('div.' + type).show();
-                var $targetImage = $targetDiv.find('img').eq(index).show();
-                var imageWidth = images.getWidth($targetImage);
-                var imageHeight = images.getHeight($targetImage);
-                var totalHeight = getTotalHeight() - 120;
-                if (imageHeight > totalHeight) {
-                    imageWidth = imageWidth * totalHeight / imageHeight;
-                    imageHeight = totalHeight;
-                }
-                $targetImage.css({
-                    height: imageHeight,
-                    width: imageWidth
-                });
-
-                var pageX = event.clientX;
-                var pageY = event.clientY;
-                var totalWidth = getTotalWidth();
-                var x, y;
-                if (pageX > totalWidth / 2) {
-                    x = pageX - imageWidth - 100;
-                } else {
-                    x = pageX + 100;
-                }
-                y = pageY - imageHeight / 2;
-                if (y < 0) {
-                    y = 0;
-                }
-
-                $enlargeImage.css({
-                    left: x,
-                    top: y
-                }).show();
+                enlargeImage.hideAll();
+                var $targetImage = enlargeImage.show$Image(type, index);
+                //enlargeImage.adjustImageSize($targetImage);
+                enlargeImage.adjustImagePosition($targetImage);
+                enlargeImage.show();
             };
             $scope.closeEnlargeImage = function () {
-                $enlargeImage.hide();
+                enlargeImage.hide();
             };
             $scope.imageUrls = [];
             $scope.detailImageUrls = [];

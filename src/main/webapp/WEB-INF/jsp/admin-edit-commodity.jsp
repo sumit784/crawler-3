@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
 <input type="hidden" id="errorInfo" value="${errorInfo}">
+
 <div class="boxShadow">
     <form action="admin-commodity-add-update" method="post" id="mainForm">
         <input type="hidden" name="id" value="${commodity.id}">
@@ -62,7 +63,7 @@
                     <td>商品名称</td>
                     <td>
                         <input type="hidden" name="commodityName" value="${commodity.name}"/>
-                        <a id="commodityName" class="noLineAnchor keyWordLink"
+                        <a id="commodityName" class="noLineAnchor keyWordLink" target="_blank"
                            href="${commodity.url}">${commodity.name}</a>
                     </td>
                 </tr>
@@ -72,9 +73,8 @@
                     <div class="title">商品图片</div>
                     <div class="imageGroup">
                         <div class="image" ng-repeat="imageUrl in imageUrls">
-                            <img class="link" ng-src="{{imageUrl}}"
-                                 ng-mouseover="enlargeImage($index, $event, 'normal')"
-                                 ng-mouseout="closeEnlargeImage()"/><br/>
+                            <img class="link" ng-src="{{imageUrl}}" title="单击放大"
+                                 ng-click="enlargeImage($index, $event, 'normal')"/><br/>
                             <a class="noLineAnchor" href="javascript:void(0)"
                                ng-click="deleteImage($index)">删除</a>
                         </div>
@@ -84,23 +84,12 @@
                     <div class="title">商品描述图片</div>
                     <div class="imageGroup">
                         <div class="image" ng-repeat="detailImageUrl in detailImageUrls">
-                            <img class="link" ng-src="{{detailImageUrl}}"
-                                 ng-mouseover="enlargeImage($index, $event, 'detail')"
-                                 ng-mouseout="closeEnlargeImage()"/><br/>
+                            <img class="link" ng-src="{{detailImageUrl}}" title="单击放大"
+                                 ng-click="enlargeImage($index, $event, 'detail')"/><br/>
                             <a class="noLineAnchor" href="javascript:void(0)"
                                ng-click="deleteDetailImage($index)">删除</a>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div id="enlargeImage" class="boxShadow">
-                <div class="normal" ng-repeat="imageUrl in originalImageUrls">
-                    <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
-                    <img ng-src="{{imageUrl}}"/>
-                </div>
-                <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls">
-                    <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
-                    <img ng-src="{{detailImageUrl}}"/>
                 </div>
             </div>
         </div>
@@ -200,6 +189,17 @@
     </form>
     <div class="deepTransparent" id="submitInfo">
         <h1>正在处理，图片下载可能要一些时间，请耐心等待...</h1>
+    </div>
+    <div id="enlargeImage" class="boxShadow">
+        <div class="normal" ng-repeat="imageUrl in originalImageUrls">
+            <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
+            <img ng-src="{{imageUrl}}"/>
+        </div>
+        <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls">
+            <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
+            <img ng-src="{{detailImageUrl}}"/>
+        </div>
+        <div class="closeEnlargeIcon" ng-click="closeEnlargeImage()"></div>
     </div>
 </div>
 <%@include file="footer.jsp" %>
