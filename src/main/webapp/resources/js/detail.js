@@ -63,10 +63,10 @@
         descriptionDetail: $('div.description div.detail'),
         snapshotRightPrice: $('div.content > div.left div.snapshot div.right div.price'),
         largeImage: $('div.content > div.left div.snapshot div.left div.largeImage'),
-        enlargeImage: $('div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage'),
-        enlargeIcon: $('div.content > div.left div.snapshot div.left div.largeImage div.enlarge'),
+        enlargeImage: $('div.content > div.left div.snapshot div.left div.enlargeImage'),
+        enlargeIcon: $('div.content > div.left div.snapshot div.left div.largeImage div.enlargeIcon'),
         couponLink: $('#couponLink'),
-        closeLargeImageLink: $('div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage div.closeLargeImage'),
+        closeEnlargeIcon: $('div.content > div.left div.snapshot div.left div.enlargeImage div.closeEnlargeIcon'),
         otherCommodityImages: $('div.content > div.right div.whiteBack div.other > div img'),
         foundTime: $('#foundTime')
     };
@@ -79,7 +79,7 @@
         var index = $this.dataOptions()['index'];
         $elements.largeImage.find('img.boxShadow').hide().eq(index).show();
         $elements.enlargeImage.find('img').hide().eq(index).show();
-    });
+    }).eq(0).trigger('mouseover');
     $elements.trendDiv.hover(function () {
         historyTrend.show();
     }, function () {
@@ -87,7 +87,7 @@
     });
     $elements.trendTextDiv.hover(function () {
         historyTrend.show();
-    }, function(){
+    }, function () {
     });
     $elements.descriptionTitles.mouseover(function () {
         $elements.descriptionTitles.filter('.selected').removeClass('selected');
@@ -107,12 +107,12 @@
     $elements.enlargeIcon.click(function () {
         transparentBackground.show();
         $elements.enlargeImage.fadeIn(250);
-    }).hover(function(){
+    }).hover(function () {
         $(this).removeClass('mediumTransparent');
-    }, function(){
+    }, function () {
         $(this).addClass('mediumTransparent');
     });
-    $elements.closeLargeImageLink.click(function () {
+    $elements.closeEnlargeIcon.click(function () {
         $elements.enlargeImage.fadeOut(250);
         transparentBackground.hide();
     });

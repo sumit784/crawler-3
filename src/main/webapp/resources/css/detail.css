@@ -20,6 +20,8 @@ div.content > div.left div.snapshot div.left div.branch {
 div.content > div.left div.snapshot div.left div.largeImage {
     min-height: 340px;
     padding: 20px 0;
+    width: 300px;
+    text-align: right;
 }
 
 div.content > div.left div.snapshot div.left div.largeImage img {
@@ -27,12 +29,7 @@ div.content > div.left div.snapshot div.left div.largeImage img {
     padding: 0;
 }
 
-div.content > div.left div.snapshot div.left div.largeImage > img {
-    width: 300px;
-    height: 300px;
-}
-
-div.content > div.left div.snapshot div.left div.largeImage div.enlarge {
+div.content > div.left div.snapshot div.left div.largeImage div.enlargeIcon {
     width: 34px;
     height: 34px;
     position: absolute;
@@ -42,7 +39,7 @@ div.content > div.left div.snapshot div.left div.largeImage div.enlarge {
     cursor: pointer;
 }
 
-div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage {
+div.content > div.left div.snapshot div.left div.enlargeImage {
     position: absolute;
     top: -60px;
     right: -120px;
@@ -50,12 +47,7 @@ div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage {
     display: none;
 }
 
-div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage img {
-    width: 450px;
-    height: 450px;
-}
-
-div.content > div.left div.snapshot div.left div.largeImage div.enlargeImage div.closeLargeImage {
+div.content > div.left div.snapshot div.left div.enlargeImage div.closeEnlargeIcon {
     position: absolute;
     right: -20px;
     top: -20px;
@@ -69,14 +61,13 @@ div.content > div.left div.snapshot div.left div.smallImage {
     padding-left: 10px;
     padding-bottom: 20px;
     min-height: 44px;
+    width: 290px;
 }
 
 div.content > div.left div.snapshot div.left div.smallImage img {
     margin: 0;
     border: 2px solid #ffffff;
     padding: 1px;
-    width: 42px;
-    height: 42px;
 }
 
 div.content > div.left div.snapshot div.left div.smallImage img.selected {

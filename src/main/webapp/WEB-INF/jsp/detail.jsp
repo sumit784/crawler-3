@@ -14,24 +14,25 @@
             <div class="largeImage">
                 <c:if test="${fn:length(pictures)>0}">
                     <c:forEach var="picture" items="${middlePictures}" varStatus="status">
-                        <img class="boxShadow" src="${picture}"
+                        <img class="boxShadow" src="${picture}" onload="adjustImage(this, 300, 300)"
                              <c:if test="${status.index >0 }">style="display: none;"</c:if>/>
                     </c:forEach>
 
-                    <div class="enlarge mediumTransparent"></div>
-                    <div class="enlargeImage">
-                        <c:forEach var="picture" items="${pictures}" varStatus="status">
-                            <img src="${picture}"/>
-                        </c:forEach>
+                    <div class="enlargeIcon mediumTransparent"></div>
 
-                        <div class="closeLargeImage"></div>
-                    </div>
                 </c:if>
+            </div>
+            <div class="enlargeImage boxShadow">
+                <c:forEach var="picture" items="${pictures}" varStatus="status">
+                    <img src="${picture}" onload="adjustImage(this, 600, 600)"/>
+                </c:forEach>
+
+                <div class="closeEnlargeIcon"></div>
             </div>
             <div class="smallImage">
                 <c:forEach var="picture" items="${smallPictures}" varStatus="status">
-                    <img class="${status.index==0?'link selected':'link'}" data-options="index:${status.index}"
-                         src="${picture}"/>
+                    <img class="link" data-options="index:${status.index}"
+                         src="${picture}" onload="adjustImageHeight(this, 42)"/>
                 </c:forEach>
             </div>
         </div>
