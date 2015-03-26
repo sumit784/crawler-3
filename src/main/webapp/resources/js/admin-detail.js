@@ -55,7 +55,7 @@
         $scope.editImage = function (event) {
             var $this = $(event.target);
             var $tr = getParent($this, 'tr');
-            var id = $tr.attr('id').replace(/\D/g, '');
+            var id = $tr.parseIntegerInId();
             var url = $.trim($tr.find('a:eq(0)').attr('title'));
             imageInput.get$EditSubmit().show();
             imageInput.get$AddSubmit().hide();

@@ -87,7 +87,7 @@
         $scope.validateInput = buildNormalValidationCallback(input);
         $scope.editBranch = function (event) {
             var $tr = getParent($(event.target), 'tr');
-            var id = $tr.attr('id').replace(/\D/g, '');
+            var id = $tr.parseIntegerInId();
             var name = $tr.find('td.name').text();
             var firstLetter = $tr.find('td.firstLetter').text();
             var parentId = $tr.find('td.parent').dataOptions()['parentId'];

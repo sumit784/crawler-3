@@ -37,7 +37,7 @@
         $scope.validateInput = buildNormalValidationCallback(input);
         $scope.editIndexLogo = function (event) {
             var $tr = getParent($(event.target), 'tr');
-            var id = $tr.attr('id').replace(/\D/g, '');
+            var id = $tr.parseIntegerInId();
             var link = $tr.find('td.link a').attr('title');
             var path = $tr.find('td.path a').attr('title');
             var description = $tr.find('td.description').text();

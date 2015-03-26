@@ -108,6 +108,7 @@
             }
             loadHotWord();
             loadSnapshot($scope, $http);
+            initBranch();
             subCategoryLinks.click($this);
         };
 

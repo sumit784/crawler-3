@@ -164,7 +164,7 @@
         $scope.editCategory = function (event) {
             var $this = $(event.target);
             var $tr = getParent($this, 'tr');
-            var id = $tr.attr('id').replace(/\D/g, '');
+            var id = $tr.parseIntegerInId();
             var name = $.trim($tr.find('td.name').text());
             var parentId = $tr.find('td.parent').dataOptions()['parentId'];
 
