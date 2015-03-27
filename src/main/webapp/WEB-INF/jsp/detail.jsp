@@ -153,25 +153,6 @@
     <div class="text">
         <%@include file="widget-detail-text.jsp" %>
         <%@include file="widget-detail-images.jsp" %>
-        <%--
-        <div style="font-size:10pt;color:#a16b4e;margin: 12px 15px;">
-            无非就是买买买，何必等到又十一
-        </div>
-        <div style="font-size:9pt;color:#6a6a6a;margin: 0 30px;">
-            距离双十一还有不到一个月的时间，钱包君好像已经感受到了什么，渐渐开始躁动不安起来...
-        </div>
-        <div style="font-size:10pt;margin:12px 15px;text-align:right;">
-            ......（<span style="color:#a16b4e;">更多</span>）
-        </div>
-        -->
-        <!--
-        <div style="margin: 5px 5px 5px -5px;">
-            <img src="resources/css/images/detail/other11.png"/>
-        </div>
-        <div style="margin: 5px 5px 5px -5px;">
-            <img src="resources/css/images/detail/other11.png"/>
-        </div>
-        --%>
     </div>
     <div class="attention">
         <div class="title">关注我们</div>

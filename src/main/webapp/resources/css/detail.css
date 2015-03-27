@@ -287,6 +287,7 @@ div.content > div.left div.description div.detail td {
 
 div.content > div.left div.detailImage {
     margin: 18px 0;
+    text-align: center;
 }
 
 div.content > div.right {
