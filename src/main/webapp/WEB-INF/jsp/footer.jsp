@@ -23,11 +23,11 @@
 <script src="resources/js/lib/angular/html5shiv.js"></script>
 <script src="resources/js/lib/angular/json2.js"></script>
 <script src="resources/js/lib/angular/angular.min.js"></script>
-<script src="resources/js/lib/jsutils.js"></script>
 <script src="resources/js/lib/underscore-min.js"></script>
-<script src="resources/js/common.js"></script>
+<script src="<%=RequestUtils.getJs("lib/jsutils")%>"></script>
+<script src="<%=RequestUtils.getJs("common")%>"></script>
 <c:forEach var="js" items="${moreJs}">
-    <script src="resources/js/${js}.js"></script>
+    <script src="resources/js/${js}.js?t=<%=AppConfig.VERSION%>"></script>
 </c:forEach>
-<script src="resources/js/<%=request.getRequestURI().replaceAll("^.*/","").replace(".jsp",".js")%>"></script>
+<script src="resources/js/<%=RequestUtils.getRelativeJs(request)%>"></script>
 </html>
