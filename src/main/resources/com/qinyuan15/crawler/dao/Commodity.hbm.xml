@@ -12,8 +12,6 @@
         <property name="url"/>
         <property name="buyUrl" column="buy_url"/>
         <property name="price"/>
-        <property name="lowPrice" column="low_price"/>
-        <property name="originalPrice" column="original_price"/>
         <property name="onShelfTime" column="on_shelf_time"/>
         <property name="active"/>
         <property name="branchId" column="branch_id"/>

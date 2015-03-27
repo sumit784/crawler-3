@@ -9,6 +9,7 @@
     <!--
     <import resource="application-price-crawler.xml"/>
     -->
+    <import resource="application-delay-load.xml"/>
     <import resource="application-image.xml"/>
     <import resource="application-page-parser.xml"/>
     <import resource="application-share.xml"/>

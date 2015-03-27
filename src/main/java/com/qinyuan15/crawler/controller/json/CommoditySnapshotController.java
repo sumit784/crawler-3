@@ -3,8 +3,10 @@ package com.qinyuan15.crawler.controller.json;
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.commodity.CommoditySnapshot;
 import com.qinyuan15.crawler.core.commodity.CommoditySnapshotBuilder;
+import com.qinyuan15.crawler.core.commodity.SnapshotConfig;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,9 @@ import java.util.List;
 @Controller
 public class CommoditySnapshotController extends ImageController {
 
+    @Autowired
+    private SnapshotConfig snapshotConfig;
+
     @ResponseBody
     @RequestMapping("/json/commoditySnapshot.json")
     public String index(@RequestParam(value = "categoryId", required = false) Integer categoryId,
@@ -28,7 +33,8 @@ public class CommoditySnapshotController extends ImageController {
                         @RequestParam(value = "branchId", required = false) Integer branchId,
                         @RequestParam(value = "orderField", required = false) String orderField,
                         @RequestParam(value = "orderType", required = false) String orderType,
-                        @RequestParam(value = "inLowPrice", required = false) Boolean inLowPrice) {
+                        @RequestParam(value = "inLowPrice", required = false) Boolean inLowPrice,
+                        @RequestParam(value = "pageNumber", required = true) Integer pageNumber) {
         // set default value of active to true
         if (active == null) {
             active = true;
@@ -43,6 +49,12 @@ public class CommoditySnapshotController extends ImageController {
                     .setType(CommodityDao.OrderType.create(orderType));
             factory.setOrder(order);
         }
+
+        if (!isPositive(pageNumber)) {
+            pageNumber = 0;
+        }
+
+
 
         List<Commodity> commodities = factory.getInstances();
         List<CommoditySnapshot> snapshots = new CommoditySnapshotBuilder().build(

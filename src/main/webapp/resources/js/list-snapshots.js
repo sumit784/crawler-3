@@ -36,7 +36,7 @@ function initSnapshot($scope, $http) {
     $scope.orderType = 'desc';
     loadSnapshot($scope, $http);
 }
-function loadSnapshot($scope, $http) {
+function buildSnapshotUrl($scope, pageNumber) {
     var params = [];
     if ($scope.categoryId) {
         params.push("categoryId=" + $scope.categoryId);
@@ -58,7 +58,12 @@ function loadSnapshot($scope, $http) {
     if ($scope.orderType) {
         params.push("orderType=" + $scope.orderType);
     }
-    var url = "json/commoditySnapshot.json?" + params.join('&');
+    params.push('pageNumber', pageNumber);
+    return "json/commoditySnapshot.json?" + params.join('&');
+}
+
+function loadSnapshot($scope, $http) {
+    var url = buildSnapshotUrl($scope, 0);
     $http.get(url).success(function (data) {
         $scope.snapshots = data;
     });

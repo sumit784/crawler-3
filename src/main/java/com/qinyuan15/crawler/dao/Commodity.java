@@ -4,14 +4,11 @@ package com.qinyuan15.crawler.dao;
  * Persist Object of Commodity
  * Created by qinyuan on 14-12-28.
  */
-public class Commodity extends SimpleCommodity {
+public class Commodity extends PersistObject {
 
     private String serialNumber;
     private String showId;
-    private Double lowPrice;
     private String onShelfTime;
-    private Double originalPrice;
-    //private Boolean lowestInThreeMonth;
     private String url;
     private String buyUrl;
     private Boolean active;
@@ -19,6 +16,33 @@ public class Commodity extends SimpleCommodity {
     private String parameters;
     private Integer userId;
     private Integer sales;
+    private String name;
+    private Double price;
+    private Integer categoryId;
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public Integer getSales() {
         return sales;
@@ -72,21 +96,9 @@ public class Commodity extends SimpleCommodity {
         return this.url;
     }
 
-    public Double getLowPrice() {
-        return lowPrice;
-    }
-
     public String getOnShelfTime() {
         return onShelfTime == null ? null : onShelfTime.trim().replaceAll("\\s.*", "");
     }
-
-    public Double getOriginalPrice() {
-        return originalPrice;
-    }
-/*
-    public Boolean getLowestInThreeMonth() {
-        return lowestInThreeMonth;
-    }*/
 
     public Boolean getActive() {
         return active;
@@ -104,21 +116,9 @@ public class Commodity extends SimpleCommodity {
         return userId;
     }
 
-    public void setLowPrice(Double lowPrice) {
-        this.lowPrice = lowPrice;
-    }
-
     public void setOnShelfTime(String onShelfTime) {
         this.onShelfTime = onShelfTime;
     }
-
-    public void setOriginalPrice(Double originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    /*public void setLowestInThreeMonth(Boolean lowestInThreeMonth) {
-        this.lowestInThreeMonth = lowestInThreeMonth;
-    }*/
 
     public void setActive(Boolean active) {
         this.active = active;
