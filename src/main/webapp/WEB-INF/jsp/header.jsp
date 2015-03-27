@@ -15,7 +15,7 @@
     <c:forEach var="css" items="${moreCss}">
         <link rel="stylesheet" href="resources/css/${css}.css?t=<%=AppConfig.VERSION%>">
     </c:forEach>
-    <link rel="stylesheet" href="resources/css/<%=RequestUtils.getRelativeCss(request)%>">
+    <link rel="stylesheet" href="<%=RequestUtils.getRelativeCss(request)%>">
     <c:forEach var="js" items="${headJs}">
         <script src="resources/js/${js}.js?t=<%=AppConfig.VERSION%>"></script>
     </c:forEach>

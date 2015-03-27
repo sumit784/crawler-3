@@ -29,5 +29,5 @@
 <c:forEach var="js" items="${moreJs}">
     <script src="resources/js/${js}.js?t=<%=AppConfig.VERSION%>"></script>
 </c:forEach>
-<script src="resources/js/<%=RequestUtils.getRelativeJs(request)%>"></script>
+<script src="<%=RequestUtils.getRelativeJs(request)%>"></script>
 </html>
