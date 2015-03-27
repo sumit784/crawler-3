@@ -149,8 +149,6 @@
     branchInput.$form.ajaxForm(normalSubmitCallback);
 
     angularUtils.controller(function ($scope) {
-
-
         // actions about category
         $scope.validateInput = buildNormalValidationCallback(input);
         $scope.deleteCategory = function (event) {
@@ -173,6 +171,18 @@
             input.get$ParentId().val(parentId);
             input.get$AddSubmit().attr('disabled', true);
             input.get$EditSubmit().attr('disabled', false);
+        };
+        $scope.rankUpCategory = function (event) {
+            var target = event.target;
+            $.post('admin-category-rank-up', {
+                id: getTableRowIdByImgElement(target)
+            }, normalSubmitCallback);
+        };
+        $scope.rankDownCategory = function (event) {
+            var target = event.target;
+            $.post('admin-category-rank-down', {
+                id: getTableRowIdByImgElement(target)
+            }, normalSubmitCallback);
         };
 
         // actions about search word

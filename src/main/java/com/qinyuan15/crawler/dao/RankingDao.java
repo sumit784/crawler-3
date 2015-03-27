@@ -16,6 +16,10 @@ public class RankingDao {
     public final static String ASC_ORDER = " ORDER BY ranking ASC";
     public final static String DESC_ORDER = " ORDER BY ranking DESC";
 
+    public <T extends Ranking> List<T> getInstances(Class<T> clazz) {
+        return HibernateUtils.getList(clazz, RankingDao.ASC_ORDER);
+    }
+
     public Integer getMaxRanking(Class<? extends Ranking> clazz) {
         return (Integer) HibernateUtils.getFirstItem("SELECT MAX(ranking) FROM " + clazz.getSimpleName());
     }

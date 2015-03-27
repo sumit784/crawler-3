@@ -4,9 +4,10 @@ package com.qinyuan15.crawler.dao;
  * Persist object of category
  * Created by qinyuan on 15-2-25.
  */
-public class Category extends PersistObject {
+public class Category extends PersistObject implements Ranking {
     private String name;
     private Integer parentId;
+    private Integer ranking;
 
     public String getName() {
         return name;
@@ -24,8 +25,23 @@ public class Category extends PersistObject {
         this.parentId = parentId;
     }
 
-    public String getParentName() {
-        Category category = HibernateUtils.get(Category.class, this.parentId);
-        return category == null ? null : category.getName();
+    public Integer getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Integer ranking) {
+        this.ranking = ranking;
+    }
+
+    private boolean initParentName = false;
+    private String parentName;
+
+    public synchronized String getParentName() {
+        if (!this.initParentName) {
+            Category category = HibernateUtils.get(Category.class, this.parentId);
+            this.parentName = category == null ? null : category.getName();
+            this.initParentName = true;
+        }
+        return this.parentName;
     }
 }

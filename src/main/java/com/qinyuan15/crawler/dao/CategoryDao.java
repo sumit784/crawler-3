@@ -2,6 +2,8 @@ package com.qinyuan15.crawler.dao;
 
 import java.util.List;
 
+import static com.qinyuan15.crawler.dao.RankingDao.ASC_ORDER;
+
 /**
  * Dao object of branch
  * Created by qinyuan on 15-2-24.
@@ -9,29 +11,33 @@ import java.util.List;
 public class CategoryDao {
 
     public List<Category> getInstances() {
-        return HibernateUtils.getList(Category.class);
+        return new RankingDao().getInstances(Category.class);
     }
 
     public Category getInstance(Integer id) {
         return HibernateUtils.get(Category.class, id);
     }
 
+    private final static String ROOT_CONDITION = "parentId IS NULL OR parentId<=0";
+
     public Category getFirstInstance() {
-        @SuppressWarnings("unchecked")
-        List<Category> instances = HibernateUtils.getList("FROM Category ORDER BY id");
-        return instances.size() == 0 ? null : instances.get(0);
+        return (Category) HibernateUtils.getFirstItem("FROM Category WHERE "
+                + ROOT_CONDITION + ASC_ORDER);
     }
 
     public List<Category> getRootInstances() {
-        return HibernateUtils.getList(Category.class, "parentId IS NULL OR parentId<=0");
+        return HibernateUtils.getList(Category.class,
+                ROOT_CONDITION + ASC_ORDER);
     }
 
     public List<Category> getSubInstances(int parentId) {
-        return HibernateUtils.getList(Category.class, "parentId=" + parentId);
+        return HibernateUtils.getList(Category.class,
+                "parentId=" + parentId + ASC_ORDER);
     }
 
     public List<Category> getSubInstancesAndSelf(int parentId) {
-        return HibernateUtils.getList(Category.class, "id = " + parentId + " OR parentId=" + parentId);
+        return HibernateUtils.getList(Category.class,
+                "id = " + parentId + " OR parentId=" + parentId + ASC_ORDER);
     }
 
     public String getSubInstancesAndSelfIdsString(int parentId) {
@@ -49,5 +55,13 @@ public class CategoryDao {
             new HotSearchWordDao().clear(id);
             HibernateUtils.delete(Category.class, id);
         }
+    }
+
+    public void rankUp(int id) {
+        new RankingDao().rankUp(Category.class, id);
+    }
+
+    public void rankDown(int id) {
+        new RankingDao().rankDown(Category.class, id);
     }
 }

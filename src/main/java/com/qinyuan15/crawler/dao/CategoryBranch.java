@@ -33,27 +33,35 @@ public class CategoryBranch extends PersistObject implements Ranking {
         this.ranking = ranking;
     }
 
-    private boolean categoryNameInit = false;
-    private String categoryName;
+    private boolean categoryInit = false;
+    private Category category;
 
-    public synchronized String getCategoryName() {
-        if (!this.categoryNameInit) {
-            Category category = new CategoryDao().getInstance(this.categoryId);
-            this.categoryName = category == null ? null : category.getName();
-            this.categoryNameInit = true;
+    public synchronized Category getCategory() {
+        if (!this.categoryInit) {
+            this.category = new CategoryDao().getInstance(this.categoryId);
+            this.categoryInit = true;
         }
-        return this.categoryName;
+        return this.category;
     }
 
-    private boolean branchNameInit = false;
-    private String branchName;
+    public String getCategoryName() {
+        Category category = this.getCategory();
+        return category == null ? null : category.getName();
+    }
 
-    public synchronized String getBranchName() {
-        if (!this.branchNameInit) {
-            Branch branch = new BranchDao().getInstance(this.branchId);
-            this.branchName = branch == null ? null : branch.getName();
-            this.branchNameInit = true;
+    private boolean branchInit = false;
+    private Branch branch;
+
+    public synchronized Branch getBranch() {
+        if (!this.branchInit) {
+            this.branch = new BranchDao().getInstance(this.branchId);
+            this.branchInit = true;
         }
-        return this.branchName;
+        return this.branch;
+    }
+
+    public String getBranchName() {
+        Branch branch = this.getBranch();
+        return branch == null ? null : branch.getName();
     }
 }

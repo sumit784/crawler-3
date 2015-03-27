@@ -184,57 +184,79 @@ var angularUtils = {
         });
     });
 
-    var toTopLink = {
-        enable: function () {
-            $elements.toTopLink.removeClass('lightTransparent');
-        },
-        disable: function () {
-            $elements.toTopLink.addClass('lightTransparent');
-        },
-        update: function () {
-            if ($(document).scrollTop() == 0) {
-                toTopLink.disable();
-            } else {
-                toTopLink.enable();
+    function initToTopLink() {
+        var toTopLink = {
+            $link: $('.toTop'),
+            enable: function () {
+                this.$link.removeClass('lightTransparent');
+            },
+            disable: function () {
+                this.$link.addClass('lightTransparent');
+            },
+            update: function () {
+                if ($(document).scrollTop() == 0) {
+                    this.disable();
+                } else {
+                    this.enable();
+                }
+            },
+            init: function () {
+                this.$link.click(function () {
+                    scrollTop();
+                });
             }
-        }
-    };
+        };
 
-    function adjustRightFloatPosition() {
-        var top = 0.80 - $elements.rightFloat.height() / window.screen.availHeight;
-        $elements.rightFloat.css('top', top * 100 + "%");
+
+        $(document).scroll(function () {
+            toTopLink.update();
+        });
+        toTopLink.update();
     }
 
-    var $elements = {
-        toTopLink: $('.toTop'),
-        rightFloat: $('div.rightFloat')
-    };
+    function adjustRightFloatPosition() {
+        var $rightFloat = $('div.rightFloat');
+        var top = 0.80 - $rightFloat.height() / window.screen.availHeight;
+        $rightFloat.css('top', top * 100 + "%");
+    }
 
-    var colors = {
-        darkOrange: '#ED3800'
-    };
+    function initOrangeButton() {
+        var colors = {
+            darkOrange: '#ED3800'
+        };
+        setTimeout(function () {
+            $('.orangeButton').hover(function () {
+                colors.orange = $(this).css('background-color');
+                $(this).css('background-color', colors.darkOrange);
+            }, function () {
+                if (colors.orange) {
+                    $(this).css('background-color', colors.orange);
+                }
+            });
+        }, 500);
+    }
 
-    $elements.toTopLink.click(function () {
-        scrollTop();
-    });
+    function initNormalTable() {
+        var lightOrange = '#FAFABC';
+        var yellow = '#F3F370';
+        var white = '#FFFFFF';
 
-    $(document).scroll(function () {
-        toTopLink.update();
-    });
-    toTopLink.update();
+        $('table.normal > tbody > tr:even').css('background-color', lightOrange).hover(function () {
+            $(this).css('background-color', yellow);
+        }, function () {
+            $(this).css('background-color', lightOrange);
+        });
+        $('table.normal > tbody > tr:odd').css('background-color', white).hover(function () {
+            $(this).css('background-color', yellow);
+        }, function () {
+            $(this).css('background-color', white);
+        });
+    }
+
+    initToTopLink();
+    initOrangeButton();
     adjustRightFloatPosition();
     setTimeout(adjustRightFloatPosition, 500);
-
-    setTimeout(function () {
-        $('.orangeButton').hover(function () {
-            colors.orange = $(this).css('background-color');
-            $(this).css('background-color', colors.darkOrange);
-        }, function () {
-            if (colors.orange) {
-                $(this).css('background-color', colors.orange);
-            }
-        });
-    }, 500);
-
     initLimitSizeElements();
+    initNormalTable();
 })();

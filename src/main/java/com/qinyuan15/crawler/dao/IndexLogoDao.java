@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class IndexLogoDao {
     public List<IndexLogo> getInstances() {
-        return HibernateUtils.getList(IndexLogo.class, RankingDao.ASC_ORDER);
+        return new RankingDao().getInstances(IndexLogo.class);
     }
 
     public void delete(Integer id) {

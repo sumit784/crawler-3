@@ -73,4 +73,26 @@ public class AdminCategoryController extends ImageController {
             return SUCCESS;
         }
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin-category-rank-up", method = RequestMethod.POST)
+    public Map<String, Object> rankUp(@RequestParam(value = "id", required = true) Integer id) {
+        if (isPositive(id)) {
+            CategoryDao dao = new CategoryDao();
+            logAction("上移'%s'分类的排序", dao.getInstance(id).getName());
+            dao.rankUp(id);
+        }
+        return SUCCESS;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin-category-rank-down", method = RequestMethod.POST)
+    public Map<String, Object> rankDown(@RequestParam(value = "id", required = true) Integer id) {
+        if (isPositive(id)) {
+            CategoryDao dao = new CategoryDao();
+            logAction("下移'%s'分类的排序", dao.getInstance(id).getName());
+            dao.rankDown(id);
+        }
+        return SUCCESS;
+    }
 }

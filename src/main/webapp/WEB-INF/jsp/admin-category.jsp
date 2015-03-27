@@ -33,6 +33,10 @@
                         <jsp:param name="editAction" value="editCategory($event)"/>
                         <jsp:param name="deleteAction" value="deleteCategory($event)"/>
                     </jsp:include>
+                    <jsp:include page="widget-ranking.jsp">
+                        <jsp:param name="upAction" value="rankUpCategory($event)"/>
+                        <jsp:param name="downAction" value="rankDownCategory($event)"/>
+                    </jsp:include>
                 </td>
                 <td class="hotSearchWord">
                     <table class="inner">
