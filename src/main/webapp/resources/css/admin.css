@@ -45,31 +45,22 @@ div.content div.left div.user a {
     font-weight: normal;
 }
 
-div.content div.left div.active, div.content div.left div.inactive {
+div.content div.left div.activeGroup {
     font-size: 10pt;
 }
 
-div.content div.left div.active {
-    padding-bottom: 2px;
-}
-
-div.content div.left div.inactive {
-    padding-top: 2px;
+div.content div.left div.activeGroup > div {
+    padding: 1px 0;
 }
 
 div.content div.left div.commodity,
 div.content div.left div.log,
-div.content div.left div.branch,
-div.content div.left div.category,
-div.content div.left div.index-logo,
-div.content div.left div.detail {
+div.content div.left div.linkGroup > div {
     font-size: 9pt;
 }
 
-div.content div.left div.branch,
-div.content div.left div.category,
-div.content div.left div.index-logo {
-    padding-bottom: 0;
+div.content div.left div.linkGroup > div {
+    padding: 4px 0;
 }
 
 div.content div.right {
@@ -82,7 +73,7 @@ div.content div.right > div {
     margin: 0 5px 10px 0;
 }
 
-div.content div.right > div.active {
+div.content div.right div.active {
     border: 4px solid #05FF0D;
 }
 
@@ -90,7 +81,7 @@ div.content div.left span.active {
     background-color: #05FF0D;
 }
 
-div.content div.right > div.inactive {
+div.content div.right div.inactive {
     border: 4px solid #A53614;
 }
 
