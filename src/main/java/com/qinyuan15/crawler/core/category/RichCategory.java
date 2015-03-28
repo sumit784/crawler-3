@@ -9,10 +9,11 @@ import java.util.List;
  * Group of hot search words
  * Created by qinyuan on 15-3-21.
  */
-public class HotSearchWordGroup {
+public class RichCategory {
     private Category category;
     private List<HotSearchWord> hotSearchWords;
     private List<Branch> branches;
+    private List<CategoryPoster> posters;
     private Integer categoryLevel;
 
     public void setHotSearchWords(List<HotSearchWord> hotSearchWords) {
@@ -23,12 +24,20 @@ public class HotSearchWordGroup {
         this.branches = branches;
     }
 
+    public void setPosters(List<CategoryPoster> posters) {
+        this.posters = posters;
+    }
+
     public void setCategory(Category category) {
         this.category = category;
     }
 
     public void setCategoryLevel(Integer categoryLevel) {
         this.categoryLevel = categoryLevel;
+    }
+
+    public List<CategoryPoster> getPosters() {
+        return posters;
     }
 
     public List<HotSearchWord> getHotSearchWords() {
@@ -47,29 +56,30 @@ public class HotSearchWordGroup {
         return categoryLevel;
     }
 
-    public static List<HotSearchWordGroup> getInstances() {
-        List<HotSearchWordGroup> hotSearchWordGroups = new ArrayList<>();
+    public static List<RichCategory> getInstances() {
+        List<RichCategory> richCategories = new ArrayList<>();
 
         CategoryDao categoryDao = new CategoryDao();
         List<Category> rootCategories = categoryDao.getRootInstances();
         for (Category category : rootCategories) {
-            hotSearchWordGroups.add(getInstance(category, 0));
+            richCategories.add(getInstance(category, 0));
             for (Category subCategory : categoryDao.getSubInstances(category.getId())) {
-                hotSearchWordGroups.add(getInstance(subCategory, 1));
+                richCategories.add(getInstance(subCategory, 1));
             }
         }
 
-        return hotSearchWordGroups;
+        return richCategories;
     }
 
-    private static HotSearchWordGroup getInstance(Category category, int categoryLevel) {
-        HotSearchWordGroup hotSearchWordGroup = new HotSearchWordGroup();
+    private static RichCategory getInstance(Category category, int categoryLevel) {
+        RichCategory richCategory = new RichCategory();
 
-        hotSearchWordGroup.setCategory(category);
-        hotSearchWordGroup.setCategoryLevel(categoryLevel);
-        hotSearchWordGroup.setHotSearchWords(new HotSearchWordDao().getInstances(category.getId()));
-        hotSearchWordGroup.setBranches(new BranchDao().getInstancesByCategoryId(category.getId()));
+        richCategory.setCategory(category);
+        richCategory.setCategoryLevel(categoryLevel);
+        richCategory.setHotSearchWords(new HotSearchWordDao().getInstances(category.getId()));
+        richCategory.setBranches(new BranchDao().getInstancesByCategoryId(category.getId()));
+        richCategory.setPosters(new CategoryPosterDao().getInstances(category.getId()));
 
-        return hotSearchWordGroup;
+        return richCategory;
     }
 }

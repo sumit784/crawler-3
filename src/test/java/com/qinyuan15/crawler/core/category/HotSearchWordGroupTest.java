@@ -11,7 +11,7 @@ import java.util.List;
 public class HotSearchWordGroupTest {
     @Test
     public void testGetInstances() throws Exception {
-        List<HotSearchWordGroup> hotSearchWordGroups = HotSearchWordGroup.getInstances();
-        System.out.println(hotSearchWordGroups.size());
+        List<RichCategory> richCategories = RichCategory.getInstances();
+        System.out.println(richCategories.size());
     }
 }

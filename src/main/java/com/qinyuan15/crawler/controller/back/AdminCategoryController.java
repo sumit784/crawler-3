@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
-import com.qinyuan15.crawler.core.category.HotSearchWordGroup;
+import com.qinyuan15.crawler.core.category.RichCategory;
 import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.Category;
 import com.qinyuan15.crawler.dao.CategoryDao;
@@ -28,11 +28,11 @@ public class AdminCategoryController extends ImageController {
         CategoryDao categoryDao = new CategoryDao();
         model.addAttribute("rootCategories", categoryDao.getRootInstances());
 
-        List<HotSearchWordGroup> hotSearchWordGroups = HotSearchWordGroup.getInstances();
-        for (HotSearchWordGroup hotSearchWordGroup : hotSearchWordGroups) {
-            adjustBranches(hotSearchWordGroup.getBranches());
+        List<RichCategory> richCategories = RichCategory.getInstances();
+        for (RichCategory richCategory : richCategories) {
+            adjustBranches(richCategory.getBranches());
         }
-        model.addAttribute("searchWordGroups", hotSearchWordGroups);
+        model.addAttribute("searchWordGroups", richCategories);
         model.addAttribute("branches", adjustBranches(new BranchDao().getInstances()));
         addCssAndJs("admin-normal-edit-page");
 
@@ -45,7 +45,7 @@ public class AdminCategoryController extends ImageController {
     public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
                                          @RequestParam(value = "name", required = true) String name,
                                          @RequestParam(value = "parentId", required = true) Integer parentId) {
-        if(!isPositive(parentId)) {
+        if (!isPositive(parentId)) {
             parentId = null;
         }
 
