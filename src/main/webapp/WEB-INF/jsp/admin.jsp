@@ -21,6 +21,7 @@
     <div class="category"><a target="_blank" href="admin-category.html">分类管理&gt;&gt;</a></div>
     <div class="index-logo"><a target="_blank" href="admin-index-logo.html">主页管理&gt;&gt;</a></div>
     <div class="detail"><a target="_blank" href="admin-detail.html">详情页管理&gt;&gt;</a></div>
+    <div class="user"><a target="_blank" href="admin-detail.html">用户管理&gt;&gt;</a></div>
     <div class="split"></div>
 </div>
 <div class="right">
