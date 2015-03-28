@@ -21,5 +21,6 @@
         <property name="categoryId" column="category_id"/>
         <property name="userId" column="user_id"/>
         <property name="sales"/>
+        <property name="inLowPrice" column="in_low_price"/>
     </class>
 </hibernate-mapping>

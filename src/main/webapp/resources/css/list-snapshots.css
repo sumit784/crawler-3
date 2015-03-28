@@ -105,10 +105,16 @@ div.content div.goods > div.images div.branch {
     bottom: 25px;
 }
 
-div.content div.goods > div.loading {
+div.content div.goods > div.loading,
+div.content div.goods > div.loadMore {
     padding: 42px;
     text-align: center;
     display: none;
+}
+
+div.content div.goods > div.loadMore {
+    font-weight: bold;
+    color: #2F1680;
 }
 
 div.rightFloat div.split {
@@ -122,6 +128,7 @@ div.content div.goods > div.images > div.no-found {
     text-align: center;
     width: 950px;
 }
-div.content div.goods > div.images > div.no-found img{
+
+div.content div.goods > div.images > div.no-found img {
     margin-bottom: 30px;
 }

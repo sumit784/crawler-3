@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller to query commodity snapshot
@@ -39,6 +41,9 @@ public class CommoditySnapshotController extends ImageController {
         if (active == null) {
             active = true;
         }
+        if (inLowPrice == null) {
+            inLowPrice = false;
+        }
         CommodityDao.Factory factory = CommodityDao.factory().setCategoryId(categoryId)
                 .setActive(active).setKeyWord(keyWord).setBranchId(branchId)
                 .setInLowPrice(inLowPrice).orderByActive();
@@ -54,11 +59,21 @@ public class CommoditySnapshotController extends ImageController {
             pageNumber = 0;
         }
 
+        int loadSize = snapshotConfig.getLoadSize();
+        int firstResult = pageNumber * loadSize;
+        List<Commodity> commodities = factory.getInstances(firstResult, loadSize + 1);
 
+        Map<String, Object> result = new HashMap<>();
+        if (commodities.size() == loadSize + 1) {
+            result.put("hasNext", true);
+            commodities = commodities.subList(0, loadSize);
+        } else {
+            result.put("hasNext", false);
+        }
 
-        List<Commodity> commodities = factory.getInstances();
         List<CommoditySnapshot> snapshots = new CommoditySnapshotBuilder().build(
                 commodities, pictureUrlConverter);
-        return toJson(snapshots);
+        result.put("snapshots", snapshots);
+        return toJson(result);
     }
 }

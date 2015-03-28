@@ -7,6 +7,7 @@ function initSnapshot($scope, $http) {
         } else if ($this.hasClass('lowest')) {
             $scope.inLowPrice = true;
         }
+        $scope.pageNumber = 0;
         loadSnapshot($scope, $http);
         $this.siblings().css('border-bottom-width', '0');
         $this.css('border-bottom-width', '2px');
@@ -30,11 +31,24 @@ function initSnapshot($scope, $http) {
                 $scope.orderType = 'desc';
                 break;
         }
+        $scope.pageNumber = 0;
         loadSnapshot($scope, $http);
+    };
+    $scope.loadMore = function () {
+        if ($scope.hasNext) {
+            $scope.pageNumber = $scope.pageNumber + 1;
+            loadSnapshot($scope, $http);
+        }
     };
     $scope.orderField = 'onShelfTime';
     $scope.orderType = 'desc';
+    $scope.pageNumer = 0;
     loadSnapshot($scope, $http);
+    $(document).scroll(function () {
+        if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+            $scope.loadMore();
+        }
+    });
 }
 function buildSnapshotUrl($scope, pageNumber) {
     var params = [];
@@ -58,13 +72,36 @@ function buildSnapshotUrl($scope, pageNumber) {
     if ($scope.orderType) {
         params.push("orderType=" + $scope.orderType);
     }
-    params.push('pageNumber', pageNumber);
+    if ($scope.pageNumber == null) {
+        $scope.pageNumber = 0;
+    }
+    params.push('pageNumber=' + $scope.pageNumber);
     return "json/commoditySnapshot.json?" + params.join('&');
 }
 
+function _get$LoadMoreDiv() {
+    return $('div.content div.goods > div.loadMore');
+}
+
+function _get$LoadingDiv() {
+    return $('div.content div.goods > div.loading');
+}
+
 function loadSnapshot($scope, $http) {
-    var url = buildSnapshotUrl($scope, 0);
+    var url = buildSnapshotUrl($scope);
+    _get$LoadingDiv().show();
     $http.get(url).success(function (data) {
-        $scope.snapshots = data;
+        if ($scope.pageNumber == 0) {
+            $scope.snapshots = data.snapshots;
+        } else {
+            $scope.snapshots = $scope.snapshots.concat(data.snapshots);
+        }
+        _get$LoadingDiv().hide();
+        $scope.hasNext = data.hasNext;
+        if ($scope.hasNext) {
+            _get$LoadMoreDiv().show();
+        } else {
+            _get$LoadMoreDiv().hide();
+        }
     });
 }

@@ -73,6 +73,18 @@ public class CommodityDao {
         }
     }
 
+    public void updateInLowPrice(int id) {
+        String startTime = DateUtils.threeMonthAgo().toString();
+        String endTime = DateUtils.now().toString();
+        Double lowPrice = CommodityPriceDao.range(id)
+                .setStartTime(startTime).setEndTime(endTime).getMin();
+        Double currentPrice = new CommodityPriceDao().getCurrentPrice(id);
+
+        Commodity commodity = getInstance(id);
+        commodity.setInLowPrice(currentPrice - lowPrice <= 0.01);
+        HibernateUtils.update(commodity);
+    }
+
     public void updateOnShelfTime(int id) {
         PriceRecord firstPriceRecord = new PriceRecordDao().getFirstInstance(id);
         if (firstPriceRecord == null) {
@@ -262,6 +274,10 @@ public class CommodityDao {
                 query += " AND active=" + active;
             }
 
+            if (inLowPrice) {
+                query += " AND inLowPrice=true";
+            }
+
             List<String> orderItems = new ArrayList<>();
             if (this.orderByActive) {
                 orderItems.add("active DESC");
@@ -281,10 +297,16 @@ public class CommodityDao {
             return list.get(0);
         }
 
+        @SuppressWarnings("unchecked")
+        public List<Commodity> getInstances(int firstResult, int maxResults) {
+            return HibernateUtils.getList(getHQL(),firstResult,maxResults);
+        }
+
         public List<Commodity> getInstances() {
             @SuppressWarnings("unchecked")
             List<Commodity> commodities = HibernateUtils.getList(getHQL());
-
+            return commodities;
+            /*
             if (!inLowPrice) {
                 return commodities;
             } else {
@@ -302,6 +324,7 @@ public class CommodityDao {
                 }
                 return commoditiesInLowPrice;
             }
+            */
         }
     }
 }

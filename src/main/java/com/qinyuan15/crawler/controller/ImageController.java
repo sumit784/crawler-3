@@ -37,7 +37,6 @@ public class ImageController extends BaseController {
     private List<String> getCommodityPictureUrils(List<CommodityPicture> commodityPictures) {
         List<String> paths = CommodityPictureUtils.getUrls(commodityPictures);
         return commodityPictureFilter.filterSize(paths);
-
     }
 
     protected List<String> parseCommodityPictureUrls(List<CommodityPicture> commodityPictures) {

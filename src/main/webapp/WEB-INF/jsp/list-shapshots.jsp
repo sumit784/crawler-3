@@ -31,3 +31,6 @@
 <div class="loading">
     <span>加载中，请稍候...</span>
 </div>
+<div class="loadMore">
+    <a href="javascript:void(0)" class="noLineAnchor" ng-click="loadMore()">加载更多</a>
+</div>

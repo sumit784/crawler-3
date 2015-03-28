@@ -19,6 +19,15 @@ public class Commodity extends PersistObject {
     private String name;
     private Double price;
     private Integer categoryId;
+    private Boolean inLowPrice;
+
+    public Boolean getInLowPrice() {
+        return inLowPrice;
+    }
+
+    public void setInLowPrice(Boolean inLowPrice) {
+        this.inLowPrice = inLowPrice;
+    }
 
     public String getName() {
         return name;
