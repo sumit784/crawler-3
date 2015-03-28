@@ -25,12 +25,19 @@
                 <td class="password">${user.password}</td>
                 <td class="role">${user.role}</td>
                 <td class="edit">
-                    <c:if test="${fn:contains(user.role,'SUPPER')}">
-                        <jsp:include page="widget-edit-delete.jsp">
-                            <jsp:param name="editAction" value="editUser($event)"/>
-                            <jsp:param name="deleteAction" value="deleteUser($event)"/>
-                        </jsp:include>
-                    </c:if>
+                    <c:choose>
+                        <c:when test="${fn:contains(user.role,'SUPPER')}">
+                            <jsp:include page="widget-edit.jsp">
+                                <jsp:param name="editAction" value="editUser($event)"/>
+                            </jsp:include>
+                        </c:when>
+                        <c:otherwise>
+                            <jsp:include page="widget-edit-delete.jsp">
+                                <jsp:param name="editAction" value="editUser($event)"/>
+                                <jsp:param name="deleteAction" value="deleteUser($event)"/>
+                            </jsp:include>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
         </c:forEach>

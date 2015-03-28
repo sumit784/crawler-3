@@ -52,10 +52,7 @@ public class AdminUserController extends ImageController {
             if (userDao.getInstanceByName(username) != null) {
                 return createFailResult("用户名'" + username + "'已经存在");
             }
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            HibernateUtils.save(user);
+            userDao.addAdmin(username, password);
             logAction("添加用户'%s'", username);
         }
         return SUCCESS;

@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
+import com.qinyuan15.crawler.security.SecurityUtils;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -34,6 +35,14 @@ public class UserDao {
     public String getNameById(Integer userId) {
         User user = getInstance(userId);
         return user == null ? null : user.getUsername();
+    }
+
+    public Integer addAdmin(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setRole(SecurityUtils.ADMIN);
+        return HibernateUtils.save(user);
     }
 
     public void delete(Integer id) {
