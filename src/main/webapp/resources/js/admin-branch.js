@@ -1,40 +1,39 @@
 ;
 (function () {
-    var $branchForm = $('#branchForm');
     var $addSubmit = $('#addSubmit');
     var $editSubmit = $('#editSubmit');
 
-    $branchForm.ajaxForm(normalSubmitCallback);
     var input = {
+        $form: $('#branchForm'),
         get$Id: function () {
-            return $branchForm.find('input[name=id]');
+            return this.$form.find('input[name=id]');
         },
         get$Name: function () {
-            return $branchForm.find('input[name=name]');
+            return this.$form.find('input[name=name]');
         },
         get$FirstLetter: function () {
-            return $branchForm.find('input[name=firstLetter]');
+            return this.$form.find('input[name=firstLetter]');
         },
         get$ParentId: function () {
-            return $branchForm.find('select[name=parentId]');
+            return this.$form.find('select[name=parentId]');
         },
         get$Logo: function () {
-            return $branchForm.find('input[name=logo]');
+            return this.$form.find('input[name=logo]');
         },
         get$LogoFile: function () {
-            return $branchForm.find('input[name=logoFile]');
+            return this.$form.find('input[name=logoFile]');
         },
         get$SquareLogo: function () {
-            return $branchForm.find('input[name=squareLogo]');
+            return this.$form.find('input[name=squareLogo]');
         },
         get$Poster: function () {
-            return $branchForm.find('input[name=poster]');
+            return this.$form.find('input[name=poster]');
         },
         get$SquareLogoFile: function () {
-            return $branchForm.find('input[name=squareLogoFile]');
+            return this.$form.find('input[name=squareLogoFile]');
         },
         get$Slogan: function () {
-            return $branchForm.find('textarea[name=slogan]');
+            return this.$form.find('textarea[name=slogan]');
         },
         validate: function () {
             function isEmpty($input) {
@@ -82,6 +81,7 @@
             input.get$FirstLetter().val("");
         }
     });
+    input.$form.ajaxForm(normalSubmitCallback);
 
     angularUtils.controller(function ($scope) {
         $scope.validateInput = buildNormalValidationCallback(input);
@@ -117,6 +117,7 @@
                     name: $this.text()
                 });
             });
+            scrollTop(input.$form);
         };
         $scope.deleteBranch = function (event) {
             $.post('admin-branch-delete', {

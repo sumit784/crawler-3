@@ -171,6 +171,7 @@
             input.get$ParentId().val(parentId);
             input.get$AddSubmit().attr('disabled', true);
             input.get$EditSubmit().attr('disabled', false);
+            scrollTop(input.$form);
         };
         $scope.rankUpCategory = function (event) {
             var target = event.target;
@@ -188,7 +189,6 @@
         // actions about search word
         $scope.validateSearchWordInput = buildNormalValidationCallback(searchWordInput);
         $scope.cancelSearchWordInput = function () {
-            console.log('aa');
             searchWordInput.hide();
         };
         $scope.deleteSearchWord = function (event) {

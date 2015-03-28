@@ -90,17 +90,17 @@
     <form id="categoryForm" method="post" action="admin-category-add-update">
         <input type="hidden" name="id"/>
 
-        <div>
-            <label>名称: </label><br/>
+        <div class="name">
+            <label>名称</label>
             <input type="text" id="name" name="name"/>
         </div>
-        <div>
-            <label>父分类</label><br/>
+        <div class="parent">
+            <label>父分类</label>
             <jsp:include page="admin-category-parent-select.jsp">
                 <jsp:param name="elementId" value="parentId"/>
             </jsp:include>
         </div>
-        <div>
+        <div class="button">
             <button id="addSubmit" type="submit" class="btn btn-success"
                     ng-click="validateInput($event)">
                 添加

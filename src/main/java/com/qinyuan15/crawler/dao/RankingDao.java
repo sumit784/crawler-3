@@ -123,7 +123,7 @@ public class RankingDao {
     private String getLimitFieldCondition(Object bean, String limitField) {
         try {
             Object value = PropertyUtils.getProperty(bean, limitField);
-            if (value == null || (value instanceof Integer && (Integer) value <= 0)) {
+            if (value == null) {
                 return limitField + " IS null";
             } else {
                 return limitField + "=" + value;

@@ -45,6 +45,10 @@ public class AdminCategoryController extends ImageController {
     public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
                                          @RequestParam(value = "name", required = true) String name,
                                          @RequestParam(value = "parentId", required = true) Integer parentId) {
+        if(!isPositive(parentId)) {
+            parentId = null;
+        }
+
         // build Category object
         Category category = isPositive(id) ? new CategoryDao().getInstance(id) : new Category();
         category.setName(name);

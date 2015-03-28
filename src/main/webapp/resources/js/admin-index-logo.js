@@ -49,6 +49,7 @@
 
             $addSubmit.attr('disabled', true);
             $editSubmit.attr('disabled', false);
+            scrollTop(input.$form);
         };
         $scope.deleteIndexLogo = function (event) {
             var target = event.target;

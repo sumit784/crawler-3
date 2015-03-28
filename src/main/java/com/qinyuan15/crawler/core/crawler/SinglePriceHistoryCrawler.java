@@ -79,8 +79,6 @@ class SinglePriceHistoryCrawler {
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
         }
-        // TODO remove this line someday
-        new CommodityDao().updateInLowPrice(commodity.getId());
     }
 
     private void savePriceRecord(Date date, Double price, int commodityId) {

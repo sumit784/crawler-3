@@ -1,18 +1,26 @@
-div.content table {
-    float: left;
-}
-
-div.content table.normal th.hotSearchWord,
-div.content table.normal td.hotSearchWord {
-    padding-left: 40px;
+div.content table.normal col.action {
+    border-right: 1px solid #C3C3C3;
+    width: 100px;
 }
 
 div.content form {
-    float: right;
+    margin-top: 20px;
+    overflow: hidden;
+    padding: 20px;
 }
 
 div.content form > div {
-    margin: 20px;
+    float: left;
+    margin-right: 30px;
+}
+
+div.content form > div.name,
+div.content form > div.parent {
+    padding-top: 3px;
+}
+
+div.content form > div label {
+    margin-right: 5px;
 }
 
 div.content table.inner {

@@ -23,7 +23,7 @@
                 <td class="index">${status.index+1}</td>
                 <td class="username">${user.username}</td>
                 <td class="password">${user.password}</td>
-                <td class="role">${user.role}</td>
+                <td class="role">${fn:contains(user.role, 'SUPPER')?'超级管理员':'管理员'}</td>
                 <td class="edit">
                     <c:choose>
                         <c:when test="${fn:contains(user.role,'SUPPER')}">
