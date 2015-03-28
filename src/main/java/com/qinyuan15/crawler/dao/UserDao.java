@@ -22,6 +22,10 @@ public class UserDao {
         return user;
     }
 
+    public List<User> getInstances() {
+        return HibernateUtils.getList(User.class);
+    }
+
     public Integer getIdByName(String username) {
         User user = this.getInstanceByName(username);
         return user == null ? null : user.getId();
@@ -30,5 +34,9 @@ public class UserDao {
     public String getNameById(Integer userId) {
         User user = getInstance(userId);
         return user == null ? null : user.getUsername();
+    }
+
+    public void delete(Integer id) {
+        HibernateUtils.delete(User.class, id);
     }
 }
