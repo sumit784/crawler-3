@@ -1,18 +1,55 @@
 ;
 (function () {
+    function getCategoryId() {
+        return $('#categoryId').val();
+    }
+
     var branchPoster = {
         speed: 500,
+        $div: $('div.search div.right div.branch div.poster'),
         show: function () {
             $branchTitle.hide();
             $branchLogo.hide();
-            $branchPoster.fadeIn(this.speed);
+            this.$div.fadeIn(this.speed);
         },
         hide: function () {
             $branchTitle.fadeIn(this.speed);
             $branchLogo.fadeIn(this.speed);
-            $branchPoster.hide();
+            this.$div.hide();
+        },
+        init: function () {
+            var $div = this.$div;
+            var $a = $div.parent();
+            $.get('json/category-poster.json', {
+                'categoryId': getCategoryId()
+            }, function (data) {
+                if (data.length > 0) {
+                    loadPoster(data[0]);
+                    if (data.length > 1) {
+                        var posterIndex = 0;
+                        setInterval(function () {
+                            if (posterIndex < data.length - 1) {
+                                posterIndex++;
+                            } else {
+                                posterIndex = 0;
+                            }
+                            loadPoster(data[posterIndex]);
+                        }, 3000);
+                    }
+                }
+            });
+
+            function loadPoster(posterObject) {
+                $div.css('background-image', 'url(' + posterObject.path + ')');
+                if (posterObject.link != null && $.trim(posterObject.link) != '') {
+                    $a.attr('href', posterObject.link).css('cursor', 'pointer');
+                } else {
+                    $a.attr('href', 'javascript:void(0)').css('cursor', 'default');
+                }
+            }
         }
     };
+    branchPoster.init();
 
     var subCategoryLinks = {
         originalColor: 'rgb(102, 102, 102)',
@@ -50,7 +87,6 @@
     var $branchTitle = $('div.branch div.title');
     var $goodsImages = $('div.goods div.images div.image img');
     var $hotWords = $('div.search div.right div.searchForm div.hotWords');
-    var $branchPoster = $('div.search div.right div.branch div.poster');
 
     $collectButton.click(function () {
     });
@@ -68,10 +104,10 @@
     }, function () {
         $(this).removeClass('deepTransparent');
     });
+
     angularUtils.controller(function ($scope, $http) {
-        var $categoryId = $('#categoryId');
         $scope.inLowPrice = true;
-        $scope.categoryId = $categoryId.val();
+        $scope.categoryId = getCategoryId();
         initBranch();
         initSnapshot($scope, $http);
         $scope.showMore = function () {
@@ -102,7 +138,7 @@
         $scope.selectSubCategory = function (event) {
             var $this = $(event.target);
             if ($this.hasClass('selected')) {
-                $scope.categoryId = $categoryId.val();
+                $scope.categoryId = getCategoryId();
             } else {
                 $scope.categoryId = $this.dataOptions()['id'];
             }
@@ -142,9 +178,9 @@
                 $scope.hotWords = data;
                 $.each($scope.hotWords, function () {
                     if (this['hot']) {
-                        this.style = 'noLineAnchor red';
+                        this['style'] = 'noLineAnchor red';
                     } else {
-                        this.style = 'noLineAnchor';
+                        this['style'] = 'noLineAnchor';
                     }
                 });
             });

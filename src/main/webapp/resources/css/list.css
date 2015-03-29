@@ -85,13 +85,11 @@ div.search > div.right div.searchForm div.hotWords > span:last-child {
     border-right: none;
 }
 
-div.search > div.right div.branch > div.poster {
+div.search > div.right div.branch div.poster {
     margin: 0 5px;
-    background-image: url("images/poster.jpg");
     background-size: 100%;
     width: 690px;
     height: 130px;
-    cursor: pointer;
 }
 
 div.search > div.right div.branch > div.title,

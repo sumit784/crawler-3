@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="branch">
-    <div class="poster"></div>
+    <a target="_blank" herf="javascript:void(0)"><div class="poster"></div></a>
     <div class="title blueFont"><img src="resources/css/images/branch_rank.png"/></div>
     <div class="logos">
         <div class="showBranch" ng-repeat="branch in showBranches" ng-mouseover="showMore()">
