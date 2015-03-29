@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.BaseController;
+import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.HotSearchWordDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,12 @@ public class AdminHotSearchWordController extends BaseController {
         HotSearchWordDao dao = new HotSearchWordDao();
         if (isPositive(id)) {
             dao.update(id, content, categoryId, hot);
-            logAction("更新搜索关键词'%s'", content);
+            logAction("为'%s'分类更新搜索关键词'%s'", new CategoryDao().getNameById(categoryId),
+                    content);
         } else {
             dao.add(content, categoryId, hot);
-            logAction("添加搜索关键词'%s'", content);
+            logAction("为'%s'分类添加搜索关键词'%s'", new CategoryDao().getNameById(categoryId),
+                    content);
         }
 
         return SUCCESS;

@@ -148,6 +148,55 @@
     };
     branchInput.$form.ajaxForm(normalSubmitCallback);
 
+    var posterInput = {
+        $form: $('#posterForm'),
+        get$Id: function () {
+            return this.$form.find('input[name=id]');
+        },
+        get$CategoryId: function () {
+            return this.$form.find('input[name=categoryId]');
+        },
+        get$AddSubmit: function () {
+            return $('#addPosterSubmit');
+        },
+        get$EditSubmit: function () {
+            return $('#editPosterSubmit');
+        },
+        get$Url: function () {
+            return this.$form.find('input[name=url]');
+        },
+        get$Link: function () {
+            return this.$form.find('input[name=link]');
+        },
+        get$UploadFile: function () {
+            return this.$form.find('input[name=uploadFile]');
+        },
+        show: function (id, categoryId, imageUrl, link) {
+            this.get$Id().val(id);
+            this.get$CategoryId().val(categoryId);
+            this.get$Url().val(imageUrl);
+            this.get$Link().val(link);
+            this.get$UploadFile().val(null);
+            transparentBackground.show();
+            this.$form.show();
+            this.get$Url().focusOrSelect();
+        },
+        hide: function () {
+            this.$form.hide();
+            transparentBackground.hide();
+        },
+        validate: function () {
+            if (this.get$Url().val() == '' && this.get$UploadFile().val() == '') {
+                alert('图片未设置');
+                this.get$Url().focusOrSelect();
+                return false;
+            } else {
+                return true;
+            }
+        }
+    };
+    posterInput.$form.ajaxForm(normalSubmitCallback);
+
     angularUtils.controller(function ($scope) {
         // actions about category
         $scope.validateInput = buildNormalValidationCallback(input);
@@ -272,7 +321,6 @@
                     moveDownTableRow(target);
                 }));
         };
-
         function getCategoryBranchParam(target) {
             return  {
                 'branchId': getInnerRowId(target),
@@ -289,5 +337,52 @@
             var $this = $(target);
             return getParent($this, 'tr').parseIntegerInId();
         }
+
+        // actions about poster
+        $scope.validatePosterInput = buildNormalValidationCallback(posterInput);
+        $scope.addPoster = function (event) {
+            posterInput.get$AddSubmit().show();
+            posterInput.get$EditSubmit().hide();
+            posterInput.show(0, getTableRowIdByImgElement(event.target), '', '');
+        };
+        $scope.editPoster = function (event) {
+            var $this = $(event.target);
+            var $tr = getParent($this, 'tr');
+            var id = $tr.parseIntegerInId();
+            var imageUrl = $tr.find('img').attr('src');
+            var link = $tr.find('a').attr('href');
+            var categoryId = getParent($tr, 'tr').parseIntegerInId();
+
+            posterInput.get$AddSubmit().hide();
+            posterInput.get$EditSubmit().show();
+            posterInput.show(id, categoryId, imageUrl, link);
+        };
+        $scope.deletePoster = function (event) {
+            var target = event.target;
+            $.post('admin-category-branch-delete', {
+                'id': getTableRowIdByImgElement(event.target)
+            }, buildSubmitCallback(function () {
+                removeTableRow(target);
+            }));
+        };
+        $scope.cancelPosterInput = function () {
+            posterInput.hide();
+        };
+        $scope.rankUpPoster = function (event) {
+            var target = event.target;
+            $.post('admin-category-poster-rank-up', {
+                'id': getTableRowIdByImgElement(event.target)
+            }, buildSubmitCallback(function () {
+                moveUpTableRow(target);
+            }));
+        };
+        $scope.rankDownPoster = function (event) {
+            var target = event.target;
+            $.post('admin-category-poster-rank-down', {
+                'id': getTableRowIdByImgElement(event.target)
+            }, buildSubmitCallback(function () {
+                moveDownTableRow(target);
+            }));
+        };
     });
 })();

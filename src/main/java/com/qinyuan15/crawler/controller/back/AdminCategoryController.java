@@ -24,15 +24,15 @@ import java.util.Map;
 public class AdminCategoryController extends ImageController {
     @RequestMapping("/admin-category")
     public String index(ModelMap model) {
-        //model.addAttribute("categories", categoryDao.getInstances());
         CategoryDao categoryDao = new CategoryDao();
         model.addAttribute("rootCategories", categoryDao.getRootInstances());
 
         List<RichCategory> richCategories = RichCategory.getInstances();
         for (RichCategory richCategory : richCategories) {
             adjustBranches(richCategory.getBranches());
+            adjustCategoryPosters(richCategory.getPosters());
         }
-        model.addAttribute("searchWordGroups", richCategories);
+        model.addAttribute("richCategories", richCategories);
         model.addAttribute("branches", adjustBranches(new BranchDao().getInstances()));
         addCssAndJs("admin-normal-edit-page");
 

@@ -18,6 +18,14 @@ public class CategoryPosterDao {
         return HibernateUtils.get(CategoryPoster.class, id);
     }
 
+    public void update(Integer id, Integer categoryId, String path, String link) {
+        CategoryPoster categoryPoster = this.getInstance(id);
+        categoryPoster.setCategoryId(categoryId);
+        categoryPoster.setPath(path);
+        categoryPoster.setLink(link);
+        HibernateUtils.update(categoryPoster);
+    }
+
     public Integer add(Integer categoryId, String path, String link) {
         CategoryPoster categoryPoster = new CategoryPoster();
         categoryPoster.setCategoryId(categoryId);

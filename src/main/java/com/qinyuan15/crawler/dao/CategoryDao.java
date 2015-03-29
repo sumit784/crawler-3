@@ -19,6 +19,11 @@ public class CategoryDao {
         return HibernateUtils.get(Category.class, id);
     }
 
+    public String getNameById(Integer id) {
+        Category category = this.getInstance(id);
+        return category == null ? null : category.getName();
+    }
+
     private final static String ROOT_CONDITION = PARENT_ID + " IS NULL OR " + PARENT_ID + "<=0";
 
     public Category getFirstInstance() {

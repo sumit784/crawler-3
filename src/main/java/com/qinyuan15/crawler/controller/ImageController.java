@@ -1,10 +1,12 @@
 package com.qinyuan15.crawler.controller;
 
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
+import com.qinyuan15.crawler.core.category.CategoryPosterUrlAdapter;
 import com.qinyuan15.crawler.core.commodity.CommodityPictureUtils;
 import com.qinyuan15.crawler.core.image.*;
 import com.qinyuan15.crawler.core.index.IndexLogoUrlAdapter;
 import com.qinyuan15.crawler.dao.Branch;
+import com.qinyuan15.crawler.dao.CategoryPoster;
 import com.qinyuan15.crawler.dao.CommodityPicture;
 import com.qinyuan15.crawler.dao.IndexLogo;
 import org.apache.commons.lang.RandomStringUtils;
@@ -61,6 +63,10 @@ public class ImageController extends BaseController {
 
     protected List<IndexLogo> adjustIndexLogos(List<IndexLogo> indexLogos) {
         return new IndexLogoUrlAdapter(pictureUrlConverter).adjust(indexLogos);
+    }
+
+    protected List<CategoryPoster> adjustCategoryPosters(List<CategoryPoster> categoryPosters) {
+        return new CategoryPosterUrlAdapter(pictureUrlConverter).adjust(categoryPosters);
     }
 
     protected List<Branch> adjustBranches(List<Branch> branches) {

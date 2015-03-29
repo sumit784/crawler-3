@@ -9,13 +9,13 @@ div.content form {
     padding: 20px;
 }
 
-div.content form > div {
+#categoryForm > div {
     float: left;
     margin-right: 30px;
 }
 
-div.content form > div.name,
-div.content form > div.parent {
+#categoryForm > div.name,
+#categoryForm > div.parent {
     padding-top: 3px;
 }
 
@@ -25,6 +25,10 @@ div.content form > div label {
 
 div.content table.inner {
     float: none;
+}
+
+div.content td.poster table.inner td.image {
+    text-align: center;
 }
 
 div.content table.inner td.content span.hot {
@@ -51,4 +55,8 @@ div.content form div.branchGroup div.branch img.selected {
 
 #branchForm {
     text-align: center;
+}
+
+#posterForm {
+    top: 30%;
 }

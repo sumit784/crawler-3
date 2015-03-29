@@ -111,7 +111,10 @@ var JSUtils = {
  * query plugins
  */
 jQuery.fn.dataOptions = function () {
-    var dataOptionsString = this.attr('data-options');
+    var dataOptionsString = $.trim(this.attr('data-options'));
+    if (dataOptionsString.match(/:$/g)) {
+        dataOptionsString += 'null';
+    }
     if (dataOptionsString) {
         var dataOptions = null;
         eval('dataOptions = {' + dataOptionsString + "}");
