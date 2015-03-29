@@ -50,18 +50,17 @@ public class AdminCategoryController extends ImageController {
             parentId = null;
         }
 
-        // build Category object
-        Category category = isPositive(id) ? new CategoryDao().getInstance(id) : new Category();
-        category.setName(name);
-        category.setParentId(parentId);
-
+        CategoryDao dao = new CategoryDao();
         // save or update
         if (isPositive(id)) {
+            Category category = new CategoryDao().getInstance(id);
+            category.setName(name);
+            category.setParentId(parentId);
             HibernateUtils.update(category);
             logAction("更新商品分类'%s'", category.getName());
         } else {
-            HibernateUtils.save(category);
-            logAction("添加商品分类'%s'", category.getName());
+            dao.add(name, parentId);
+            logAction("添加商品分类'%s'", name);
         }
         return SUCCESS;
     }

@@ -24,6 +24,13 @@ public class CategoryDao {
         return category == null ? null : category.getName();
     }
 
+    public Integer add(String name, Integer parentId) {
+        Category category = new Category();
+        category.setName(name);
+        category.setParentId(parentId);
+        return new RankingDao().add(category);
+    }
+
     private final static String ROOT_CONDITION = PARENT_ID + " IS NULL OR " + PARENT_ID + "<=0";
 
     public Category getFirstInstance() {

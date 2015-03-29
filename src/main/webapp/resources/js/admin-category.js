@@ -197,19 +197,6 @@
     };
     posterInput.$form.ajaxForm(normalSubmitCallback);
 
-    var enlargePoster = {
-        $div: $('#enlargePoster'),
-        show: function (url, top) {
-            transparentBackground.show();
-            this.$div.css('top', top).show().find('image').empty()
-                .append('<img src="'+url+'" onload="adjustImageWidth(500)"/>');
-        },
-        hide: function () {
-            this.$div.hide();
-            transparentBackground.hide();
-        }
-    };
-
     angularUtils.controller(function ($scope) {
         // actions about category
         $scope.validateInput = buildNormalValidationCallback(input);
@@ -363,7 +350,7 @@
             var $tr = getParent($this, 'tr');
             var id = $tr.parseIntegerInId();
             var imageUrl = $tr.find('img').attr('src');
-            var link = $tr.find('a').attr('href');
+            var link = $tr.find('a.link').attr('href');
             var categoryId = getParent($tr, 'tr').parseIntegerInId();
 
             posterInput.get$AddSubmit().hide();
@@ -377,15 +364,6 @@
             }, buildSubmitCallback(function () {
                 removeTableRow(target);
             }));
-        };
-        $scope.enlargePoster = function (event) {
-            var $target = $(event.target);
-            var url = $target.attr('src');
-            var top = $target.offset().top;
-            enlargePoster.show(url, top);
-        };
-        $scope.closeEnlargePoster = function () {
-            enlargePoster.hide();
         };
         $scope.cancelPosterInput = function () {
             posterInput.hide();

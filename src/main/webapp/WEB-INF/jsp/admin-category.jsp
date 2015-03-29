@@ -57,9 +57,5 @@
     <%@include file="admin-category-hot-search-word-form.jsp" %>
     <%@include file="admin-category-branch-form.jsp" %>
     <%@include file="admin-category-poster-form.jsp" %>
-    <div id="enlargePoster" class="boxShadow">
-        <div class="image"></div>
-        <div class="closeEnlargeIcon" ng-click="closeEnlargePoster()"></div>
-    </div>
 </div>
 <%@include file="footer.jsp" %>

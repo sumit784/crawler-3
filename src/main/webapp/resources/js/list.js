@@ -34,7 +34,7 @@
                                 posterIndex = 0;
                             }
                             loadPoster(data[posterIndex]);
-                        }, 3000);
+                        }, 4000);
                     }
                 }
             });
@@ -46,6 +46,7 @@
                 } else {
                     $a.attr('href', 'javascript:void(0)').css('cursor', 'default');
                 }
+                $div.hide().fadeIn(1000);
             }
         }
     };
