@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
+import com.qinyuan15.crawler.core.DateUtils;
+
 /**
  * Persist object of user log
  * Created by qinyuan on 15-3-6.
@@ -18,11 +20,7 @@ public class UserLog extends PersistObject {
     }
 
     public String getLogTime() {
-        if (logTime == null) {
-            return null;
-        } else {
-            return logTime.replaceAll("\\.\\d*$", "");
-        }
+        return DateUtils.adjustDateStringFromDB(logTime);
     }
 
     public void setUserId(Integer userId) {

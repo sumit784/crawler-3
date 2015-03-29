@@ -11,16 +11,16 @@ public class CommodityCrawlLogDaoTest {
 
     @Test
     public void testGetInstances() throws Exception {
-        System.out.println(dao.getInstances(true).size());
+        System.out.println(CommodityCrawlLogDao.factory().getInstances().size());
     }
 
     @Test
     public void testLogSuccess() {
-        //dao.logSuccess(1, "HelloWorld");
+        //dao.logSuccess(3, "HelloWorld");
     }
 
     @Test
     public void testLogFail() {
-        //dao.logFail(2, "HelloWorld2");
+        //dao.logFail(3, "HelloWorld2");
     }
 }

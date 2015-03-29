@@ -21,6 +21,7 @@ public class AdminLogController extends ImageController {
         Integer userId = SecurityUtils.getUserId();
         List<UserLog> userLogs = new UserLogDao().getInstancesByUserId(userId);
         model.addAttribute("userLogs", userLogs);
+        addCssAndJs("admin-normal-edit-page");
         setTitle("操作日志");
         return "admin-log";
     }

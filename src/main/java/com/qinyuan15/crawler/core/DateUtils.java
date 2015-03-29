@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -84,5 +83,9 @@ public class DateUtils {
     public static Date threeMonthAgo() {
         long secondsOfThreeMonth = 90 * 3600 * 24;
         return new Date(System.currentTimeMillis() - secondsOfThreeMonth * 1000);
+    }
+
+    public static String adjustDateStringFromDB(String dateString) {
+        return dateString == null ? null : dateString.replaceAll("\\.\\d*$", "");
     }
 }

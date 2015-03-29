@@ -45,22 +45,25 @@ class SinglePriceHistoryCrawler {
 
         String url = commodity.getUrl();
         HttpClientWrapper client = this.httpClientPool.next();
+        Integer commodityId = commodity.getId();
         try {
             LOGGER.info("prepare to save price history of {}", url);
+
             String html = client.getContent(url);
             commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
             if (commodityPageParser.isExpire()) {
                 new CommodityDao().deactivate(commodity.getId());
+                new CommodityCrawlLogDao().logFail(commodityId, "网页已过期");
                 return;
             }
 
             Map<Date, Double> priceHistory = commodityPageParser.getPriceHistory();
             if (priceHistory == null) {
                 LOGGER.info("can not get priceHistory from url {}, html contents: {}", url, html);
+                new CommodityCrawlLogDao().logFail(commodityId, "网页解析失败");
                 client.feedbackRejection();
             } else {
-                LOGGER.info("save price history of {}", url);
                 for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                     savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
                 }
@@ -75,9 +78,13 @@ class SinglePriceHistoryCrawler {
                 commodityDao.updateOnShelfTime(commodity.getId());
                 commodityDao.updatePrice(commodity.getId());
                 commodityDao.updateInLowPrice(commodity.getId());
+
+                LOGGER.info("save price history of {}", url);
+                new CommodityCrawlLogDao().logFail(commodityId, "价格记录抓取成功");
             }
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
+            new CommodityCrawlLogDao().logFail(commodityId, "未知错误");
         }
     }
 

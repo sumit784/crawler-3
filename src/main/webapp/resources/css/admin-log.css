@@ -1,9 +1,3 @@
-div.content > div:first-child {
-    padding: 50px;
-    background-color: #ffffff;
-    overflow: hidden;
-}
-
 col.index {
     width: 50px;
 }

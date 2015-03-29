@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
+import com.qinyuan15.crawler.core.DateUtils;
+
 /**
  * Persist Object of commodity crawl log
  * Created by qinyuan on 15-2-29.
@@ -19,7 +21,7 @@ public class CommodityCrawlLog extends PersistObject {
     }
 
     public String getLogTime() {
-        return logTime;
+        return DateUtils.adjustDateStringFromDB(logTime);
     }
 
     public Boolean getSuccess() {

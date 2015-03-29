@@ -59,6 +59,10 @@ div.content div.left div.linkGroup > div {
     font-size: 9pt;
 }
 
+div.content div.left div.log > div {
+    padding: 2px 0;
+}
+
 div.content div.left div.linkGroup > div {
     padding: 4px 0;
 }

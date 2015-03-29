@@ -11,7 +11,8 @@
         <div class="boldSplit"></div>
     </div>
     <div class="log">
-        <a href="admin-log" target="_blank">操作日志</a>
+        <div class="user"><a href="admin-log.html" target="_blank">操作日志</a></div>
+        <div class="crawl"><a href="admin-crawl-log.html" target="_blank">爬虫日志</a></div>
     </div>
     <div class="split"></div>
     <div class="activeGroup">
