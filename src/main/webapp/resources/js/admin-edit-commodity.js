@@ -42,7 +42,7 @@
         },
         hide: function () {
             this.$div.hide();
-            transparentBackground.hide(5);
+            transparentBackground.hide();
         }
     };
 

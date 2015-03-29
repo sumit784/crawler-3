@@ -197,6 +197,19 @@
     };
     posterInput.$form.ajaxForm(normalSubmitCallback);
 
+    var enlargePoster = {
+        $div: $('#enlargePoster'),
+        show: function (url, top) {
+            transparentBackground.show();
+            this.$div.css('top', top).show().find('image').empty()
+                .append('<img src="'+url+'" onload="adjustImageWidth(500)"/>');
+        },
+        hide: function () {
+            this.$div.hide();
+            transparentBackground.hide();
+        }
+    };
+
     angularUtils.controller(function ($scope) {
         // actions about category
         $scope.validateInput = buildNormalValidationCallback(input);
@@ -364,6 +377,15 @@
             }, buildSubmitCallback(function () {
                 removeTableRow(target);
             }));
+        };
+        $scope.enlargePoster = function (event) {
+            var $target = $(event.target);
+            var url = $target.attr('src');
+            var top = $target.offset().top;
+            enlargePoster.show(url, top);
+        };
+        $scope.closeEnlargePoster = function () {
+            enlargePoster.hide();
         };
         $scope.cancelPosterInput = function () {
             posterInput.hide();

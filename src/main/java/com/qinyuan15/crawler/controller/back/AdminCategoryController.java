@@ -35,6 +35,7 @@ public class AdminCategoryController extends ImageController {
         model.addAttribute("richCategories", richCategories);
         model.addAttribute("branches", adjustBranches(new BranchDao().getInstances()));
         addCssAndJs("admin-normal-edit-page");
+        addHeadJs("image-adjust");
 
         setTitle("编辑商品分类");
         return "admin-category";

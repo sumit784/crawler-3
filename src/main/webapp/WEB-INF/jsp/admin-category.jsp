@@ -53,20 +53,13 @@
         </c:forEach>
         </tbody>
     </table>
-    <%@include file="admin-category-form.jsp"%>
-    <%@include file="admin-category-hot-search-word-form.jsp"%>
-    <%@include file="admin-category-branch-form.jsp"%>
-    <%@include file="admin-category-poster-form.jsp"%>
-    <div id="enlargeImage" class="boxShadow">
-        <div class="normal" ng-repeat="imageUrl in originalImageUrls">
-            <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
-            <img ng-src="{{imageUrl}}"/>
-        </div>
-        <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls">
-            <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
-            <img ng-src="{{detailImageUrl}}"/>
-        </div>
-        <div class="closeEnlargeIcon" ng-click="closeEnlargeImage()"></div>
+    <%@include file="admin-category-form.jsp" %>
+    <%@include file="admin-category-hot-search-word-form.jsp" %>
+    <%@include file="admin-category-branch-form.jsp" %>
+    <%@include file="admin-category-poster-form.jsp" %>
+    <div id="enlargePoster" class="boxShadow">
+        <div class="image"></div>
+        <div class="closeEnlargeIcon" ng-click="closeEnlargePoster()"></div>
     </div>
 </div>
 <%@include file="footer.jsp" %>

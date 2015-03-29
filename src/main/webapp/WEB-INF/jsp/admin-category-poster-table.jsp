@@ -5,7 +5,7 @@
     <c:forEach var="poster" items="${richCategory.posters}">
         <tr id="poster_${poster.id}">
             <td class="image">
-                <img class="branch-logo" src="${poster.path}"/>
+                <img title="单击放大" class="branch-logo link" src="${poster.path}" ng-click="enlargePoster($event)"/>
                 <c:if test="${fn:length(poster.link)>0}">
                     <br/><a target="_blank" href="${poster.link}">${poster.link}</a>
                 </c:if>

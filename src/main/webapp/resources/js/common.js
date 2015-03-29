@@ -68,14 +68,17 @@ var transparentBackground = {
             return $('<div></div>').attr('id', 'transparentBackground').css(style)
                 .addClass('deepTransparent').appendTo('body');
         } else {
+            if (zIndex) {
+                $transparentBackground.css('z-index', zIndex);
+            }
             return $transparentBackground;
         }
     },
     show: function (zIndex) {
         this._getDiv(zIndex).show();
     },
-    hide: function (zIndex) {
-        this._getDiv(zIndex).hide();
+    hide: function () {
+        this._getDiv().hide();
     }
 };
 
