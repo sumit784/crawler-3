@@ -49,7 +49,7 @@ public class AdminBranchController extends ImageController {
                                          @RequestParam(value = "firstLetter", required = true) String firstLetter,
                                          @RequestParam(value = "slogan", required = true) String slogan,
                                          @RequestParam(value = "shoppeNames", required = false) String[] shoppeNames,
-                                         @RequestParam(value = "shoppeUrls", required = true) String[] shoppeUrls) {
+                                         @RequestParam(value = "shoppeUrls", required = false) String[] shoppeUrls) {
         // deal with logUrl
         String logoUrl;
         try {
@@ -73,7 +73,11 @@ public class AdminBranchController extends ImageController {
         // deal with poster
         String posterUrl;
         try {
-            posterUrl = getSavePath(poster, posterFile, SAVE_PATH_PREFIX);
+            if (!StringUtils.hasText(poster) && posterFile == null) {
+                posterUrl = null;
+            } else {
+                posterUrl = getSavePath(poster, posterFile, SAVE_PATH_PREFIX);
+            }
         } catch (Exception e) {
             LOGGER.error("fail to deal with posterUrl, poster:{}, posterFile:{}, error:{}"
                     , poster, posterFile, e);

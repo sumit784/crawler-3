@@ -1,7 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
 import com.google.common.collect.Lists;
-import com.qinyuan15.crawler.core.DateUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.List;
  */
 public class AppConfig extends PersistObject {
     public final static String DEFAULT_ENCODING = "utf-8";
-    public final static String VERSION = DateUtils.now().toString();
+    public final static String VERSION = String.valueOf(System.currentTimeMillis())/* DateUtils.now().toString()*/;
     public final static String IMAGE_SEPARATOR = ",";
     private String detailText;
     private String detailImages;

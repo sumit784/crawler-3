@@ -302,6 +302,7 @@
                 }));
         };
         $scope.selectBranch = function (event) {
+            console.log(this);
             branchInput.selectBranch(event.target);
         };
         $scope.cancelBranchInput = function () {
@@ -359,7 +360,7 @@
         };
         $scope.deletePoster = function (event) {
             var target = event.target;
-            $.post('admin-category-branch-delete', {
+            $.post('admin-category-poster-delete', {
                 'id': getTableRowIdByImgElement(event.target)
             }, buildSubmitCallback(function () {
                 removeTableRow(target);

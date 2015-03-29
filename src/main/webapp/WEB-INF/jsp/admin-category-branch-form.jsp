@@ -5,7 +5,7 @@
     <div class="branchGroup">
         <c:forEach var="branch" items="${branches}">
             <div class="branch">
-                <img class="branch-logo link" src="${branch.logo}" ng-click="electBranch($event)"
+                <img class="branch-logo link" src="${branch.logo}" ng-click="selectBranch($event)"
                      data-options="id:${branch.id}"/><br/>
                 <span>${branch.name}</span>
             </div>
