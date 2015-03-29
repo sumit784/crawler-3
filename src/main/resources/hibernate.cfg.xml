@@ -33,5 +33,6 @@
         <mapping resource="com/qinyuan15/crawler/dao/PriceRecord.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/Commodity.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/CommodityPicture.hbm.xml"/>
+        <mapping resource="com/qinyuan15/crawler/dao/CommodityCrawlLog.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
