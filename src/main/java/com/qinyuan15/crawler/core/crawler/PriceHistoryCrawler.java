@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.crawler;
 
+import com.qinyuan15.crawler.core.DateUtils;
 import com.qinyuan15.crawler.core.commodity.CommodityPool;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
@@ -25,6 +26,8 @@ public class PriceHistoryCrawler {
     private CommodityPool commodityPool;
     private ComposableCommodityPageParser commodityPageParser;
     private ImageDownloader imageDownloader;
+    private int startHour = -1;
+    private int endHour = -1;
 
     public void init() {
         for (int i = 0; i < this.threadSize; i++) {
@@ -37,6 +40,14 @@ public class PriceHistoryCrawler {
                 LOGGER.warn("exception in init(): {}", e);
             }
         }
+    }
+
+    public void setStartHour(int startHour) {
+        this.startHour = startHour;
+    }
+
+    public void setEndHour(int endHour) {
+        this.endHour = endHour;
     }
 
     public void setHttpClientPool(HttpClientPool httpClientPool) {
@@ -63,6 +74,19 @@ public class PriceHistoryCrawler {
         this.imageDownloader = imageDownloader;
     }
 
+    private boolean inCrawlTime() {
+        if (this.startHour < 0 || this.endHour < 0) {
+            return true;
+        }
+
+        int currentHour = DateUtils.currentHour();
+        if (this.startHour < this.endHour) {
+            return currentHour >= this.startHour && currentHour < this.endHour;
+        } else {
+            return currentHour >= this.startHour || currentHour < this.endHour;
+        }
+    }
+
     private class CrawlThread extends Thread {
         private SinglePriceHistoryCrawler singleCommodityCrawler;
 
@@ -81,24 +105,31 @@ public class PriceHistoryCrawler {
             PriceRecordDao dao = new PriceRecordDao();
 
             while (true) {
-                Commodity commodity = commodityPool.next();
                 try {
-                    if (commodity == null) {
-                        commodityPool.reset();
-                    } else {
-                        if (dao.hasInstanceToday(commodity.getId())) {
-                            LOGGER.info("Today's price of commodity {} already save, just skip it",
-                                    commodity.getName());
-                        } else {
-                            this.singleCommodityCrawler.save(commodity);
-                        }
-                    }
                     Thread.sleep(interval);
-                } catch (Exception e) {
-                    String commodityInfo = commodity == null ?
-                            null : commodity.getName() + "(" + commodity.getUrl() + ")";
-                    LOGGER.error("fail to grub commodity '{}': {}",
-                            commodityInfo, e);
+                } catch (InterruptedException e) {
+                    LOGGER.error("Thread fail to sleep: {}", e);
+                }
+
+                if (inCrawlTime()) {
+                    Commodity commodity = commodityPool.next();
+                    try {
+                        if (commodity == null) {
+                            commodityPool.reset();
+                        } else {
+                            if (dao.hasInstanceToday(commodity.getId())) {
+                                LOGGER.info("Today's price of commodity {} already save, just skip it",
+                                        commodity.getName());
+                            } else {
+                                this.singleCommodityCrawler.save(commodity);
+                            }
+                        }
+                    } catch (Exception e) {
+                        String commodityInfo = commodity == null ?
+                                null : commodity.getName() + "(" + commodity.getUrl() + ")";
+                        LOGGER.error("fail to grub commodity '{}': {}",
+                                commodityInfo, e);
+                    }
                 }
             }
         }

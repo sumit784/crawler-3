@@ -138,7 +138,7 @@
 
             if ($target.hasClass("logos") || $target.hasClass("branch")
                 || $target.hasClass('right') || $target.hasClass('search')
-                || $target.hasClass('split')) {
+                || $target.hasClass('split') || $target.hasClass('title')) {
                 get$HideBranch().hide();
                 get$MoreBranch().show();
             }

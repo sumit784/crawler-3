@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Tool class about date
@@ -37,6 +38,10 @@ public class DateUtils {
     public static String toLongString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return dateFormat.format(date);
+    }
+
+    public static int currentHour() {
+        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
     }
 
     public static Date now() {

@@ -14,6 +14,8 @@
         <property name="commodityPool" ref="commodityPool"/>
         <property name="commodityPageParser" ref="webPageParser"/>
         <property name="imageDownloader" ref="imageDownloader"/>
+        <property name="startHour" value="10"/>
+        <property name="endHour" value="18"/>
     </bean>
 
 </beans>

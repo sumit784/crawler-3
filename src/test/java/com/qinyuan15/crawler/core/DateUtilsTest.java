@@ -27,6 +27,12 @@ public class DateUtilsTest {
     }
 
     @Test
+    public void testGetCurrentHour() {
+        int currentHour = DateUtils.currentHour();
+        System.out.println(currentHour);
+    }
+
+    @Test
     public void testNow() throws Exception {
         assertThat(DateUtils.now().getTime() - System.currentTimeMillis()).isGreaterThan(-2);
     }
