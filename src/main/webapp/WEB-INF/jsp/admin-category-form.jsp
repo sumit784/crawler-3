@@ -12,14 +12,5 @@
             <jsp:param name="elementId" value="parentId"/>
         </jsp:include>
     </div>
-    <div class="button">
-        <button id="addSubmit" type="submit" class="btn btn-success"
-                ng-click="validateInput($event)">
-            添加
-        </button>
-        <button id="editSubmit" type="submit" class="btn btn-success" disabled
-                ng-click="validateInput($event)">
-            修改
-        </button>
-    </div>
+    <%@include file="admin-form-submit.jsp"%>
 </form>

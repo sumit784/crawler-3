@@ -15,6 +15,12 @@ public class ChineseUtilsTest {
         String result = ChineseUtils.getPhoneticLetter(testString);
         assertThat(result).isEqualTo("WDFD");
 
-        System.out.println(ChineseUtils.getPhoneticLetter("小"));
+        testString = "小";
+        result = ChineseUtils.getPhoneticLetter(testString);
+        assertThat(result).isEqualTo("X");
+
+        testString = "gap";
+        result = ChineseUtils.getPhoneticLetter(testString);
+        assertThat(result).isEqualTo("GAP");
     }
 }

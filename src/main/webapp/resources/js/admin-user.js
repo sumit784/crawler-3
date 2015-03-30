@@ -1,16 +1,7 @@
 ;
 (function () {
-    var input = {
+    var input = buildInput({
         $form: $('#userForm'),
-        get$AddSubmit: function () {
-            return $('#addSubmit');
-        },
-        get$EditSubmit: function () {
-            return $('#editSubmit');
-        },
-        get$Id: function () {
-            return this.$form.find('input[name=id]');
-        },
         get$Username: function () {
             return this.$form.find('input[name=username]');
         },
@@ -30,9 +21,7 @@
                 return true;
             }
         }
-    };
-    input.$form.ajaxForm(normalSubmitCallback);
-    input.get$Username().focus();
+    }).focus();
 
     angularUtils.controller(function ($scope) {
         $scope.validateInput = buildNormalValidationCallback(input);
@@ -54,8 +43,7 @@
             input.get$Id().val(id);
             input.get$Username().val(username).focusOrSelect();
             input.get$Password().val(password);
-            input.get$AddSubmit().attr('disabled', true);
-            input.get$EditSubmit().attr('disabled', false);
+            input.toEditMode();
         };
     });
 })();

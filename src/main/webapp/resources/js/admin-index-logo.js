@@ -1,25 +1,18 @@
 ;
 (function () {
-    var $indexLogoForm = $('#indexLogoForm');
-    var $addSubmit = $('#addSubmit');
-    var $editSubmit = $('#editSubmit');
-
-    $indexLogoForm.ajaxForm(normalSubmitCallback);
-    var input = {
-        get$Id: function () {
-            return $indexLogoForm.find('input[name=id]');
-        },
+    var input = buildInput({
+        $form: $('#indexLogoForm'),
         get$link: function () {
-            return $indexLogoForm.find('input[name=link]');
+            return this.$form.find('input[name=link]');
         },
         get$Logo: function () {
-            return $indexLogoForm.find('input[name=logo]');
+            return this.$form.find('input[name=logo]');
         },
         get$LogoFile: function () {
-            return $indexLogoForm.find('input[name=logoFile]');
+            return this.$form.find('input[name=logoFile]');
         },
         get$Description: function () {
-            return $indexLogoForm.find('input[name=description]');
+            return this.$form.find('input[name=description]');
         },
         validate: function () {
             if ($.trim(this.get$Logo().val()) == '' &&
@@ -28,10 +21,9 @@
                 this.get$Logo().focusOrSelect();
                 return false;
             }
-
             return true;
         }
-    };
+    }).focus();
 
     angularUtils.controller(function ($scope) {
         $scope.validateInput = buildNormalValidationCallback(input);
@@ -46,10 +38,7 @@
             input.get$link().val(link);
             input.get$Logo().val(path).focusOrSelect();
             input.get$Description().val(description);
-
-            $addSubmit.attr('disabled', true);
-            $editSubmit.attr('disabled', false);
-            scrollTop(input.$form);
+            input.toEditMode();
         };
         $scope.deleteIndexLogo = function (event) {
             var target = event.target;
@@ -76,6 +65,4 @@
             }));
         };
     });
-
-    input.get$Logo().focus();
 })();

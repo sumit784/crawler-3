@@ -97,20 +97,13 @@
                     <label>名称</label><input type="text" name="shoppeNames" value="{{shoppe.name}}"/>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <label>url</label><input type="text" name="shoppeUrls" value="{{shoppe.url}}"/>
+                    <img ng-click="deleteShoppe($index)" class="link" title="删除"
+                         src="resources/css/images/table/action_delete.png"/>
                 </div>
                 <img ng-click="addShoppe()" class="link" title="添加" src="resources/css/images/add.png"/>
             </div>
         </div>
-        <div class="button">
-            <button id="addSubmit" type="submit" class="btn btn-primary"
-                    ng-click="validateInput($event)">
-                添加
-            </button>
-            <button id="editSubmit" type="submit" class="btn btn-success" disabled
-                    ng-click="validateInput($event)">
-                修改
-            </button>
-        </div>
+        <%@include file="admin-form-submit.jsp" %>
     </form>
 </div>
 <%@include file="footer.jsp" %>

@@ -1,16 +1,7 @@
 ;
 (function () {
-    var input = {
+    var input = buildInput({
         $form: $('#categoryForm'),
-        get$AddSubmit: function () {
-            return $('#addSubmit');
-        },
-        get$EditSubmit: function () {
-            return $('#editSubmit');
-        },
-        get$Id: function () {
-            return this.$form.find('input[name=id]');
-        },
         get$Name: function () {
             return this.$form.find('input[name=name]');
         },
@@ -26,8 +17,7 @@
                 return true;
             }
         }
-    };
-    input.$form.ajaxForm(normalSubmitCallback);
+    });
 
     var searchWordInput = {
         $form: $('#searchWordForm'),
@@ -218,9 +208,7 @@
             input.get$Id().val(id);
             input.get$Name().val(name).focusOrSelect();
             input.get$ParentId().val(parentId);
-            input.get$AddSubmit().attr('disabled', true);
-            input.get$EditSubmit().attr('disabled', false);
-            scrollTop(input.$form);
+            input.toEditMode();
         };
         $scope.rankUpCategory = function (event) {
             var target = event.target;

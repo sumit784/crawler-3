@@ -30,7 +30,7 @@ public class ChineseUtils {
                     int char1 = b[i++] & 255;
                     char1 <<= 8;
                     int chart = char1 + (b[i] & 255);
-                    sb.append(getPhoneticLetter((char) chart, upperCase));
+                    sb.append(getPhoneticLetter((char) chart));
                     continue;
                 }
                 char c = (char) b[i];
@@ -38,7 +38,11 @@ public class ChineseUtils {
                 //    c = 'A';
                 sb.append(c);
             }
-            return sb.toString();
+            if (upperCase) {
+                return sb.toString().toUpperCase();
+            } else {
+                return sb.toString().toLowerCase();
+            }
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
@@ -48,10 +52,9 @@ public class ChineseUtils {
      * Get first phonetic letter of Chinese character
      *
      * @param chineseChar Chinese character
-     * @param upperCase   return upper case or lower case
      * @return first phonetic letter of chineseChar
      */
-    private static char getPhoneticLetter(char chineseChar, boolean upperCase) {
+    private static char getPhoneticLetter(char chineseChar) {
         int charGBK = (int) chineseChar;
         char result;
         if (charGBK >= 45217 && charGBK <= 45252)
@@ -102,9 +105,6 @@ public class ChineseUtils {
             result = 'Z';
         else
             throw new RuntimeException("unrecognised Chinese character: " + chineseChar);
-
-        if (!upperCase)
-            result = Character.toLowerCase(result);
         return result;
     }
 }

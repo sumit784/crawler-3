@@ -43,6 +43,7 @@ public class AdminEditCommodityController extends ImageController {
         }
 
         addJs("commodity-parameters");
+        addJs("lib/jquery.cookie");
         return EDIT_PAGE;
     }
 
