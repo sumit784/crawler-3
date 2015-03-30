@@ -7,19 +7,24 @@
     var branchPoster = {
         speed: 500,
         $div: $('div.search div.right div.branch div.poster'),
+        $imageDiv: $('div.search div.right div.branch div.poster div.image'),
+        stop: false,
         show: function () {
             $branchTitle.hide();
             $branchLogo.hide();
-            this.$div.fadeIn(this.speed);
+            this.$div.show();
+            this.$imageDiv.hide().fadeIn(this.speed);
+            this.stop = false;
         },
         hide: function () {
             $branchTitle.fadeIn(this.speed);
             $branchLogo.fadeIn(this.speed);
+            this.$imageDiv.hide();
             this.$div.hide();
+            this.stop = true;
         },
         init: function () {
-            var $div = this.$div;
-            var $a = $div.parent();
+            var self = this;
             $.get('json/category-poster.json', {
                 'categoryId': getCategoryId()
             }, function (data) {
@@ -33,20 +38,22 @@
                             } else {
                                 posterIndex = 0;
                             }
-                            loadPoster(data[posterIndex]);
+                            if (!self.stop) {
+                                loadPoster(data[posterIndex]);
+                            }
                         }, 4000);
                     }
                 }
             });
 
             function loadPoster(posterObject) {
-                $div.css('background-image', 'url(' + posterObject.path + ')');
+                self.$imageDiv.css('background-image', 'url(' + posterObject.path + ')');
                 if (posterObject.link != null && $.trim(posterObject.link) != '') {
-                    $a.attr('href', posterObject.link).css('cursor', 'pointer');
+                    self.$imageDiv.parent().attr('href', posterObject.link).css('cursor', 'pointer');
                 } else {
-                    $a.attr('href', 'javascript:void(0)').css('cursor', 'default');
+                    self.$imageDiv.parent().attr('href', 'javascript:void(0)').css('cursor', 'default');
                 }
-                $div.hide().fadeIn(1000);
+                self.$imageDiv.hide().fadeIn(self.speed);
             }
         }
     };

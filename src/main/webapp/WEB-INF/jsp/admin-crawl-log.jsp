@@ -4,11 +4,15 @@
     <form id="filterForm" method="get" action="admin-crawl-log.html">
         <div class="success">
             <label>是否成功</label>
-            <select name="success" id="successSelect">
+            <select name="success">
                 <option value="0">全部</option>
                 <option value="1">是</option>
                 <option value="2">否</option>
             </select>
+        </div>
+        <div class="showId">
+            <label>商品ID</label>
+            <input type="text" name="showId"/>
         </div>
         <div class="button">
             <button id="addSubmit" type="submit" class="btn btn-success">筛选</button>

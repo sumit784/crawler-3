@@ -80,7 +80,7 @@ class SinglePriceHistoryCrawler {
                 commodityDao.updateInLowPrice(commodity.getId());
 
                 LOGGER.info("save price history of {}", url);
-                new CommodityCrawlLogDao().logFail(commodityId, "价格记录抓取成功");
+                new CommodityCrawlLogDao().logSuccess(commodityId, "价格记录抓取成功");
             }
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);

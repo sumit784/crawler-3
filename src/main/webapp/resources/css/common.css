@@ -1,3 +1,7 @@
+a:focus {
+    outline: none;
+}
+
 .darkFont {
     color: rgb(128, 128, 128);
 }
