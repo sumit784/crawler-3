@@ -112,3 +112,14 @@ div.content div.right div.description a {
     font-size: 10pt;
     color: #7F4B2F;
 }
+
+div.content div.right div.action {
+    border-top: 1px solid #eeeeee;
+    text-align: right;
+}
+
+div.content div.right div.action img {
+    height: 20px;
+    width: 20px;
+    margin: 0 3px;
+}

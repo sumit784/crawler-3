@@ -33,7 +33,8 @@
         },
         adjustImagePosition: function ($image) {
             var totalWidth = this.$div.parent().width();
-            var x = (totalWidth - images.getWidth($image)) / 2;
+            //var x = (totalWidth - images.getWidth($image)) / 2;
+            var x = (totalWidth - $image.get(0).width) / 2;
             this.$div.css('left', x);
         },
         show: function () {

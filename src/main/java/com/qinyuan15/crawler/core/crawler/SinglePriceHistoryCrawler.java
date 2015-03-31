@@ -69,8 +69,8 @@ class SinglePriceHistoryCrawler {
                 }
 
                 // save images
-                CommodityPictureDownloader downloader = new CommodityPictureDownloader(imageDownloader);
-                downloader.saveIfNotExist(commodity.getId(), commodityPageParser.getImageUrls());
+                //CommodityPictureDownloader downloader = new CommodityPictureDownloader(imageDownloader);
+                //downloader.saveIfNotExist(commodity.getId(), commodityPageParser.getImageUrls());
 
                 // save sales and on self time
                 CommodityDao commodityDao = new CommodityDao();

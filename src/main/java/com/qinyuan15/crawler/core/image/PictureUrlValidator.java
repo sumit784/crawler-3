@@ -16,6 +16,6 @@ public class PictureUrlValidator {
     }
 
     public boolean isLocal(String url) {
-        return url.contains("://" + this.localAddress + "/");
+        return url.contains("://" + this.localAddress);
     }
 }

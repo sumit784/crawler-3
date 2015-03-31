@@ -20,10 +20,6 @@ public class CommodityPictureDownloader {
     private PictureUrlConverter pictureUrlConverter;
     private PictureUrlValidator urlValidator;
 
-    public CommodityPictureDownloader(ImageDownloader imageDownloader) {
-        this(imageDownloader, null);
-    }
-
     public CommodityPictureDownloader(ImageDownloader imageDownloader, PictureUrlConverter pictureUrlConverter) {
         this.imageDownloader = imageDownloader;
         this.pictureUrlConverter = pictureUrlConverter;

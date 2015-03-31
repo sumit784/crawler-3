@@ -23,4 +23,5 @@
 
     angularUtils.controller(function ($scope) {
     });
+    JSUtils.recordScrollStatus();
 })();

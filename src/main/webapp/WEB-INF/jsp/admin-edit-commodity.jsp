@@ -143,16 +143,7 @@
                     <button id="publishCommodity" name="publishSubmit" type="submit">发布商品</button>
                 </c:when>
                 <c:otherwise>
-                    <c:choose>
-                        <c:when test="${commodity.active}">
-                            <button id="deleteCommodity" name="deactivateSubmit" type="submit">删除商品</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button id="deleteCommodity" name="activateSubmit" type="submit">激活商品</button>
-                            <button id="deleteCommodity" name="deleteSubmit" type="submit">彻底删除</button>
-                        </c:otherwise>
-                    </c:choose>
-                    <button id="publishCommodity" name="publishSubmit" type="submit">修改商品</button>
+                    <button id="publishCommodity" name="publishSubmit" type="submit">修改</button>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -186,17 +177,21 @@
                 </tr>
             </table>
         </div>
+        <div class="normal" ng-repeat="imageUrl in originalImageUrls">
+            <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
+        </div>
+        <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls">
+            <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
+        </div>
     </form>
     <div class="deepTransparent" id="submitInfo">
         <h1>正在处理，图片下载可能要一些时间，请耐心等待...</h1>
     </div>
     <div id="enlargeImage" class="boxShadow">
         <div class="normal" ng-repeat="imageUrl in originalImageUrls">
-            <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
             <img ng-src="{{imageUrl}}"/>
         </div>
         <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls">
-            <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
             <img ng-src="{{detailImageUrl}}"/>
         </div>
         <div class="closeEnlargeIcon" ng-click="closeEnlargeImage()"></div>

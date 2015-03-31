@@ -18,6 +18,7 @@
 </body>
 <script src="resources/js/lib/jquery-1.11.1.min.js"></script>
 <script src="resources/js/lib/jquery.url.js"></script>
+<script src="resources/js/lib/jquery.cookie.js"></script>
 <script src="resources/js/lib/jquery-form-3.51.0.js"></script>
 <script src="resources/js/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/lib/angular/html5shiv.js"></script>

@@ -13,7 +13,7 @@
                 <div class="horizontalBorder"></div>
                 <div class="verticalBorder"></div>
             </div>
-            <div>
+            <div class="branchLogo">
                 <a href="shoppe?id={{branch.id}}" target="_blank">
                     <img class="link branch-logo" ng-src="{{branch.logo}}"
                          onmouseover="showBranchBorder(this)"
@@ -21,7 +21,7 @@
                 </a>
             </div>
         </div>
-        <div class="moreBranch" ng-mouseover="showMore()" ng-show="moreBranch.show">
+        <div class="moreBranch branchLogo" ng-mouseover="showMore()" ng-show="moreBranch.show">
             <a href="javascript:void(0)" target="_blank">
                 <img class="link branch-logo" ng-src="{{moreBranch.logo}}"
                      onmouseover="showBranchBorder(this)"
@@ -34,7 +34,7 @@
                 <div class="horizontalBorder"></div>
                 <div class="verticalBorder"></div>
             </div>
-            <div>
+            <div class="branchLogo">
                 <a href="shoppe?id={{branch.id}}" target="_blank">
                     <img class="link branch-logo" ng-src="{{branch.logo}}"
                          onmouseover="showBranchBorder(this)"

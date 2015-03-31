@@ -75,8 +75,9 @@ public class CommodityDaoTest {
     @Test
     public void testGetInstance() throws Exception {
         CommodityDao dao = new CommodityDao();
-        Commodity commodity = dao.getInstance(10);
+        Commodity commodity = dao.getInstance(9);
         if (commodity != null) {
+            System.out.println(commodity.getActive());
             System.out.println(commodity.getShowId());
             System.out.println(commodity.getSerialNumber());
         }

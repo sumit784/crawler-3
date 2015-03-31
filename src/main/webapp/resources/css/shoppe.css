@@ -1,8 +1,7 @@
 div.poster {
     position: relative;
     width: 100%;
-    text-align: center;
-    background-color: #ffffff;
+    background: #ffffff no-repeat center;
 }
 
 div.content > div.copy {

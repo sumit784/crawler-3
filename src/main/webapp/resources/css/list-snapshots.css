@@ -1,3 +1,7 @@
+div.content div.goods {
+    min-height: 360px;
+}
+
 div.content div.goods > div.sort {
     border-bottom: 1px solid rgb(223, 223, 223);
     margin-top: 27px;
@@ -131,4 +135,9 @@ div.content div.goods > div.images > div.no-found {
 
 div.content div.goods > div.images > div.no-found img {
     margin-bottom: 30px;
+}
+
+div.content div.goods > div.images > div.no-found {
+    background-color: rgb(238, 238, 238);
+    border: none;
 }
