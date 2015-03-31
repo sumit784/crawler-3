@@ -9,9 +9,13 @@
     <div class="subCategory">
         <c:forEach var="subCategory" items="${subCategories}" varStatus="status">
             <div>
-                <a href="javascript:void(0)" class="noLineAnchor lightGrayFont"
-                   data-options="id:${subCategory.id}"
+                <!--
+                <a href="list.html?id=${categoryId}&subCategory=${subCategory.id}"
+                   class="noLineAnchor lightGrayFont" data-options="id:${subCategory.id}"
                    ng-click="selectSubCategory($event)">${subCategory.name}</a>
+                   -->
+                <a href="list.html?id=${categoryId}&subCategory=${subCategory.id}"
+                   class="noLineAnchor lightGrayFont" data-options="id:${subCategory.id}">${subCategory.name}</a>
             </div>
         </c:forEach>
     </div>

@@ -143,18 +143,35 @@
                 get$MoreBranch().show();
             }
         };
-        $scope.selectSubCategory = function (event) {
-            var $this = $(event.target);
-            if ($this.hasClass('selected')) {
+        /*
+         $scope.selectSubCategory = function (event) {
+         var $this = $(event.target);
+         selectSubCategory($this);
+         };
+         */
+        function selectSubCategory($categoryAnchor) {
+            if ($categoryAnchor.hasClass('selected')) {
                 $scope.categoryId = getCategoryId();
             } else {
-                $scope.categoryId = $this.dataOptions()['id'];
+                $scope.categoryId = $categoryAnchor.dataOptions()['id'];
             }
             loadHotWord();
             loadSnapshot($scope, $http);
             initBranch();
-            subCategoryLinks.click($this);
-        };
+            subCategoryLinks.click($categoryAnchor);
+        }
+
+        var subCategory = $.url.param('subCategory');
+        if (subCategory) {
+            $('div.search div.subCategory a').each(function () {
+                var $this = $(this);
+                if ($this.dataOptions()['id'] == parseInt(subCategory)) {
+                    var href = $this.attr('href');
+                    $this.attr('href', href.replace('&subCategory=' + subCategory, ''));
+                    selectSubCategory($this);
+                }
+            })
+        }
 
         function get$HideBranch() {
             return  $('div.search > div.right div.branch > div.logos div.hideBranch');
