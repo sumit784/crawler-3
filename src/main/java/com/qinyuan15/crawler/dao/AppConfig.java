@@ -16,6 +16,33 @@ public class AppConfig extends PersistObject {
     public final static String IMAGE_SEPARATOR = ",";
     private String detailText;
     private String detailImages;
+    private String globalLogo;
+    private String globalBanner;
+    private String globalBottomPoster;
+
+    public void setGlobalLogo(String globalLogo) {
+        this.globalLogo = globalLogo;
+    }
+
+    public void setGlobalBanner(String globalBanner) {
+        this.globalBanner = globalBanner;
+    }
+
+    public void setGlobalBottomPoster(String globalBottomPoster) {
+        this.globalBottomPoster = globalBottomPoster;
+    }
+
+    public String getGlobalLogo() {
+        return globalLogo;
+    }
+
+    public String getGlobalBanner() {
+        return globalBanner;
+    }
+
+    public String getGlobalBottomPoster() {
+        return globalBottomPoster;
+    }
 
     public String getDetailText() {
         return detailText;

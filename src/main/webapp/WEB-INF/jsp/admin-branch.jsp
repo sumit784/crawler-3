@@ -72,19 +72,22 @@
         <div class="logo">
             <label>矩形logo(url或上传图片)</label>
             <span class="required">*</span>
-            <input type="text" id="logo" name="logo"/>
-            <input type="file" name="logoFile"/>
+            <jsp:include page="widget-upload-image.jsp">
+                <jsp:param name="id" value="logo"/>
+            </jsp:include>
         </div>
         <div class="logo">
             <label>方形logo(url或上传图片)</label>
             <span class="required">*</span>
-            <input type="text" id="squareLogo" name="squareLogo"/>
-            <input type="file" name="squareLogoFile"/>
+            <jsp:include page="widget-upload-image.jsp">
+                <jsp:param name="id" value="squareLogo"/>
+            </jsp:include>
         </div>
         <div class="logo">
             <label>品牌海报(url或上传图片)</label>
-            <input type="text" id="poster" name="poster"/>
-            <input type="file" name="posterFile"/>
+            <jsp:include page="widget-upload-image.jsp">
+                <jsp:param name="id" value="poster"/>
+            </jsp:include>
         </div>
         <div class="slogan">
             <label>品牌口号</label>

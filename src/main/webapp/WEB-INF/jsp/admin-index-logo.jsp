@@ -24,8 +24,9 @@
             <label>图片(url或上传图片)</label>
             <span class="required">*</span>
             <br/>
-            <input type="text" name="logo"/>
-            <input type="file" name="logoFile"/>
+            <jsp:include page="widget-upload-image.jsp">
+                <jsp:param name="id" value="logo"/>
+            </jsp:include>
         </div>
         <div class="link">
             <label>目标链接</label><br/>

@@ -30,6 +30,9 @@
                 <value>CommodityPicture.url</value>
                 <value>IndexLogo.path</value>
                 <value>AppConfig.detailImages</value>
+                <value>AppConfig.globalLogo</value>
+                <value>AppConfig.globalBanner</value>
+                <value>AppConfig.globalBottomPoster</value>
             </list>
         </property>
     </bean>
