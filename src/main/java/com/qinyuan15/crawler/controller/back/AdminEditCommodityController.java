@@ -6,6 +6,7 @@ import com.qinyuan15.crawler.dao.AppraiseGroupDao;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.dao.HibernateUtils;
+import com.qinyuan15.crawler.security.SecurityUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,6 +140,9 @@ public class AdminEditCommodityController extends ImageController {
             logAction("更新商品'%s'", commodity.getName());
             LOGGER.info("Update Commodity {}", commodity.getId());
         } else {
+            commodity.setActive(true);
+            commodity.setUserId(SecurityUtils.getUserId());
+            commodity.setInLowPrice(false);
             id = HibernateUtils.save(commodity);
             logAction("添加商品'%s'", commodity.getName());
             LOGGER.info("Insert new Commodity {}", id);
