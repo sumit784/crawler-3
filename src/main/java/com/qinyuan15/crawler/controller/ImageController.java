@@ -31,28 +31,25 @@ public class ImageController extends BaseController {
     @Autowired
     protected ImageDownloader imageDownloader;
 
-    @Autowired
-    protected PictureUrlConverter pictureUrlConverter;
-
     private ImageFilter commodityPictureFilter = new ImageFilter().setFilterSize(ImageSize.VERY_SMALL);
 
-    private List<String> getCommodityPictureUrils(List<CommodityPicture> commodityPictures) {
+    private List<String> getCommodityPictureUrls(List<CommodityPicture> commodityPictures) {
         List<String> paths = CommodityPictureUtils.getUrls(commodityPictures);
         return commodityPictureFilter.filterSize(paths);
     }
 
     protected List<String> parseCommodityPictureUrls(List<CommodityPicture> commodityPictures) {
-        return pictureUrlConverter.pathsToUrls(getCommodityPictureUrils(commodityPictures));
+        return pictureUrlConverter.pathsToUrls(getCommodityPictureUrls(commodityPictures));
     }
 
     protected List<String> parseCommodityPictureMiddleUrls(List<CommodityPicture> commodityPictures) {
-        List<String> paths = getCommodityPictureUrils(commodityPictures);
+        List<String> paths = getCommodityPictureUrls(commodityPictures);
         paths = new ThumbnailsBuilder().getMiddle(paths);
         return pictureUrlConverter.pathsToUrls(paths);
     }
 
     protected List<String> parseCommodityPictureSmallUrls(List<CommodityPicture> commodityPictures) {
-        List<String> paths = getCommodityPictureUrils(commodityPictures);
+        List<String> paths = getCommodityPictureUrls(commodityPictures);
         paths = new ThumbnailsBuilder().getSmall(paths);
         return pictureUrlConverter.pathsToUrls(paths);
     }

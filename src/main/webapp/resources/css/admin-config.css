@@ -1,0 +1,13 @@
+fieldset {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+div.uploadImage {
+    float: left;
+    margin-right: 10px;
+}
+
+div.uploadImage input[type=text] {
+    width: 250px;
+}

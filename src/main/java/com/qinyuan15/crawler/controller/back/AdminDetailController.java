@@ -6,7 +6,6 @@ import com.qinyuan15.crawler.dao.AppConfigDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +25,7 @@ public class AdminDetailController extends ImageController {
     private final static String SAVE_PATH_PREFIX = "mall/detail/images/";
 
     @RequestMapping("/admin-detail")
-    public String index(ModelMap model) {
-        AppConfig appConfig = new AppConfigDao().getInstance();
-        model.addAttribute("detailText", appConfig.getDetailText());
-        model.addAttribute("detailImages", pictureUrlConverter.pathsToUrls(appConfig.getDetailImagesList()));
-
+    public String index() {
         addCssAndJs("admin-normal-edit-page");
         addJs("lib/ckeditor/ckeditor");
 

@@ -136,6 +136,13 @@ public class AdminEditCommodityController extends ImageController {
 
         // add or update
         if (isPositive(id)) {
+            if (!(SecurityUtils.isSupperAdmin() ||
+                    SecurityUtils.getUserId().equals(commodity.getUserId()))) {
+                LOGGER.warn("forbid user {} to edit commodity {}",
+                        SecurityUtils.getUsername(), commodity.getName());
+                return toEditPage("您无权修改些商品!");
+            }
+
             HibernateUtils.update(commodity);
             logAction("更新商品'%s'", commodity.getName());
             LOGGER.info("Update Commodity {}", commodity.getId());

@@ -2,7 +2,7 @@
 <%@include file="header.jsp" %>
 <div class="boxShadow">
     <form id="detailForm" method="post" action="admin-detail-update">
-        <textarea class="ckeditor" name="detailText">${detailText}</textarea>
+        <textarea class="ckeditor" name="detailText">${appConfig.detailText}</textarea>
 
         <div>
             <button id="editSubmit" type="submit" class="btn btn-success">
@@ -13,7 +13,7 @@
         <div class="image">
             <table class="normal">
                 <tbody>
-                <c:forEach var="detailImage" items="${detailImages}" varStatus="status">
+                <c:forEach var="detailImage" items="${appConfig.detailImagesList}" varStatus="status">
                     <tr id="detailImage_${status.index}">
                         <td>
                             <a class="limit-size" data-options="limit:50" href="${detailImage}"

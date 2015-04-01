@@ -10,15 +10,9 @@ import java.util.List;
  * Created by qinyuan on 15-2-24.
  */
 public class PictureUrlConverter {
-    //private final static Logger LOGGER = LoggerFactory.getLogger(PictureUrlConverter.class);
     private String urlPrefix;
     private String pathPrefix;
     private List<String> otherPathPrefixes;
-/*
-    public PictureUrlConverter(String urlPrefix, String pathPrefix) {
-        this.urlPrefix = urlPrefix;
-        this.pathPrefix = pathPrefix;
-    }*/
 
     public void setPathPrefix(String pathPrefix) {
         this.pathPrefix = pathPrefix;

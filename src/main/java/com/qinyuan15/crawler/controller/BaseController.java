@@ -2,6 +2,9 @@ package com.qinyuan15.crawler.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.qinyuan15.crawler.core.config.AppConfigAdapter;
+import com.qinyuan15.crawler.core.image.PictureUrlConverter;
+import com.qinyuan15.crawler.dao.AppConfigDao;
 import com.qinyuan15.crawler.dao.UserLogDao;
 import com.qinyuan15.crawler.security.SecurityUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -34,6 +37,9 @@ public class BaseController {
     protected final static String RESULT = "result";
 
     @Autowired
+    protected PictureUrlConverter pictureUrlConverter;
+
+    @Autowired
     protected HttpServletRequest request;
 
     protected String redirect(String page) {
@@ -54,6 +60,8 @@ public class BaseController {
     }
 
     protected void setTitle(Object title) {
+        request.setAttribute("appConfig", new AppConfigAdapter(pictureUrlConverter)
+                .adjust(new AppConfigDao().getInstance()));
         request.setAttribute(TITLE, title);
     }
 
