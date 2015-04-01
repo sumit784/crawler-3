@@ -21,11 +21,10 @@
         </div>
     </div>
     <div ng-show="(snapshots.length==0)" style="display: none;" class="no-found">
-        <img src="resources/css/images/list/no-found.png"/>
-
-        <p>对不起，没有处于最低的商品</p>
-
-        <p>您可以再看看其他类别的商品</p>
+        <img src="${appConfig.noFoundImage}"/>
+        <c:forEach var="noFoundText" items="${appConfig.noFoundTexts}">
+            <p>${noFoundText}</p>
+        </c:forEach>
     </div>
 </div>
 <div class="loading">

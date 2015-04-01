@@ -20,6 +20,26 @@ public class AppConfig extends PersistObject {
     private String globalBanner;
     private String indexHeadPoster;
     private String indexFootPoster;
+    private String indexFootPosterLink;
+    private String branchRankImage;
+    private String noFoundImage;
+    private String noFoundText;
+
+    public void setIndexFootPosterLink(String indexFootPosterLink) {
+        this.indexFootPosterLink = indexFootPosterLink;
+    }
+
+    public void setBranchRankImage(String branchRankImage) {
+        this.branchRankImage = branchRankImage;
+    }
+
+    public void setNoFoundImage(String noFoundImage) {
+        this.noFoundImage = noFoundImage;
+    }
+
+    public void setNoFoundText(String noFoundText) {
+        this.noFoundText = noFoundText;
+    }
 
     public void setGlobalLogo(String globalLogo) {
         this.globalLogo = globalLogo;
@@ -61,6 +81,22 @@ public class AppConfig extends PersistObject {
         return detailImages;
     }
 
+    public String getIndexFootPosterLink() {
+        return indexFootPosterLink;
+    }
+
+    public String getBranchRankImage() {
+        return branchRankImage;
+    }
+
+    public String getNoFoundImage() {
+        return noFoundImage;
+    }
+
+    public String getNoFoundText() {
+        return noFoundText;
+    }
+
     public List<String> getDetailImagesList() {
         if (StringUtils.hasText(detailImages)) {
             return Lists.newArrayList(detailImages.split(IMAGE_SEPARATOR));
@@ -77,4 +113,10 @@ public class AppConfig extends PersistObject {
         this.detailImages = detailImages;
     }
 
+    public List<String> getNoFoundTexts() {
+        if (!StringUtils.hasText(noFoundText)) {
+            return new ArrayList<>();
+        }
+        return Lists.newArrayList(noFoundText.split("\n"));
+    }
 }

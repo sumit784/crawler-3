@@ -8,10 +8,14 @@
     });
 
     // foot image
-    $('<div></div>').addClass('footImage')
-        .append('<img class="link" src="' + $('#footPoster').text() + '"/>').css({
-            top: $linksDiv.height() + 370
-        }).appendTo($('body'));
+    var img = '<img src="' + $.trim($('#footPoster').text()) + '"/>';
+    var footPosterLink = $.trim($('#footPosterLink').text());
+    if (footPosterLink != '') {
+        img = '<a href="' + footPosterLink + '">' + img + '</a>';
+    }
+    $('<div></div>').addClass('footImage').append(img).css({
+        top: $linksDiv.height() + 370
+    }).appendTo($('body'));
     angularUtils.controller(function () {
     });
 })();

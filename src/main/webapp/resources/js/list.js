@@ -212,6 +212,7 @@
         }
     });
     focusSearchInput();
+    JSUtils.recordScrollStatus();
 })();
 function showBranchBorder(element) {
     getParent($(element), 'div').prev().show();

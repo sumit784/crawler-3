@@ -14,5 +14,9 @@
         <property name="globalLogo" column="global_logo"/>
         <property name="indexFootPoster" column="index_foot_poster"/>
         <property name="indexHeadPoster" column="index_head_poster"/>
+        <property name="indexFootPosterLink" column="index_foot_poster_link"/>
+        <property name="branchRankImage" column="branch_rank_image"/>
+        <property name="noFoundImage" column="no_found_image"/>
+        <property name="noFoundText" column="no_found_text"/>
     </class>
 </hibernate-mapping>

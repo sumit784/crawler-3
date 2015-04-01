@@ -33,5 +33,6 @@
     </c:forEach>
 </div>
 <script id="footPoster" type="text/x-data">${appConfig.indexFootPoster}</script>
+<script id="footPosterLink" type="text/x-data">${appConfig.indexFootPosterLink}</script>
 <%@include file="footer.jsp" %>
 

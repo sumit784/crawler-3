@@ -22,6 +22,8 @@ public class AppConfigAdapter {
         appConfig.setGlobalBanner(pictureUrlConverter.pathToUrl(appConfig.getGlobalBanner()));
         appConfig.setIndexHeadPoster(pictureUrlConverter.pathToUrl(appConfig.getIndexHeadPoster()));
         appConfig.setIndexFootPoster(pictureUrlConverter.pathToUrl(appConfig.getIndexFootPoster()));
+        appConfig.setBranchRankImage(pictureUrlConverter.pathToUrl(appConfig.getBranchRankImage()));
+        appConfig.setNoFoundImage(pictureUrlConverter.pathToUrl(appConfig.getNoFoundImage()));
 
         List<String> images = appConfig.getDetailImagesList();
         for (int i = 0; i < images.size(); i++) {

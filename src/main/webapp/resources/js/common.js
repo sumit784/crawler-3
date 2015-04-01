@@ -204,17 +204,17 @@ var angularUtils = {
                 }
             },
             init: function () {
+                this.update();
                 this.$link.click(function () {
                     scrollTop();
                 });
             }
         };
-
+        toTopLink.init();
 
         $(document).scroll(function () {
             toTopLink.update();
         });
-        toTopLink.update();
     }
 
     function adjustRightFloatPosition() {

@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
+import com.qinyuan15.crawler.core.config.LinkAdapter;
 import com.qinyuan15.crawler.dao.HibernateUtils;
 import com.qinyuan15.crawler.dao.IndexLogo;
 import com.qinyuan15.crawler.dao.IndexLogoDao;
@@ -51,9 +52,7 @@ public class AdminIndexLogoController extends ImageController {
         }
 
         // adjust link
-        if (link != null && link.startsWith("www.")) {
-            link = "http://" + link;
-        }
+        link = new LinkAdapter().adjust(link);
 
         IndexLogoDao dao = new IndexLogoDao();
         if (isPositive(id)) {

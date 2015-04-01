@@ -14,3 +14,7 @@ div.uploadImage {
 div.uploadImage input[type=text] {
     width: 250px;
 }
+
+div.uploadImage textarea {
+    font-size: 9pt;
+}

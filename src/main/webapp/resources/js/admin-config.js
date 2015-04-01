@@ -26,6 +26,18 @@
         get$indexFootPosterFile: function () {
             return this.$form.find('input[name=indexFootPosterFile]');
         },
+        get$BranchRankImage: function () {
+            return this.$form.find('input[name=branchRankImage]');
+        },
+        get$BranchRankImageFile: function () {
+            return this.$form.find('input[name=branchRankImageFile]');
+        },
+        get$NoFoundImage: function () {
+            return this.$form.find('input[name=noFoundImage]');
+        },
+        get$NoFoundImageFile: function () {
+            return this.$form.find('input[name=noFoundImageFile]');
+        },
         get$EditSubmit: function () {
             return $('#editImageSubmit');
         },
@@ -50,13 +62,23 @@
                 alert('首页尾部海报未设置!');
                 this.get$indexFootPoster().focusOrSelect();
                 return false;
+            } else if ($.trim(this.get$BranchRankImage().val()) == '' &&
+                $.trim(this.get$BranchRankImageFile().val()) == '') {
+                alert('品牌排行图片未设置!');
+                this.get$BranchRankImage().focusOrSelect();
+                return false;
+            } else if ($.trim(this.get$NoFoundImage().val()) == '' &&
+                $.trim(this.get$NoFoundImageFile().val()) == '') {
+                alert('无对应商品时显示的图片未设置!');
+                this.get$NoFoundImage().focusOrSelect();
+                return false;
             } else {
                 return true;
             }
         }
     };
     input.$form.ajaxForm(normalSubmitCallback);
-    input.get$GlobalLogo().focusOrSelect();
+    input.get$GlobalBanner().focusOrSelect();
     angularUtils.controller(function ($scope) {
         $scope.validateInput = buildNormalValidationCallback(input);
     });

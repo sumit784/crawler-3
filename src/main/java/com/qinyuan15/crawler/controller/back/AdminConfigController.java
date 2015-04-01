@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
+import com.qinyuan15.crawler.core.config.LinkAdapter;
 import com.qinyuan15.crawler.dao.AppConfig;
 import com.qinyuan15.crawler.dao.AppConfigDao;
 import org.slf4j.Logger;
@@ -42,7 +43,13 @@ public class AdminConfigController extends ImageController {
                                       @RequestParam(value = "indexHeadPoster", required = true) String indexHeadPoster,
                                       @RequestParam(value = "indexHeadPosterFile", required = false) MultipartFile indexHeadPosterFile,
                                       @RequestParam(value = "indexFootPoster", required = true) String indexFootPoster,
-                                      @RequestParam(value = "indexFootPosterFile", required = false) MultipartFile indexFootPosterFile) {
+                                      @RequestParam(value = "indexFootPosterFile", required = false) MultipartFile indexFootPosterFile,
+                                      @RequestParam(value = "indexFootPosterLink", required = true) String indexFootPosterLink,
+                                      @RequestParam(value = "branchRankImage", required = true) String branchRankImage,
+                                      @RequestParam(value = "branchRankImageFile", required = false) MultipartFile branchRankImageFile,
+                                      @RequestParam(value = "noFoundImage", required = true) String noFoundImage,
+                                      @RequestParam(value = "noFoundImageFile", required = false) MultipartFile noFoundImageFile,
+                                      @RequestParam(value = "noFoundText", required = true) String noFoundText) {
         String globalBannerPath;
         try {
             globalBannerPath = getSavePath(globalBanner, globalBannerFile, SAVE_PATH_PREFIX);
@@ -79,22 +86,77 @@ public class AdminConfigController extends ImageController {
             return createFailResult("首页尾部海报处理失败!");
         }
 
+        String branchRankImagePath;
+        try {
+            branchRankImagePath = getSavePath(branchRankImage, branchRankImageFile, SAVE_PATH_PREFIX);
+        } catch (Exception e) {
+            LOGGER.error("fail to deal with branchRankImage, branchRankImage:{}, branchRankImageFile:{}, error:{}",
+                    branchRankImage, branchRankImageFile, e);
+            return createFailResult("品牌排行图片处理失败!");
+        }
+
+        String noFoundImagePath;
+        try {
+            noFoundImagePath = getSavePath(noFoundImage, noFoundImageFile, SAVE_PATH_PREFIX);
+        } catch (Exception e) {
+            LOGGER.error("fail to deal with noFoundImage, noFoundImage:{}, noFoundImageFile:{}, error:{}",
+                    noFoundImage, noFoundImageFile, e);
+            return createFailResult("无对应商品时显示的图片处理失败!");
+        }
+
         AppConfigDao dao = new AppConfigDao();
         AppConfig appConfig = dao.getInstance();
 
-        appConfig.setGlobalBanner(globalBannerPath);
-        logAction("将页头横幅修改为'%s'", pictureUrlConverter.pathToUrl(globalBannerPath));
+        if (isDifferent(appConfig.getGlobalBanner(), globalBannerPath)) {
+            appConfig.setGlobalBanner(globalBannerPath);
+            logAction("将页头横幅修改为'%s'", pictureUrlConverter.pathToUrl(globalBannerPath));
+        }
 
-        appConfig.setGlobalLogo(globalLogoPath);
-        logAction("将页头Logo修改为'%s'", pictureUrlConverter.pathToUrl(globalLogoPath));
+        if (isDifferent(appConfig.getGlobalLogo(), globalLogoPath)) {
+            appConfig.setGlobalLogo(globalLogoPath);
+            logAction("将页头Logo修改为'%s'", pictureUrlConverter.pathToUrl(globalLogoPath));
+        }
 
-        appConfig.setIndexHeadPoster(indexHeadPosterPath);
-        logAction("将主页头部海报修改为'%s'", pictureUrlConverter.pathToUrl(indexHeadPosterPath));
+        if (isDifferent(appConfig.getIndexHeadPoster(), indexHeadPosterPath)) {
+            appConfig.setIndexHeadPoster(indexHeadPosterPath);
+            logAction("将主页头部海报修改为'%s'", pictureUrlConverter.pathToUrl(indexHeadPosterPath));
+        }
 
-        appConfig.setIndexFootPoster(indexFootPosterPath);
-        logAction("将主页尾部海报修改为'%s'", pictureUrlConverter.pathToUrl(indexFootPosterPath));
+        if (isDifferent(appConfig.getIndexFootPoster(), indexFootPosterPath)) {
+            appConfig.setIndexFootPoster(indexFootPosterPath);
+            logAction("将主页尾部海报修改为'%s'", pictureUrlConverter.pathToUrl(indexFootPosterPath));
+        }
+
+        indexFootPosterLink = new LinkAdapter().adjust(indexFootPosterLink);
+        if (isDifferent(appConfig.getIndexFootPosterLink(), indexFootPosterLink)) {
+            appConfig.setIndexFootPosterLink(indexFootPosterLink);
+            logAction("将主页尾部海报目标链接修改为'%s'", indexFootPosterLink);
+        }
+
+        if (isDifferent(appConfig.getBranchRankImage(), branchRankImagePath)) {
+            appConfig.setBranchRankImage(branchRankImagePath);
+            logAction("将品牌排行图片修改为'%s'", pictureUrlConverter.pathToUrl(branchRankImagePath));
+        }
+
+        if (isDifferent(appConfig.getNoFoundImage(), noFoundImagePath)) {
+            appConfig.setNoFoundImage(noFoundImagePath);
+            logAction("将无对应商品时显示的图片修改为'%s'", pictureUrlConverter.pathToUrl(noFoundImagePath));
+        }
+
+        if (isDifferent(appConfig.getNoFoundText(), noFoundText)) {
+            appConfig.setNoFoundText(noFoundText);
+            logAction("将无对应商品时显示的文字修改为'%s'", noFoundText);
+        }
 
         dao.update(appConfig);
         return SUCCESS;
+    }
+
+    private boolean isDifferent(String str1, String str2) {
+        if (str1 == null) {
+            return str2 != null;
+        } else {
+            return !str1.equals(str2);
+        }
     }
 }
