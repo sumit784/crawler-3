@@ -3,19 +3,9 @@
 <div class="boxShadow">
     <form id="mainForm" method="post" action="admin-config-update" enctype="multipart/form-data">
         <fieldset>
-            <legend>主页配置</legend>
+            <legend>页头设置</legend>
             <div class="uploadImage">
-                <label>首页Logo(url或上传图片)</label><br/>
-                <jsp:include page="widget-upload-image.jsp">
-                    <jsp:param name="id" value="globalLogo"/>
-                    <jsp:param name="value" value="${appConfig.globalLogo}"/>
-                </jsp:include>
-                <jsp:include page="admin-config-image-snapshot.jsp">
-                    <jsp:param name="url" value="${appConfig.globalLogo}"/>
-                </jsp:include>
-            </div>
-            <div class="uploadImage">
-                <label>首页头部横幅(url或上传图片)</label><br/>
+                <label>页头横幅(url或上传图片)</label><br/>
                 <jsp:include page="widget-upload-image.jsp">
                     <jsp:param name="id" value="globalBanner"/>
                     <jsp:param name="value" value="${appConfig.globalBanner}"/>
@@ -25,13 +15,36 @@
                 </jsp:include>
             </div>
             <div class="uploadImage">
-                <label>首页尾部海报(url或上传图片)</label><br/>
+                <label>页头Logo(url或上传图片)</label><br/>
                 <jsp:include page="widget-upload-image.jsp">
-                    <jsp:param name="id" value="globalBottomPoster"/>
-                    <jsp:param name="value" value="${appConfig.globalBottomPoster}"/>
+                    <jsp:param name="id" value="globalLogo"/>
+                    <jsp:param name="value" value="${appConfig.globalLogo}"/>
                 </jsp:include>
                 <jsp:include page="admin-config-image-snapshot.jsp">
-                    <jsp:param name="url" value="${appConfig.globalBottomPoster}"/>
+                    <jsp:param name="url" value="${appConfig.globalLogo}"/>
+                </jsp:include>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>主页设置</legend>
+            <div class="uploadImage">
+                <label>首页头部海报(url或上传图片)</label><br/>
+                <jsp:include page="widget-upload-image.jsp">
+                    <jsp:param name="id" value="indexHeadPoster"/>
+                    <jsp:param name="value" value="${appConfig.indexHeadPoster}"/>
+                </jsp:include>
+                <jsp:include page="admin-config-image-snapshot.jsp">
+                    <jsp:param name="url" value="${appConfig.indexHeadPoster}"/>
+                </jsp:include>
+            </div>
+            <div class="uploadImage">
+                <label>首页尾部海报(url或上传图片)</label><br/>
+                <jsp:include page="widget-upload-image.jsp">
+                    <jsp:param name="id" value="indexFootPoster"/>
+                    <jsp:param name="value" value="${appConfig.indexFootPoster}"/>
+                </jsp:include>
+                <jsp:include page="admin-config-image-snapshot.jsp">
+                    <jsp:param name="url" value="${appConfig.indexFootPoster}"/>
                 </jsp:include>
             </div>
         </fieldset>

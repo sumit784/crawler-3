@@ -14,30 +14,41 @@
         get$GlobalBannerFile: function () {
             return this.$form.find('input[name=globalBannerFile]');
         },
-        get$GlobalBottomPoster: function () {
-            return this.$form.find('input[name=globalBottomPoster]');
+        get$indexHeadPoster: function () {
+            return this.$form.find('input[name=indexHeadPoster]');
         },
-        get$GlobalBottomPosterFile: function () {
-            return this.$form.find('input[name=globalBottomPosterFile]');
+        get$indexHeadPosterFile: function () {
+            return this.$form.find('input[name=indexHeadPosterFile]');
+        },
+        get$indexFootPoster: function () {
+            return this.$form.find('input[name=indexFootPoster]');
+        },
+        get$indexFootPosterFile: function () {
+            return this.$form.find('input[name=indexFootPosterFile]');
         },
         get$EditSubmit: function () {
             return $('#editImageSubmit');
         },
         validate: function () {
-            if ($.trim(this.get$GlobalLogo().val()) == '' &&
-                $.trim(this.get$GlobalLogoFile().val()) == '') {
-                alert('首页Logo未设置!');
-                this.get$GlobalLogo().focusOrSelect();
-                return false;
-            } else if ($.trim(this.get$GlobalBanner().val()) == '' &&
+            if ($.trim(this.get$GlobalBanner().val()) == '' &&
                 $.trim(this.get$GlobalBannerFile().val()) == '') {
-                alert('首页头部横幅未设置!');
+                alert('页头部横幅未设置!');
                 this.get$GlobalBanner().focusOrSelect();
                 return false;
-            } else if ($.trim(this.get$GlobalBottomPoster().val()) == '' &&
-                $.trim(this.get$GlobalBottomPosterFile().val()) == '') {
+            } else if ($.trim(this.get$GlobalLogo().val()) == '' &&
+                $.trim(this.get$GlobalLogoFile().val()) == '') {
+                alert('页头Logo未设置!');
+                this.get$GlobalLogo().focusOrSelect();
+                return false;
+            } else if ($.trim(this.get$indexHeadPoster().val()) == '' &&
+                $.trim(this.get$indexHeadPosterFile().val()) == '') {
+                alert('首页头部海报未设置!');
+                this.get$indexHeadPoster().focusOrSelect();
+                return false;
+            } else if ($.trim(this.get$indexFootPoster().val()) == '' &&
+                $.trim(this.get$indexFootPosterFile().val()) == '') {
                 alert('首页尾部海报未设置!');
-                this.get$GlobalBottomPoster().focusOrSelect();
+                this.get$indexFootPoster().focusOrSelect();
                 return false;
             } else {
                 return true;

@@ -9,7 +9,7 @@
 
     // foot image
     $('<div></div>').addClass('footImage')
-        .append('<img class="link" src="resources/css/images/index/footer.png"/>').css({
+        .append('<img class="link" src="' + $('#footPoster').text() + '"/>').css({
             top: $linksDiv.height() + 370
         }).appendTo($('body'));
     angularUtils.controller(function () {

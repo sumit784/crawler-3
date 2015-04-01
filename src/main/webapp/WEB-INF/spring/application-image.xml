@@ -32,7 +32,8 @@
                 <value>AppConfig.detailImages</value>
                 <value>AppConfig.globalLogo</value>
                 <value>AppConfig.globalBanner</value>
-                <value>AppConfig.globalBottomPoster</value>
+                <value>AppConfig.indexHeadPoster</value>
+                <value>AppConfig.indexFootPoster</value>
             </list>
         </property>
     </bean>

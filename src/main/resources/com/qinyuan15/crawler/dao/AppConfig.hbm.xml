@@ -12,6 +12,7 @@
         <property name="detailImages" column="detail_images"/>
         <property name="globalBanner" column="global_banner"/>
         <property name="globalLogo" column="global_logo"/>
-        <property name="globalBottomPoster" column="global_bottom_poster"/>
+        <property name="indexFootPoster" column="index_foot_poster"/>
+        <property name="indexHeadPoster" column="index_head_poster"/>
     </class>
 </hibernate-mapping>

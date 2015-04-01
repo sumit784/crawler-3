@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
 <div class="title">
+    <!--
     <img src="resources/css/images/index/title.png"/>
+    -->
+    <img src="${appConfig.indexHeadPoster}"/>
 </div>
 <div class="search input-group">
     <form action="search">
@@ -29,5 +32,6 @@
         </a>
     </c:forEach>
 </div>
+<script id="footPoster" type="text/x-data">${appConfig.indexFootPoster}</script>
 <%@include file="footer.jsp" %>
 

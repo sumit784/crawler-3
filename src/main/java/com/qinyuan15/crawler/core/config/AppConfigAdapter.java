@@ -20,7 +20,8 @@ public class AppConfigAdapter {
     public AppConfig adjust(AppConfig appConfig) {
         appConfig.setGlobalLogo(pictureUrlConverter.pathToUrl(appConfig.getGlobalLogo()));
         appConfig.setGlobalBanner(pictureUrlConverter.pathToUrl(appConfig.getGlobalBanner()));
-        appConfig.setGlobalBottomPoster(pictureUrlConverter.pathToUrl(appConfig.getGlobalBottomPoster()));
+        appConfig.setIndexHeadPoster(pictureUrlConverter.pathToUrl(appConfig.getIndexHeadPoster()));
+        appConfig.setIndexFootPoster(pictureUrlConverter.pathToUrl(appConfig.getIndexFootPoster()));
 
         List<String> images = appConfig.getDetailImagesList();
         for (int i = 0; i < images.size(); i++) {

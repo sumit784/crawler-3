@@ -1,11 +1,14 @@
 fieldset {
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #555555;
 }
 
 div.uploadImage {
     float: left;
     margin-right: 10px;
+    padding-left: 10px;
 }
 
 div.uploadImage input[type=text] {

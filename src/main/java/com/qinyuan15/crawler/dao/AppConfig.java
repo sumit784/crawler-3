@@ -18,7 +18,8 @@ public class AppConfig extends PersistObject {
     private String detailImages;
     private String globalLogo;
     private String globalBanner;
-    private String globalBottomPoster;
+    private String indexHeadPoster;
+    private String indexFootPoster;
 
     public void setGlobalLogo(String globalLogo) {
         this.globalLogo = globalLogo;
@@ -28,8 +29,12 @@ public class AppConfig extends PersistObject {
         this.globalBanner = globalBanner;
     }
 
-    public void setGlobalBottomPoster(String globalBottomPoster) {
-        this.globalBottomPoster = globalBottomPoster;
+    public void setIndexHeadPoster(String indexHeadPoster) {
+        this.indexHeadPoster = indexHeadPoster;
+    }
+
+    public void setIndexFootPoster(String indexFootPoster) {
+        this.indexFootPoster = indexFootPoster;
     }
 
     public String getGlobalLogo() {
@@ -40,12 +45,16 @@ public class AppConfig extends PersistObject {
         return globalBanner;
     }
 
-    public String getGlobalBottomPoster() {
-        return globalBottomPoster;
-    }
-
     public String getDetailText() {
         return detailText;
+    }
+
+    public String getIndexHeadPoster() {
+        return indexHeadPoster;
+    }
+
+    public String getIndexFootPoster() {
+        return indexFootPoster;
     }
 
     public String getDetailImages() {
