@@ -98,37 +98,37 @@ public class AdminEditCommodityController extends ImageController {
         Commodity commodity = isPositive(id) ? commodityDao.getInstance(id) : new Commodity();
 
         if (!isPositive(branchId)) {
-            return toEditPage("品牌未设置");
+            return toEditPage("品牌未设置", id);
         }
         commodity.setBranchId(getBranchId(branchId, subBranch1Id, subBranch2Id));
 
         if (!isPositive(categoryId)) {
-            return toEditPage("商品分类未设置");
+            return toEditPage("商品分类未设置", id);
         }
         commodity.setCategoryId(getCategoryId(categoryId, subCategoryId));
 
         if (!StringUtils.hasText(commodityName)) {
-            return toEditPage("名称未设置");
+            return toEditPage("名称未设置", id);
         }
         commodity.setName(commodityName);
 
         if (!StringUtils.hasText(serialNumber)) {
-            return toEditPage("商品编号未设置");
+            return toEditPage("商品编号未设置", id);
         }
         commodity.setSerialNumber(serialNumber);
 
         if (!StringUtils.hasText(showId)) {
-            return toEditPage("商品ID未设置");
+            return toEditPage("商品ID未设置", id);
         }
         commodity.setShowId(showId);
 
         if (!StringUtils.hasText(buyUrl)) {
-            return toEditPage("购买链接未设置");
+            return toEditPage("购买链接未设置", id);
         }
         commodity.setBuyUrl(buyUrl);
 
         if (!StringUtils.hasText(url)) {
-            return toEditPage("爬虫链接未设置");
+            return toEditPage("爬虫链接未设置", id);
         }
         commodity.setUrl(url);
 
@@ -138,49 +138,83 @@ public class AdminEditCommodityController extends ImageController {
         if (isPositive(id)) {
             if (!(SecurityUtils.isSupperAdmin() ||
                     SecurityUtils.getUserId().equals(commodity.getUserId()))) {
-                LOGGER.warn("forbid user {} to edit commodity {}",
+                LOGGER.error("forbid user {} to edit commodity {}",
                         SecurityUtils.getUsername(), commodity.getName());
-                return toEditPage("您无权修改些商品!");
+                return toEditPage("您无权修改此商品!", id);
             }
 
-            HibernateUtils.update(commodity);
-            logAction("更新商品'%s'", commodity.getName());
-            LOGGER.info("Update Commodity {}", commodity.getId());
+            try {
+                HibernateUtils.update(commodity);
+                logAction("更新商品'%s'", commodity.getName());
+                LOGGER.info("Update Commodity {}", commodity.getId());
+            } catch (Exception e) {
+                logAction("更新商品'%s'失败", commodity.getName());
+                LOGGER.error("fail to Update Commodity {}, info: {}", commodity.getId(), e);
+                return toEditPage("更新商品失败", id);
+            }
         } else {
             commodity.setActive(true);
             commodity.setUserId(SecurityUtils.getUserId());
             commodity.setInLowPrice(false);
-            id = HibernateUtils.save(commodity);
-            logAction("添加商品'%s'", commodity.getName());
-            LOGGER.info("Insert new Commodity {}", id);
+            try {
+                id = HibernateUtils.save(commodity);
+                logAction("添加商品'%s'", commodity.getName());
+                LOGGER.info("Insert new Commodity {}", id);
+            } catch (Exception e) {
+                logAction("添加商品'%s'失败", commodity.getName());
+                LOGGER.error("fail to insert new Commodity: {}", e);
+                return toEditPage("添加商品失败", id);
+            }
         }
 
-        AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
-        appraiseGroupDao.clearAndSave(id, positiveAppraiseGroups, true);
-        appraiseGroupDao.clearAndSave(id, negativeAppraiseGroups, false);
+        try {
+            AppraiseGroupDao appraiseGroupDao = new AppraiseGroupDao();
+            appraiseGroupDao.clearAndSave(id, positiveAppraiseGroups, true);
+            appraiseGroupDao.clearAndSave(id, negativeAppraiseGroups, false);
+        } catch (Exception e) {
+            LOGGER.error("fail to add appraiseGroups, id:{}, positiveAppraiseGroups:{}, negativeAppraiseGroups:{}, info:{}",
+                    id, Arrays.toString(positiveAppraiseGroups), Arrays.toString(negativeAppraiseGroups), e);
+            return toEditPage("添加商品评价失败", id);
+        }
 
         CommodityPictureDownloader pictureDownloader = new CommodityPictureDownloader(imageDownloader, pictureUrlConverter);
         pictureDownloader.setLocalAddress(getLocalAddress());
-        if (imageUrls == null) {
-            imageUrls = new String[0];
+        try {
+            if (imageUrls == null) {
+                imageUrls = new String[0];
+            }
+            LOGGER.info("start saving images");
+            pictureDownloader.clearAndSave(id, Arrays.asList(imageUrls));
+            LOGGER.info("complete saving images");
+        } catch (Exception e) {
+            LOGGER.error("fail to save commodity images, imageUrls: {}, info: {}",
+                    Arrays.toString(imageUrls), e);
+            return toEditPage("保存商品图片失败", id);
         }
-        LOGGER.info("start saving images");
-        pictureDownloader.clearAndSave(id, Arrays.asList(imageUrls));
-        LOGGER.info("complete saving images");
 
-        if (detailImageUrls == null) {
-            detailImageUrls = new String[0];
+        try {
+            if (detailImageUrls == null) {
+                detailImageUrls = new String[0];
+            }
+            LOGGER.info("start saving detail images");
+            pictureDownloader.clearAndSaveDetail(id, Arrays.asList(detailImageUrls));
+            LOGGER.info("complete saving detail images");
+        } catch (Exception e) {
+            LOGGER.error("fail to save commodity detail images, detailImageUrls: {}, info: {}",
+                    Arrays.toString(detailImageUrls), e);
+            return toEditPage("保存商品描述图片失败", id);
         }
-        LOGGER.info("start saving detail images");
-        pictureDownloader.clearAndSaveDetail(id, Arrays.asList(detailImageUrls));
-        LOGGER.info("complete saving detail images");
 
-        return redirect("admin-edit-commodity.html?id=" + id);
+        return redirect(EDIT_PAGE + "?id=" + id);
     }
 
-    private String toEditPage(String errorInfo) {
+    private String toEditPage(String errorInfo, Integer id) {
         request.setAttribute("errorInfo", errorInfo);
-        return EDIT_PAGE;
+        if (isPositive(id)) {
+            return redirect(EDIT_PAGE + "?id=" + id);
+        } else {
+            return redirect(EDIT_PAGE);
+        }
     }
 
     private Integer getCategoryId(Integer id1, Integer id2) {

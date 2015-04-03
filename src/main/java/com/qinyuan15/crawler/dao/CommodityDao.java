@@ -34,6 +34,20 @@ public class CommodityDao {
         return commodities;
     }
 
+    public void unlinkCategory(Integer categoryId) {
+        Session session = HibernateUtils.getSession();
+        String hql = "UPDATE Commodity SET categoryId=null WHERE categoryId=" + categoryId;
+        session.createQuery(hql).executeUpdate();
+        HibernateUtils.commit(session);
+    }
+
+    public void unlinkBranch(Integer branchId) {
+        Session session = HibernateUtils.getSession();
+        String hql = "UPDATE Commodity SET branchId=null WHERE branchId=" + branchId;
+        session.createQuery(hql).executeUpdate();
+        HibernateUtils.commit(session);
+    }
+
     public void delete(int id) {
         HibernateUtils.delete(Commodity.class, id);
     }
@@ -299,7 +313,7 @@ public class CommodityDao {
 
         @SuppressWarnings("unchecked")
         public List<Commodity> getInstances(int firstResult, int maxResults) {
-            return HibernateUtils.getList(getHQL(),firstResult,maxResults);
+            return HibernateUtils.getList(getHQL(), firstResult, maxResults);
         }
 
         public List<Commodity> getInstances() {

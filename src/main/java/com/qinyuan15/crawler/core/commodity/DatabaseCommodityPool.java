@@ -28,7 +28,7 @@ public class DatabaseCommodityPool implements CommodityPool {
         }
 
         if (pointer % PAGE_SIZE == 0) {
-            this.commodities = HibernateUtils.getList("FROM Commodity WHERE active=true ORDER BY id",
+            this.commodities = HibernateUtils.getList("FROM Commodity WHERE active=true ORDER BY id DESC",
                     pointer, PAGE_SIZE);
         }
 

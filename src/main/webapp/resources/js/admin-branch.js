@@ -115,9 +115,23 @@
             input.toEditMode();
         };
         $scope.deleteBranch = function (event) {
-            $.post('admin-branch-delete', {
-                id: getTableRowIdByImgElement(event.target)
-            }, normalSubmitCallback);
+            var id = getTableRowIdByImgElement(event.target);
+            $.post('admin-branch-deletable', {
+                id: id
+            }, function (data) {
+                if (data.success) {
+                    doDelete();
+                } else {
+                    if (confirm(data['detail'])) {
+                        doDelete();
+                    }
+                }
+            });
+            function doDelete() {
+                $.post('admin-branch-delete', {
+                    id: id
+                }, normalSubmitCallback);
+            }
         };
         $scope.shoppes = [];
         $scope.addShoppe = function () {

@@ -8,14 +8,21 @@
            http://www.springframework.org/schema/task/spring-task.xsd">
 
     <bean id="imageDownloader" class="com.qinyuan15.crawler.core.image.ImageDownloader">
+        <!--
         <constructor-arg value="/var/www/html/images"/>
+        -->
+        <constructor-arg value="d:/apache/htdocs/images"/>
     </bean>
     <bean id="pictureUrlConverter" class="com.qinyuan15.crawler.core.image.PictureUrlConverter">
         <property name="urlPrefix" value="http://127.0.0.1/images"/>
+        <!--
         <property name="pathPrefix" value="/var/www/html/images"/>
+        -->
+        <property name="pathPrefix" value="d:/apache/htdocs/images"/>
         <property name="otherPathPrefixes">
             <list>
                 <value>/var/ftp</value>
+                <value>/var/www/html/images</value>
             </list>
         </property>
     </bean>
@@ -34,13 +41,18 @@
                 <value>AppConfig.globalBanner</value>
                 <value>AppConfig.indexHeadPoster</value>
                 <value>AppConfig.indexFootPoster</value>
+                <value>AppConfig.branchRankImage</value>
+                <value>AppConfig.noFoundImage</value>
             </list>
         </property>
     </bean>
 
     <bean id="imageCleaner" class="com.qinyuan15.crawler.core.image.RedundantImageCleaner">
         <!--<property name="debugMode" value="true"/>-->
+        <!--
         <property name="baseDir" value="/var/www/html/images"/>
+        -->
+        <property name="baseDir" value="d:/apache/htdocs/images"/>
         <property name="redundantImageValidator" ref="redundantImageValidator"/>
     </bean>
     <task:scheduled-tasks>

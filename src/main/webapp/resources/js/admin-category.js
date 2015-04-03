@@ -192,11 +192,25 @@
         $scope.validateInput = buildNormalValidationCallback(input);
         $scope.deleteCategory = function (event) {
             var target = event.target;
-            $.post('admin-category-delete', {
-                id: getTableRowIdByImgElement(target)
-            }, buildSubmitCallback(function () {
-                removeTableRow(target);
-            }));
+            var id = getTableRowIdByImgElement(target);
+            $.post('admin-category-deletable', {
+                id: id
+            }, function (data) {
+                if (data.success) {
+                    doDelete();
+                } else {
+                    if (confirm(data['detail'])) {
+                        doDelete();
+                    }
+                }
+            });
+            function doDelete() {
+                $.post('admin-category-delete', {
+                    id: getTableRowIdByImgElement(target)
+                }, buildSubmitCallback(function () {
+                    removeTableRow(target);
+                }));
+            }
         };
         $scope.editCategory = function (event) {
             var $this = $(event.target);
@@ -374,4 +388,5 @@
             }));
         };
     });
+    JSUtils.recordScrollStatus();
 })();

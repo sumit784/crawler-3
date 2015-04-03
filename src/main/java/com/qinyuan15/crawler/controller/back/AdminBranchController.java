@@ -128,15 +128,33 @@ public class AdminBranchController extends ImageController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/admin-branch-deletable", method = RequestMethod.POST)
+    public Map<String, Object> deletable(@RequestParam(value = "id", required = true) Integer id) {
+        BranchDao dao = new BranchDao();
+        boolean hasSubInstance = dao.hasSubInstance(id);
+        boolean hasCommodity = dao.hasCommodity(id);
+
+        if (hasSubInstance) {
+            if (hasCommodity) {
+                return createFailResult("该品牌被某些商品使用且存在子品牌,确定删除?");
+            } else {
+                return createFailResult("该品牌存在子品牌,确定删除?");
+            }
+        } else {
+            if (hasCommodity) {
+                return createFailResult("该品牌被某些商品使用,确定删除?");
+            } else {
+                return SUCCESS;
+            }
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/admin-branch-delete", method = RequestMethod.POST)
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
         BranchDao dao = new BranchDao();
-        if (dao.isUsed(id)) {
-            return createFailResult("该品牌已经被某些商品或其他品牌使用，不允许删除！");
-        } else {
-            logAction("删除品牌'%s'", dao.getInstance(id).getName());
-            dao.delete(id);
-            return SUCCESS;
-        }
+        logAction("删除品牌'%s'", dao.getInstance(id).getName());
+        dao.delete(id);
+        return SUCCESS;
     }
 }

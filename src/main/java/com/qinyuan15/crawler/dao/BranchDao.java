@@ -16,14 +16,23 @@ public class BranchDao {
     }
 
     public boolean isUsed(Integer id) {
-        return HibernateUtils.getCount(Commodity.class, "branchId=" + id) > 0 ||
-                HibernateUtils.getCount(Branch.class, "parentId=" + id) > 0;
+        return hasCommodity(id) || hasSubInstance(id);
+    }
+
+    public boolean hasCommodity(Integer id) {
+        return HibernateUtils.getCount(Commodity.class, "branchId=" + id) > 0;
+    }
+
+    public boolean hasSubInstance(Integer id) {
+        return HibernateUtils.getCount(Branch.class, "parentId=" + id) > 0;
     }
 
     public void delete(Integer id) {
-        if (!isUsed(id)) {
-            new ShoppeDao().clear(id);
-            HibernateUtils.delete(Branch.class, id);
+        new CommodityDao().unlinkBranch(id);
+        new CategoryBranchDao().deleteByBranchId(id);
+        HibernateUtils.delete(Branch.class, id);
+        for (Branch subBranch : getSubInstances(id)) {
+            this.delete(subBranch.getId());
         }
     }
 

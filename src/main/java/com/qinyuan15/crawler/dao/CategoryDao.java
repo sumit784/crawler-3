@@ -5,7 +5,7 @@ import java.util.List;
 import static com.qinyuan15.crawler.dao.RankingDao.ASC_ORDER;
 
 /**
- * Dao object of branch
+ * Dao object of Category
  * Created by qinyuan on 15-2-24.
  */
 public class CategoryDao {
@@ -57,14 +57,25 @@ public class CategoryDao {
     }
 
     public boolean isUsed(int id) {
-        return HibernateUtils.getCount(Commodity.class, "categoryId=" + id) > 0 ||
-                HibernateUtils.getCount(Category.class, PARENT_ID + "=" + id) > 0;
+        return hasCommodity(id) || hasSubInstance(id);
+    }
+
+    public boolean hasSubInstance(int id) {
+        return HibernateUtils.getCount(Category.class, PARENT_ID + "=" + id) > 0;
+    }
+
+    public boolean hasCommodity(int id) {
+        return HibernateUtils.getCount(Commodity.class, "categoryId=" + id) > 0;
     }
 
     public void delete(int id) {
-        if (!isUsed(id)) {
-            new HotSearchWordDao().clear(id);
-            HibernateUtils.delete(Category.class, id);
+        new CommodityDao().unlinkCategory(id);
+        new HotSearchWordDao().clear(id);
+        new CategoryBranchDao().deleteByCategoryId(id);
+        HibernateUtils.delete(Category.class, id);
+
+        for (Category subCategory : getSubInstances(id)) {
+            this.delete(subCategory.getId());
         }
     }
 

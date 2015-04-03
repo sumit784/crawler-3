@@ -23,9 +23,7 @@
         </div>
         <div class="moreBranch branchLogo" ng-mouseover="showMore()" ng-show="moreBranch.show">
             <a href="javascript:void(0)" target="_blank">
-                <img class="link branch-logo" ng-src="{{moreBranch.logo}}"
-                     onmouseover="showBranchBorder(this)"
-                     onmouseout="hideBranchBorder(this)"/>
+                <img class="link branch-logo" ng-src="{{moreBranch.logo}}"/>
             </a>
         </div>
         <div class="hideBranch" ng-repeat="branch in hideBranches">
