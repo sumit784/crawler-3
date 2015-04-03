@@ -66,16 +66,34 @@ public class AdminCategoryController extends ImageController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/admin-category-deletable", method = RequestMethod.POST)
+    public Map<String, Object> deletable(@RequestParam(value = "id", required = true) Integer id) {
+        CategoryDao dao = new CategoryDao();
+        boolean hasSubInstance = dao.hasSubInstance(id);
+        boolean hasCommodity = dao.hasCommodity(id);
+
+        if (hasSubInstance) {
+            if (hasCommodity) {
+                return createFailResult("该分类被某些商品使用且存在子分类,确定删除?");
+            } else {
+                return createFailResult("该分类存在子分类,确定删除?");
+            }
+        } else {
+            if (hasCommodity) {
+                return createFailResult("该分类被某些商品使用,确定删除?");
+            } else {
+                return SUCCESS;
+            }
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/admin-category-delete", method = RequestMethod.POST)
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
         CategoryDao dao = new CategoryDao();
-        if (dao.isUsed(id)) {
-            return createFailResult("该商品分类已经被某些商品或其他分类使用，不能删除");
-        } else {
-            logAction("删除商品分类'%s'", dao.getInstance(id).getName());
-            dao.delete(id);
-            return SUCCESS;
-        }
+        logAction("删除商品分类'%s'", dao.getNameById(id));
+        dao.delete(id);
+        return SUCCESS;
     }
 
     @ResponseBody
@@ -83,7 +101,7 @@ public class AdminCategoryController extends ImageController {
     public Map<String, Object> rankUp(@RequestParam(value = "id", required = true) Integer id) {
         if (isPositive(id)) {
             CategoryDao dao = new CategoryDao();
-            logAction("上移'%s'分类的排序", dao.getInstance(id).getName());
+            logAction("上移'%s'分类的排序", dao.getNameById(id));
             dao.rankUp(id);
         }
         return SUCCESS;
@@ -94,7 +112,7 @@ public class AdminCategoryController extends ImageController {
     public Map<String, Object> rankDown(@RequestParam(value = "id", required = true) Integer id) {
         if (isPositive(id)) {
             CategoryDao dao = new CategoryDao();
-            logAction("下移'%s'分类的排序", dao.getInstance(id).getName());
+            logAction("下移'%s'分类的排序", dao.getNameById(id));
             dao.rankDown(id);
         }
         return SUCCESS;

@@ -45,6 +45,14 @@ public class CategoryBranchDao {
         HibernateUtils.delete(CategoryBranch.class, id);
     }
 
+    public void deleteByCategoryId(Integer categoryId) {
+        HibernateUtils.delete(CategoryBranch.class, CATEGORY_ID + "=" + categoryId);
+    }
+
+    public void deleteByBranchId(Integer branchId) {
+        HibernateUtils.delete(CategoryBranch.class, BRANCH_ID + "=" + branchId);
+    }
+
     public CategoryBranch getInstance(int id) {
         return HibernateUtils.get(CategoryBranch.class, id);
     }

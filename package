@@ -5,7 +5,7 @@ mvn clean
 mvn package -Dmaven.test.skip=true
 cp target/mall-core-1.0-SNAPSHOT.war target/mall.war
 cp -r target/mall-core-1.0-SNAPSHOT target/mall
-rm -rf target/mall/WEB-INF/{spring,lib} target/mall/WEB-INF/hibernate*
+rm -rf target/mall/WEB-INF/{spring,lib} target/mall/WEB-INF/classes/hibernate*
 cd target/mall
 tar -zcf mall.tar.gz *
 mv mall.tar.gz ../

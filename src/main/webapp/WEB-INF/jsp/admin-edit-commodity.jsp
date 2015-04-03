@@ -177,10 +177,10 @@
                 </tr>
             </table>
         </div>
-        <div class="normal" ng-repeat="imageUrl in originalImageUrls">
+        <div class="normal" ng-repeat="imageUrl in originalImageUrls" style="display:none;">
             <input type="hidden" name="imageUrls" value="{{imageUrl}}"/>
         </div>
-        <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls">
+        <div class="detail" ng-repeat="detailImageUrl in originalDetailImageUrls" style="display:none;">
             <input type="hidden" name="detailImageUrls" value="{{detailImageUrl}}"/>
         </div>
     </form>
