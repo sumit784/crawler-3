@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo service mysqld start
-sudo service httpd start
+/etc/init.d/mysqld start
+/etc/init.d/apache2 start

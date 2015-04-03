@@ -70,7 +70,7 @@ div.content div.right {
     width: 820px;
 }
 
-div.content div.right > div {
+div.content div.right div.images > div {
     background-color: #ffffff;
     float: left;
     margin: 0 5px 10px 0;
@@ -92,13 +92,27 @@ div.content div.left span.inactive {
     background-color: #A53614;
 }
 
+div.content div.right div.images {
+    overflow: hidden;
+}
+
 div.content div.right div.image img {
     height: 192px;
     width: 192px;
 }
 
-div.content div.right div.image:last-child img {
-    height: 260px;
+div.content div.right div.images div.addIcon {
+    background-color: rgb(238, 238, 238);
+    padding-top: 10px;
+}
+
+div.content div.right div.images div.addIcon div.image {
+    background-color: #ffffff;
+}
+
+div.content div.right div.addIcon img {
+    height: 270px;
+    width: 198px;
 }
 
 div.content div.right div.description {
@@ -110,6 +124,7 @@ div.content div.right div.description {
 div.content div.right div.description a {
     font-size: 10pt;
     color: #7F4B2F;
+    cursor: pointer;
 }
 
 div.content div.right div.action {
@@ -121,4 +136,16 @@ div.content div.right div.action img {
     height: 20px;
     width: 20px;
     margin: 0 3px;
+}
+
+div.content div.right div.pagination {
+    padding-left: 280px;
+}
+
+div.content div.right div.pagination li.showButton {
+    display: inline;
+}
+
+div.content div.right div.pagination li.hideButton {
+    display: none;
 }

@@ -9,6 +9,7 @@ import com.qinyuan15.crawler.security.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,15 +21,31 @@ import java.util.List;
 public class AdminController extends ImageController {
 
     @RequestMapping("/admin")
-    public String index(ModelMap model) {
-        CommodityDao.Factory factory = CommodityDao.factory().orderByActive();
+    public String index(ModelMap model,
+                        @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
+
+        if (!isPositive(pageNumber)) {
+            pageNumber = 1;
+        }
+
+        CommodityDao.Factory factory = CommodityDao.factory();
 
         if (!SecurityUtils.isSupperAdmin()) {
             Integer userId = SecurityUtils.getUserId();
             factory.setUserId(userId);
         }
 
-        List<Commodity> commodities = factory.getInstances();
+        int pageSize = 7;
+        int visibleButtonCount = 5;
+
+        long commodityCount = factory.getCount();
+        int pageCount = commodityCount == 0 ? 1 :
+                (int) (Math.ceil((double) commodityCount / pageSize));
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("visibleButtonCount", 5);
+        model.addAttribute("currentPageNumber", pageNumber);
+
+        List<Commodity> commodities = factory.getInstances((pageNumber - 1) * pageSize, pageSize);
         List<CommoditySimpleSnapshot> snapshots = new CommoditySimpleSnapshotBuilder().build(
                 commodities, pictureUrlConverter);
         model.addAttribute("commodities", snapshots);

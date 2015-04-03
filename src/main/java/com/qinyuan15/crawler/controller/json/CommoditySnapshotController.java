@@ -46,7 +46,7 @@ public class CommoditySnapshotController extends ImageController {
         }
         CommodityDao.Factory factory = CommodityDao.factory().setCategoryId(categoryId)
                 .setActive(active).setKeyWord(keyWord).setBranchId(branchId)
-                .setInLowPrice(inLowPrice).orderByActive();
+                .setInLowPrice(inLowPrice);
 
         if (StringUtils.hasText(orderField) && StringUtils.hasText(orderType)) {
             CommodityDao.Order order = new CommodityDao.Order()

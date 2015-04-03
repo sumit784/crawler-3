@@ -36,14 +36,16 @@ public class CommodityDao {
 
     public void unlinkCategory(Integer categoryId) {
         Session session = HibernateUtils.getSession();
-        String hql = "UPDATE Commodity SET categoryId=null WHERE categoryId=" + categoryId;
+        String hql = "UPDATE Commodity SET categoryId=null,active=false WHERE categoryId="
+                + categoryId;
         session.createQuery(hql).executeUpdate();
         HibernateUtils.commit(session);
     }
 
     public void unlinkBranch(Integer branchId) {
         Session session = HibernateUtils.getSession();
-        String hql = "UPDATE Commodity SET branchId=null WHERE branchId=" + branchId;
+        String hql = "UPDATE Commodity SET branchId=null,active=false WHERE branchId="
+                + branchId;
         session.createQuery(hql).executeUpdate();
         HibernateUtils.commit(session);
     }
@@ -190,7 +192,8 @@ public class CommodityDao {
     public static class Factory {
         private Integer id;
         private boolean inLowPrice = false;
-        private boolean orderByActive = false;
+        //private OrderType activeOrder = null;
+        //private boolean orderByActive = false;
         private Integer categoryId;
         private Boolean active;
         private Integer userId;
@@ -249,10 +252,10 @@ public class CommodityDao {
             return this;
         }
 
-        public Factory orderByActive() {
-            this.orderByActive = true;
+        /*public Factory setActiveOrder(OrderType activeOrder) {
+            this.activeOrder = activeOrder;
             return this;
-        }
+        }*/
 
         private String getHQL() {
             // build SQL query command
@@ -293,12 +296,25 @@ public class CommodityDao {
             }
 
             List<String> orderItems = new ArrayList<>();
-            if (this.orderByActive) {
-                orderItems.add("active DESC");
+            if (active == null) {
+                orderItems.add("active ASC");
             }
+            /*
+            if (this.activeOrder != null) {
+                switch (this.activeOrder) {
+                    case ASC:
+                        orderItems.add("active ASC");
+                        break;
+                    case DESC:
+                        orderItems.add("active DESC");
+                        break;
+                }
+            }
+            */
             if (this.order != null) {
                 orderItems.add(this.order.toString());
             }
+            orderItems.add("id DESC");
             if (orderItems.size() > 0) {
                 query += " ORDER BY " + StringUtils.join(orderItems, ",");
             }
@@ -320,25 +336,6 @@ public class CommodityDao {
             @SuppressWarnings("unchecked")
             List<Commodity> commodities = HibernateUtils.getList(getHQL());
             return commodities;
-            /*
-            if (!inLowPrice) {
-                return commodities;
-            } else {
-                List<Commodity> commoditiesInLowPrice = new ArrayList<>();
-                String startTime = DateUtils.threeMonthAgo().toString();
-                String endTime = DateUtils.now().toString();
-                for (Commodity commodity : commodities) {
-                    Integer commodityId = commodity.getId();
-                    Double lowPrice = CommodityPriceDao.range(commodityId)
-                            .setStartTime(startTime).setEndTime(endTime).getMin();
-                    Double currentPrice = new CommodityPriceDao().getCurrentPrice(commodityId);
-                    if (currentPrice - lowPrice <= 0.01) {
-                        commoditiesInLowPrice.add(commodity);
-                    }
-                }
-                return commoditiesInLowPrice;
-            }
-            */
         }
     }
 }

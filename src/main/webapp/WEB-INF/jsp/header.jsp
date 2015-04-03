@@ -1,9 +1,7 @@
 <%@ page import="com.qinyuan15.crawler.core.RequestUtils" %>
 <%@ page import="com.qinyuan15.crawler.dao.AppConfig" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@include file="taglib.jsp" %>
 <!DOCTYPE html>
 <html>
 <head lang="zh-ch">

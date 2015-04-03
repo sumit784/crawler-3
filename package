@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export JAVA_HOME=/usr/java/jdk1.7.0_71
+#export JAVA_HOME=/usr/java/jdk1.7.0_71
 mvn clean
 mvn package -Dmaven.test.skip=true
 cp target/mall-core-1.0-SNAPSHOT.war target/mall.war
@@ -9,5 +9,5 @@ rm -rf target/mall/WEB-INF/{spring,lib} target/mall/WEB-INF/classes/hibernate*
 cd target/mall
 tar -zcf mall.tar.gz *
 mv mall.tar.gz ../
-cd ../
-rm -rf  ./mall
+#cd ../
+#rm -rf  ./mall
