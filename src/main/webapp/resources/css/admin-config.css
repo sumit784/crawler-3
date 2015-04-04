@@ -18,3 +18,13 @@ div.uploadImage input[type=text] {
 div.uploadImage textarea {
     font-size: 9pt;
 }
+
+#adminPaginationConfig input {
+    width: 40px;
+}
+
+#adminPaginationConfig div {
+    padding-left: 10px;
+    float: left;
+    width: 300px;
+}

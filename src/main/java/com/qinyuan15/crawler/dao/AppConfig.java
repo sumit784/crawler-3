@@ -24,6 +24,24 @@ public class AppConfig extends PersistObject {
     private String branchRankImage;
     private String noFoundImage;
     private String noFoundText;
+    private Integer adminPaginationCommoditySize;
+    private Integer adminPaginationButtonSize;
+
+    public Integer getAdminPaginationCommoditySize() {
+        return adminPaginationCommoditySize;
+    }
+
+    public Integer getAdminPaginationButtonSize() {
+        return adminPaginationButtonSize;
+    }
+
+    public void setAdminPaginationCommoditySize(Integer adminPaginationCommoditySize) {
+        this.adminPaginationCommoditySize = adminPaginationCommoditySize;
+    }
+
+    public void setAdminPaginationButtonSize(Integer adminPaginationButtonSize) {
+        this.adminPaginationButtonSize = adminPaginationButtonSize;
+    }
 
     public void setIndexFootPosterLink(String indexFootPosterLink) {
         this.indexFootPosterLink = indexFootPosterLink;

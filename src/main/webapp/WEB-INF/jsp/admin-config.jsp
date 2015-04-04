@@ -60,6 +60,19 @@
                 <textarea name="noFoundText" cols="25" rows="4">${appConfig.noFoundText}</textarea>
             </div>
         </fieldset>
+        <fieldset id="adminPaginationConfig">
+            <legend>管理员主页设置</legend>
+            <div>
+                <label>商品列表中每个分页的商品数量</label>
+                <input type="text" name="adminPaginationCommoditySize"
+                       value="${appConfig.adminPaginationCommoditySize}"/>
+            </div>
+            <div>
+                <label>商品列表中每个分页的底部链接数量</label>
+                <input type="text" name="adminPaginationButtonSize"
+                       value="${appConfig.adminPaginationButtonSize}"/>
+            </div>
+        </fieldset>
 
         <button id="editSubmit" type="submit" class="btn btn-primary"
                 ng-click="validateInput($event)">

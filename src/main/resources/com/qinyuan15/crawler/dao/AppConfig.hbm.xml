@@ -18,5 +18,7 @@
         <property name="branchRankImage" column="branch_rank_image"/>
         <property name="noFoundImage" column="no_found_image"/>
         <property name="noFoundText" column="no_found_text"/>
+        <property name="adminPaginationCommoditySize" column="admin_pagination_commodity_size"/>
+        <property name="adminPaginationButtonSize" column="admin_pagination_button_size"/>
     </class>
 </hibernate-mapping>

@@ -36,20 +36,23 @@ public class AdminConfigController extends ImageController {
 
     @ResponseBody
     @RequestMapping(value = "/admin-config-update", method = RequestMethod.POST)
-    public Map<String, Object> update(@RequestParam(value = "globalBanner", required = true) String globalBanner,
-                                      @RequestParam(value = "globalBannerFile", required = false) MultipartFile globalBannerFile,
-                                      @RequestParam(value = "globalLogo", required = true) String globalLogo,
-                                      @RequestParam(value = "globalLogoFile", required = false) MultipartFile globalLogoFile,
-                                      @RequestParam(value = "indexHeadPoster", required = true) String indexHeadPoster,
-                                      @RequestParam(value = "indexHeadPosterFile", required = false) MultipartFile indexHeadPosterFile,
-                                      @RequestParam(value = "indexFootPoster", required = true) String indexFootPoster,
-                                      @RequestParam(value = "indexFootPosterFile", required = false) MultipartFile indexFootPosterFile,
-                                      @RequestParam(value = "indexFootPosterLink", required = true) String indexFootPosterLink,
-                                      @RequestParam(value = "branchRankImage", required = true) String branchRankImage,
-                                      @RequestParam(value = "branchRankImageFile", required = false) MultipartFile branchRankImageFile,
-                                      @RequestParam(value = "noFoundImage", required = true) String noFoundImage,
-                                      @RequestParam(value = "noFoundImageFile", required = false) MultipartFile noFoundImageFile,
-                                      @RequestParam(value = "noFoundText", required = true) String noFoundText) {
+    public Map<String, Object> update(
+            @RequestParam(value = "globalBanner", required = true) String globalBanner,
+            @RequestParam(value = "globalBannerFile", required = false) MultipartFile globalBannerFile,
+            @RequestParam(value = "globalLogo", required = true) String globalLogo,
+            @RequestParam(value = "globalLogoFile", required = false) MultipartFile globalLogoFile,
+            @RequestParam(value = "indexHeadPoster", required = true) String indexHeadPoster,
+            @RequestParam(value = "indexHeadPosterFile", required = false) MultipartFile indexHeadPosterFile,
+            @RequestParam(value = "indexFootPoster", required = true) String indexFootPoster,
+            @RequestParam(value = "indexFootPosterFile", required = false) MultipartFile indexFootPosterFile,
+            @RequestParam(value = "indexFootPosterLink", required = true) String indexFootPosterLink,
+            @RequestParam(value = "branchRankImage", required = true) String branchRankImage,
+            @RequestParam(value = "branchRankImageFile", required = false) MultipartFile branchRankImageFile,
+            @RequestParam(value = "noFoundImage", required = true) String noFoundImage,
+            @RequestParam(value = "noFoundImageFile", required = false) MultipartFile noFoundImageFile,
+            @RequestParam(value = "noFoundText", required = true) String noFoundText,
+            @RequestParam(value = "adminPaginationCommoditySize", required = true) Integer adminPaginationCommoditySize,
+            @RequestParam(value = "adminPaginationButtonSize", required = true) Integer adminPaginationButtonSize) {
         String globalBannerPath;
         try {
             globalBannerPath = getSavePath(globalBanner, globalBannerFile, SAVE_PATH_PREFIX);
@@ -104,6 +107,14 @@ public class AdminConfigController extends ImageController {
             return createFailResult("无对应商品时显示的图片处理失败!");
         }
 
+        if (!isPositive(adminPaginationButtonSize)) {
+            adminPaginationButtonSize = 0;
+        }
+
+        if (!isPositive(adminPaginationCommoditySize)) {
+            adminPaginationCommoditySize = 0;
+        }
+
         AppConfigDao dao = new AppConfigDao();
         AppConfig appConfig = dao.getInstance();
 
@@ -148,11 +159,21 @@ public class AdminConfigController extends ImageController {
             logAction("将无对应商品时显示的文字修改为'%s'", noFoundText);
         }
 
+        if (isDifferent(appConfig.getAdminPaginationCommoditySize(), adminPaginationCommoditySize)) {
+            appConfig.setAdminPaginationCommoditySize(adminPaginationCommoditySize);
+            logAction("商品列表中每个分页的商品数量修改为'%s'", adminPaginationCommoditySize);
+        }
+
+        if (isDifferent(appConfig.getAdminPaginationButtonSize(), adminPaginationButtonSize)) {
+            appConfig.setAdminPaginationButtonSize(adminPaginationButtonSize);
+            logAction("将商品列表中每个分页的底部链接数量修改为'%s'", adminPaginationButtonSize);
+        }
+
         dao.update(appConfig);
         return SUCCESS;
     }
 
-    private boolean isDifferent(String str1, String str2) {
+    private boolean isDifferent(Object str1, Object str2) {
         if (str1 == null) {
             return str2 != null;
         } else {

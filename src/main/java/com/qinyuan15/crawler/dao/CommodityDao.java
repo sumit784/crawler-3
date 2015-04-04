@@ -192,8 +192,6 @@ public class CommodityDao {
     public static class Factory {
         private Integer id;
         private boolean inLowPrice = false;
-        //private OrderType activeOrder = null;
-        //private boolean orderByActive = false;
         private Integer categoryId;
         private Boolean active;
         private Integer userId;
@@ -252,11 +250,6 @@ public class CommodityDao {
             return this;
         }
 
-        /*public Factory setActiveOrder(OrderType activeOrder) {
-            this.activeOrder = activeOrder;
-            return this;
-        }*/
-
         private String getHQL() {
             // build SQL query command
             String query = "FROM Commodity WHERE 1=1";
@@ -299,18 +292,6 @@ public class CommodityDao {
             if (active == null) {
                 orderItems.add("active ASC");
             }
-            /*
-            if (this.activeOrder != null) {
-                switch (this.activeOrder) {
-                    case ASC:
-                        orderItems.add("active ASC");
-                        break;
-                    case DESC:
-                        orderItems.add("active DESC");
-                        break;
-                }
-            }
-            */
             if (this.order != null) {
                 orderItems.add(this.order.toString());
             }

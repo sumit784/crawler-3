@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.qinyuan15.crawler.core.config.AppConfigAdapter;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
+import com.qinyuan15.crawler.dao.AppConfig;
 import com.qinyuan15.crawler.dao.AppConfigDao;
 import com.qinyuan15.crawler.dao.UserLogDao;
 import com.qinyuan15.crawler.security.SecurityUtils;
@@ -59,9 +60,23 @@ public class BaseController {
         return request.getLocalAddr();
     }
 
+    private final static String APP_CONFIG_KEY = "appConfig";
+
+    private void injectAppConfig() {
+        AppConfig appConfig = new AppConfigAdapter(pictureUrlConverter).adjust(new AppConfigDao().getInstance());
+        request.setAttribute(APP_CONFIG_KEY, appConfig);
+    }
+
+    protected AppConfig getAppConfig() {
+        Object appConfig = request.getAttribute(APP_CONFIG_KEY);
+        if (appConfig == null || !(appConfig instanceof AppConfig)) {
+            injectAppConfig();
+        }
+        return (AppConfig) request.getAttribute(APP_CONFIG_KEY);
+    }
+
     protected void setTitle(Object title) {
-        request.setAttribute("appConfig", new AppConfigAdapter(pictureUrlConverter)
-                .adjust(new AppConfigDao().getInstance()));
+        getAppConfig();
         request.setAttribute(TITLE, title);
     }
 

@@ -5,7 +5,7 @@
     <a href="/j_spring_security_logout">[退出]</a>
 </div>
 <div class="split"></div>
-<div class="commodity">发布的商品<span id="commodityCount">(${fn:length(commodities)})</span></div>
+<div class="commodity">发布的商品<span id="commodityCount">(${commodityCount})</span></div>
 <div class="split">
     <div class="boldSplit"></div>
 </div>

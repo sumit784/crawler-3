@@ -43,28 +43,5 @@
     </c:forEach>
 </div>
 <div class="pagination">
-    <ul class="pagination">
-        <li>
-            <a id="prevPaginationButtons" href="javascript:void(0)" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <c:forEach var="i" begin="1" end="${pageCount}">
-            <li class="pageButton ${i>visibleButtonCount ? 'hideButton' : 'showButton'}">
-                <c:choose>
-                    <c:when test="${i == currentPageNumber}">
-                        <a class="noLineAnchor" style="color:#000000;" href="javascript:void(0)">${i}</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="admin?pageNumber=${i}">${i}</a>
-                    </c:otherwise>
-                </c:choose>
-            </li>
-        </c:forEach>
-        <li>
-            <a id="nextPaginationButtons" href="javascript:void(0)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
+    <%@include file="pagination.jsp" %>
 </div>

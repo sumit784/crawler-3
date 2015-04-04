@@ -3,9 +3,11 @@ package com.qinyuan15.crawler.controller.back;
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.commodity.CommoditySimpleSnapshot;
 import com.qinyuan15.crawler.core.commodity.CommoditySimpleSnapshotBuilder;
+import com.qinyuan15.crawler.dao.AppConfig;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.security.SecurityUtils;
+import com.qinyuan15.crawler.ui.PaginationAnchor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,15 +37,23 @@ public class AdminController extends ImageController {
             factory.setUserId(userId);
         }
 
-        int pageSize = 7;
-        int visibleButtonCount = 5;
+        AppConfig appConfig = getAppConfig();
+        Integer pageSize = appConfig.getAdminPaginationCommoditySize();
+        if (!isPositive(pageSize)) {
+            pageSize = Integer.MAX_VALUE;
+        }
+        Integer visibleButtonCount = appConfig.getAdminPaginationButtonSize();
+        if (!isPositive(visibleButtonCount)) {
+            visibleButtonCount = Integer.MAX_VALUE;
+        }
 
         long commodityCount = factory.getCount();
         int pageCount = commodityCount == 0 ? 1 :
                 (int) (Math.ceil((double) commodityCount / pageSize));
-        model.addAttribute("pageCount", pageCount);
-        model.addAttribute("visibleButtonCount", 5);
-        model.addAttribute("currentPageNumber", pageNumber);
+
+        List<PaginationAnchor> anchors = PaginationAnchor.create("admin", pageCount, visibleButtonCount, pageNumber);
+        model.addAttribute("paginationAnchors", anchors);
+        model.addAttribute("commodityCount", commodityCount);
 
         List<Commodity> commodities = factory.getInstances((pageNumber - 1) * pageSize, pageSize);
         List<CommoditySimpleSnapshot> snapshots = new CommoditySimpleSnapshotBuilder().build(
