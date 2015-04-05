@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
+import com.qinyuan15.crawler.core.config.LinkAdapter;
 import com.qinyuan15.crawler.dao.AppConfig;
 import com.qinyuan15.crawler.dao.AppConfigDao;
 import com.qinyuan15.crawler.dao.AppConfigDetailImageDao;
@@ -69,6 +70,7 @@ public class AdminDetailController extends ImageController {
             return createFailResult("矩形Logo文件处理失败!");
         }
 
+        link = new LinkAdapter().adjust(link);
         AppConfigDetailImageDao dao = new AppConfigDetailImageDao();
         if (id != null && id >= 0) {
             dao.edit(id, savePath, link);

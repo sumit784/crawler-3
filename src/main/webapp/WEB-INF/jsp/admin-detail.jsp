@@ -23,11 +23,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="detailImage" items="${appConfig.detailImagesList}" varStatus="status">
-                    <tr id="detailImage_${status.index}">
+                <c:forEach var="detailImage" items="${appConfig.detailImages}">
+                    <tr id="detailImage_${detailImage.id}">
                         <td>
-                            <a class="limit-size" data-options="limit:50" href="${detailImage}"
-                               target="_blank" title="${detailImage}">${detailImage}</a>
+                            <a class="limit-size" data-options="limit:40" href="${detailImage.path}"
+                               target="_blank" title="${detailImage.path}">${detailImage.path}</a>
+                        </td>
+                        <td>
+                            <a class="limit-size" data-options="limit:20" href="${detailImage.link}"
+                               target="_blank" title="${detailImage.link}">${detailImage.link}</a>
                         </td>
                         <td>
                             <jsp:include page="widget-edit-delete.jsp">
@@ -58,9 +62,13 @@
         <input type="hidden" name="id"/>
 
         <div>
-            <label>(url或上传图片)</label><span class="required">*</span><br/>
-            <input type="text" name="url"/><br/>
+            <label>图片(url或上传图片)</label><span class="required">*</span><br/>
+            <input type="text" name="url" tabindex="1" /><br/>
             <input type="file" name="uploadFile"/>
+        </div>
+        <div>
+            <label>目标链接</label><br/>
+            <input type="text" name="link" tabindex="2"/>
         </div>
         <div>
             <button id="addImageSubmit" type="submit" class="btn btn-success"

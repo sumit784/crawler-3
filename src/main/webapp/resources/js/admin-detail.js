@@ -11,15 +11,19 @@
         get$UploadFile: function () {
             return this.$form.find('input[name=uploadFile]');
         },
+        get$Link: function () {
+            return this.$form.find('input[name=link]');
+        },
         get$AddSubmit: function () {
             return $('#addImageSubmit');
         },
         get$EditSubmit: function () {
             return $('#editImageSubmit');
         },
-        show: function (id, url) {
+        show: function (id, url, link) {
             this.get$Id().val(id);
             this.get$Url().val(url);
+            this.get$Link().val(link);
             transparentBackground.show();
             this.$form.show();
             this.get$Url().focusOrSelect();
@@ -50,16 +54,17 @@
         $scope.addImage = function () {
             imageInput.get$EditSubmit().hide();
             imageInput.get$AddSubmit().show();
-            imageInput.show(-1, '');
+            imageInput.show(-1, '', '');
         };
         $scope.editImage = function (event) {
             var $this = $(event.target);
             var $tr = getParent($this, 'tr');
             var id = $tr.parseIntegerInId();
             var url = $.trim($tr.find('a:eq(0)').attr('title'));
+            var link = $.trim($tr.find('a:eq(1)').attr('title'));
             imageInput.get$EditSubmit().show();
             imageInput.get$AddSubmit().hide();
-            imageInput.show(id, url);
+            imageInput.show(id, url, link);
         };
         $scope.deleteImage = function (event) {
             $.post('admin-detail-image-delete', {

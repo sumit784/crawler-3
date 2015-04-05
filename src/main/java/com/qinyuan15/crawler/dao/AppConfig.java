@@ -146,23 +146,9 @@ public class AppConfig extends PersistObject {
         return noFoundText;
     }
 
-    /*
-    public List<String> getDetailImagesList() {
-        if (StringUtils.hasText(detailImages)) {
-            return Lists.newArrayList(detailImages.split(IMAGE_SEPARATOR));
-        } else {
-            return new ArrayList<>();
-        }
-    }
-    */
-
     public void setDetailText(String detailText) {
         this.detailText = detailText;
     }
-
-    /*public void setDetailImages(String detailImages) {
-        this.detailImages = detailImages;
-    }*/
 
     public List<String> getNoFoundTexts() {
         if (!StringUtils.hasText(noFoundText)) {
