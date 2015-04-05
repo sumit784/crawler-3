@@ -43,17 +43,6 @@ public class UserLogDao {
         }
     }
 
-    /*
-    public List<UserLog> getInstances() {
-        return HibernateUtils.getList(UserLog.class, ORDER_CLAUSE);
-    }
-
-    public List<UserLog> getInstancesByUserId(Integer userId, int firstResult, int maxResults) {
-        return HibernateUtils.getList(UserLog.class, "userId=" + userId + " " + ORDER_CLAUSE,
-                firstResult, maxResults);
-    }
-    */
-
     public void save(Integer userId, String action) {
         UserLog userLog = new UserLog();
         userLog.setUserId(userId);

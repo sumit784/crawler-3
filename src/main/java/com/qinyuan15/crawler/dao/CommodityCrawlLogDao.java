@@ -33,7 +33,7 @@ public class CommodityCrawlLogDao {
         return new Factory();
     }
 
-    public static class Factory {
+    public static class Factory implements PaginationFactory<CommodityCrawlLog> {
         private Boolean success;
         private Integer commodityId;
         private String commodityShowId;
@@ -53,7 +53,11 @@ public class CommodityCrawlLogDao {
             return this;
         }
 
-        public List<CommodityCrawlLog> getInstances() {
+        public long getCount() {
+            return HibernateUtils.getCount(CommodityCrawlLog.class, getWhereClause());
+        }
+
+        private String getWhereClause() {
             String whereClause = "commodityId IN (SELECT id FROM Commodity)";
             if (this.success != null) {
                 whereClause += " AND success=" + this.success;
@@ -65,8 +69,12 @@ public class CommodityCrawlLogDao {
                 whereClause += " AND commodityId IN (SELECT id FROM Commodity WHERE showId LIKE '%"
                         + StringEscapeUtils.escapeSql(this.commodityShowId) + "%')";
             }
+            return whereClause;
+        }
+
+        public List<CommodityCrawlLog> getInstances(int firstResult, int maxResults) {
             return HibernateUtils.getList(CommodityCrawlLog.class,
-                    whereClause + " ORDER BY logTime DESC");
+                    getWhereClause() + " ORDER BY logTime DESC", firstResult, maxResults);
         }
     }
 }

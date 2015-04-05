@@ -11,7 +11,7 @@ public class CommodityCrawlLogDaoTest {
 
     @Test
     public void testGetInstances() throws Exception {
-        System.out.println(CommodityCrawlLogDao.factory().getInstances().size());
+        System.out.println(CommodityCrawlLogDao.factory().getInstances(0, 0).size());
     }
 
     @Test

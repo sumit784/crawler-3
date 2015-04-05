@@ -44,7 +44,7 @@
         <tbody>
         <c:forEach var="crawlLog" items="${crawlLogs}" varStatus="status">
             <tr>
-                <td class="index">${status.index+1}</td>
+                <td class="index">${status.index + rowStartIndex}</td>
                 <td class="showId">${crawlLog.commodity.showId}</td>
                 <td class="name">${crawlLog.commodity.name}</td>
                 <td class="url">
@@ -57,5 +57,6 @@
         </c:forEach>
         </tbody>
     </table>
+    <%@include file="pagination.jsp" %>
 </div>
 <%@include file="footer.jsp" %>

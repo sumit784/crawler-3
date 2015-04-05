@@ -12,10 +12,8 @@ import java.util.List;
  */
 public class AppConfig extends PersistObject {
     public final static String DEFAULT_ENCODING = "utf-8";
-    public final static String VERSION = String.valueOf(System.currentTimeMillis())/* DateUtils.now().toString()*/;
-    public final static String IMAGE_SEPARATOR = ",";
+    public final static String VERSION = String.valueOf(System.currentTimeMillis());
     private String detailText;
-    //private String detailImages;
     private String globalLogo;
     private String globalBanner;
     private String indexHeadPoster;

@@ -29,13 +29,13 @@
                 <value>CategoryPoster.path</value>
                 <value>CommodityPicture.url</value>
                 <value>IndexLogo.path</value>
-                <value>AppConfig.detailImages</value>
                 <value>AppConfig.globalLogo</value>
                 <value>AppConfig.globalBanner</value>
                 <value>AppConfig.indexHeadPoster</value>
                 <value>AppConfig.indexFootPoster</value>
                 <value>AppConfig.branchRankImage</value>
                 <value>AppConfig.noFoundImage</value>
+                <value>AppConfigDetailImage.link</value>
             </list>
         </property>
     </bean>

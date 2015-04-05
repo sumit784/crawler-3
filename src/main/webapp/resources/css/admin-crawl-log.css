@@ -2,8 +2,16 @@ col.index {
     width: 50px;
 }
 
+col.showId {
+    width: 100px;
+}
+
 col.name {
     width: 360px;
+}
+
+col.url{
+    width: 300px;
 }
 
 col.time {
