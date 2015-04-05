@@ -46,7 +46,9 @@ public class DetailController extends ImageController {
         model.addAttribute("detailPictures", parseCommodityPictureUrls(detailPictures));
 
         // related commodity
-        List<Commodity> commodities = new RelatedCommodityDao().getInstances(commodity);
+        Integer relatedCommoditySize = getAppConfig().getRelatedCommoditySize();
+        List<Commodity> commodities = new RelatedCommodityDao()
+                .setLimitSize(relatedCommoditySize).getInstances(commodity);
         model.addAttribute("relatedCommodities", createRelatedCommodityWrappers(commodities));
 
         // branch

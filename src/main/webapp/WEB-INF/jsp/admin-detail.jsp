@@ -15,6 +15,13 @@
         <div class="image">
             <h4>相关图片：</h4>
             <table class="normal">
+                <thead>
+                <tr>
+                    <th>图片链接</th>
+                    <th>目标链接</th>
+                    <th></th>
+                </tr>
+                </thead>
                 <tbody>
                 <c:forEach var="detailImage" items="${appConfig.detailImagesList}" varStatus="status">
                     <tr id="detailImage_${status.index}">

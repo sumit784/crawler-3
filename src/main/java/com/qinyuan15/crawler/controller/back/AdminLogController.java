@@ -27,7 +27,7 @@ public class AdminLogController extends ImageController {
         Integer userId = SecurityUtils.getUserId();
 
         if (!isPositive(pageNumber)) {
-            pageNumber = 0;
+            pageNumber = 1;
         }
 
         UserLogDao.Factory factory = UserLogDao.factory().setUserId(userId);
@@ -41,6 +41,7 @@ public class AdminLogController extends ImageController {
                 pageUrl, pageCount, VISIBLE_BUTTON_COUNT, pageNumber);
         model.addAttribute("paginationAnchors", anchors);
         model.addAttribute("userLogs", factory.getInstances((pageNumber - 1) * PAGE_SIZE, PAGE_SIZE));
+        model.addAttribute("rowStartIndex", (pageNumber - 1) * PAGE_SIZE + 1);
 
         addCssAndJs("admin-normal-edit-page");
         setTitle("操作日志");

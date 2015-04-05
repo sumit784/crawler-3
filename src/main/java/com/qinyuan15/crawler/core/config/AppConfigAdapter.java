@@ -29,7 +29,8 @@ public class AppConfigAdapter {
         for (int i = 0; i < images.size(); i++) {
             images.set(i, pictureUrlConverter.pathToUrl(images.get(i)));
         }
-        appConfig.setDetailImages(Joiner.on(AppConfig.IMAGE_SEPARATOR).join(images));
+        // TODO
+        //appConfig.setDetailImages(Joiner.on(AppConfig.IMAGE_SEPARATOR).join(images));
 
         return appConfig;
     }

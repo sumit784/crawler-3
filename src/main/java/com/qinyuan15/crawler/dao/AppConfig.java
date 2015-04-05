@@ -15,7 +15,7 @@ public class AppConfig extends PersistObject {
     public final static String VERSION = String.valueOf(System.currentTimeMillis())/* DateUtils.now().toString()*/;
     public final static String IMAGE_SEPARATOR = ",";
     private String detailText;
-    private String detailImages;
+    //private String detailImages;
     private String globalLogo;
     private String globalBanner;
     private String indexHeadPoster;
@@ -122,9 +122,9 @@ public class AppConfig extends PersistObject {
         return indexFootPoster;
     }
 
-    public String getDetailImages() {
+    /*public String getDetailImages() {
         return detailImages;
-    }
+    }*/
 
     public String getIndexFootPosterLink() {
         return indexFootPosterLink;
@@ -143,20 +143,23 @@ public class AppConfig extends PersistObject {
     }
 
     public List<String> getDetailImagesList() {
+        return new ArrayList<>();
+        /*
         if (StringUtils.hasText(detailImages)) {
             return Lists.newArrayList(detailImages.split(IMAGE_SEPARATOR));
         } else {
             return new ArrayList<>();
         }
+        */
     }
 
     public void setDetailText(String detailText) {
         this.detailText = detailText;
     }
 
-    public void setDetailImages(String detailImages) {
+    /*public void setDetailImages(String detailImages) {
         this.detailImages = detailImages;
-    }
+    }*/
 
     public List<String> getNoFoundTexts() {
         if (!StringUtils.hasText(noFoundText)) {

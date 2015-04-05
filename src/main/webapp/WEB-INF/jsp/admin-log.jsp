@@ -19,7 +19,7 @@
         <tbody>
         <c:forEach var="userLog" items="${userLogs}" varStatus="status">
             <tr>
-                <td class="index">${status.index+1}</td>
+                <td class="index">${status.index + rowStartIndex}</td>
                 <td class="user">${userLog.username}</td>
                 <td class="time">${userLog.logTime}</td>
                 <td class="action">${userLog.action}</td>

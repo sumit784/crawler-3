@@ -9,7 +9,7 @@
             <generator class="identity"/>
         </id>
         <property name="detailText" column="detail_text"/>
-        <property name="detailImages" column="detail_images"/>
+        <!--<property name="detailImages" column="detail_images"/>-->
         <property name="globalBanner" column="global_banner"/>
         <property name="globalLogo" column="global_logo"/>
         <property name="indexFootPoster" column="index_foot_poster"/>

@@ -13,3 +13,7 @@ col.time {
 col.action {
     width: 750px;
 }
+
+ul.pagination{
+    margin-left: 200px;
+}

@@ -20,7 +20,8 @@ public class AppConfigDao {
     }
 
     private void updateImage(AppConfig appConfig, List<String> images) {
-        appConfig.setDetailImages(Joiner.on(AppConfig.IMAGE_SEPARATOR).join(images));
+        // TODO
+        //appConfig.setDetailImages(Joiner.on(AppConfig.IMAGE_SEPARATOR).join(images));
         update(appConfig);
     }
 

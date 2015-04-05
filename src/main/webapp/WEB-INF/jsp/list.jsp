@@ -32,7 +32,7 @@
         </div>
         <%@include file="list-sort-links.jsp" %>
     </div>
-    <%@include file="list-shapshots.jsp" %>
+    <%@include file="list-snapshots.jsp" %>
 </div>
 <%@include file="list-right-panel.jsp" %>
 <%@include file="footer.jsp" %>

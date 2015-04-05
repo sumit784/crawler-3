@@ -1,5 +1,6 @@
 div.content div.goods {
     min-height: 360px;
+    padding-bottom: 50px;
 }
 
 div.content div.goods > div.sort {
@@ -106,7 +107,7 @@ div.content div.goods > div.images div.price {
 div.content div.goods > div.images div.branch {
     position: absolute;
     right: 30px;
-    bottom: 25px;
+    bottom: 15px;
 }
 
 div.content div.goods > div.loading,

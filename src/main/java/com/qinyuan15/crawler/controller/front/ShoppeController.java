@@ -39,6 +39,8 @@ public class ShoppeController extends ImageController {
                     + ");height:" + posterHeight + "px;'></div>";
             model.addAttribute("headerAdditions", html);
         }
+
+        setTitle("'"+branch.getName()+"'品牌相关商品");
         return "shoppe";
     }
 }
