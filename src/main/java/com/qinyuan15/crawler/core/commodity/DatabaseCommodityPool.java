@@ -18,7 +18,6 @@ public class DatabaseCommodityPool implements CommodityPool {
     private int pointer = 0;
     private List<Commodity> commodities;
 
-    @SuppressWarnings("unchecked")
     @Override
     public synchronized Commodity next() {
         long commodityCount = this.size();
@@ -28,8 +27,12 @@ public class DatabaseCommodityPool implements CommodityPool {
         }
 
         if (pointer % PAGE_SIZE == 0) {
+            this.commodities = HibernateUtils.getList(Commodity.class,
+                    "active=true ORDER BY id DESC", pointer, PAGE_SIZE);
+            /*
             this.commodities = HibernateUtils.getList("FROM Commodity WHERE active=true ORDER BY id DESC",
                     pointer, PAGE_SIZE);
+                    */
         }
 
         Commodity commodity = this.commodities.get(pointer % PAGE_SIZE);

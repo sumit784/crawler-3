@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.core.html;
 
 import com.google.common.collect.Lists;
-import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import org.apache.commons.lang3.math.NumberUtils;

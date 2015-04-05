@@ -94,6 +94,7 @@ div.content div.left span.inactive {
 
 div.content div.right div.images {
     overflow: hidden;
+    clear: both;
 }
 
 div.content div.right div.image img {
@@ -148,4 +149,19 @@ div.content div.right div.pagination li.showButton {
 
 div.content div.right div.pagination li.hideButton {
     display: none;
+}
+
+div.content div.search {
+    margin-bottom: 20px;
+    float: right;
+}
+
+div.content div.search input {
+    border-radius: 0;
+    height: 37px;
+    width: 230px;
+}
+
+div.content div.search span.searchCommit {
+    padding: 0;
 }

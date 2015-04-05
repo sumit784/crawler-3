@@ -79,9 +79,7 @@ public class CommodityPictureDao {
 
     public CommodityPicture getFirstInstance(Integer commodityId) {
         String hql = "FROM CommodityPicture WHERE commodityId=" + commodityId + " ORDER BY id ASC";
-        @SuppressWarnings("unchecked")
-        List<CommodityPicture> pictures = HibernateUtils.getList(hql, 0, 1);
-        return pictures.size() == 0 ? null : pictures.get(0);
+        return (CommodityPicture) HibernateUtils.getFirstItem(hql);
     }
 
     public List<CommodityPicture> getFirstInstances(List<Integer> commodityIds) {

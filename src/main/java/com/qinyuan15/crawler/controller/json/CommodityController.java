@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.controller.json;
 
 import com.qinyuan15.crawler.controller.ImageController;
-import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.dao.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

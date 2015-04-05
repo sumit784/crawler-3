@@ -1,7 +1,6 @@
 package com.qinyuan15.crawler.core.crawler;
 
-import com.qinyuan15.crawler.core.DateUtils;
-import com.qinyuan15.crawler.core.commodity.CommodityPictureDownloader;
+import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;

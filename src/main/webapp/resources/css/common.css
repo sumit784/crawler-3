@@ -172,6 +172,9 @@ table.normal tbody tr {
 table.normal th, table.normal td {
     padding: 5px;
     font-size: 10pt;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 img.branch-logo {

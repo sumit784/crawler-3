@@ -27,5 +27,6 @@
         </c:forEach>
         </tbody>
     </table>
+    <%@include file="pagination.jsp" %>
 </div>
 <%@include file="footer.jsp" %>

@@ -60,17 +60,30 @@
                 <textarea name="noFoundText" cols="25" rows="4">${appConfig.noFoundText}</textarea>
             </div>
         </fieldset>
-        <fieldset id="adminPaginationConfig">
+        <fieldset class="textOnly">
             <legend>管理员主页设置</legend>
             <div>
-                <label>商品列表中每个分页的商品数量</label>
+                <label>商品列表中每个分页的商品数量(0表示无限制)</label>
                 <input type="text" name="adminPaginationCommoditySize"
                        value="${appConfig.adminPaginationCommoditySize}"/>
             </div>
             <div>
-                <label>商品列表中每个分页的底部链接数量</label>
+                <label>商品列表中每个分页的底部链接数量(0表示无限制)</label>
                 <input type="text" name="adminPaginationButtonSize"
                        value="${appConfig.adminPaginationButtonSize}"/>
+            </div>
+        </fieldset>
+        <fieldset class="textOnly">
+            <legend>商品编辑页设置</legend>
+            <div>
+                <label>商品图片数量限制(0表示无限制)</label>
+                <input type="text" name="maxCommodityPictureSize"
+                       value="${appConfig.maxCommodityPictureSize}"/>
+            </div>
+            <div>
+                <label>商品描述图片数量限制(0表示无限制)</label>
+                <input type="text" name="maxCommodityDetailPictureSize"
+                       value="${appConfig.maxCommodityDetailPictureSize}"/>
             </div>
         </fieldset>
 

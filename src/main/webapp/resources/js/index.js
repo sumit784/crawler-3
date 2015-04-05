@@ -18,4 +18,6 @@
     }).appendTo($('body'));
     angularUtils.controller(function () {
     });
+
+    $('#searchInput').focusOrSelect();
 })();

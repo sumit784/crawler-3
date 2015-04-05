@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.controller.json;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.core.ChineseUtils;
+import com.qinyuan15.crawler.utils.ChineseUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;

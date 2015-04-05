@@ -4,6 +4,14 @@
     float: left;
 }
 
+#detailForm div.submit {
+    margin: 20px 0;
+}
+
+#detailForm h4 {
+    margin: 10px 0 3px;
+}
+
 div.content fieldset {
     float: right;
     width: 250px;
@@ -11,6 +19,7 @@ div.content fieldset {
 
 #detailForm div.image {
     margin-top: 30px;
+    border-top: 1px double #aaaaaa;
 }
 
 #detailForm div.image table td {

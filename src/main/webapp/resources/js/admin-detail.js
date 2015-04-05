@@ -67,4 +67,5 @@
             }, normalSubmitCallback);
         };
     });
+    $('input[type=text]').eq(0).focusOrSelect();
 })();

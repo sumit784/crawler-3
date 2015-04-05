@@ -2,15 +2,18 @@
 <%@include file="header.jsp" %>
 <div class="boxShadow">
     <form id="detailForm" method="post" action="admin-detail-update">
+        <label>相关商品数量限制(0表示无限制)：</label>
+        <input type="text" style="width: 30px;" name="relatedCommoditySize" value="${appConfig.relatedCommoditySize}"/>
+        <h4>文字描述：</h4>
         <textarea class="ckeditor" name="detailText">${appConfig.detailText}</textarea>
 
-        <div>
+        <div class="submit">
             <button id="editSubmit" type="submit" class="btn btn-success">
                 提交修改
             </button>
         </div>
-
         <div class="image">
+            <h4>相关图片：</h4>
             <table class="normal">
                 <tbody>
                 <c:forEach var="detailImage" items="${appConfig.detailImagesList}" varStatus="status">

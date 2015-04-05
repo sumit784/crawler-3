@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.core.image;
 
-import com.qinyuan15.crawler.core.file.FileType;
-import com.qinyuan15.crawler.core.file.FileTypeJudge;
+import com.qinyuan15.crawler.utils.file.FileType;
+import com.qinyuan15.crawler.utils.file.FileTypeJudge;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
 

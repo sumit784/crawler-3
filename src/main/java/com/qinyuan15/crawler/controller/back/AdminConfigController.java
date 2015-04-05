@@ -52,7 +52,9 @@ public class AdminConfigController extends ImageController {
             @RequestParam(value = "noFoundImageFile", required = false) MultipartFile noFoundImageFile,
             @RequestParam(value = "noFoundText", required = true) String noFoundText,
             @RequestParam(value = "adminPaginationCommoditySize", required = true) Integer adminPaginationCommoditySize,
-            @RequestParam(value = "adminPaginationButtonSize", required = true) Integer adminPaginationButtonSize) {
+            @RequestParam(value = "adminPaginationButtonSize", required = true) Integer adminPaginationButtonSize,
+            @RequestParam(value = "maxCommodityPictureSize", required = true) Integer maxCommodityPictureSize,
+            @RequestParam(value = "maxCommodityDetailPictureSize", required = true) Integer maxCommodityDetailPictureSize) {
         String globalBannerPath;
         try {
             globalBannerPath = getSavePath(globalBanner, globalBannerFile, SAVE_PATH_PREFIX);
@@ -169,15 +171,17 @@ public class AdminConfigController extends ImageController {
             logAction("将商品列表中每个分页的底部链接数量修改为'%s'", adminPaginationButtonSize);
         }
 
+        if (isDifferent(appConfig.getMaxCommodityPictureSize(), maxCommodityPictureSize)) {
+            appConfig.setMaxCommodityPictureSize(maxCommodityPictureSize);
+            logAction("将商品编辑页的商品图片数量限制修改为'%s'", maxCommodityPictureSize);
+        }
+
+        if (isDifferent(appConfig.getMaxCommodityDetailPictureSize(), maxCommodityDetailPictureSize)) {
+            appConfig.setMaxCommodityDetailPictureSize(maxCommodityDetailPictureSize);
+            logAction("将商品编辑页的商品详情图片数量限制修改为'%s'", maxCommodityDetailPictureSize);
+        }
+
         dao.update(appConfig);
         return SUCCESS;
-    }
-
-    private boolean isDifferent(Object str1, Object str2) {
-        if (str1 == null) {
-            return str2 != null;
-        } else {
-            return !str1.equals(str2);
-        }
     }
 }

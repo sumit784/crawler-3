@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core.file;
+package com.qinyuan15.crawler.utils.file;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
-import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
+import com.qinyuan15.crawler.utils.IntegerUtils;
 
 import java.util.List;
 
@@ -11,13 +12,47 @@ import java.util.List;
 public class UserLogDao {
     private final static String ORDER_CLAUSE = "ORDER BY logTime DESC";
 
+
+    public static Factory factory() {
+        return new Factory();
+    }
+
+    public static class Factory {
+        private Integer userId;
+
+        public Factory setUserId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public List<UserLog> getInstances(int firstResult, int maxResults) {
+            return HibernateUtils.getList(UserLog.class, getWhereClause() + " " + ORDER_CLAUSE,
+                    firstResult, maxResults);
+        }
+
+        private String getWhereClause() {
+            if (IntegerUtils.isPositive(userId)) {
+                return "userId=" + userId;
+            } else {
+                return "";
+            }
+        }
+
+        public long getCount() {
+            return HibernateUtils.getCount(UserLog.class, getWhereClause());
+        }
+    }
+
+    /*
     public List<UserLog> getInstances() {
         return HibernateUtils.getList(UserLog.class, ORDER_CLAUSE);
     }
 
-    public List<UserLog> getInstancesByUserId(Integer userId) {
-        return HibernateUtils.getList(UserLog.class, "userId=" + userId + " " + ORDER_CLAUSE);
+    public List<UserLog> getInstancesByUserId(Integer userId, int firstResult, int maxResults) {
+        return HibernateUtils.getList(UserLog.class, "userId=" + userId + " " + ORDER_CLAUSE,
+                firstResult, maxResults);
     }
+    */
 
     public void save(Integer userId, String action) {
         UserLog userLog = new UserLog();

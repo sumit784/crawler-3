@@ -1,4 +1,4 @@
-<%@ page import="com.qinyuan15.crawler.core.RequestUtils" %>
+<%@ page import="com.qinyuan15.crawler.ui.RequestUtils" %>
 <%@ page import="com.qinyuan15.crawler.dao.AppConfig" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="taglib.jsp" %>

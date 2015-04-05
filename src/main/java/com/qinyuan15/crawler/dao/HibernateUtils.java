@@ -143,8 +143,12 @@ public class HibernateUtils {
 
     @SuppressWarnings("unchecked")
     public static <T> List<T> getList(Class<T> clazz, String whereClause) {
-        String hql = clazz.getSimpleName() + " " + adjustWhereClause(whereClause);
-        return getList(hql);
+        return getList(clazz.getSimpleName() + " " + adjustWhereClause(whereClause));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> getList(Class<T> clazz, String whereClause, int firstResult, int maxResults) {
+        return getList(clazz.getSimpleName() + " " + adjustWhereClause(whereClause), firstResult, maxResults);
     }
 
     public static List getList(String hql) {

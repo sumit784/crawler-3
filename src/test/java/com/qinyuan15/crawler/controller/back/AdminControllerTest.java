@@ -19,7 +19,7 @@ public class AdminControllerTest {
         injectImageDownloader(controller);
 
         ModelMap modelMap = mockModelMap();
-        controller.index(modelMap, 1);
+        controller.index(modelMap, 1, null);
         List commodities = (List) modelMap.get("commodities");
         System.out.println(commodities.size());
     }

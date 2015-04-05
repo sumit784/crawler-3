@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core;
 
+import com.qinyuan15.crawler.utils.ChineseUtils;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

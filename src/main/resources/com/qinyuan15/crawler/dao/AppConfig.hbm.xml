@@ -20,5 +20,8 @@
         <property name="noFoundText" column="no_found_text"/>
         <property name="adminPaginationCommoditySize" column="admin_pagination_commodity_size"/>
         <property name="adminPaginationButtonSize" column="admin_pagination_button_size"/>
+        <property name="maxCommodityPictureSize" column="max_commodity_picture_size"/>
+        <property name="maxCommodityDetailPictureSize" column="max_commodity_detail_picture_size"/>
+        <property name="relatedCommoditySize" column="related_commodity_size"/>
     </class>
 </hibernate-mapping>

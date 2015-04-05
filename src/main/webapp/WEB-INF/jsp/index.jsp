@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
 <div class="title">
-    <!--
-    <img src="resources/css/images/index/title.png"/>
-    -->
     <img src="${appConfig.indexHeadPoster}"/>
 </div>
 <div class="search input-group">
@@ -11,7 +8,7 @@
         <input type="text" name="keyWord" id="searchInput" class="form-control"
                placeholder="搜下有什么好东西"/>
         <span class="input-group-addon searchCommit">
-            <img class="link" id="searchCommmit" src="resources/css/images/index/search.png"/>
+            <img class="link" id="searchCommit" src="resources/css/images/index/search.png"/>
         </span>
     </form>
 </div>

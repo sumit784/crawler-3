@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
-import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
 
 /**
  * Persist Object of commodity crawl log

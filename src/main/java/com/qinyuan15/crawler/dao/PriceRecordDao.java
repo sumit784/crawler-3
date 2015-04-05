@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
-import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
 
 import java.sql.Date;
 import java.util.List;
@@ -82,18 +82,12 @@ public class PriceRecordDao {
 
         public PriceRecord getLastInstance() {
             String hql = getHQL() + " ORDER BY recordTime DESC";
-
-            @SuppressWarnings("unchecked")
-            List<PriceRecord> priceRecords = HibernateUtils.getList(hql, 0, 1);
-            return priceRecords.size() == 0 ? null : priceRecords.get(0);
+            return (PriceRecord) HibernateUtils.getFirstItem(hql);
         }
 
         public PriceRecord getFirstInstance() {
             String hql = getHQL() + " ORDER BY recordTime ASC";
-
-            @SuppressWarnings("unchecked")
-            List<PriceRecord> priceRecords = HibernateUtils.getList(hql, 0, 1);
-            return priceRecords.size() == 0 ? null : priceRecords.get(0);
+            return (PriceRecord) HibernateUtils.getFirstItem(hql);
         }
 
         public boolean hasInstance() {
@@ -114,7 +108,7 @@ public class PriceRecordDao {
                 .hasInstance();
     }
 
-    public PriceRecord getLastInstance(int commodityId){
+    public PriceRecord getLastInstance(int commodityId) {
         return factory().setCommodityId(commodityId).getLastInstance();
     }
 

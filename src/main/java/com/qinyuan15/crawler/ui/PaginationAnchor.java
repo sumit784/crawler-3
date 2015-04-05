@@ -39,12 +39,21 @@ public class PaginationAnchor {
 
     public static List<PaginationAnchor> create(String pageUrl, int pageCount, int visibleAnchorCount,
                                                 int currentPageNumber) {
+
+        if (pageUrl.contains("?")) {
+            if (!pageUrl.endsWith("&")) {
+                pageUrl += "&";
+            }
+        } else {
+            pageUrl += "?";
+        }
+
         List<PaginationAnchor> anchors = new ArrayList<>();
 
         if (currentPageNumber == 1) {
             anchors.add(new PaginationAnchor(null, TO_FIRST_TEXT, null));
         } else {
-            anchors.add(new PaginationAnchor(pageUrl + "?pageNumber=1", TO_FIRST_TEXT, "第一页"));
+            anchors.add(new PaginationAnchor(pageUrl + "pageNumber=1", TO_FIRST_TEXT, "第一页"));
         }
 
         int startPageNumber, endPageNumber;
@@ -63,7 +72,7 @@ public class PaginationAnchor {
             if (i == currentPageNumber) {
                 anchors.add(new PaginationAnchor(null, i, null));
             } else {
-                anchors.add(new PaginationAnchor(pageUrl + "?pageNumber=" + i, i, "第" + i + "页"));
+                anchors.add(new PaginationAnchor(pageUrl + "pageNumber=" + i, i, "第" + i + "页"));
             }
         }
 
@@ -71,7 +80,7 @@ public class PaginationAnchor {
         if (currentPageNumber == pageCount) {
             anchors.add(new PaginationAnchor(null, TO_LAST_TEXT, null));
         } else {
-            anchors.add(new PaginationAnchor(pageUrl + "?pageNumber=" + pageCount, TO_LAST_TEXT, "最后一页"));
+            anchors.add(new PaginationAnchor(pageUrl + "pageNumber=" + pageCount, TO_LAST_TEXT, "最后一页"));
         }
         return anchors;
     }

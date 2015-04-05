@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
-import com.qinyuan15.crawler.core.DateUtils;
-import com.qinyuan15.crawler.core.IntegerUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
+import com.qinyuan15.crawler.utils.IntegerUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.springframework.util.StringUtils;
 

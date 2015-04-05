@@ -8,11 +8,17 @@ import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.security.SecurityUtils;
 import com.qinyuan15.crawler.ui.PaginationAnchor;
+import com.qinyuan15.crawler.ui.PaginationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -21,10 +27,12 @@ import java.util.List;
  */
 @Controller
 public class AdminController extends ImageController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
 
     @RequestMapping("/admin")
     public String index(ModelMap model,
-                        @RequestParam(value = "pageNumber", required = false) Integer pageNumber) {
+                        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+                        @RequestParam(value = "keyWord", required = false) String keyWord) {
 
         if (!isPositive(pageNumber)) {
             pageNumber = 1;
@@ -32,9 +40,15 @@ public class AdminController extends ImageController {
 
         CommodityDao.Factory factory = CommodityDao.factory();
 
+        // security
         if (!SecurityUtils.isSupperAdmin()) {
             Integer userId = SecurityUtils.getUserId();
             factory.setUserId(userId);
+        }
+
+        // key word
+        if (StringUtils.hasText(keyWord)) {
+            factory.setKeyWord(keyWord);
         }
 
         AppConfig appConfig = getAppConfig();
@@ -48,12 +62,25 @@ public class AdminController extends ImageController {
         }
 
         long commodityCount = factory.getCount();
-        int pageCount = commodityCount == 0 ? 1 :
-                (int) (Math.ceil((double) commodityCount / pageSize));
+        int pageCount = PaginationUtils.getPageCount(commodityCount, pageSize);
+        if (pageNumber > pageCount) {
+            pageNumber = pageCount;
+        }
 
-        List<PaginationAnchor> anchors = PaginationAnchor.create("admin", pageCount, visibleButtonCount, pageNumber);
+        String pageUrl = "admin";
+        if (StringUtils.hasText(keyWord)) {
+            try {
+                pageUrl = pageUrl + "?keyWord=" + URLEncoder.encode(keyWord, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                LOGGER.error("fail to encode keyWord '{}', info: '{}'", keyWord, e);
+            }
+        }
+
+        List<PaginationAnchor> anchors = PaginationAnchor.create(
+                pageUrl, pageCount, visibleButtonCount, pageNumber);
         model.addAttribute("paginationAnchors", anchors);
         model.addAttribute("commodityCount", commodityCount);
+        model.addAttribute("keyWord", keyWord);
 
         List<Commodity> commodities = factory.getInstances((pageNumber - 1) * pageSize, pageSize);
         List<CommoditySimpleSnapshot> snapshots = new CommoditySimpleSnapshotBuilder().build(

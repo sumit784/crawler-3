@@ -7,16 +7,14 @@ import org.junit.Test;
  * Created by qinyuan on 15-3-6.
  */
 public class UserLogDaoTest {
-    private UserLogDao dao = new UserLogDao();
-
     @Test
     public void testGetInstances() throws Exception {
-        System.out.println(dao.getInstances().size());
+        System.out.println(UserLogDao.factory().getInstances(0, 0).size());
     }
 
     @Test
-    public void testGetInstancesByUserId() throws Exception {
-        System.out.println(dao.getInstancesByUserId(1).size());
+    public void testGetCount() {
+        System.out.println(UserLogDao.factory().getCount());
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.controller.json;
 
 import com.qinyuan15.crawler.controller.BaseController;
-import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.core.price.PriceRecordUtils;
 import com.qinyuan15.crawler.dao.PriceRecord;
 import com.qinyuan15.crawler.dao.PriceRecordDao;

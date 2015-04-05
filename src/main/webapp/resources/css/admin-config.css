@@ -19,12 +19,12 @@ div.uploadImage textarea {
     font-size: 9pt;
 }
 
-#adminPaginationConfig input {
-    width: 40px;
+fieldset.textOnly input {
+    width: 30px;
 }
 
-#adminPaginationConfig div {
+fieldset.textOnly div {
     padding-left: 10px;
     float: left;
-    width: 300px;
+    margin-right: 30px;
 }

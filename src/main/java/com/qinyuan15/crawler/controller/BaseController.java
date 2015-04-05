@@ -160,4 +160,12 @@ public class BaseController {
     protected static Map<String, Object> createFailResult(Object detail) {
         return createResultMap(false, detail);
     }
+
+    protected boolean isDifferent(Object str1, Object str2) {
+        if (str1 == null) {
+            return str2 != null;
+        } else {
+            return !str1.equals(str2);
+        }
+    }
 }

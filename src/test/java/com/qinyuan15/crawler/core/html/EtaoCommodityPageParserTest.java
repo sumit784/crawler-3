@@ -1,6 +1,6 @@
 package com.qinyuan15.crawler.core.html;
 
-import com.qinyuan15.crawler.core.DateUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Before;
 import org.junit.Test;

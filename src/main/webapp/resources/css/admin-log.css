@@ -3,7 +3,7 @@ col.index {
 }
 
 col.user {
-    width: 150px;
+    width: 100px;
 }
 
 col.time {
@@ -11,5 +11,5 @@ col.time {
 }
 
 col.action {
-    width: 400px;
+    width: 750px;
 }

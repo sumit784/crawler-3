@@ -26,6 +26,33 @@ public class AppConfig extends PersistObject {
     private String noFoundText;
     private Integer adminPaginationCommoditySize;
     private Integer adminPaginationButtonSize;
+    private Integer maxCommodityPictureSize;
+    private Integer maxCommodityDetailPictureSize;
+    private Integer relatedCommoditySize;
+
+    public Integer getRelatedCommoditySize() {
+        return relatedCommoditySize;
+    }
+
+    public void setRelatedCommoditySize(Integer relatedCommoditySize) {
+        this.relatedCommoditySize = relatedCommoditySize;
+    }
+
+    public void setMaxCommodityPictureSize(Integer maxCommodityPictureSize) {
+        this.maxCommodityPictureSize = maxCommodityPictureSize;
+    }
+
+    public void setMaxCommodityDetailPictureSize(Integer maxCommodityDetailPictureSize) {
+        this.maxCommodityDetailPictureSize = maxCommodityDetailPictureSize;
+    }
+
+    public Integer getMaxCommodityPictureSize() {
+        return maxCommodityPictureSize;
+    }
+
+    public Integer getMaxCommodityDetailPictureSize() {
+        return maxCommodityDetailPictureSize;
+    }
 
     public Integer getAdminPaginationCommoditySize() {
         return adminPaginationCommoditySize;

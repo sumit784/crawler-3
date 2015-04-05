@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core;
+package com.qinyuan15.crawler.utils;
 
 /**
  * Tool class for integer

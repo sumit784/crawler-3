@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core.file;
+package com.qinyuan15.crawler.utils.file;
 
 /**
  * Enum about file type

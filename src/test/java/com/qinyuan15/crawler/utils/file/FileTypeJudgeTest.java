@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core.file;
+package com.qinyuan15.crawler.utils.file;
 
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Test;

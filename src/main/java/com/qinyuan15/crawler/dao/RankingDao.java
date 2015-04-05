@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
 import com.google.common.collect.Lists;
-import com.qinyuan15.crawler.core.IntegerUtils;
+import com.qinyuan15.crawler.utils.IntegerUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.util.StringUtils;
 

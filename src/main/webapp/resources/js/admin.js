@@ -30,6 +30,7 @@
         });
     });
 
+    $('#searchInput').focusOrSelect();
     JSUtils.recordScrollStatus();
     angularUtils.controller(function ($scope) {
     });

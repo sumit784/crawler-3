@@ -34,12 +34,21 @@ public class AdminDetailController extends ImageController {
     }
 
     @RequestMapping(value = "/admin-detail-update", method = RequestMethod.POST)
-    public String update(@RequestParam(value = "detailText", required = false) String detailText) {
+    public String update(@RequestParam(value = "detailText", required = true) String detailText,
+                         @RequestParam(value = "relatedCommoditySize", required = true) Integer relatedCommoditySize) {
         AppConfigDao dao = new AppConfigDao();
         AppConfig appConfig = dao.getInstance();
-        if (detailText != null) {
+
+        if (isDifferent(appConfig.getDetailText(), detailText)) {
             appConfig.setDetailText(detailText);
+            logAction("更改了商品详情页的文字描述内容");
         }
+
+        if (isDifferent(appConfig.getRelatedCommoditySize(), relatedCommoditySize)) {
+            appConfig.setRelatedCommoditySize(relatedCommoditySize);
+            logAction("将商品详情页的相关商品数量限制修改为'%s'", relatedCommoditySize);
+        }
+
         dao.update(appConfig);
         return redirect(ADMIN_DETAIL);
     }
