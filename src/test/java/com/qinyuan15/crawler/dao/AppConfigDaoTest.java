@@ -14,7 +14,7 @@ public class AppConfigDaoTest {
         AppConfig appConfig = dao.getInstance();
         System.out.println(appConfig.getId());
         System.out.println(appConfig.getDetailText());
-        System.out.println(appConfig.getDetailImages());
+        //System.out.println(appConfig.getDetailImages());
     }
 
     @Test

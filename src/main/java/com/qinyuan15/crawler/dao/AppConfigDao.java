@@ -1,11 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
 
-import com.google.common.base.Joiner;
-import org.springframework.util.StringUtils;
-
-import java.util.List;
-
 /**
  * Dao of AppConfig
  * Created by qinyuan on 15-3-22.
@@ -19,7 +14,7 @@ public class AppConfigDao {
         HibernateUtils.update(appConfig);
     }
 
-    private void updateImage(AppConfig appConfig, List<String> images) {
+/*    private void updateImage(AppConfig appConfig, List<String> images) {
         // TODO
         //appConfig.setDetailImages(Joiner.on(AppConfig.IMAGE_SEPARATOR).join(images));
         update(appConfig);
@@ -66,5 +61,5 @@ public class AppConfigDao {
 
         images.remove(index.intValue());
         updateImage(config, images);
-    }
+    }*/
 }

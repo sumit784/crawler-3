@@ -29,6 +29,7 @@ public class AppConfig extends PersistObject {
     private Integer maxCommodityPictureSize;
     private Integer maxCommodityDetailPictureSize;
     private Integer relatedCommoditySize;
+    private List<AppConfigDetailImage> detailImages;
 
     public Integer getRelatedCommoditySize() {
         return relatedCommoditySize;
@@ -122,9 +123,12 @@ public class AppConfig extends PersistObject {
         return indexFootPoster;
     }
 
-    /*public String getDetailImages() {
+    public List<AppConfigDetailImage> getDetailImages() {
+        if (detailImages == null) {
+            detailImages = new AppConfigDetailImageDao().getInstances();
+        }
         return detailImages;
-    }*/
+    }
 
     public String getIndexFootPosterLink() {
         return indexFootPosterLink;
@@ -142,16 +146,15 @@ public class AppConfig extends PersistObject {
         return noFoundText;
     }
 
+    /*
     public List<String> getDetailImagesList() {
-        return new ArrayList<>();
-        /*
         if (StringUtils.hasText(detailImages)) {
             return Lists.newArrayList(detailImages.split(IMAGE_SEPARATOR));
         } else {
             return new ArrayList<>();
         }
-        */
     }
+    */
 
     public void setDetailText(String detailText) {
         this.detailText = detailText;

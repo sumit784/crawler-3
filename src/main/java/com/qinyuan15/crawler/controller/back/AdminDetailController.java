@@ -3,6 +3,7 @@ package com.qinyuan15.crawler.controller.back;
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.dao.AppConfig;
 import com.qinyuan15.crawler.dao.AppConfigDao;
+import com.qinyuan15.crawler.dao.AppConfigDetailImageDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,8 @@ public class AdminDetailController extends ImageController {
     @RequestMapping(value = "/admin-detail-image-add-update", method = RequestMethod.POST)
     public Map<String, Object> addUpdateImage(@RequestParam(value = "id", required = true) Integer id,
                                               @RequestParam(value = "url", required = true) String url,
-                                              @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile) {
+                                              @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
+                                              @RequestParam(value = "link", required = true) String link) {
         String savePath;
         try {
             savePath = getSavePath(url, uploadFile, SAVE_PATH_PREFIX);
@@ -67,12 +69,12 @@ public class AdminDetailController extends ImageController {
             return createFailResult("矩形Logo文件处理失败!");
         }
 
-        AppConfigDao dao = new AppConfigDao();
+        AppConfigDetailImageDao dao = new AppConfigDetailImageDao();
         if (id != null && id >= 0) {
-            dao.editImage(id, savePath);
+            dao.edit(id, savePath, link);
             logAction("将商品详细页配置第'%d'个配置图片修改为'%s'", id, savePath);
         } else {
-            dao.addImage(savePath);
+            dao.add(savePath, link);
             logAction("为商品详细页配置添加图片'%s'", savePath);
         }
 
@@ -82,9 +84,9 @@ public class AdminDetailController extends ImageController {
     @ResponseBody
     @RequestMapping(value = "/admin-detail-image-delete", method = RequestMethod.POST)
     public Map<String, Object> deleteImage(@RequestParam(value = "id", required = true) Integer id) {
-        AppConfigDao dao = new AppConfigDao();
+        AppConfigDetailImageDao dao = new AppConfigDetailImageDao();
         if (id != null && id >= 0) {
-            dao.deleteImage(id);
+            dao.delete(id);
             logAction("删除商品详细页配置第'%d'个配置图片", id);
         }
         return SUCCESS;

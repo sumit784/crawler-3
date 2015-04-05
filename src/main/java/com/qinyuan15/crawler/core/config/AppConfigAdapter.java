@@ -1,10 +1,8 @@
 package com.qinyuan15.crawler.core.config;
 
-import com.google.common.base.Joiner;
 import com.qinyuan15.crawler.core.image.PictureUrlConverter;
 import com.qinyuan15.crawler.dao.AppConfig;
-
-import java.util.List;
+import com.qinyuan15.crawler.dao.AppConfigDetailImage;
 
 /**
  * Adjust url of AppConfig
@@ -25,12 +23,9 @@ public class AppConfigAdapter {
         appConfig.setBranchRankImage(pictureUrlConverter.pathToUrl(appConfig.getBranchRankImage()));
         appConfig.setNoFoundImage(pictureUrlConverter.pathToUrl(appConfig.getNoFoundImage()));
 
-        List<String> images = appConfig.getDetailImagesList();
-        for (int i = 0; i < images.size(); i++) {
-            images.set(i, pictureUrlConverter.pathToUrl(images.get(i)));
+        for (AppConfigDetailImage image : appConfig.getDetailImages()) {
+            image.setPath(pictureUrlConverter.pathToUrl(image.getPath()));
         }
-        // TODO
-        //appConfig.setDetailImages(Joiner.on(AppConfig.IMAGE_SEPARATOR).join(images));
 
         return appConfig;
     }
