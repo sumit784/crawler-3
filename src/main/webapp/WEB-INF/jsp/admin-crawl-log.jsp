@@ -18,8 +18,6 @@
             <button id="addSubmit" type="submit" class="btn btn-success">筛选</button>
         </div>
     </form>
-
-
     <table class="normal">
         <colgroup>
             <col class="index"/>

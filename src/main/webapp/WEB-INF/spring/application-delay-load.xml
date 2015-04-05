@@ -5,7 +5,7 @@
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="snapshotConfig" class="com.qinyuan15.crawler.core.commodity.SnapshotConfig">
-        <property name="loadSize" value="3"/>
+        <property name="loadSize" value="15"/>
     </bean>
 
 </beans>

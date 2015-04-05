@@ -1,39 +1,86 @@
 package com.qinyuan15.crawler.ui;
 
+import com.google.common.base.Joiner;
 import com.qinyuan15.crawler.dao.PaginationFactory;
 import com.qinyuan15.crawler.utils.IntegerUtils;
-import org.springframework.ui.ModelMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Class to add attributes about pagination to ModelMap
  * Created by qinyuan on 15-4-5.
  */
 public class PaginationAttributeAdder {
-    public final static int DEFAULT_PAGE_SIZE = 50;
-    public final static int DEFAULT_VISIBLE_BUTTON_SIZE = 5;
+    private final static Logger LOGGER = LoggerFactory.getLogger(PaginationAttributeAdder.class);
 
-    private Integer pageNumber;
+    public final static int DEFAULT_PAGE_SIZE = 50;
+    public final static int DEFAULT_VISIBLE_BUTTON_SIZE = 10;
+    public final static String PAGE_NUMBER_KEY = "pageNumber";
+    public final static String DEFAULT_ROW_ITEMS_NAME = "paginationItems";
+    public final static String DEFAULT_ROW_ITEM_COUNT_NAME = "paginationItemCount";
+
     private PaginationFactory factory;
+    private HttpServletRequest request;
+    private String rowItemsName = DEFAULT_ROW_ITEMS_NAME;
     private int pageSize = DEFAULT_PAGE_SIZE;
     private int visibleButtonSize = DEFAULT_VISIBLE_BUTTON_SIZE;
+    private String rowItemCountName = DEFAULT_ROW_ITEM_COUNT_NAME;
 
-    private Map<String, Object> requestParameters = new HashMap<>();
-
-    public PaginationAttributeAdder(PaginationFactory factory, Integer pageNumber) {
-        this.pageNumber = pageNumber;
+    public PaginationAttributeAdder(PaginationFactory factory, HttpServletRequest request) {
         this.factory = factory;
+        this.request = request;
     }
 
-    public PaginationAttributeAdder addRequestParameter(String key, Object value) {
-        requestParameters.put(key, value);
+    public PaginationAttributeAdder setPageSize(int pageSize) {
+        if (!IntegerUtils.isPositive(pageSize)) {
+            pageSize = Integer.MAX_VALUE;
+        }
+        this.pageSize = pageSize;
         return this;
     }
 
-    public void addAttributes(String pageUrl, String instancesKey, ModelMap model) {
+    public PaginationAttributeAdder setRowItemCountName(String rowItemCountName) {
+        this.rowItemCountName = rowItemCountName;
+        return this;
+    }
+
+    public PaginationAttributeAdder setVisibleButtonSize(int visibleButtonSize) {
+        if (!IntegerUtils.isPositive(visibleButtonSize)) {
+            visibleButtonSize = Integer.MAX_VALUE;
+        }
+
+        this.visibleButtonSize = visibleButtonSize;
+        return this;
+    }
+
+    public PaginationAttributeAdder setRowItemsName(String rowItemsName) {
+        this.rowItemsName = rowItemsName;
+        return this;
+    }
+
+    protected Integer getIntParameter(String name) {
+        String value = request.getParameter(name);
+        if (value == null) {
+            return null;
+        }
+
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception e) {
+            LOGGER.error("fail to convert '{}' to integer, info: '{}'", value, e);
+            return null;
+        }
+    }
+
+    public void add() {
+        Integer pageNumber = getIntParameter(PAGE_NUMBER_KEY);
+
         if (!IntegerUtils.isPositive(pageNumber)) {
             pageNumber = 1;
         }
@@ -44,22 +91,43 @@ public class PaginationAttributeAdder {
             pageNumber = pageCount;
         }
 
-        if (requestParameters.size() > 0) {
-            if (!pageUrl.endsWith("?")) {
-                pageUrl += "?";
+        String pageUrl = request.getRequestURI();
+        if (pageUrl.startsWith("/")) {
+            pageUrl = pageUrl.substring(1);
+        }
+
+        List<String> parameters = new ArrayList<>();
+        @SuppressWarnings("unchecked")
+        Set<Map.Entry<String, Object>> entries = request.getParameterMap().entrySet();
+        for (Map.Entry<String, Object> entry : entries) {
+            if (entry.getKey().equals(PAGE_NUMBER_KEY)) {
+                continue;
             }
-            for (Map.Entry entry : requestParameters.entrySet()) {
-                if (entry.getValue() != null) {
-                    pageUrl += "&" + entry.getKey() + "=" + entry.getValue();
+
+            Object value = entry.getValue();
+            if (value == null) {
+                continue;
+            }
+
+            if (value instanceof String) {
+                parameters.add(entry.getKey() + "=" + value);
+            } else if (value.getClass().isArray()) {
+                String[] strings = (String[]) value;
+                if (strings.length > 0) {
+                    parameters.add(entry.getKey() + "=" + strings[0]);
                 }
             }
+        }
+        if (parameters.size() > 0) {
+            pageUrl += "?" + Joiner.on("&").join(parameters);
         }
 
         List<PaginationAnchor> anchors = PaginationAnchor.create(
                 pageUrl, pageCount, visibleButtonSize, pageNumber);
 
-        model.addAttribute("paginationAnchors", anchors);
-        model.addAttribute("rowStartIndex", (pageNumber - 1) * pageSize + 1);
-        model.addAttribute(instancesKey, factory.getInstances((pageNumber - 1) * pageSize, pageSize));
+        request.setAttribute("paginationAnchors", anchors);
+        request.setAttribute("rowStartIndex", (pageNumber - 1) * pageSize + 1);
+        request.setAttribute(rowItemsName, factory.getInstances((pageNumber - 1) * pageSize, pageSize));
+        request.setAttribute(rowItemCountName, itemCount);
     }
 }

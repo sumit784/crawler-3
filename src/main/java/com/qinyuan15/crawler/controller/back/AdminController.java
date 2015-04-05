@@ -7,18 +7,12 @@ import com.qinyuan15.crawler.dao.AppConfig;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.security.SecurityUtils;
-import com.qinyuan15.crawler.ui.PaginationAnchor;
-import com.qinyuan15.crawler.ui.PaginationUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.qinyuan15.crawler.ui.PaginationAttributeAdder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -27,18 +21,10 @@ import java.util.List;
  */
 @Controller
 public class AdminController extends ImageController {
-    private final static Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
-
     @RequestMapping("/admin")
     public String index(ModelMap model,
-                        @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                         @RequestParam(value = "keyWord", required = false) String keyWord) {
-
-        if (!isPositive(pageNumber)) {
-            pageNumber = 1;
-        }
-
-        CommodityDao.Factory factory = CommodityDao.factory();
+        CommodityDao.Factory factory = CommodityDao.factory().setKeyWord(keyWord);
 
         // security
         if (!SecurityUtils.isSupperAdmin()) {
@@ -46,46 +32,20 @@ public class AdminController extends ImageController {
             factory.setUserId(userId);
         }
 
-        // key word
-        if (StringUtils.hasText(keyWord)) {
-            factory.setKeyWord(keyWord);
-        }
-
         AppConfig appConfig = getAppConfig();
-        Integer pageSize = appConfig.getAdminPaginationCommoditySize();
-        if (!isPositive(pageSize)) {
-            pageSize = Integer.MAX_VALUE;
-        }
-        Integer visibleButtonCount = appConfig.getAdminPaginationButtonSize();
-        if (!isPositive(visibleButtonCount)) {
-            visibleButtonCount = Integer.MAX_VALUE;
-        }
+        new PaginationAttributeAdder(factory, request)
+                .setPageSize(appConfig.getAdminPaginationCommoditySize())
+                .setVisibleButtonSize(appConfig.getAdminPaginationButtonSize())
+                .setRowItemCountName("commodityCount")
+                .add();
 
-        long commodityCount = factory.getCount();
-        int pageCount = PaginationUtils.getPageCount(commodityCount, pageSize);
-        if (pageNumber > pageCount) {
-            pageNumber = pageCount;
-        }
-
-        String pageUrl = "admin";
-        if (StringUtils.hasText(keyWord)) {
-            try {
-                pageUrl = pageUrl + "?keyWord=" + URLEncoder.encode(keyWord, "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                LOGGER.error("fail to encode keyWord '{}', info: '{}'", keyWord, e);
-            }
-        }
-
-        List<PaginationAnchor> anchors = PaginationAnchor.create(
-                pageUrl, pageCount, visibleButtonCount, pageNumber);
-        model.addAttribute("paginationAnchors", anchors);
-        model.addAttribute("commodityCount", commodityCount);
-        model.addAttribute("keyWord", keyWord);
-
-        List<Commodity> commodities = factory.getInstances((pageNumber - 1) * pageSize, pageSize);
+        @SuppressWarnings("unchecked")
+        List<Commodity> commodities = (List) request.getAttribute(
+                PaginationAttributeAdder.DEFAULT_ROW_ITEMS_NAME);
         List<CommoditySimpleSnapshot> snapshots = new CommoditySimpleSnapshotBuilder().build(
                 commodities, pictureUrlConverter);
         model.addAttribute("commodities", snapshots);
+        model.addAttribute("keyWord", keyWord);
         setTitle("商品管理");
 
         return "admin";

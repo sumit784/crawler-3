@@ -50,7 +50,7 @@ function initSnapshot($scope, $http) {
         }
     });
 }
-function buildSnapshotUrl($scope, pageNumber) {
+function _buildSnapshotUrl($scope, pageNumber) {
     var params = [];
     if ($scope.categoryId) {
         params.push("categoryId=" + $scope.categoryId);
@@ -88,7 +88,7 @@ function _get$LoadingDiv() {
 }
 
 function loadSnapshot($scope, $http) {
-    var url = buildSnapshotUrl($scope);
+    var url = _buildSnapshotUrl($scope);
     _get$LoadingDiv().show();
     $http.get(url).success(function (data) {
         if ($scope.pageNumber == 0) {

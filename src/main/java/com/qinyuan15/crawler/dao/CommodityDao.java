@@ -189,7 +189,7 @@ public class CommodityDao {
         }
     }
 
-    public static class Factory {
+    public static class Factory implements PaginationFactory<Commodity> {
         private Integer id;
         private boolean inLowPrice = false;
         private Integer categoryId;

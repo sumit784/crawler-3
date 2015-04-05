@@ -83,13 +83,18 @@
             </div>
             <div class="buySubmit">
                 <c:if test="${fn:length(branch.shoppes)>0}">
-                    <span id="couponLink" class="noLineAnchor" href="javascript:void(0)">
+                    <%--
+                    <span id="couponLink" class="noLineAnchor">
                         别忘了领取
                         <a class="noLineAnchor" href="${branch.shoppes[0].url}" target="_blank">
                             <img src="resources/css/images/edit-commodity/coupon.png"/>
                         </a>
                         哦
                     </span>
+                    --%>
+                    <a id="couponLink" class="noLineAnchor" href="${branch.shoppes[0].url}" target="_blank">
+                        去看看有没有优惠券
+                    </a>
                 </c:if>
                 <a href="${commodity.buyUrl}" target="_blank">
                     <button id="buySubmit" class="orangeButton">去购买</button>
@@ -154,6 +159,7 @@
         <%@include file="widget-detail-text.jsp" %>
         <%@include file="widget-detail-images.jsp" %>
     </div>
+    <!--
     <div class="attention">
         <div class="title">关注我们</div>
         <div class="link">
@@ -161,6 +167,7 @@
             微博：<a href="javascript:void(0)">@豆瓣东西</a>
         </div>
     </div>
+    -->
     <div class="advice">
         <a target="_blank" href="company-info?tab=2">我想给你们些建议</a>
     </div>

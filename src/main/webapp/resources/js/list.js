@@ -117,7 +117,6 @@
         $scope.inLowPrice = true;
         $scope.categoryId = getCategoryId();
         initBranch();
-        initSnapshot($scope, $http);
         $scope.showMore = function () {
             if ($scope.hideBranches.length == 0) {
                 return;
@@ -163,6 +162,8 @@
 
         var subCategory = $.url.param('subCategory');
         if (subCategory) {
+            $scope.categoryId = parseInt(subCategory);
+            initSnapshot($scope, $http);
             $('div.search div.subCategory a').each(function () {
                 var $this = $(this);
                 if ($this.dataOptions()['id'] == parseInt(subCategory)) {
@@ -171,6 +172,8 @@
                     selectSubCategory($this);
                 }
             })
+        } else {
+            initSnapshot($scope, $http);
         }
 
         function get$HideBranch() {

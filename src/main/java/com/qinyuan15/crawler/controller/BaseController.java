@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -47,12 +46,21 @@ public class BaseController {
         return "redirect:" + page;
     }
 
-    protected String getParameter(String name) {
-        try {
-            request.setCharacterEncoding("utf-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+    protected Integer getIntParameter(String name) {
+        String value = getParameter(name);
+        if (value == null) {
+            return null;
         }
+
+        try {
+            return Integer.parseInt(getParameter(name));
+        } catch (Exception e) {
+            LOGGER.error("fail to convert '{}' to integer, info: '{}'", value, e);
+            return null;
+        }
+    }
+
+    protected String getParameter(String name) {
         return request.getParameter(name);
     }
 

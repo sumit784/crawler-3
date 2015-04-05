@@ -17,7 +17,7 @@ public class UserLogDao {
         return new Factory();
     }
 
-    public static class Factory {
+    public static class Factory implements PaginationFactory<UserLog> {
         private Integer userId;
 
         public Factory setUserId(Integer userId) {
