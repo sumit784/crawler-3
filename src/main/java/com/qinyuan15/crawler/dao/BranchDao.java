@@ -10,6 +10,7 @@ import java.util.List;
  * Created by qinyuan on 15-2-24.
  */
 public class BranchDao {
+    private final static String ORDER_CLAUSE = " ORDER BY firstLetter ASC, id ASC";
 
     public Branch getInstance(Integer id) {
         return HibernateUtils.get(Branch.class, id);
@@ -37,15 +38,16 @@ public class BranchDao {
     }
 
     public List<Branch> getInstances() {
-        return HibernateUtils.getList(Branch.class);
+        return HibernateUtils.getList(Branch.class, ORDER_CLAUSE);
     }
 
     public List<Branch> getRootInstances() {
-        return HibernateUtils.getList(Branch.class, "parentId IS NULL OR parentId<=0");
+        return HibernateUtils.getList(Branch.class,
+                "parentId IS NULL OR parentId<=0" + ORDER_CLAUSE);
     }
 
     public List<Branch> getSubInstances(int parentId) {
-        return HibernateUtils.getList(Branch.class, "parentId=" + parentId);
+        return HibernateUtils.getList(Branch.class, "parentId=" + parentId + ORDER_CLAUSE);
     }
 
     public List<Branch> getAllSubInstances(int parentId) {

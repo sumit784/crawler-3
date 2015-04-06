@@ -1,8 +1,8 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
+import com.qinyuan15.crawler.core.branch.BranchGroupBuilder;
 import com.qinyuan15.crawler.core.category.RichCategory;
-import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.Category;
 import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.HibernateUtils;
@@ -33,7 +33,9 @@ public class AdminCategoryController extends ImageController {
             adjustCategoryPosters(richCategory.getPosters());
         }
         model.addAttribute("richCategories", richCategories);
-        model.addAttribute("branches", adjustBranches(new BranchDao().getInstances()));
+        model.addAttribute("branchGroups", adjustBranchGroups(
+                new BranchGroupBuilder().setGroupSize(5).build()));
+        //model.addAttribute("branches", adjustBranches(new BranchDao().getInstances()));
         addCssAndJs("admin-normal-edit-page");
         addHeadJs("image-adjust");
 
