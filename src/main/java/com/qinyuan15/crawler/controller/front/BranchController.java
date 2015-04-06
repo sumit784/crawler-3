@@ -1,8 +1,7 @@
 package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.ImageController;
-import com.qinyuan15.crawler.core.branch.BranchGrouper;
-import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
+import com.qinyuan15.crawler.core.branch.BranchGroupBuilder;
 import com.qinyuan15.crawler.dao.Branch;
 import com.qinyuan15.crawler.dao.BranchDao;
 import com.qinyuan15.crawler.dao.HibernateUtils;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,28 +39,24 @@ public class BranchController extends ImageController {
     public String query(@RequestParam(value = "parentId", required = false) Integer parentId,
                         @RequestParam(value = "categoryId", required = false) Integer categoryId) {
         BranchDao dao = new BranchDao();
-        BranchUrlAdapter urlAdapter = getBranchUrlAdapter();
         if (isPositive(categoryId)) {
-            return toJson(urlAdapter.adjust(dao.getInstancesByCategoryId(categoryId)));
+            return toJson(adjustBranches(dao.getInstancesByCategoryId(categoryId)));
         }
 
         if (isPositive(parentId)) {
-            return toJson(urlAdapter.adjust(dao.getSubInstances(parentId)));
+            return toJson(adjustBranches(dao.getSubInstances(parentId)));
         } else {
-            return toJson(urlAdapter.adjust(dao.getRootInstances()));
+            return toJson(adjustBranches(dao.getRootInstances()));
         }
     }
 
     /**
-     * @return branches grouped by first letter
+     * @return branch groups
      */
     @ResponseBody
-    @RequestMapping("/json/groupedBranches.json")
-    public String queryGroupedBranches() {
-        List<Branch> branches = new BranchDao().getInstances();
-        BranchGrouper branchGrouper = new BranchGrouper();
-        BranchUrlAdapter urlAdapter = getBranchUrlAdapter();
-        return toJson(branchGrouper.groupByLetter(urlAdapter.adjust(branches)));
+    @RequestMapping("/json/branchGroups.json")
+    public String queryBranchGroups() {
+        return toJson(adjustBranchGroups(new BranchGroupBuilder().build()));
     }
 
     @ResponseBody
@@ -89,7 +83,7 @@ public class BranchController extends ImageController {
     }
 
     private String createParentResult(Integer branchId, Integer subBranch1Id, Integer subBranch2Id) {
-        Map<String, Integer> result = new HashMap<String, Integer>();
+        Map<String, Integer> result = new HashMap<>();
         result.put("branchId", branchId);
         result.put("subBranch1Id", subBranch1Id);
         result.put("subBranch2Id", subBranch2Id);

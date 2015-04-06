@@ -1,19 +1,9 @@
 ;
 (function () {
     angularUtils.controller(function ($scope, $http) {
-        $http.get('json/groupedBranches.json').success(function (data) {
-            $scope.branches = [];
-            for (var i = 0, len = letters.length; i < len; i++) {
-                var letter = letters[i];
-                if (letter in data) {
-                    $scope.branches.push({'letter': letters[i], 'branches': JSUtils.splitArray(data[letter], 7)});
-                } else {
-                    $scope.branches.push({'letter': letters[i], 'branches': []});
-                }
-            }
+        $http.get('json/branchGroups.json').success(function (data) {
+            $scope.branchGroups = data;
         });
-        var letters = getBranchGroupLetters();
-        $scope.letters = JSUtils.splitArray(letters, 3);
         $scope.letterClick = function (letter) {
             $('div.branchGroup').each(function () {
                 if ($.trim($(this).find('div.title').text()) == $.trim(letter)) {
@@ -25,14 +15,4 @@
             });
         };
     });
-
-    function getBranchGroupLetters() {
-        var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        var arr = [];
-        for (var i = 0; i < letters.length; i++) {
-            arr.push(letters[i]);
-        }
-        arr.push('0-9');
-        return arr;
-    }
 })();

@@ -1,17 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
 <div id="branchGroups">
-    <div class="branchGroup" ng-repeat="branchGroup in branches">
+    <div class="branchGroup" ng-repeat="branchGroup in branchGroups">
         <div class="title"><span>{{branchGroup.letter}}</span></div>
-        <table>
-            <tr ng-repeat="branchRow in branchGroup.branches">
-                <td ng-repeat="branch in branchRow">
-                    <a class="noLineAnchor" ng-href="shoppe?id={{branch.id}}" target="_blank">
-                        <img class="branch-logo" ng-src="{{branch.logo}}"/><br>{{branch.name}}
-                    </a>
-                </td>
-            </tr>
-        </table>
+        <div class="branch" ng-repeat="branch in branchGroup.branches">
+            <a class="noLineAnchor" ng-href="shoppe?id={{branch.id}}" target="_blank">
+                <img class="branch-logo" ng-src="{{branch.logo}}"/><br>{{branch.name}}
+            </a>
+        </div>
     </div>
 </div>
 <!--
@@ -20,13 +16,9 @@
 </div>
 -->
 <div class="rightFloat">
-    <table>
-        <tr ng-repeat="letterGroup in letters">
-            <td ng-repeat="letter in letterGroup">
-                <a class="darkFont branchGroupLink sameWidthFont"
-                   href="javascript:void(0)" ng-click="letterClick(letter)">{{letter}}</a>
-            </td>
-        </tr>
-    </table>
+    <div ng-repeat="branchGroup in branchGroups">
+        <a class="darkFont sameWidthFont noLineAnchor" href="javascript:void(0)"
+           ng-click="letterClick(branchGroup.letter)">{{branchGroup.letter}}</a>
+    </div>
 </div>
 <%@include file="footer.jsp" %>

@@ -20,7 +20,7 @@ public class CommoditySnapshot extends CommoditySimpleSnapshot {
         this.price = new CommodityPriceDao().getCurrentPrice(commodity.getId());
         this.branch = HibernateUtils.get(Branch.class, commodity.getBranchId());
         BranchUrlAdapter adapter = new BranchUrlAdapter(pictureUrlConverter);
-        adapter.adjust(this.branch);
+        adapter.adjustBranch(this.branch);
     }
 
     public Double getPrice() {

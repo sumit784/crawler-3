@@ -16,14 +16,21 @@ public class BranchUrlAdapter {
         this.pictureUrlConverter = pictureUrlConverter;
     }
 
-    public List<Branch> adjust(List<Branch> branches) {
+    public List<Branch> adjustBranches(List<Branch> branches) {
         for (Branch branch : branches) {
-            adjust(branch);
+            adjustBranch(branch);
         }
         return branches;
     }
 
-    public Branch adjust(Branch branch) {
+    public List<BranchGroup> adjustBranchGroups(List<BranchGroup> branchGroups) {
+        for (BranchGroup branchGroup : branchGroups) {
+            adjustBranches(branchGroup.getBranches());
+        }
+        return branchGroups;
+    }
+
+    public Branch adjustBranch(Branch branch) {
         if (branch == null) {
             return null;
         }

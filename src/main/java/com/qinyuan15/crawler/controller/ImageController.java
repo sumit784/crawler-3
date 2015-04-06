@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.controller;
 
+import com.qinyuan15.crawler.core.branch.BranchGroup;
 import com.qinyuan15.crawler.core.branch.BranchUrlAdapter;
 import com.qinyuan15.crawler.core.category.CategoryPosterUrlAdapter;
 import com.qinyuan15.crawler.core.commodity.CommodityPictureUtils;
@@ -66,12 +67,16 @@ public class ImageController extends BaseController {
         return new CategoryPosterUrlAdapter(pictureUrlConverter).adjust(categoryPosters);
     }
 
+    protected List<BranchGroup> adjustBranchGroups(List<BranchGroup> branchGroups) {
+        return getBranchUrlAdapter().adjustBranchGroups(branchGroups);
+    }
+
     protected List<Branch> adjustBranches(List<Branch> branches) {
-        return getBranchUrlAdapter().adjust(branches);
+        return getBranchUrlAdapter().adjustBranches(branches);
     }
 
     protected Branch adjustBranch(Branch branch) {
-        return getBranchUrlAdapter().adjust(branch);
+        return getBranchUrlAdapter().adjustBranch(branch);
     }
 
     /**

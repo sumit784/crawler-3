@@ -92,9 +92,9 @@ public class PaginationAttributeAdder {
         }
 
         String pageUrl = request.getRequestURI();
-        if (pageUrl.startsWith("/")) {
+        /*if (pageUrl.startsWith("/")) {
             pageUrl = pageUrl.substring(1);
-        }
+        }*/
 
         List<String> parameters = new ArrayList<>();
         @SuppressWarnings("unchecked")
