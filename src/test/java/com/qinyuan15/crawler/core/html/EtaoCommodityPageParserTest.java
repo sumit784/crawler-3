@@ -1,7 +1,7 @@
 package com.qinyuan15.crawler.core.html;
 
-import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.lib.TestFileUtils;
+import com.qinyuan15.crawler.utils.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.powermock.reflect.Whitebox;
@@ -99,5 +99,16 @@ public class EtaoCommodityPageParserTest {
     public void testGetSales() throws Exception {
         Integer sale = parser.getSales();
         assertThat(sale).isEqualTo(2);
+    }
+
+    @Test
+    public void testGetSales2() throws Exception {
+        parser.setHTML(TestFileUtils.read("etao3.html"));
+        Integer sale = parser.getSales();
+        System.out.println(sale);
+        /*
+        Map<Date, Double> priceHistory = parser.getPriceHistory();
+        System.out.println(priceHistory);
+        */
     }
 }

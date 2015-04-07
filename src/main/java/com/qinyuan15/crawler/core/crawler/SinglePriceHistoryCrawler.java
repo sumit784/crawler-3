@@ -66,28 +66,29 @@ class SinglePriceHistoryCrawler {
                 for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                     savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
                 }
+                LOGGER.info("save price history of {}", url);
+                new CommodityCrawlLogDao().logSuccess(commodityId, "价格记录抓取成功");
 
                 // save images
                 //CommodityPictureDownloader downloader = new CommodityPictureDownloader(imageDownloader);
                 //downloader.saveIfNotExist(commodity.getId(), commodityPageParser.getImageUrls());
 
-                // save sales and on self time
-                CommodityDao commodityDao = new CommodityDao();
-                commodityDao.updateSales(commodity.getId(), commodityPageParser.getSales());
-                commodityDao.updateOnShelfTime(commodity.getId());
-                commodityDao.updatePrice(commodity.getId());
-                commodityDao.updateInLowPrice(commodity.getId());
-
-                LOGGER.info("save price history of {}", url);
-                new CommodityCrawlLogDao().logSuccess(commodityId, "价格记录抓取成功");
+                //updateOtherCommodityInfo(commodity.getId());
             }
-
+            new CommodityDao().updateSales(commodity.getId(), commodityPageParser.getSales());
             // TODO comment out this someday
-            new CommodityDao().updateInLowPrice(commodity.getId());
+            updateOtherCommodityInfo(commodity.getId());
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
             new CommodityCrawlLogDao().logFail(commodityId, "未知错误");
         }
+    }
+
+    private void updateOtherCommodityInfo(Integer commodityId) {
+        CommodityDao commodityDao = new CommodityDao();
+        commodityDao.updateOnShelfTime(commodityId);
+        commodityDao.updatePrice(commodityId);
+        commodityDao.updateInLowPrice(commodityId);
     }
 
     private void savePriceRecord(Date date, Double price, int commodityId) {

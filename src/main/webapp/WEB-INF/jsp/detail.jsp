@@ -40,7 +40,7 @@
             <div class="name">${commodity.name}</div>
             <div class="price">
                 <div>
-                    历史低价： <span class="lowPrice">￥${lowPrice}</span>
+                    价格： <span class="lowPrice">￥${currentPrice}</span>
                     销量： <span class="sales">${commodity.sales}</span>件
                 </div>
                 <div>

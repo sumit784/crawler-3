@@ -92,7 +92,7 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
 
         Elements liElements = ulElement.getElementsByTag("li");
         char htmlSpace = 160;
-        String regex = String.format("销[\\s%c]*量\\d", htmlSpace);
+        String regex = String.format("销[\\s%c]*量\\d+", htmlSpace);
         Pattern pattern = Pattern.compile(regex);
         for (Element liElement : liElements) {
             String text = liElement.text().trim();

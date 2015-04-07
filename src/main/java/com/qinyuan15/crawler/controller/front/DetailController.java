@@ -57,7 +57,8 @@ public class DetailController extends ImageController {
 
         // price
         CommodityPriceDao priceDao = new CommodityPriceDao();
-        model.addAttribute("lowPrice", priceDao.getMinPriceInThreeMonth(id));
+        model.addAttribute("currentPrice", priceDao.getCurrentPrice(id));
+        //model.addAttribute("lowPrice", priceDao.getMinPriceInThreeMonth(id));
         model.addAttribute("highPrice", priceDao.getMaxPrice(id));
 
         // appraise

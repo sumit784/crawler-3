@@ -47,7 +47,7 @@ function linechart(elementId, config) {
         if (yDiff == 0) {
             yUnit = (Y_GRID_COUNT - 1 ) * yGridHeight / yMax;
         } else {
-            yUnit = parseInt((height - Y_MARGIN * 2 - 2 * yGridHeight) / yDiff);
+            yUnit = (height - Y_MARGIN * 2 - 2 * yGridHeight) / yDiff;
         }
         var dots = [];
         for (var i = 0; i < serialSize; i++) {
