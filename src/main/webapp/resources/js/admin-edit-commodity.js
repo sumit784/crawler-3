@@ -162,24 +162,38 @@
         };
 
         var selectForm = {
-            select: function (dataModel, idToSelect, subDataModel, url, callBack) {
-                $.each(dataModel.items, function () {
-                    if (this.id == idToSelect) {
-                        dataModel.selected.id = this.id;
-                        dataModel.selected.name = this.name;
+            select: function (dataModel, idToSelect, subDataModel, url, callBack, retryTimes) {
+                if (retryTimes == null) {
+                    retryTimes = 0;
+                } else if (retryTimes >= 100) {
+                    return;
+                }
+                for (var i = 0, len = dataModel.items.length; i < len; i++) {
+                    var item = dataModel.items[i];
+                    if (item.id == idToSelect) {
+                        dataModel.selected.id = item.id;
+                        dataModel.selected.name = item.name;
                         if (subDataModel) {
-                            selectForm.load(url + "?parentId=" + this.id, subDataModel, callBack);
+                            selectForm.load(url + "?parentId=" + item.id, subDataModel, callBack);
                         }
+                        setTimeout(function() {
+                          $scope.$apply();
+                        }, 100);
+                        return;
                     }
-                });
+                }
+                var self = this;
+                setTimeout(function () {
+                    self.select(dataModel, idToSelect, subDataModel, url, callBack, retryTimes + 1);
+                }, 50);
             },
             load: function (url, dataModel, callBack) {
                 var items = dataModel.items;
                 $http.get(url).success(function (data) {
                     items.splice(0, items.length);
                     dataModel.disabled = (data.length == 0);
-                    dataModel.selected.id = dataModel.default.id;
-                    dataModel.selected.name = dataModel.default.name;
+                    dataModel.selected.id = dataModel['default'].id;
+                    dataModel.selected.name = dataModel['default'].name;
                     $.each(data, function () {
                         items.push(this);
                     });
@@ -193,7 +207,7 @@
         var category = {
             init: function () {
                 $scope.category = {
-                    default: {id: 0, 'name': '(一级分类)'},
+                    'default': {id: 0, 'name': '(一级分类)'},
                     selected: {id: 0, 'name': '(一级分类)'},
                     items: []
                 };
@@ -201,7 +215,7 @@
                 selectForm.load(categoryJsonUrl, $scope.category);
                 $scope.subCategory = {
                     disabled: true,
-                    default: {id: 0, name: '(二级分类)'},
+                    'default': {id: 0, name: '(二级分类)'},
                     selected: {id: 0, name: '(二级分类)'},
                     items: []
                 };
@@ -217,7 +231,7 @@
                 var initCategoryId = $initCategoryId.val();
                 if (initCategoryId != '') {
                     this.setInitialValue(initCategoryId, categoryJsonUrl);
-                } else if ($.cookie(recordCategoryKey)) {
+                } else if ($.cookie(recordCategoryKey) && $.url.param('id') == null) {
                     this.setInitialValue($.cookie(recordCategoryKey), categoryJsonUrl);
                 }
             },
@@ -258,7 +272,7 @@
                     showBranchGroup($(event.target).parent().parent(), index);
                 };
                 $scope.branch = {
-                    default: {id: 0, name: '(品牌选择)'},
+                    'default': {id: 0, name: '(品牌选择)'},
                     selected: {id: 0, name: '(品牌选择)'},
                     items: []
                 };
@@ -266,13 +280,13 @@
                 selectForm.load(branchJsonUrl, $scope.branch);
                 $scope.subBranch1 = {
                     disabled: true,
-                    default: {id: 0, name: '(一级子品牌)'},
+                    'default': {id: 0, name: '(一级子品牌)'},
                     selected: {id: 0, name: '(一级子品牌)'},
                     items: []
                 };
                 $scope.subBranch2 = {
                     disabled: true,
-                    default: {id: 0, name: '(二级子品牌)'},
+                    'default': {id: 0, name: '(二级子品牌)'},
                     selected: {id: 0, name: '(二级子品牌)'},
                     items: []
                 };
@@ -294,7 +308,7 @@
                 var initBranchId = $initBranchId.val();
                 if (initBranchId != '') {
                     this.setInitialValue(initBranchId, branchJsonUrl);
-                } else if ($.cookie(recordBranchKey)) {
+                } else if ($.cookie(recordBranchKey) && $.url.param('id') == null) {
                     this.setInitialValue($.cookie(recordBranchKey), branchJsonUrl);
                 }
             },
@@ -318,23 +332,32 @@
                     });
                 }, 100)
             },
-            select: function (dataModel, idToSelect, subDataModel, url, callBack) {
-                var success = false;
-                $.each(dataModel.items, function () {
-                    $.each(this['branches'], function () {
-                        if (this.id == idToSelect) {
-                            success = true;
-                            dataModel.selected.id = this.id;
-                            dataModel.selected.name = this.name;
-                            if (subDataModel) {
-                                selectForm.load(url + "?parentId=" + this.id, subDataModel, callBack);
-                            }
-                        }
-                    });
-                });
-                if (success) {
-                    $('div.branchDropdown').hide();
+            select: function (dataModel, idToSelect, subDataModel, url, callBack, retryTimes) {
+                if (retryTimes == null) {
+                    retryTimes = 0;
+                } else if (retryTimes >= 100) {
+                    return;
                 }
+                for (var i = 0, len = dataModel.items.length; i < len; i++) {
+                    for (var j = 0, len2 = dataModel.items[i]['branches'].length; j < len2; j++) {
+                        var branch = dataModel.items[i]['branches'][j];
+                        if (branch.id == idToSelect) {
+                            dataModel.selected.id = branch.id;
+                            dataModel.selected.name = branch.name;
+                            if (subDataModel) {
+                                selectForm.load(url + "?parentId=" + branch.id, subDataModel, callBack);
+                            }
+                            setTimeout(function() {
+                              $scope.$apply();
+                            }, 100);
+                            return;
+                        }
+                    }
+                }
+                var self = this;
+                setTimeout(function () {
+                    self.select(dataModel, idToSelect, subDataModel, url, callBack, retryTimes + 1);
+                }, 50);
             }
         };
 

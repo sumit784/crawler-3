@@ -75,7 +75,17 @@ class SinglePriceHistoryCrawler {
 
                 //updateOtherCommodityInfo(commodity.getId());
             }
-            new CommodityDao().updateSales(commodity.getId(), commodityPageParser.getSales());
+
+            Integer sales = commodityPageParser.getSales();
+            if (sales == null) {
+                LOGGER.error("fail to parse sales of commodity {}", commodity.getName());
+            } else {
+                new CommodityDao().updateSales(commodity.getId(), sales);
+                if (!sales.equals(commodity.getSales())) {
+                    LOGGER.info("update sales of commodity {} to {}", commodity.getName(), sales);
+                }
+            }
+
             // TODO comment out this someday
             updateOtherCommodityInfo(commodity.getId());
         } catch (Exception e) {

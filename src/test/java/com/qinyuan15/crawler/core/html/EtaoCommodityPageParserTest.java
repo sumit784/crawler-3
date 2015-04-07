@@ -105,10 +105,6 @@ public class EtaoCommodityPageParserTest {
     public void testGetSales2() throws Exception {
         parser.setHTML(TestFileUtils.read("etao3.html"));
         Integer sale = parser.getSales();
-        System.out.println(sale);
-        /*
-        Map<Date, Double> priceHistory = parser.getPriceHistory();
-        System.out.println(priceHistory);
-        */
+        assertThat(sale).isEqualTo(3063);
     }
 }
