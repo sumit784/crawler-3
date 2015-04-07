@@ -99,11 +99,11 @@
                 this._insertInput($(target).parent(), $target.dataOptions()['id']);
             }
         },
-        showBranchGroup: function (index) {
-            this.$form.find('div.branchGroupLetter > div').removeClass('selected')
-                .eq(index).addClass('selected');
-            this.$form.find('div.branchGroup').hide().eq(index).show();
-        },
+        /*showBranchGroup: function (index) {
+         this.$form.find('div.branchGroupLetter > div').removeClass('selected')
+         .eq(index).addClass('selected');
+         this.$form.find('div.branchGroup').hide().eq(index).show();
+         },*/
         show: function (categoryId, excludeBranchIds) {
             this.get$CategoryId().val(categoryId);
             var self = this;
@@ -294,7 +294,6 @@
             });
             branchInput.show(categoryId, branchIds);
         };
-        branchInput.show(0, 0);// TODO
         $scope.deleteBranch = function (event) {
             var target = event.target;
             $.post('admin-category-branch-delete', getCategoryBranchParam(target),
@@ -306,7 +305,7 @@
             branchInput.selectBranch(event.target);
         };
         $scope.showBranchGroup = function (event) {
-            branchInput.showBranchGroup($(event.target).parseIntegerInId());
+            showBranchGroup(branchInput.$form, $(event.target).parseIntegerInId());
         };
         $scope.cancelBranchInput = function () {
             branchInput.hide();

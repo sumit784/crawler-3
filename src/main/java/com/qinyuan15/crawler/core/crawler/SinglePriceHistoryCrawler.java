@@ -1,11 +1,11 @@
 package com.qinyuan15.crawler.core.crawler;
 
-import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
 import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
+import com.qinyuan15.crawler.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +81,9 @@ class SinglePriceHistoryCrawler {
                 LOGGER.info("save price history of {}", url);
                 new CommodityCrawlLogDao().logSuccess(commodityId, "价格记录抓取成功");
             }
+
+            // TODO comment out this someday
+            new CommodityDao().updateInLowPrice(commodity.getId());
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
             new CommodityCrawlLogDao().logFail(commodityId, "未知错误");

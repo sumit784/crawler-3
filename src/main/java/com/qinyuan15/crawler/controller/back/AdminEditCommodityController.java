@@ -46,6 +46,7 @@ public class AdminEditCommodityController extends ImageController {
         }
 
         addJs("commodity-parameters");
+        addCssAndJs("admin-branch-select-form");
         return EDIT_PAGE;
     }
 

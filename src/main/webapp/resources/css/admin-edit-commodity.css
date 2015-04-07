@@ -60,6 +60,42 @@ div.content div.basic div.branch div.require-info {
     left: 670px;
 }
 
+div.content div.basic div.branch div.branchDropdown {
+    position: absolute;
+    top: 100%;
+    z-index: 10;
+    display: none;
+    width: 500px;
+    padding: 10px;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px
+}
+
+div.content div.basic div.branch div.branchDropdown div.branchGroupLetter > div {
+    font-size: 12pt;
+}
+
+div.content div.basic div.branch div.branchDropdown div.branchGroup {
+    margin-top: 10px;
+}
+
+div.content div.basic div.branch div.branchDropdown div.hide {
+    display: none;
+}
+
+div.content div.basic div.branch div.branchDropdown div.branchGroup div.branch {
+    font-size: 11pt;
+    color: #4169E1;
+    margin: 6px 12px;
+    cursor: pointer;
+}
+
 div.content div.basic div.category div.require-info {
     left: 480px;
 }

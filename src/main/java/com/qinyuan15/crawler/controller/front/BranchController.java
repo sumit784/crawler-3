@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +20,6 @@ import java.util.Map;
  */
 @Controller
 public class BranchController extends ImageController {
-
     @RequestMapping("/branch")
     public String index() {
         setTitle("品牌大全");
@@ -50,9 +50,16 @@ public class BranchController extends ImageController {
         }
     }
 
-    /**
-     * @return branch groups
-     */
+    @ResponseBody
+    @RequestMapping("/json/partialBranchGroups.json")
+    public String queryPartialBranchGroups(@RequestParam(value = "parentId", required = false) Integer parentId) {
+        BranchDao dao = new BranchDao();
+        List<Branch> branches = isPositive(parentId) ? dao.getSubInstances(parentId)
+                : dao.getRootInstances();
+        return toJson(adjustBranchGroups(new BranchGroupBuilder()
+                .setGroupSize(5).build(branches)));
+    }
+
     @ResponseBody
     @RequestMapping("/json/branchGroups.json")
     public String queryBranchGroups() {

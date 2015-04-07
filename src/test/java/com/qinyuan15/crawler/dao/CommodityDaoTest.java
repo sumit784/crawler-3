@@ -119,4 +119,9 @@ public class CommodityDaoTest {
     public void testUpdateOnShelfTime() throws Exception {
         //new CommodityDao().updateOnShelfTime(6);
     }
+
+    @Test
+    public void testUpdateInLowPrice() throws Exception {
+        new CommodityDao().updateInLowPrice(41);
+    }
 }

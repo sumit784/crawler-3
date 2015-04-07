@@ -36,7 +36,9 @@ public class AdminCategoryController extends ImageController {
         model.addAttribute("branchGroups", adjustBranchGroups(
                 new BranchGroupBuilder().setGroupSize(5).build()));
         //model.addAttribute("branches", adjustBranches(new BranchDao().getInstances()));
+
         addCssAndJs("admin-normal-edit-page");
+        addCssAndJs("admin-branch-select-form");
         addHeadJs("image-adjust");
 
         setTitle("编辑商品分类");

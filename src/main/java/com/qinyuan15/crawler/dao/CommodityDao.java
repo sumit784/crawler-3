@@ -97,7 +97,7 @@ public class CommodityDao {
         Double currentPrice = new CommodityPriceDao().getCurrentPrice(id);
 
         Commodity commodity = getInstance(id);
-        commodity.setInLowPrice(currentPrice - lowPrice <= 0.01);
+        commodity.setInLowPrice(currentPrice - lowPrice < 1);
         HibernateUtils.update(commodity);
     }
 

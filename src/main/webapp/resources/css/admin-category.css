@@ -45,36 +45,10 @@ div.content table.inner td.content span.hot {
 }
 
 #branchForm div.branchGroup {
-    overflow: hidden;
-}
-
-#branchForm div.branchGroupLetter {
-    overflow: hidden;
-    width: 443px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#branchForm div.branchGroupLetter > div {
-    float: left;
-    padding: 5px 23px;
-    font-size: 12pt;
-    color: #3A0088;
-    border: 1px solid #696969;
-    cursor: pointer;
-}
-
-#branchForm div.branchGroupLetter > div.selected {
-    background-color: #696969;
-    color: #ffffff;
-}
-
-#branchForm div.branchGroup {
     height: 70%;
 }
 
 #branchForm div.branchGroup div.branch {
-    float: left;
     margin: 10px;
 }
 
