@@ -181,7 +181,7 @@ var angularUtils = {
                 $scope.categories.push({
                     id: this.id,
                     text: this.name,
-                    class: this.id == selectedCategoryIndex ? 'selected' : 'darkFont'
+                    'class': this.id == selectedCategoryIndex ? 'selected' : 'darkFont'
                 });
             });
         });

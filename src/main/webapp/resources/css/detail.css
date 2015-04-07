@@ -15,6 +15,7 @@ div.content > div.left div.snapshot div.left {
 div.content > div.left div.snapshot div.left div.branch {
     padding: 5px;
     font-size: 9pt;
+    min-height: 48px;
 }
 
 div.content > div.left div.snapshot div.left div.largeImage {

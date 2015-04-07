@@ -124,17 +124,27 @@ var JSUtils = {
  * query plugins
  */
 jQuery.fn.dataOptions = function () {
-    var dataOptionsString = $.trim(this.attr('data-options'));
-    if (dataOptionsString.match(/:$/g)) {
-        dataOptionsString += 'null';
-    }
-    if (dataOptionsString) {
-        var dataOptions = null;
-        eval('dataOptions = {' + dataOptionsString + "}");
+    var dataOptions = {};
+    var dataOptionsString = this.attr('data-options');
+    if (dataOptionsString == null) {
         return dataOptions;
-    } else {
-        return null;
     }
+
+    dataOptionsString = $.trim(dataOptionsString);
+    var dataOptionsArray = dataOptionsString.split(',');
+    for (var i = 0, len = dataOptionsArray.length; i < len; i++) {
+        var keyValuePair = dataOptionsArray[i].split(':');
+        if (keyValuePair.length == 1) {
+            continue;
+        }
+
+        var value = keyValuePair[1];
+        if (value == '') {
+            value = null;
+        }
+        dataOptions[keyValuePair[0]] = value;
+    }
+    return dataOptions;
 };
 
 jQuery.fn.parseIntegerInId = function () {

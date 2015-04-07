@@ -1,12 +1,11 @@
 package com.qinyuan15.crawler.core.crawler;
 
-import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.core.commodity.CommodityPool;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.Commodity;
 import com.qinyuan15.crawler.dao.PriceRecordDao;
+import com.qinyuan15.crawler.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +24,6 @@ public class PriceHistoryCrawler {
     private HttpClientPool httpClientPool;
     private CommodityPool commodityPool;
     private ComposableCommodityPageParser commodityPageParser;
-    private ImageDownloader imageDownloader;
     private int startHour = -1;
     private int endHour = -1;
 
@@ -70,10 +68,6 @@ public class PriceHistoryCrawler {
         this.interval = interval;
     }
 
-    public void setImageDownloader(ImageDownloader imageDownloader) {
-        this.imageDownloader = imageDownloader;
-    }
-
     private boolean inCrawlTime() {
         if (this.startHour < 0 || this.endHour < 0) {
             return true;
@@ -92,7 +86,7 @@ public class PriceHistoryCrawler {
 
         public CrawlThread() {
             this.singleCommodityCrawler = new SinglePriceHistoryCrawler(
-                    commodityPageParser, imageDownloader, httpClientPool);
+                    commodityPageParser, httpClientPool);
         }
 
         @Override

@@ -16,7 +16,7 @@ public class SinglePriceHistoryCrawlerTest {
     public void test() throws Exception {
         SinglePriceHistoryCrawler crawler = new SinglePriceHistoryCrawler(
                 ComposableCommodityPageParserTest.mockComposableCommodityPageParser(),
-                ImageDownloaderTest.mockImageDownloader(),
+                /*ImageDownloaderTest.mockImageDownloader(),*/
                 new HttpClientPool()
         );
         Commodity commodity = new TestCommodityPool().next();

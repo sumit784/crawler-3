@@ -4,10 +4,12 @@
     <div class="snapshot boxShadow">
         <div class="left">
             <div class="branch">
-                所属品牌：
-                <a href="shoppe?id=${branch.id}" target="_blank">
-                    <img class="branch-logo" src="${branch.logo}"/>
-                </a>
+                <c:if test="${branch!=null}">
+                    所属品牌：
+                    <a href="shoppe?id=${branch.id}" target="_blank">
+                        <img class="branch-logo" src="${branch.logo}"/>
+                    </a>
+                </c:if>
             </div>
             <script id="pictures" type="text/x-data">${pictures}</script>
             <script id="middlePictures" type="text/x-data">${middlePictures}</script>

@@ -15,7 +15,7 @@
             ￥{{snapshot.price}}
         </div>
         <div class="branch">
-            <a href="shoppe?id={{snapshot.branch.id}}" target="_blank">
+            <a href="shoppe?id={{snapshot.branch.id}}" target="_blank" ng-show="snapshot.branch!=null">
                 <img class="link branch-logo" ng-src="{{snapshot.branch.logo}}"/>
             </a>
         </div>

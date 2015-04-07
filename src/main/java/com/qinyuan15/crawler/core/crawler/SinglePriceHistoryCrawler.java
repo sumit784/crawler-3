@@ -3,7 +3,6 @@ package com.qinyuan15.crawler.core.crawler;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
-import com.qinyuan15.crawler.core.image.ImageDownloader;
 import com.qinyuan15.crawler.dao.*;
 import com.qinyuan15.crawler.utils.DateUtils;
 import org.slf4j.Logger;
@@ -19,15 +18,16 @@ import java.util.Map;
 class SinglePriceHistoryCrawler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SinglePriceHistoryCrawler.class);
+    private final static ExpireCommodityRecorder expireCommodityRecorder = new ExpireCommodityRecorder();
 
     private HttpClientPool httpClientPool;
     private ComposableCommodityPageParser commodityPageParser;
-    private ImageDownloader imageDownloader;
+    private CommodityDao commodityDao = new CommodityDao();
+    private CommodityCrawlLogDao crawlLogDao = new CommodityCrawlLogDao();
 
     public SinglePriceHistoryCrawler(ComposableCommodityPageParser commodityPageParser,
-                                     ImageDownloader imageDownloader, HttpClientPool httpClientPool) {
+                                     HttpClientPool httpClientPool) {
         this.commodityPageParser = commodityPageParser;
-        this.imageDownloader = imageDownloader;
         this.httpClientPool = httpClientPool;
     }
 
@@ -51,28 +51,31 @@ class SinglePriceHistoryCrawler {
             String html = client.getContent(url);
             commodityPageParser.setWebUrl(url);
             commodityPageParser.setHTML(html);
+
             if (commodityPageParser.isExpire()) {
-                new CommodityDao().deactivate(commodity.getId());
-                new CommodityCrawlLogDao().logFail(commodityId, "网页已过期");
+                String logInfo = "网已过期，第" + expireCommodityRecorder.getFailTimes(commodityId)
+                        + "次发现该网页过期";
+                if (expireCommodityRecorder.reachMaxFailTimes(commodityId)) {
+                    commodityDao.deactivate(commodityId);
+                    logInfo += "，自动标记为过期网页";
+                }
+                crawlLogDao.logFail(commodityId, logInfo);
                 return;
+            } else {
+                expireCommodityRecorder.clear(commodityId);
             }
 
             Map<Date, Double> priceHistory = commodityPageParser.getPriceHistory();
             if (priceHistory == null) {
                 LOGGER.info("can not get priceHistory from url {}, html contents: {}", url, html);
-                new CommodityCrawlLogDao().logFail(commodityId, "网页解析失败");
+                crawlLogDao.logFail(commodityId, "网页解析失败");
                 client.feedbackRejection();
             } else {
                 for (Map.Entry<Date, Double> entry : priceHistory.entrySet()) {
                     savePriceRecord(entry.getKey(), entry.getValue(), commodity.getId());
                 }
                 LOGGER.info("save price history of {}", url);
-                new CommodityCrawlLogDao().logSuccess(commodityId, "价格记录抓取成功");
-
-                // save images
-                //CommodityPictureDownloader downloader = new CommodityPictureDownloader(imageDownloader);
-                //downloader.saveIfNotExist(commodity.getId(), commodityPageParser.getImageUrls());
-
+                crawlLogDao.logSuccess(commodityId, "价格记录抓取成功");
                 //updateOtherCommodityInfo(commodity.getId());
             }
 
@@ -80,7 +83,7 @@ class SinglePriceHistoryCrawler {
             if (sales == null) {
                 LOGGER.error("fail to parse sales of commodity {}", commodity.getName());
             } else {
-                new CommodityDao().updateSales(commodity.getId(), sales);
+                commodityDao.updateSales(commodity.getId(), sales);
                 if (!sales.equals(commodity.getSales())) {
                     LOGGER.info("update sales of commodity {} to {}", commodity.getName(), sales);
                 }
@@ -90,12 +93,11 @@ class SinglePriceHistoryCrawler {
             updateOtherCommodityInfo(commodity.getId());
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
-            new CommodityCrawlLogDao().logFail(commodityId, "未知错误");
+            crawlLogDao.logFail(commodityId, "未知错误");
         }
     }
 
     private void updateOtherCommodityInfo(Integer commodityId) {
-        CommodityDao commodityDao = new CommodityDao();
         commodityDao.updateOnShelfTime(commodityId);
         commodityDao.updatePrice(commodityId);
         commodityDao.updateInLowPrice(commodityId);

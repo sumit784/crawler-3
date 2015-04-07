@@ -6,7 +6,7 @@
         <img class="link" id="closeLink" src="resources/css/images/login/close.png"/>
     </div>
     <div class="loginForm">
-        <form action="/j_spring_security_check" method="post">
+        <form action="j_spring_security_check" method="post">
             <p>
                 <input type="text" name="j_username" class="form-control" placeholder="用户名"/>
             </p>
