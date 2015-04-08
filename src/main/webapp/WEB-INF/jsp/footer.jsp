@@ -22,8 +22,11 @@
 <script src="resources/js/lib/jquery.cookie.js"></script>
 <script src="resources/js/lib/jquery-form-3.51.0.js"></script>
 <script src="resources/js/lib/bootstrap/js/bootstrap.min.js"></script>
+<!--[if IE]>
 <script src="resources/js/lib/angular/html5shiv.js"></script>
 <script src="resources/js/lib/angular/json2.js"></script>
+<script src="resources/js/lib/ie-patch.js"></script>
+<![endif]-->
 <script src="resources/js/lib/angular/angular.min.js"></script>
 <script src="resources/js/lib/underscore-min.js"></script>
 <script src="<%=RequestUtils.getJs("lib/jsutils")%>"></script>

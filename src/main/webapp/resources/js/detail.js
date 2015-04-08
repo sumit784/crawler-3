@@ -77,8 +77,9 @@
         var $this = $(this);
         $this.addClass('selected');
         var index = $this.dataOptions()['index'];
-        $elements.largeImage.find('img.boxShadow').hide().eq(index).show();
-        $elements.enlargeImage.find('img').hide().eq(index).show();
+        $elements.largeImage.find('img.boxShadow').hide().eq(index).show().get(0).onload();
+        $elements.enlargeImage.find('img').hide().eq(index).show().get(0).onload();
+        // TODO
     }).eq(0).trigger('mouseover');
     $elements.trendDiv.hover(function () {
         historyTrend.show();
@@ -106,7 +107,9 @@
     });
     $elements.enlargeIcon.click(function () {
         transparentBackground.show();
-        $elements.enlargeImage.fadeIn(250);
+        $elements.enlargeImage.fadeIn(250).find('>img').each(function () {
+            this.onload();
+        });
     }).hover(function () {
         $(this).removeClass('mediumTransparent');
     }, function () {

@@ -11,7 +11,10 @@
         <constructor-arg value="/var/www/html/images"/>
     </bean>
     <bean id="pictureUrlConverter" class="com.qinyuan15.crawler.core.image.PictureUrlConverter">
+        <!--
         <property name="urlPrefix" value="http://127.0.0.1/images"/>
+        -->
+        <property name="urlPrefix" value="http://qinyuan/images"/>
         <property name="pathPrefix" value="/var/www/html/images"/>
         <property name="otherPathPrefixes">
             <list>

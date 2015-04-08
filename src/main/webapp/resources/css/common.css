@@ -195,3 +195,7 @@ div.content div.closeEnlargeIcon {
     background-image: url('images/detail/close.png');
     cursor: pointer;
 }
+
+div.content form input[type='file'] {
+    width: 220px;
+}

@@ -19,8 +19,8 @@ div.content > div.left div.snapshot div.left div.branch {
 }
 
 div.content > div.left div.snapshot div.left div.largeImage {
-    min-height: 340px;
-    padding: 20px 0;
+    padding: 0;
+    margin: 20px 0;
     width: 300px;
     text-align: right;
 }
@@ -34,8 +34,8 @@ div.content > div.left div.snapshot div.left div.largeImage div.enlargeIcon {
     width: 34px;
     height: 34px;
     position: absolute;
-    left: 263px;
-    bottom: 24px;
+    right: 5px;
+    bottom: 5px;
     background-image: url("images/detail/enlarge.png");
     cursor: pointer;
 }

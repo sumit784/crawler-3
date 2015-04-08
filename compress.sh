@@ -24,7 +24,7 @@ done
 
 compress js/lib/linecharts/linecharts.js
 compress js/lib/jsutils.js
-compress js/lib/angular-patch.js
+compress js/lib/ie-patch.js
 
 
 ######################### compress CSS ##################

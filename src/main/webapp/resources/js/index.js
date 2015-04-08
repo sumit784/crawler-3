@@ -8,8 +8,8 @@
     });
 
     // foot image
-    var img = '<img src="' + $.trim($('#footPoster').text()) + '"/>';
-    var footPosterLink = $.trim($('#footPosterLink').text());
+    var img = '<img src="' + $.trim($('#footPoster').html()) + '"/>';
+    var footPosterLink = $.trim($('#footPosterLink').html());
     if (footPosterLink != '') {
         img = '<a href="' + footPosterLink + '">' + img + '</a>';
     }
