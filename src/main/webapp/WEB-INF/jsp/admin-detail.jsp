@@ -57,7 +57,7 @@
             <%@include file="widget-detail-images.jsp" %>
         </div>
     </fieldset>
-    <form class="fixedForm" id="imageForm" method="post" action="admin-detail-image-add-update"
+    <form class="fixedForm" id="imageForm" method="post" action="admin-detail-image-add-update.json"
           enctype="multipart/form-data">
         <input type="hidden" name="id"/>
 

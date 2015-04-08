@@ -57,7 +57,7 @@
             </div>
             <div class="uploadImage">
                 <label>无对应商品时显示的文本</label><br/>
-                <textarea name="noFoundText" cols="25" rows="4">${appConfig.noFoundText}</textarea>
+                <textarea name="noFoundText" cols="32" rows="4">${appConfig.noFoundText}</textarea>
             </div>
         </fieldset>
         <fieldset class="textOnly">

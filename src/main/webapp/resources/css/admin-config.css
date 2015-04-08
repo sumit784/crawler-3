@@ -19,12 +19,15 @@ div.uploadImage textarea {
     font-size: 9pt;
 }
 
-fieldset.textOnly input {
-    width: 30px;
+fieldset.textOnly {
+    padding-left: 10px;
 }
 
-fieldset.textOnly div {
-    padding-left: 10px;
+fieldset.textOnly > div {
+    width: 390px;
     float: left;
-    margin-right: 30px;
+}
+
+fieldset.textOnly input {
+    width: 30px;
 }
