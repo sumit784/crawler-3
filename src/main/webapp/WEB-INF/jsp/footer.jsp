@@ -35,4 +35,9 @@
     <script src="resources/js/${js}.js?t=<%=AppConfig.VERSION%>"></script>
 </c:forEach>
 <script src="<%=RequestUtils.getRelativeJs(request)%>"></script>
+<!--[if IE]>
+<c:forEach var="js" items="${ieJs}">
+    <script src="resources/js/${js}.js?t=<%=AppConfig.VERSION%>"></script>
+</c:forEach>
+<![endif]-->
 </html>

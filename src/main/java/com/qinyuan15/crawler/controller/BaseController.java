@@ -129,6 +129,10 @@ public class BaseController {
         addListAttribute("headJs", file);
     }
 
+    protected void addIEJs(String file) {
+        addListAttribute("ieJs", file);
+    }
+
     protected void addCssAndJs(String file) {
         addCss(file);
         addJs(file);
