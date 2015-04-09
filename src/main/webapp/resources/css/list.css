@@ -52,36 +52,42 @@ div.search > div.right {
     overflow: hidden;
 }
 
-div.search > div.right div.searchForm {
+div.search > div.right div.searchFormBack {
     height: 95px;
     padding: 27px 85px;
     background-color: rgb(245, 245, 245);
     border-radius: 0 6px 0 0;
 }
 
-div.search > div.right div.searchForm div.hotWords {
+div.content > div.searchForm {
+    position: absolute;
+    top: 27px;
+    left: 325px;
+}
+
+div.searchForm div.hotWords {
     font-size: 9pt;
     padding-top: 3px;
     padding-left: 20px;
     display: none;
 }
 
-div.search > div.right div.searchForm div.hotWords a {
+div.searchForm div.hotWords a {
     color: #999999;
     margin: 0 7px;
 }
 
-div.search > div.right div.searchForm div.hotWords a.red {
+div.searchForm div.hotWords a.red {
     color: #C40000;
 }
 
-div.search > div.right div.searchForm div.hotWords > span {
+div.searchForm div.hotWords > span {
     border-right: 2px solid #E4E4E4;
     margin: 0;
     padding: 0 4px 0 3px;
 }
 
-div.search > div.right div.searchForm div.hotWords > span:last-child {
+div.searchForm div.hotWords > span:last-child {
     border-right: none;
 }
 

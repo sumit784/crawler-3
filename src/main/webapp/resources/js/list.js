@@ -94,7 +94,7 @@
     var $branchLogo = $('div.branch div.logos');
     var $branchTitle = $('div.branch div.title');
     var $goodsImages = $('div.goods div.images div.image img');
-    var $hotWords = $('div.search div.right div.searchForm div.hotWords');
+    var $hotWords = $('div.content > div.searchForm div.hotWords');
 
     $collectButton.click(function () {
     });

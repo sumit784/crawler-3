@@ -3,7 +3,8 @@
     <div ng-repeat="snapshot in snapshots" class="boxShadow">
         <div class="image">
             <a href="detail.html?id={{snapshot.id}}" target="_blank">
-                <div style="background-image:url({{snapshot.picture}})"></div>
+                <div ng-style="background-image:url({{snapshot.picture}})"
+                     style="background-image:url({{snapshot.picture}})"></div>
             </a>
         </div>
         <div class="description">

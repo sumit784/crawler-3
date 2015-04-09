@@ -106,8 +106,9 @@ public class PriceHistoryCrawler {
                 }
 
                 if (inCrawlTime()) {
-                    Commodity commodity = commodityPool.next();
+                    Commodity commodity = null;
                     try {
+                        commodity = commodityPool.next();
                         if (commodity == null) {
                             commodityPool.reset();
                         } else {

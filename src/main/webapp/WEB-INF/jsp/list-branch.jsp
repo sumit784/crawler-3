@@ -5,7 +5,7 @@
             <div class="image"></div>
         </a>
     </div>
-    <div class="title blueFont"><img src="resources/css/images/branch_rank.png"/></div>
+    <div class="title blueFont"><img src="${appConfig.branchRankImage}"/></div>
     <div class="logos">
         <div class="showBranch" ng-repeat="branch in showBranches" ng-mouseover="showMore()">
             <div class="border">

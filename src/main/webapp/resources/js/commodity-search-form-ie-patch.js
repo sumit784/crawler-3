@@ -16,12 +16,5 @@
         'margin-top': 0
     });
 
-    var zIndex = {'z-index': 10};
-    var $searchForm = $('div.searchForm').css(zIndex);
-    $searchForm.parent().css(zIndex);
-    $searchForm.parent().parent().css(zIndex);
-    $searchForm.find('div').css(zIndex);
-    $searchForm.find('>div').eq(0).css('z-index', 11);
-
-    adjustHeight($('div.content div.searchForm'), 0.6);
+    $('div.searchForm > div').eq(0).css('z-index', 11);
 })();

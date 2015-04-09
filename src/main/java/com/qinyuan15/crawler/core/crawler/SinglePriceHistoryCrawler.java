@@ -53,7 +53,7 @@ class SinglePriceHistoryCrawler {
             commodityPageParser.setHTML(html);
 
             if (commodityPageParser.isExpire()) {
-                String logInfo = "网已过期，第" + expireCommodityRecorder.getFailTimes(commodityId)
+                String logInfo = "网已过期，第" + (expireCommodityRecorder.getFailTimes(commodityId) + 1)
                         + "次发现该网页过期";
                 if (expireCommodityRecorder.reachMaxFailTimes(commodityId)) {
                     commodityDao.deactivate(commodityId);

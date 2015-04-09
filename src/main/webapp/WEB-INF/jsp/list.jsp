@@ -9,11 +9,11 @@
     <div class="subCategory">
         <c:forEach var="subCategory" items="${subCategories}" varStatus="status">
             <div>
-                <%--
-                <a href="list.html?id=${categoryId}&subCategory=${subCategory.id}"
-                   class="noLineAnchor lightGrayFont" data-options="id:${subCategory.id}"
-                   ng-click="selectSubCategory($event)">${subCategory.name}</a>
-                   --%>
+                    <%--
+                    <a href="list.html?id=${categoryId}&subCategory=${subCategory.id}"
+                       class="noLineAnchor lightGrayFont" data-options="id:${subCategory.id}"
+                       ng-click="selectSubCategory($event)">${subCategory.name}</a>
+                       --%>
                 <a href="list.html?id=${categoryId}&subCategory=${subCategory.id}"
                    class="noLineAnchor lightGrayFont" data-options="id:${subCategory.id}">${subCategory.name}</a>
             </div>
@@ -21,10 +21,11 @@
     </div>
     <div class="split"></div>
     <div class="right">
-        <%@include file="commodity-search-form.jsp" %>
+        <div class="searchFormBack"></div>
         <%@include file="list-branch.jsp" %>
     </div>
 </div>
+<%@include file="commodity-search-form.jsp" %>
 <div class="goods">
     <div class="sort">
         <div class="title blueFont">

@@ -31,9 +31,9 @@ public class DatabaseCommodityPool implements CommodityPool {
                     "active=true ORDER BY id DESC", pointer, PAGE_SIZE);
         }
 
-        Commodity commodity = this.commodities.get(pointer % PAGE_SIZE);
+        int index = pointer % PAGE_SIZE;
         pointer++;
-        return commodity;
+        return index >= this.commodities.size() ? null : this.commodities.get(index);
     }
 
     public long size() {
