@@ -104,4 +104,7 @@ function loadSnapshot($scope, $http) {
             _get$LoadMoreDiv().hide();
         }
     });
+    if (window.afterLoadSnapshot) {
+        window.afterLoadSnapshot();
+    }
 }

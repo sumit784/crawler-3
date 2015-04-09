@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="images">
-    <div ng-repeat="snapshot in snapshots" class="boxShadow">
+    <div ng-repeat="snapshot in snapshots" class="boxShadow imageGroup">
         <div class="image">
             <a href="detail.html?id={{snapshot.id}}" target="_blank">
                 <div ng-style="background-image:url({{snapshot.picture}})"

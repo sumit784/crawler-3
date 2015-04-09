@@ -55,6 +55,7 @@ $(function () {
 function adjustHeight($target, rate) {
     $target.css('height', ($target.height() * rate) + 'px');
 }
+
 /*
  $(function () {
  //判断浏览器是否支持placeholder属性
