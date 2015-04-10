@@ -60,6 +60,7 @@ public class CommodityCrawlerController extends BaseController {
 
             return toJson(json);
         } catch (Exception e) {
+            e.printStackTrace();
             LOGGER.error("Error in parsing {}, info: {}", url, e);
             return getFailResultString();
         }

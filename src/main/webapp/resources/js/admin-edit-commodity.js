@@ -176,8 +176,8 @@
                         if (subDataModel) {
                             selectForm.load(url + "?parentId=" + item.id, subDataModel, callBack);
                         }
-                        setTimeout(function() {
-                          $scope.$apply();
+                        setTimeout(function () {
+                            $scope.$apply();
                         }, 100);
                         return;
                     }
@@ -347,8 +347,8 @@
                             if (subDataModel) {
                                 selectForm.load(url + "?parentId=" + branch.id, subDataModel, callBack);
                             }
-                            setTimeout(function() {
-                              $scope.$apply();
+                            setTimeout(function () {
+                                $scope.$apply();
                             }, 100);
                             return;
                         }
@@ -365,10 +365,6 @@
         category.init();
         branch.init();
     });
-    var errorInfo = $('#errorInfo').val();
-    if (errorInfo != null && errorInfo != '') {
-        alert(errorInfo);
-    }
     $(document).click(function (event) {
         var $target = $(event.target);
         if ($target.is('button')) {

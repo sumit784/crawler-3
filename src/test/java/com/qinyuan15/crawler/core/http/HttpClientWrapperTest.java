@@ -16,7 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HttpClientWrapperTest {
     private HttpClientWrapper client;
     private ProxyPool proxyPool;
-    private String url = "http://www.baidu.com";
+    private String url = "http://s.etao.com/detail/8573171861127423250.html";
+    //private String url = "http://www.baidu.com";
     //private String url = "http://localhost/test/test.php";
 
     @Before
@@ -34,8 +35,10 @@ public class HttpClientWrapperTest {
 
     @Test
     public void testGetContent() throws Exception {
-        String result = client.getContent(url);
-        assertThat(result).contains("百度一下");
+        //String result = client.getContent(url);
+        //System.out.println(result);
+        //assertThat(result).contains("百度一下");
+        System.out.println(client.get(url));
     }
 
     @Test

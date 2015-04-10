@@ -108,3 +108,13 @@ function loadSnapshot($scope, $http) {
         window.afterLoadSnapshot();
     }
 }
+
+(function () {
+    var $collectButton = $('#collectButton');
+    $collectButton.click(function () {
+    });
+    var $refreshButton = $('#refreshButton');
+    $refreshButton.click(function () {
+        window.location.reload();
+    });
+})();

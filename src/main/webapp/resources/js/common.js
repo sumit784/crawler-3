@@ -256,6 +256,11 @@ var angularUtils = {
         });
     }
 
+    var errorInfo = $.url.param('errorInfo');
+    if (errorInfo) {
+        alert(errorInfo);
+    }
+
     initToTopLink();
     initOrangeButton();
     adjustRightFloatPosition();

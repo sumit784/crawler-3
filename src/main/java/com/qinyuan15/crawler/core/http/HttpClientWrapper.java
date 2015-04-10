@@ -93,10 +93,12 @@ public class HttpClientWrapper {
             LOGGER.info("parse content of {}", url);
 
             int status = response.getStatusLine().getStatusCode();
+            LOGGER.info("parse status of {}", url);
+
             this.lastConnectTime = (int) (System.currentTimeMillis() - startTime);
             return new HttpResponse(content, status);
         } catch (Exception e) {
-            LOGGER.error("fail to connect or parse {} with proxy {}", url, proxy);
+            LOGGER.error("fail to connect or parse {} with proxy {}, info: {}", url, proxy, e);
             this.lastConnectTime = Integer.MAX_VALUE;
             throw new RuntimeException(e);
         } finally {

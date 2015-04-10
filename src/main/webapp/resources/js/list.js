@@ -88,19 +88,11 @@
         }
     };
 
-    var $collectButton = $('#collectButton');
-    var $refreshButton = $('#refreshButton');
     var $subCategoryLinks = $('div.search > div.subCategory a');
     var $branchLogo = $('div.branch div.logos');
     var $branchTitle = $('div.branch div.title');
     var $goodsImages = $('div.goods div.images div.image img');
     var $hotWords = $('div.content > div.searchForm div.hotWords');
-
-    $collectButton.click(function () {
-    });
-    $refreshButton.click(function () {
-        location.reload();
-    });
     $subCategoryLinks.hover(function () {
         subCategoryLinks.over($(this));
     }, function () {

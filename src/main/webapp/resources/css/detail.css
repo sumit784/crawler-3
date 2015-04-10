@@ -23,6 +23,7 @@ div.content > div.left div.snapshot div.left div.largeImage {
     margin: 20px 0;
     width: 300px;
     text-align: right;
+    min-height: 300px;
 }
 
 div.content > div.left div.snapshot div.left div.largeImage img {

@@ -1,12 +1,14 @@
 package com.qinyuan15.crawler.core.html;
 
 import com.google.common.collect.Lists;
-import com.qinyuan15.crawler.utils.DateUtils;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
+import com.qinyuan15.crawler.utils.DateUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.sql.Date;
@@ -22,6 +24,7 @@ import java.util.regex.Pattern;
  * Created by qinyuan on 15-1-2.
  */
 public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
+    private final static Logger LOGGER = LoggerFactory.getLogger(EtaoCommodityPageParser.class);
 
     private JavaScriptParser jsParser = new JavaScriptParser();
     private HttpClientPool httpClientPool;
@@ -141,7 +144,7 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         HtmlParser htmlParser = new HtmlParser(this.html);
         Element productPictureDiv = htmlParser.getElement("J_product-pic");
         if (productPictureDiv == null) {
-            return null;
+            return new ArrayList<>();
         }
 
         String dataConfig = productPictureDiv.attr("data-config");
@@ -149,7 +152,7 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
             String imageString = dataConfig.replaceAll("^[^\\[]*\\['", "").replaceAll("'\\][^\\]]*$", "");
             return Lists.newArrayList(imageString.split("','"));
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -158,12 +161,14 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         HtmlParser htmlParser = new HtmlParser(this.html);
         Element productDetailDiv = htmlParser.getElements("div", "product-detail").first();
         if (productDetailDiv == null) {
-            return null;
+            LOGGER.error("fail to parse detail image urls, div with class 'product-detail' doesn't appear");
+            return new ArrayList<>();
         }
 
         String dataUrl = productDetailDiv.attr("data-url");
-        if (dataUrl == null) {
-            return null;
+        if (!StringUtils.hasText(dataUrl)) {
+            LOGGER.error("fail to parse detail image urls, div with class 'product-detail' has no data-url attribute");
+            return new ArrayList<>();
         }
 
         HttpClientWrapper client = this.httpClientPool == null ?

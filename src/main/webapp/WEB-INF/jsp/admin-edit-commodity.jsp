@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="header.jsp" %>
-<input type="hidden" id="errorInfo" value="${errorInfo}">
-
 <div class="boxShadow">
     <form action="admin-commodity-add-update" method="post" id="mainForm">
         <input type="hidden" name="id" value="${commodity.id}">
@@ -138,14 +136,9 @@
             </table>
         </div>
         <div class="button">
-            <c:choose>
-                <c:when test="${commodity.id == null}">
-                    <button id="publishCommodity" name="publishSubmit" type="submit">发布商品</button>
-                </c:when>
-                <c:otherwise>
-                    <button id="publishCommodity" name="publishSubmit" type="submit">修改</button>
-                </c:otherwise>
-            </c:choose>
+            <button id="publishCommodity" name="publishSubmit" type="submit">
+                ${commodity.id == null ? '发布商品' : '修改商品'}
+            </button>
         </div>
         <div class="price">
             <div class="recommend">(建议不写)</div>

@@ -22,10 +22,12 @@
             var self = this;
             $.get(url, function (data) {
                 var xSerial = [], ySerial = [];
-                $.each(data[commodityId]['prices'], function () {
-                    xSerial.push(this['date']);
-                    ySerial.push(this['price']);
-                });
+                if (data[commodityId] && data[commodityId]['prices']) {
+                    $.each(data[commodityId]['prices'], function () {
+                        xSerial.push(this['date']);
+                        ySerial.push(this['price']);
+                    });
+                }
                 self._data = {
                     xSerial: xSerial,
                     ySerial: ySerial,

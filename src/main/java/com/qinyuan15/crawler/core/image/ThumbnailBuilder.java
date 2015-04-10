@@ -53,6 +53,11 @@ public class ThumbnailBuilder {
     }
 
     private String getPath(String imagePath, String suffix) {
+        String imageName = new File(imagePath).getName();
+        if (!imageName.contains(".")) {
+            return imagePath + suffix;
+        }
+
         int extendNameIndex = imagePath.lastIndexOf('.');
         if (extendNameIndex >= 0) {
             return imagePath.substring(0, extendNameIndex) + suffix +

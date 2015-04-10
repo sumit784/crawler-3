@@ -318,6 +318,10 @@ function priceLineChart(elementId, config) {
     var width = config.width;
     var height = config.height;
     var serialSize = Math.min(xSerial.length, ySerial.length);
+    if (serialSize == 0) {
+        return;
+    }
+
     var newXSerial = [];
     var newYSerial = [];
 
