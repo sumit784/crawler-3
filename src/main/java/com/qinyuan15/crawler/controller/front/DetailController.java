@@ -74,6 +74,7 @@ public class DetailController extends ImageController {
         addJs("lib/linecharts/raphael-min");
         addJs("lib/linecharts/linecharts");
         addHeadJs("image-adjust");
+        addIEJs("detail-ie-patch");
 
         setTitle("商品明细");
 

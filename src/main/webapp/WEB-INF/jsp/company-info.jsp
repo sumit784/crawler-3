@@ -14,7 +14,7 @@
             <a href="javascript:void(0)" class="darkFont noLineAnchor" id="contactUs">联系我们</a>
         </div>
         <div class="company">
-            <a href="javascript:void(0)" class="darkFont noLineAnchor" id="freeDeclaration">免费声明</a>
+            <a href="javascript:void(0)" class="darkFont noLineAnchor" id="freeDeclaration">免责声明</a>
         </div>
         <div class="company">
             <a href="javascript:void(0)" class="darkFont noLineAnchor" id="friendLinks">友情链接</a>
@@ -67,7 +67,7 @@
     </div>
 </script>
 <script id="freeDeclarationTpl" type="text/x-handlebars-template">
-    <div>免费声明...</div>
+    <div>免责声明...</div>
 </script>
 <script id="friendLinksTpl" type="text/x-handlebars-template">
     <div>友情链接...</div>

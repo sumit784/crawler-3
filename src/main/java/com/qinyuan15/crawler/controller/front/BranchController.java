@@ -23,6 +23,7 @@ public class BranchController extends ImageController {
     @RequestMapping("/branch")
     public String index() {
         setTitle("品牌大全");
+        addIEJs("list-snapshots-ie-patch");
         return "branch";
     }
 

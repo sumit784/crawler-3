@@ -25,9 +25,13 @@ Object.keys = function (object) {
     return r;
 };
 
-$(function () {
+function isIE7() {
     var userAgent = navigator['userAgent'].toString();
-    if (userAgent.indexOf('MSIE 7.0') >= 0) {
+    return userAgent.indexOf('MSIE 7.0') >= 0 || userAgent.indexOf('MSIE 6.0') >= 0;
+}
+
+$(function () {
+    if (isIE7()) {
         $('input[type=text]').each(function () {
             adjustHeight($(this), 0.60);
         });

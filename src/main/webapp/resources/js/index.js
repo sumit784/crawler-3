@@ -19,5 +19,8 @@
     angularUtils.controller(function () {
     });
 
+    $('#searchCommit').click(function () {
+        getParent($(this), 'form').submit();
+    });
     $('#searchInput').focusOrSelect();
 })();

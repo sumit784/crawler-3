@@ -21,6 +21,9 @@
             }
         });
     }
+    $('#searchCommit').click(function () {
+        getParent($(this), 'form').submit();
+    });
 })();
 function focusSearchInput() {
     $('#searchInput').focus();

@@ -35,9 +35,11 @@
         });
     }
 
-    window.afterLoadSnapshot = function () {
-        setTimeout(function () {
-            adjustImageUrl();
-        }, 500);
+    if (isIE7()) {
+        window.afterLoadSnapshot = function () {
+            setTimeout(function () {
+                adjustImageUrl();
+            }, 500);
+        }
     }
 })();

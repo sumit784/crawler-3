@@ -98,14 +98,13 @@
                         去看看有没有优惠券
                     </a>
                 </c:if>
-                <a href="${commodity.buyUrl}" target="_blank">
-                    <button id="buySubmit" class="orangeButton">去购买</button>
-                </a>
+                <a id="buySubmit" class="noLineAnchor orangeButton" href="${commodity.buyUrl}"
+                   target="_blank">去购买</a>
             </div>
         </div>
         <div class="share">
             <div class="foundTime">
-                发现时间：<span id="foundTime"></span>
+                发现时间：<span id="foundTime">${commodity.onShelfTime}</span>
             </div>
             <div class="links">
                 告诉小伙伴：

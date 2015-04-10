@@ -2,13 +2,13 @@
 <div class="images">
     <div ng-repeat="snapshot in snapshots" class="boxShadow imageGroup">
         <div class="image">
-            <a href="detail.html?id={{snapshot.id}}" target="_blank">
+            <a ng-href="detail.html?id={{snapshot.id}}" target="_blank">
                 <div ng-style="background-image:url({{snapshot.picture}})"
                      style="background-image:url({{snapshot.picture}})"></div>
             </a>
         </div>
         <div class="description">
-            <a href="detail?id={{snapshot.id}}" class="noLineAnchor" target="_blank">
+            <a ng-href="detail?id={{snapshot.id}}" class="noLineAnchor" target="_blank">
                 {{snapshot.name}}
             </a>
         </div>
@@ -16,7 +16,7 @@
             ￥{{snapshot.price}}
         </div>
         <div class="branch">
-            <a href="shoppe?id={{snapshot.branch.id}}" target="_blank" ng-show="snapshot.branch!=null">
+            <a ng-href="shoppe?id={{snapshot.branch.id}}" target="_blank" ng-show="snapshot.branch!=null">
                 <img class="link branch-logo" ng-src="{{snapshot.branch.logo}}"/>
             </a>
         </div>

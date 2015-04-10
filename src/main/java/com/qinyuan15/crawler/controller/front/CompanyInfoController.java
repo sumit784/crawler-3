@@ -27,7 +27,7 @@ public class CompanyInfoController extends BaseController {
         } else if (tabIndex.equals("2")) {
             setTitle("联系我们");
         } else if (tabIndex.equals("3")) {
-            setTitle("免费声明");
+            setTitle("免责声明");
         } else if (tabIndex.equals("4")) {
             setTitle("友情链接");
         }

@@ -149,7 +149,7 @@ div.rightFloat {
     box-shadow: 1px 1px 10px rgb(213, 213, 213);
 }
 
-button.orangeButton, input.orangeButton {
+button.orangeButton, input.orangeButton, a.orangeButton {
     color: #ffffff;
     background-color: rgb(255, 64, 1);
     border: 0;
