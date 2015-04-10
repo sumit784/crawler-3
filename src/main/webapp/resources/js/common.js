@@ -1,6 +1,6 @@
 function scrollTop($targetElement) {
     var offset = $targetElement ? $targetElement.offset().top : 0;
-    if (JSUtils.isFirefox()) {
+    if (JSUtils.isFirefox() || JSUtils.isIE()) {
         document.documentElement.scrollTop = offset;
     } else {
         $('body').animate({scrollTop: offset}, 250);
@@ -212,7 +212,7 @@ var angularUtils = {
         };
         toTopLink.init();
 
-        $(document).scroll(function () {
+        $(window).scroll(function () {
             toTopLink.update();
         });
     }

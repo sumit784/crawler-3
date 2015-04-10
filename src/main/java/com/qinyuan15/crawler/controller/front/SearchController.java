@@ -31,10 +31,12 @@ public class SearchController extends BaseController {
         }
 
         long count = CommodityDao.factory().setKeyWord(keyWord).setCategoryId(categoryId).getCount();
+
+        addIEJs("commodity-search-form-ie-patch");
+        addIEJs("list-snapshots-ie-patch");
+
         if (count > 0) {
             setTitle(keyWord + " 相关商品");
-            addIEJs("commodity-search-form-ie-patch");
-            addIEJs("list-snapshots-ie-patch");
             return "search";
         } else {
             setTitle("找不到相关商品");

@@ -53,6 +53,9 @@ var JSUtils = {
     isFirefox: function () {
         return this.getUserAgent().indexOf('Firefox') > -1;
     },
+    isIE: function () {
+        return this.getUserAgent().indexOf('MSIE') > -1;
+    },
     isChrome: function () {
         return this.getUserAgent().indexOf('Chrome') > -1;
     },

@@ -24,6 +24,8 @@ div.content div.searchForm div.searchType button {
 div.content div.searchForm span.searchCommit {
     padding: 0;
     margin: 0;
+    width: 91px;
+    text-align: left;
 }
 
 div.content div.searchForm span.searchCommit button {
