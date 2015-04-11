@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Map;
 
 /**
  * Page to edit application config
@@ -34,9 +31,9 @@ public class AdminConfigController extends ImageController {
         return ADMIN_CONFIG;
     }
 
-    @ResponseBody
+    //@ResponseBody
     @RequestMapping(value = "/admin-config-update", method = RequestMethod.POST)
-    public Map<String, Object> update(
+    public /*Map<String, Object>*/ String update(
             @RequestParam(value = "globalBanner", required = true) String globalBanner,
             @RequestParam(value = "globalBannerFile", required = false) MultipartFile globalBannerFile,
             @RequestParam(value = "globalLogo", required = true) String globalLogo,
@@ -61,7 +58,7 @@ public class AdminConfigController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with globalBanner, globalBanner:{}, globalBannerFile:{}, error:{}",
                     globalBanner, globalBannerFile, e);
-            return createFailResult("页头横幅处理失败!");
+            return redirect(addErrorInfoParameter(ADMIN_CONFIG, "图片文件处理失败!"));
         }
 
         String globalLogoPath;
@@ -70,7 +67,7 @@ public class AdminConfigController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with globalLogo, globalLogo:{}, globalLogoFile:{}, error:{}",
                     globalLogo, globalLogoFile, e);
-            return createFailResult("页头Logo文件处理失败!");
+            return redirect(addErrorInfoParameter(ADMIN_CONFIG, "页头Logo文件处理失败!"));
         }
 
         String indexHeadPosterPath;
@@ -79,7 +76,7 @@ public class AdminConfigController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with indexHeadPoster, indexHeadPoster:{}, indexHeadPosterFile:{}, error:{}",
                     indexHeadPoster, indexHeadPosterFile, e);
-            return createFailResult("首页头部海报处理失败!");
+            return redirect(addErrorInfoParameter(ADMIN_CONFIG, "首页头部海报处理失败!"));
         }
 
         String indexFootPosterPath;
@@ -88,7 +85,7 @@ public class AdminConfigController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with indexFootPoster, indexFootPoster:{}, indexFootPosterFile:{}, error:{}",
                     indexFootPoster, indexFootPosterFile, e);
-            return createFailResult("首页尾部海报处理失败!");
+            return redirect(addErrorInfoParameter(ADMIN_CONFIG, "首页尾部海报处理失败!"));
         }
 
         String branchRankImagePath;
@@ -97,7 +94,7 @@ public class AdminConfigController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with branchRankImage, branchRankImage:{}, branchRankImageFile:{}, error:{}",
                     branchRankImage, branchRankImageFile, e);
-            return createFailResult("品牌排行图片处理失败!");
+            return redirect(addErrorInfoParameter(ADMIN_CONFIG, "品牌排行图片处理失败!"));
         }
 
         String noFoundImagePath;
@@ -106,7 +103,7 @@ public class AdminConfigController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with noFoundImage, noFoundImage:{}, noFoundImageFile:{}, error:{}",
                     noFoundImage, noFoundImageFile, e);
-            return createFailResult("无对应商品时显示的图片处理失败!");
+            return redirect(addErrorInfoParameter(ADMIN_CONFIG, "无对应商品时显示的图片处理失败!"));
         }
 
         if (!isPositive(adminPaginationButtonSize)) {
@@ -182,6 +179,6 @@ public class AdminConfigController extends ImageController {
         }
 
         dao.update(appConfig);
-        return SUCCESS;
+        return redirect(ADMIN_CONFIG);
     }
 }

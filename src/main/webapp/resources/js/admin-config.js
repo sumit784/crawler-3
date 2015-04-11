@@ -77,7 +77,6 @@
             }
         }
     };
-    input.$form.ajaxForm(normalSubmitCallback);
     input.get$GlobalBanner().focusOrSelect();
     angularUtils.controller(function ($scope) {
         $scope.validateInput = buildNormalValidationCallback(input);

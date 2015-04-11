@@ -9,7 +9,7 @@
         </td>
         <td class="link">
             <a class="limit-size" href="${indexLogo.link}" title="${indexLogo.link}" target="_blank"
-               data-options="limit:26">${indexLogo.link}</a>
+               data-options="limit:16">${indexLogo.link}</a>
         </td>
         <td class="description">${indexLogo.description}</td>
         <td class="thumbnail">

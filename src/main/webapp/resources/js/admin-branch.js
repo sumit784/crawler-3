@@ -145,5 +145,4 @@
             JSUtils.removeArrayItem($scope.shoppes, index);
         };
     });
-    JSUtils.recordScrollStatus();
 })();

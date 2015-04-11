@@ -8,6 +8,10 @@
     margin: 20px 0;
 }
 
+#detailForm div.text {
+    min-height: 510px;
+}
+
 #detailForm h4 {
     margin: 10px 0 3px;
 }
@@ -24,4 +28,20 @@ div.content fieldset {
 
 #detailForm div.image table td {
     padding-right: 20px;
+}
+
+#detailForm div.image table td.action {
+    padding-right: 0;
+}
+
+#detailForm col.image {
+    width: 300px;
+}
+
+#detailForm col.link {
+    width: 160px;
+}
+
+#detailForm col.action {
+    width: 50px;
 }

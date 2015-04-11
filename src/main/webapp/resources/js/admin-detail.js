@@ -6,10 +6,10 @@
             return this.$form.find('input[name=id]');
         },
         get$Url: function () {
-            return this.$form.find('input[name=url]');
+            return this.$form.find('input[name=image]');
         },
         get$UploadFile: function () {
-            return this.$form.find('input[name=uploadFile]');
+            return this.$form.find('input[name=imageFile]');
         },
         get$Link: function () {
             return this.$form.find('input[name=link]');
@@ -43,8 +43,6 @@
             }
         }
     };
-
-    imageInput.$form.ajaxForm(normalSubmitCallback);
 
     angularUtils.controller(function ($scope) {
         $scope.validateImageInput = buildNormalValidationCallback(imageInput);

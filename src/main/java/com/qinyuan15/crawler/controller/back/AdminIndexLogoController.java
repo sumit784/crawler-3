@@ -25,22 +25,23 @@ import java.util.Map;
 public class AdminIndexLogoController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminIndexLogoController.class);
     private final static String SAVE_PATH_PREFIX = "mall/indexLogo/logo/";
+    private final static String INDEX = "admin-index-logo";
 
     @RequestMapping("/admin-index-logo")
     public String index(ModelMap model) {
         model.addAttribute("indexLogos", adjustIndexLogos(new IndexLogoDao().getInstances()));
         addCssAndJs("admin-normal-edit-page");
         setTitle("编辑主页Logo");
-        return "admin-index-logo";
+        return INDEX;
+        //return "admin-index-logo";
     }
 
-    @ResponseBody
     @RequestMapping(value = "/admin-index-logo-add-update", method = RequestMethod.POST)
-    public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
-                                         @RequestParam(value = "logo", required = true) String logo,
-                                         @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
-                                         @RequestParam(value = "description", required = true) String description,
-                                         @RequestParam(value = "link", required = true) String link) {
+    public String addUpdate(@RequestParam(value = "id", required = false) Integer id,
+                            @RequestParam(value = "logo", required = true) String logo,
+                            @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
+                            @RequestParam(value = "description", required = true) String description,
+                            @RequestParam(value = "link", required = true) String link) {
         // deal with logUrl
         String logoUrl;
         try {
@@ -48,7 +49,7 @@ public class AdminIndexLogoController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with logoUrl, logo:{}, logoFile:{}, error:{}"
                     , logo, logoFile, e);
-            return createFailResult("矩形Logo文件处理失败!");
+            return redirect(addErrorInfoParameter(INDEX, "图片文件处理失败!"));
         }
 
         // adjust link
@@ -66,7 +67,7 @@ public class AdminIndexLogoController extends ImageController {
             dao.add(logoUrl, link, description);
             logAction("添加主页Logo'%s'", description);
         }
-        return SUCCESS;
+        return redirect(INDEX);
     }
 
     @ResponseBody

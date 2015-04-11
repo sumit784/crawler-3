@@ -55,19 +55,19 @@ public class AdminDetailController extends ImageController {
         return redirect(ADMIN_DETAIL);
     }
 
-    @ResponseBody
+    //@ResponseBody
     @RequestMapping(value = "/admin-detail-image-add-update", method = RequestMethod.POST)
-    public Map<String, Object> addUpdateImage(@RequestParam(value = "id", required = true) Integer id,
-                                              @RequestParam(value = "url", required = true) String url,
-                                              @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
-                                              @RequestParam(value = "link", required = true) String link) {
+    public String addUpdateImage(@RequestParam(value = "id", required = true) Integer id,
+                                 @RequestParam(value = "image", required = true) String image,
+                                 @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+                                 @RequestParam(value = "link", required = true) String link) {
         String savePath;
         try {
-            savePath = getSavePath(url, uploadFile, SAVE_PATH_PREFIX);
+            savePath = getSavePath(image, imageFile, SAVE_PATH_PREFIX);
         } catch (Exception e) {
             LOGGER.error("fail to deal with logoUrl, logo:{}, logoFile:{}, error:{}",
-                    url, uploadFile, e);
-            return createFailResult("矩形Logo文件处理失败!");
+                    image, imageFile, e);
+            return redirect(addErrorInfoParameter(ADMIN_DETAIL, "图片文件处理失败!"));
         }
 
         link = new LinkAdapter().adjust(link);
@@ -80,7 +80,7 @@ public class AdminDetailController extends ImageController {
             logAction("为商品详细页配置添加图片'%s'", savePath);
         }
 
-        return SUCCESS;
+        return redirect(ADMIN_DETAIL);
     }
 
     @ResponseBody

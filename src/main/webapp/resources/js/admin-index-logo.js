@@ -23,7 +23,7 @@
             }
             return true;
         }
-    }).focus();
+    }, true).focus();
 
     angularUtils.controller(function ($scope) {
         $scope.validateInput = buildNormalValidationCallback(input);

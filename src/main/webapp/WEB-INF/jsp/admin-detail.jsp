@@ -2,19 +2,27 @@
 <%@include file="header.jsp" %>
 <div class="boxShadow">
     <form id="detailForm" method="post" action="admin-detail-update">
-        <label>相关商品数量限制(0表示无限制)：</label>
-        <input type="text" style="width: 30px;" name="relatedCommoditySize" value="${appConfig.relatedCommoditySize}"/>
-        <h4>文字描述：</h4>
-        <textarea class="ckeditor" name="detailText">${appConfig.detailText}</textarea>
+        <div class="text">
+            <label>相关商品数量限制(0表示无限制)：</label>
+            <input type="text" style="width: 30px;" name="relatedCommoditySize"
+                   value="${appConfig.relatedCommoditySize}"/>
+            <h4>文字描述：</h4>
+            <textarea class="ckeditor" name="detailText">${appConfig.detailText}</textarea>
 
-        <div class="submit">
-            <button id="editSubmit" type="submit" class="btn btn-success">
-                提交修改
-            </button>
+            <div class="submit">
+                <button id="editSubmit" type="submit" class="btn btn-success">
+                    提交修改
+                </button>
+            </div>
         </div>
         <div class="image">
             <h4>相关图片：</h4>
             <table class="normal">
+                <colgroup>
+                    <col class="image"/>
+                    <col class="link"/>
+                    <col class="action"/>
+                </colgroup>
                 <thead>
                 <tr>
                     <th>图片链接</th>
@@ -33,7 +41,7 @@
                             <a class="limit-size" data-options="limit:20" href="${detailImage.link}"
                                target="_blank" title="${detailImage.link}">${detailImage.link}</a>
                         </td>
-                        <td>
+                        <td class="action">
                             <jsp:include page="widget-edit-delete.jsp">
                                 <jsp:param name="editAction" value="editImage($event)"/>
                                 <jsp:param name="deleteAction" value="deleteImage($event)"/>
@@ -63,12 +71,13 @@
 
         <div>
             <label>图片(url或上传图片)</label><span class="required">*</span><br/>
-            <input type="text" name="url" tabindex="1" /><br/>
-            <input type="file" name="uploadFile"/>
+            <jsp:include page="widget-upload-image.jsp">
+                <jsp:param name="id" value="image"/>
+            </jsp:include>
         </div>
         <div>
             <label>目标链接</label><br/>
-            <input type="text" name="link" tabindex="2"/>
+            <input type="text" name="link"/>
         </div>
         <div>
             <button id="addImageSubmit" type="submit" class="btn btn-success"

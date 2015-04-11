@@ -76,3 +76,17 @@ function buildInput(attrs, disableAjax) {
     });
     return attrs;
 }
+
+(function () {
+    $('form').each(function () {
+        var index = 0;
+        $(this).find('input').each(function () {
+            var $this = $(this);
+            var type = $this.attr('type');
+            if ((type == 'text' || type == 'password' ) && !$this.attr('tabindex')) {
+                $this.attr('tabindex', ++index);
+            }
+        });
+    });
+    JSUtils.recordScrollStatus();
+})();
