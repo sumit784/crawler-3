@@ -8,8 +8,9 @@
         <label>图片(url或上传图片)</label>
         <span class="required">*</span>
         <br/>
-        <input type="text" name="url"/>
-        <input type="file" name="uploadFile"/>
+        <jsp:include page="widget-upload-image.jsp">
+            <jsp:param name="id" value="poster"/>
+        </jsp:include>
     </div>
     <div class="link">
         <label>目标链接</label><br/>

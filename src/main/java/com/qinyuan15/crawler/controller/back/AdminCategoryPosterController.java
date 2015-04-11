@@ -1,6 +1,7 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
+import com.qinyuan15.crawler.core.config.LinkAdapter;
 import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.CategoryPoster;
 import com.qinyuan15.crawler.dao.CategoryPosterDao;
@@ -23,22 +24,24 @@ import java.util.Map;
 public class AdminCategoryPosterController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminCategoryPosterController.class);
     private final static String SAVE_PATH_PREFIX = "mall/category/poster/";
+    private final static String EDIT_PAGE = "admin-category.html";
 
-    @ResponseBody
     @RequestMapping(value = "/admin-category-poster-add-update", method = RequestMethod.POST)
-    public Map<String, Object> addUpdate(@RequestParam(value = "id", required = true) Integer id,
-                                         @RequestParam(value = "categoryId", required = true) Integer categoryId,
-                                         @RequestParam(value = "url", required = true) String url,
-                                         @RequestParam(value = "uploadFile", required = false) MultipartFile uploadFile,
-                                         @RequestParam(value = "link", required = true) String link) {
+    public String addUpdate(@RequestParam(value = "id", required = true) Integer id,
+                            @RequestParam(value = "categoryId", required = true) Integer categoryId,
+                            @RequestParam(value = "poster", required = true) String poster,
+                            @RequestParam(value = "posterFile", required = false) MultipartFile posterFile,
+                            @RequestParam(value = "link", required = true) String link) {
         String path;
         try {
-            path = getSavePath(url, uploadFile, SAVE_PATH_PREFIX);
+            path = getSavePath(poster, posterFile, SAVE_PATH_PREFIX);
         } catch (Exception e) {
             LOGGER.error("fail to deal with logoUrl, logo:{}, logoFile:{}, error:{}"
-                    , url, uploadFile, e);
-            return createFailResult("海报图片文件处理失败!");
+                    , poster, posterFile, e);
+            return redirect(addErrorInfoParameter(EDIT_PAGE, "海报图片文件处理失败!"));
         }
+
+        link = new LinkAdapter().adjust(link);
 
         CategoryPosterDao dao = new CategoryPosterDao();
         if (isPositive(id)) {
@@ -50,7 +53,8 @@ public class AdminCategoryPosterController extends ImageController {
             logAction("为'%s'分类添加海报'%s'", new CategoryDao().getNameById(categoryId),
                     pictureUrlConverter.pathToUrl(path));
         }
-        return SUCCESS;
+
+        return redirect(EDIT_PAGE);
     }
 
     @ResponseBody

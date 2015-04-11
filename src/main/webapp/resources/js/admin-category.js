@@ -151,13 +151,13 @@
             return $('#editPosterSubmit');
         },
         get$Url: function () {
-            return this.$form.find('input[name=url]');
+            return this.$form.find('input[name=poster]');
         },
         get$Link: function () {
             return this.$form.find('input[name=link]');
         },
         get$UploadFile: function () {
-            return this.$form.find('input[name=uploadFile]');
+            return this.$form.find('input[name=posterFile]');
         },
         show: function (id, categoryId, imageUrl, link) {
             this.get$Id().val(id);
@@ -183,7 +183,7 @@
             }
         }
     };
-    posterInput.$form.ajaxForm(normalSubmitCallback);
+    //posterInput.$form.ajaxForm(normalSubmitCallback);
 
     angularUtils.controller(function ($scope) {
         // actions about category
