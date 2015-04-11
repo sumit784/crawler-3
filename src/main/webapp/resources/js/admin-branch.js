@@ -71,6 +71,7 @@
         input.get$Name().keyup(function () {
             var name = $(this).val();
             if (name != '') {
+                name = encodeURI(name); // we must encode Chinese character in IE 8
                 $.post('chinese-letter.json?string=' + name, function (data) {
                     if (data.result) {
                         input.get$FirstLetter().val(data.result);
