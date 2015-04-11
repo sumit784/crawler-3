@@ -71,7 +71,7 @@ var JSUtils = {
     },
     recordScrollStatus: function () {
         var $document = $(document);
-        var key = 'scroll-status-record_' + location.pathname;
+        var key = 'scroll-status-record_' + location.pathname.replace(/\..*$/g, '');
         var value = $.cookie(key);
         if (value) {
             $document.scrollTop(value);

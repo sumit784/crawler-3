@@ -31,9 +31,8 @@ public class AdminConfigController extends ImageController {
         return ADMIN_CONFIG;
     }
 
-    //@ResponseBody
     @RequestMapping(value = "/admin-config-update", method = RequestMethod.POST)
-    public /*Map<String, Object>*/ String update(
+    public String update(
             @RequestParam(value = "globalBanner", required = true) String globalBanner,
             @RequestParam(value = "globalBannerFile", required = false) MultipartFile globalBannerFile,
             @RequestParam(value = "globalLogo", required = true) String globalLogo,
