@@ -7,6 +7,8 @@
 <head lang="zh-ch">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>${title}</title>
     <link href="resources/js/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<%=RequestUtils.getCss("common")%>">
