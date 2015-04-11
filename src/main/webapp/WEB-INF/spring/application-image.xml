@@ -9,6 +9,7 @@
 
     <bean id="imageDownloader" class="com.qinyuan15.crawler.core.image.ImageDownloader">
         <constructor-arg value="/var/www/html/images"/>
+        <property name="useRandomSaveName" value="true"/>
     </bean>
     <bean id="pictureUrlConverter" class="com.qinyuan15.crawler.core.image.PictureUrlConverter">
         <!--

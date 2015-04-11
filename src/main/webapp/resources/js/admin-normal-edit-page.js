@@ -36,7 +36,7 @@ function removeTableRow(elementInTableRowRow) {
     }, 500);
 }
 
-function buildInput(attrs) {
+function buildInput(attrs, disableAjax) {
     attrs.get$AddSubmit = function () {
         return $('#addSubmit');
     };
@@ -49,7 +49,9 @@ function buildInput(attrs) {
     attrs.get$Id = function () {
         return this.$form.find('input[name=id]');
     };
-    attrs.$form.ajaxForm(normalSubmitCallback);
+    if (!disableAjax) {
+        attrs.$form.ajaxForm(normalSubmitCallback);
+    }
     attrs.toEditMode = function () {
         this.get$AddSubmit().attr('disabled', true);
         this.get$EditSubmit().attr('disabled', false);

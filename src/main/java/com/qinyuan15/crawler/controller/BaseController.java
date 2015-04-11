@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -44,6 +45,24 @@ public class BaseController {
 
     protected String redirect(String page) {
         return "redirect:" + page;
+    }
+
+    private String encode(String str) {
+        try {
+            return URLEncoder.encode(str, "utf-8");
+        } catch (Exception e) {
+            LOGGER.error("fail to encode {}, info: {}", str, e);
+            return str;
+        }
+    }
+
+    protected String addErrorInfoParameter(String url, String errorInfo) {
+        if (url.contains("?")) {
+            url += "&";
+        } else {
+            url += "?";
+        }
+        return url + "errorInfo=" + encode(errorInfo);
     }
 
     protected Integer getIntParameter(String name) {

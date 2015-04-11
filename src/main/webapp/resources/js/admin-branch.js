@@ -67,7 +67,7 @@
                 $scope.shoppes = [];
                 $scope.$apply();
             }
-        });
+        }, true);
         input.get$Name().keyup(function () {
             var name = $(this).val();
             if (name != '') {
@@ -144,4 +144,5 @@
             JSUtils.removeArrayItem($scope.shoppes, index);
         };
     });
+    JSUtils.recordScrollStatus();
 })();

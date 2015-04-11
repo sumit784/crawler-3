@@ -25,6 +25,7 @@ import java.util.Map;
 public class AdminBranchController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminBranchController.class);
     private final static String SAVE_PATH_PREFIX = "mall/branch/logo/";
+    private final static String INDEX_PAGE = "admin-branch";
 
     @RequestMapping("/admin-branch")
     public String index(ModelMap model) {
@@ -32,24 +33,28 @@ public class AdminBranchController extends ImageController {
         model.addAttribute("branches", adjustBranches(branches));
         addCssAndJs("admin-normal-edit-page");
         setTitle("编辑品牌");
-        return "admin-branch";
+        return INDEX_PAGE;
     }
 
-    @ResponseBody
     @RequestMapping(value = "/admin-branch-add-update", method = RequestMethod.POST)
-    public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
-                                         @RequestParam(value = "name", required = true) String name,
-                                         @RequestParam(value = "logo", required = true) String logo,
-                                         @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
-                                         @RequestParam(value = "squareLogo", required = true) String squareLogo,
-                                         @RequestParam(value = "squareLogoFile", required = false) MultipartFile squareLogoFile,
-                                         @RequestParam(value = "poster", required = true) String poster,
-                                         @RequestParam(value = "posterFile", required = false) MultipartFile posterFile,
-                                         @RequestParam(value = "parentId", required = true) Integer parentId,
-                                         @RequestParam(value = "firstLetter", required = true) String firstLetter,
-                                         @RequestParam(value = "slogan", required = true) String slogan,
-                                         @RequestParam(value = "shoppeNames", required = false) String[] shoppeNames,
-                                         @RequestParam(value = "shoppeUrls", required = false) String[] shoppeUrls) {
+    public String addUpdate(@RequestParam(value = "id", required = false) Integer id,
+                            @RequestParam(value = "name", required = true) String name,
+                            @RequestParam(value = "logo", required = true) String logo,
+                            @RequestParam(value = "logoFile", required = false) MultipartFile logoFile,
+                            @RequestParam(value = "squareLogo", required = true) String squareLogo,
+                            @RequestParam(value = "squareLogoFile", required = false) MultipartFile squareLogoFile,
+                            @RequestParam(value = "poster", required = true) String poster,
+                            @RequestParam(value = "posterFile", required = false) MultipartFile posterFile,
+                            @RequestParam(value = "parentId", required = false) Integer parentId,
+                            @RequestParam(value = "firstLetter", required = true) String firstLetter,
+                            @RequestParam(value = "slogan", required = true) String slogan,
+                            @RequestParam(value = "shoppeNames", required = false) String[] shoppeNames,
+                            @RequestParam(value = "shoppeUrls", required = false) String[] shoppeUrls) {
+
+        if (!isPositive(parentId)) {
+            parentId = null;
+        }
+
         // deal with logUrl
         String logoUrl;
         try {
@@ -57,7 +62,7 @@ public class AdminBranchController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with logoUrl, logo:{}, logoFile:{}, error:{}"
                     , logo, logoFile, e);
-            return createFailResult("矩形Logo文件处理失败!");
+            return toIndexPage("矩形Logo文件处理失败!");
         }
 
         // deal with squareLogoUrl
@@ -67,13 +72,13 @@ public class AdminBranchController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with squareLogoUrl, squareLogo:{}, squareLogoFile:{}, error:{}"
                     , logo, logoFile, e);
-            return createFailResult("方形Logo文件处理失败!");
+            return toIndexPage("方形Logo文件处理失败!");
         }
 
         // deal with poster
         String posterUrl;
         try {
-            if (!StringUtils.hasText(poster) && posterFile == null) {
+            if (!StringUtils.hasText(poster) && !validateUploadFile(posterFile)) {
                 posterUrl = null;
             } else {
                 posterUrl = getSavePath(poster, posterFile, SAVE_PATH_PREFIX);
@@ -81,7 +86,7 @@ public class AdminBranchController extends ImageController {
         } catch (Exception e) {
             LOGGER.error("fail to deal with posterUrl, poster:{}, posterFile:{}, error:{}"
                     , poster, posterFile, e);
-            return createFailResult("海报文件处理失败!");
+            return toIndexPage("海报文件处理失败!");
         }
 
         // build branch object
@@ -108,7 +113,15 @@ public class AdminBranchController extends ImageController {
         ShoppeDao dao = new ShoppeDao();
         dao.clear(id);
         dao.save(createShoppes(id, shoppeNames, shoppeUrls));
-        return SUCCESS;
+        return toIndexPage(null);
+    }
+
+    private String toIndexPage(String errorInfo) {
+        if (StringUtils.hasText(errorInfo)) {
+            return redirect(addErrorInfoParameter(INDEX_PAGE, errorInfo));
+        } else {
+            return redirect(INDEX_PAGE);
+        }
     }
 
     private List<Shoppe> createShoppes(Integer branchId, String[] shoppeNames, String[] shoppeUrls) {

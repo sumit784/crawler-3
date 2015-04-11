@@ -1,9 +1,11 @@
 package com.qinyuan15.crawler.core.image;
 
 import com.qinyuan15.crawler.core.http.HttpClientWrapper;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -21,6 +23,7 @@ public class ImageDownloader {
     private final static Logger LOGGER = LoggerFactory.getLogger(ImageDownloader.class);
 
     private String saveDir;
+    private boolean useRandomSaveName;
 
     public ImageDownloader(String saveDir) {
         this.saveDir = saveDir;
@@ -30,6 +33,11 @@ public class ImageDownloader {
         return this.saveDir;
     }
 
+    public ImageDownloader setUseRandomSaveName(boolean useRandomSaveName) {
+        this.useRandomSaveName = useRandomSaveName;
+        return this;
+    }
+
     /**
      * Save image of certain url as image then return the save path
      *
@@ -37,6 +45,12 @@ public class ImageDownloader {
      * @return save path of the image
      */
     public String save(String url) {
+        if (!StringUtils.hasText(url)) {
+            String info = "empty url: '" + url + "'";
+            LOGGER.error(info);
+            throw new RuntimeException(info);
+        }
+
         String savePath = getSavePath(url);
         try {
             LOGGER.info("prepare to save image {} to {}", url, savePath);
@@ -82,8 +96,34 @@ public class ImageDownloader {
         return savePaths;
     }
 
+    private String getNameFromUrl(String url) {
+        int startIndex = url.lastIndexOf("/");
+        if (startIndex < 0) {
+            return url;
+        } else if (startIndex == url.length() - 1) {
+            return "";
+        } else {
+            return url.substring(startIndex + 1);
+        }
+    }
+
+
     private String getSavePath(String url) {
-        url = url.replaceAll("^.*://", "").replaceAll("\\?.*", "");
-        return this.saveDir + "/" + url;
+        if (this.useRandomSaveName) {
+            while (true) {
+                String fileName = getNameFromUrl(url);
+                if (fileName.length() > 40) {
+                    fileName = fileName.substring(fileName.length() - 40);
+                }
+                fileName = RandomStringUtils.randomAlphabetic(20) + "_" + fileName;
+                String filePath = this.saveDir + "/" + fileName;
+                if (!new File(filePath).exists()) {
+                    return filePath;
+                }
+            }
+        } else {
+            url = url.replaceAll("^.*://", "").replaceAll("\\?.*", "");
+            return this.saveDir + "/" + url;
+        }
     }
 }

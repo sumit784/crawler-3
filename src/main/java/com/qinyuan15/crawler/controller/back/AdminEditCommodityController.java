@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.net.URLEncoder;
 import java.util.Arrays;
 
 /**
@@ -211,12 +210,7 @@ public class AdminEditCommodityController extends ImageController {
     }
 
     private String toEditPage(String errorInfo, Integer id) {
-        try {
-            errorInfo = URLEncoder.encode(errorInfo, "utf-8");
-        } catch (Exception e) {
-            LOGGER.error("fail to encode {}", errorInfo);
-        }
-        String url = redirect(EDIT_PAGE + "?errorInfo=" + errorInfo);
+        String url = redirect(addErrorInfoParameter(EDIT_PAGE, errorInfo));
         if (isPositive(id)) {
             url += "&id=" + id;
         }

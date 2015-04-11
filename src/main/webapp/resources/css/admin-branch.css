@@ -63,6 +63,7 @@ div.content form div.shoppe > div {
 
 div.content form div.shoppe > div.left {
     margin-right: 20px;
+    width: 80px;
 }
 
 div.content form div.shoppe > div.right label {

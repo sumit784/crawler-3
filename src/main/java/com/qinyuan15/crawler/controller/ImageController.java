@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -90,15 +91,7 @@ public class ImageController extends BaseController {
      * @throws IOException
      */
     protected String getSavePath(String imageUrl, MultipartFile imageFile, String savePathPrefix) throws IOException {
-        if (imageFile == null) {
-            if (new PictureUrlValidator(getLocalAddress()).isLocal(imageUrl)) {
-                return pictureUrlConverter.urlToPath(imageUrl);
-            } else {
-                String filePath = imageDownloader.save(imageUrl);
-                LOGGER.info("save upload image to {}", filePath);
-                return filePath;
-            }
-        } else {
+        if (validateUploadFile(imageFile)) {
             if (!savePathPrefix.endsWith("/")) {
                 savePathPrefix = savePathPrefix + "/";
             }
@@ -113,6 +106,19 @@ public class ImageController extends BaseController {
             imageFile.transferTo(file);
             LOGGER.info("save upload image to {}", filePath);
             return filePath;
+        } else {
+            if (new PictureUrlValidator(getLocalAddress()).isLocal(imageUrl)) {
+                return pictureUrlConverter.urlToPath(imageUrl);
+            } else {
+                String filePath = imageDownloader.save(imageUrl);
+                LOGGER.info("save upload image to {}", filePath);
+                return filePath;
+            }
         }
+    }
+
+    protected boolean validateUploadFile(MultipartFile file) {
+        return file != null && StringUtils.hasText(file.getOriginalFilename())
+                && file.getSize() > 0;
     }
 }

@@ -49,7 +49,7 @@ public class AdminCategoryController extends ImageController {
     @RequestMapping(value = "/admin-category-add-update", method = RequestMethod.POST)
     public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
                                          @RequestParam(value = "name", required = true) String name,
-                                         @RequestParam(value = "parentId", required = true) Integer parentId) {
+                                         @RequestParam(value = "parentId", required = false) Integer parentId) {
         if (!isPositive(parentId)) {
             parentId = null;
         }
