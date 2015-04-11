@@ -8,11 +8,11 @@
     <div class="loginForm">
         <form action="j_spring_security_check" method="post">
             <p>
-                <input type="text" name="j_username" class="form-control" placeholder="用户名"/>
+                <input type="text" id="username" name="j_username" class="form-control" placeholder="用户名"/>
             </p>
 
             <p>
-                <input type="text" name="j_password" class="form-control" placeholder="密码"/>
+                <input type="text" id="password" name="j_password" class="form-control" placeholder="密码"/>
             </p>
 
             <p>

@@ -22,6 +22,7 @@ public class IndexController extends ImageController {
         setTitle("果壳科技-首页");
         List<IndexLogo> indexLogos = new IndexLogoDao().getInstances();
         model.addAttribute("indexLogos", adjustIndexLogos(indexLogos));
+        addIEJs("index-ie-patch");
         return "index";
     }
 }

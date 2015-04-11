@@ -14,6 +14,7 @@ public class AdminLoginController extends BaseController {
     public String index() {
         addCss("index");
         setTitle("用户登录");
+        addIEJs("login-ie-patch");
         return "login";
     }
 }

@@ -60,55 +60,40 @@ function adjustHeight($target, rate) {
     $target.css('height', ($target.height() * rate) + 'px');
 }
 
-/*
- $(function () {
- //判断浏览器是否支持placeholder属性
- supportPlaceholder = 'placeholder'in document.createElement('input'),
- placeholder = function (input) {
+function _supportPlaceholder() {
+    return 'placeholder' in document.createElement('input');
+}
 
- var text = input.attr('placeholder'),
- defaultValue = input.defaultValue;
+function patchPlaceholder(id, url) {
+    if (_supportPlaceholder()) {
+        return;
+    }
 
- if (!defaultValue) {
+    var $element = $('#' + id);
+    var IMAGE = 'background-image';
+    var REPEAT = 'background-repeat';
+    var POSITION = 'background-position';
+    var X = POSITION + '-x';
+    var Y = POSITION + '-y';
 
- input.val(text).addClass("phcolor");
- }
+    var oldStyle = {};
+    oldStyle[IMAGE] = $element.css(IMAGE);
+    oldStyle[REPEAT] = $element.css(REPEAT);
+    oldStyle[POSITION] = $element.css(X) + ' ' + $element.css(Y);
 
- input.focus(function () {
+    var newStyle = {};
+    newStyle[IMAGE] = 'url(' + url + ')';
+    newStyle[REPEAT] = 'no-repeat';
+    newStyle[POSITION] = 'left center';
 
- if (input.val() == text) {
+    $element.keyup(updateStyle).blur(updateStyle);
+    updateStyle();
 
- $(this).val("");
- }
- });
-
-
- input.blur(function () {
-
- if (input.val() == "") {
-
- $(this).val(text).addClass("phcolor");
- }
- });
-
- //输入的字符不为灰色
- input.keydown(function () {
-
- $(this).removeClass("phcolor");
- });
- };
-
- //当浏览器不支持placeholder属性时，调用placeholder函数
- if (!supportPlaceholder) {
-
- $('input').each(function () {
-
- text = $(this).attr("placeholder");
-
- if ($(this).attr("type") == "text") {
-
- placeholder($(this));
- }
- });
- }
- });*/
+    function updateStyle() {
+        if ($element.val() == '') {
+            $element.css(newStyle);
+        } else {
+            $element.css(oldStyle);
+        }
+    }
+}

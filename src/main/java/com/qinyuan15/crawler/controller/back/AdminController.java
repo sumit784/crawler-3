@@ -46,6 +46,7 @@ public class AdminController extends ImageController {
                 commodities, pictureUrlConverter);
         model.addAttribute("commodities", snapshots);
         model.addAttribute("keyWord", keyWord);
+        addIEJs("admin-ie-patch");
         setTitle("商品管理");
 
         return "admin";

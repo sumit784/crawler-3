@@ -19,4 +19,5 @@
         $('div.searchForm > div').eq(0).css('z-index', 11);
     }
     $(document).trigger('scroll');
+    patchPlaceholder('searchInput', "resources/css/images/list/placeholder.png");
 })();

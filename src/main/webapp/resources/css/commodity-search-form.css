@@ -16,7 +16,7 @@ div.content div.searchForm div.searchType button {
 
 #searchInput {
     margin-top: 1px;
-    background: #ffffff url("images/search.gif") no-repeat 98% 50%;
+    background: #ffffff url("images/search.gif") no-repeat 345px 8px;
     width: 368px;
     border-radius: 0;
 }
