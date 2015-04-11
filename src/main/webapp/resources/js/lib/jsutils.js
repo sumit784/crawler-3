@@ -70,10 +70,11 @@ var JSUtils = {
         return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
     },
     recordScrollStatus: function () {
-        var $document = $(document);
+        var $document = $(window);
         var key = 'scroll-status-record_' + location.pathname.replace(/\..*$/g, '');
         var value = $.cookie(key);
         if (value) {
+            document.documentElement.scrollTop = value;
             $document.scrollTop(value);
         }
         $document.scroll(function () {

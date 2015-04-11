@@ -55,7 +55,6 @@ public class AdminDetailController extends ImageController {
         return redirect(ADMIN_DETAIL);
     }
 
-    //@ResponseBody
     @RequestMapping(value = "/admin-detail-image-add-update", method = RequestMethod.POST)
     public String addUpdateImage(@RequestParam(value = "id", required = true) Integer id,
                                  @RequestParam(value = "image", required = true) String image,

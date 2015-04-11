@@ -24,7 +24,7 @@ import java.util.Map;
 public class AdminCategoryPosterController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminCategoryPosterController.class);
     private final static String SAVE_PATH_PREFIX = "mall/category/poster/";
-    private final static String EDIT_PAGE = "admin-category.html";
+    private final static String EDIT_PAGE = "admin-category";
 
     @RequestMapping(value = "/admin-category-poster-add-update", method = RequestMethod.POST)
     public String addUpdate(@RequestParam(value = "id", required = true) Integer id,

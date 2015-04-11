@@ -33,7 +33,6 @@ public class AdminIndexLogoController extends ImageController {
         addCssAndJs("admin-normal-edit-page");
         setTitle("编辑主页Logo");
         return INDEX;
-        //return "admin-index-logo";
     }
 
     @RequestMapping(value = "/admin-index-logo-add-update", method = RequestMethod.POST)

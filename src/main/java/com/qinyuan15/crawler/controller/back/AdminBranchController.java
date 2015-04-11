@@ -25,7 +25,7 @@ import java.util.Map;
 public class AdminBranchController extends ImageController {
     private final static Logger LOGGER = LoggerFactory.getLogger(AdminBranchController.class);
     private final static String SAVE_PATH_PREFIX = "mall/branch/logo/";
-    private final static String INDEX_PAGE = "admin-branch.html";
+    private final static String INDEX_PAGE = "admin-branch";
 
     @RequestMapping("/admin-branch")
     public String index(ModelMap model) {
