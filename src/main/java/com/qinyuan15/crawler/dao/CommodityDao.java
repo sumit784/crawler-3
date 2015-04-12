@@ -40,6 +40,8 @@ public class CommodityDao {
                 + categoryId;
         session.createQuery(hql).executeUpdate();
         HibernateUtils.commit(session);
+
+        updateInLowPrice(factory().setCategoryId(categoryId).getInstances());
     }
 
     public void unlinkBranch(Integer branchId) {
@@ -48,6 +50,8 @@ public class CommodityDao {
                 + branchId;
         session.createQuery(hql).executeUpdate();
         HibernateUtils.commit(session);
+
+        updateInLowPrice(factory().setBranchId(branchId).getInstances());
     }
 
     public void delete(int id) {
@@ -90,25 +94,43 @@ public class CommodityDao {
     }
 
     public void updateInLowPrice(int id) {
-        String startTime = DateUtils.threeMonthAgo().toString();
-        String endTime = DateUtils.now().toString();
+        if (!new PriceRecordDao().hasInstanceInThreeDay(id)) {
+            updateInLowPrice(id, false);
+            return;
+        }
+
+        String startTime = DateUtils.threeMonthsAgo().toString();
+        String endTime = DateUtils.nowString();
         Double lowPrice = CommodityPriceDao.range(id)
                 .setStartTime(startTime).setEndTime(endTime).getMin();
         Double currentPrice = new CommodityPriceDao().getCurrentPrice(id);
+        double deviation = 1.0;
 
+        updateInLowPrice(id, currentPrice - lowPrice < deviation);
+    }
+
+    private void updateInLowPrice(List<Commodity> commodities) {
+        for (Commodity commodity : commodities) {
+            if (commodity != null) {
+                updateInLowPrice(commodity.getId());
+            }
+        }
+    }
+
+    private void updateInLowPrice(int id, boolean inLowPrice) {
         Commodity commodity = getInstance(id);
-        commodity.setInLowPrice(currentPrice - lowPrice < 1);
+        commodity.setInLowPrice(inLowPrice);
         HibernateUtils.update(commodity);
     }
 
-    public void updateOnShelfTime(int id) {
+    public void updateDiscoverTime(int id) {
         PriceRecord firstPriceRecord = new PriceRecordDao().getFirstInstance(id);
         if (firstPriceRecord == null) {
             return;
         }
 
         Commodity commodity = getInstance(id);
-        commodity.setOnShelfTime(firstPriceRecord.getRecordTime().toString());
+        commodity.setDiscoverTime(firstPriceRecord.getRecordTime().toString());
         HibernateUtils.update(commodity);
     }
 
@@ -164,7 +186,7 @@ public class CommodityDao {
             String str;
             switch (this.field) {
                 case ON_SHELF_TIME:
-                    str = "onShelfTime";
+                    str = "discoverTime";
                     break;
                 case PRICE:
                     str = "price";
@@ -173,7 +195,7 @@ public class CommodityDao {
                     str = "sales";
                     break;
                 default:
-                    str = "onShelfTime";
+                    str = "discoverTime";
             }
             switch (this.type) {
                 case ASC:

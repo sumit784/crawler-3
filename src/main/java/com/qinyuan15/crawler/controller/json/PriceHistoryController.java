@@ -29,7 +29,7 @@ public class PriceHistoryController extends BaseController{
                       @RequestParam(value = "startTime", required = false) String startTime,
                       @RequestParam(value = "endTime", required = false) String endTime) {
         if (startTime == null) {
-            startTime = DateUtils.threeMonthAgo().toString();
+            startTime = DateUtils.threeMonthsAgo().toString();
         }
         if (endTime == null) {
             endTime = DateUtils.now().toString();

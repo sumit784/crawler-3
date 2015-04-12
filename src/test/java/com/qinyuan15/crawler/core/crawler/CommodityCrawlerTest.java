@@ -8,11 +8,11 @@ import org.junit.Test;
  * Test PriceHisotryCrawler
  * Created by qinyuan on 15-1-11.
  */
-public class PriceHistoryCrawlerTest {
+public class CommodityCrawlerTest {
 
     @Test
     public void test() throws Exception {
-        PriceHistoryCrawler crawler = new PriceHistoryCrawler();
+        CommodityCrawler crawler = new CommodityCrawler();
         crawler.setCommodityPool(new TestCommodityPool());
         crawler.setCommodityPageParser(
                 ComposableCommodityPageParserTest.mockComposableCommodityPageParser());

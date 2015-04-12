@@ -46,7 +46,7 @@ public class DateUtilsTest {
 
     @Test
     public void testThreeMonthAgo() throws Exception {
-        Date date = DateUtils.threeMonthAgo();
+        Date date = DateUtils.threeMonthsAgo();
         System.out.println(date);
     }
 

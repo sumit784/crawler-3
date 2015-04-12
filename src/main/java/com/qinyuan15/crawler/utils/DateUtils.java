@@ -85,9 +85,14 @@ public class DateUtils {
         return (int) Math.round(timeStampDiff * 1.0 / (24 * 3600 * 1000));
     }
 
-    public static Date threeMonthAgo() {
-        long secondsOfThreeMonth = 90 * 3600 * 24;
-        return new Date(System.currentTimeMillis() - secondsOfThreeMonth * 1000);
+    public static Date threeDaysAgo() {
+        long secondsOfThreeDays = 3 * 3600 * 24;
+        return new Date(System.currentTimeMillis() - secondsOfThreeDays * 1000);
+    }
+
+    public static Date threeMonthsAgo() {
+        long secondsOfThreeMonths = 90 * 3600 * 24;
+        return new Date(System.currentTimeMillis() - secondsOfThreeMonths * 1000);
     }
 
     public static String adjustDateStringFromDB(String dateString) {

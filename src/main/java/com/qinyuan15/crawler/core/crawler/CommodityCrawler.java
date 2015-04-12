@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
  * Grub price of commodity
  * Created by qinyuan on 15-1-1.
  */
-public class PriceHistoryCrawler {
+public class CommodityCrawler {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(PriceHistoryCrawler.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(CommodityCrawler.class);
     public final static int DEFAULT_THREAD_SIZE = 10;
     public final static int DEFAULT_INTERVAL = 10;
 
@@ -82,11 +82,12 @@ public class PriceHistoryCrawler {
     }
 
     private class CrawlThread extends Thread {
-        private SinglePriceHistoryCrawler singleCommodityCrawler;
+        private SingleCommodityCrawler singleCommodityCrawler;
 
         public CrawlThread() {
-            this.singleCommodityCrawler = new SinglePriceHistoryCrawler(
-                    commodityPageParser, httpClientPool);
+            // commodityPageParser is not thread safe, we need to clone it here
+            this.singleCommodityCrawler = new SingleCommodityCrawler(
+                    commodityPageParser.clone(), httpClientPool);
         }
 
         @Override

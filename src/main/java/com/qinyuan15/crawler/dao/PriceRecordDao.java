@@ -108,6 +108,14 @@ public class PriceRecordDao {
                 .hasInstance();
     }
 
+
+    public boolean hasInstanceInThreeDay(int commodityId) {
+        return factory().setCommodityId(commodityId)
+                .setStartTime(DateUtils.threeDaysAgo().toString())
+                .setEndTime(DateUtils.nowString())
+                .hasInstance();
+    }
+
     public PriceRecord getLastInstance(int commodityId) {
         return factory().setCommodityId(commodityId).getLastInstance();
     }

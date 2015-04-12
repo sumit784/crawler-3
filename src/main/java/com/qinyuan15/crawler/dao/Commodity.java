@@ -1,5 +1,7 @@
 package com.qinyuan15.crawler.dao;
 
+import com.qinyuan15.crawler.utils.DateUtils;
+
 /**
  * Persist Object of Commodity
  * Created by qinyuan on 14-12-28.
@@ -8,7 +10,7 @@ public class Commodity extends PersistObject {
 
     private String serialNumber;
     private String showId;
-    private String onShelfTime;
+    private String discoverTime;
     private String url;
     private String buyUrl;
     private Boolean active;
@@ -105,8 +107,8 @@ public class Commodity extends PersistObject {
         return this.url;
     }
 
-    public String getOnShelfTime() {
-        return onShelfTime == null ? null : onShelfTime.trim().replaceAll("\\s.*", "");
+    public String getDiscoverTime() {
+        return DateUtils.adjustDateStringFromDB(discoverTime);
     }
 
     public Boolean getActive() {
@@ -125,8 +127,8 @@ public class Commodity extends PersistObject {
         return userId;
     }
 
-    public void setOnShelfTime(String onShelfTime) {
-        this.onShelfTime = onShelfTime;
+    public void setDiscoverTime(String discoverTime) {
+        this.discoverTime = discoverTime;
     }
 
     public void setActive(Boolean active) {

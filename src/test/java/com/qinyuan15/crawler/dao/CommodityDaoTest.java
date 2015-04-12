@@ -87,7 +87,7 @@ public class CommodityDaoTest {
     public void testOrder() throws Exception {
         CommodityDao.Order order = new CommodityDao.Order();
 
-        assertThat(order.toString()).isEqualTo("onShelfTime DESC");
+        assertThat(order.toString()).isEqualTo("discoverTime DESC");
 
         order.setField(CommodityDao.OrderField.PRICE);
         order.setType(CommodityDao.OrderType.ASC);
@@ -116,7 +116,7 @@ public class CommodityDaoTest {
     }
 
     @Test
-    public void testUpdateOnShelfTime() throws Exception {
+    public void testUpdateDiscoverTime() throws Exception {
         //new CommodityDao().updateOnShelfTime(6);
     }
 

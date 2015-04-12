@@ -30,4 +30,6 @@ public interface CommodityPageParser {
     Integer getSales();
 
     boolean isExpire();
+
+    CommodityPageParser clone();
 }

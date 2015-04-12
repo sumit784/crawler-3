@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,22 @@ public class ComposableCommodityPageParser extends AbstractCommodityPageParser {
     private final static Logger LOGGER = LoggerFactory.getLogger(ComposableCommodityPageParser.class);
     private String webUrl;
     private Map<String, CommodityPageParser> parsers;
+
+    @Override
+    public ComposableCommodityPageParser clone() {
+        ComposableCommodityPageParser parser = new ComposableCommodityPageParser();
+        parser.setHTML(this.html);
+        parser.setWebUrl(this.webUrl);
+
+        Map<String, CommodityPageParser> newParsers = new HashMap<>();
+        if (this.parsers != null) {
+            for (Map.Entry<String, CommodityPageParser> entry : this.parsers.entrySet()) {
+                newParsers.put(entry.getKey(), entry.getValue().clone());
+            }
+        }
+        parser.setParsers(newParsers);
+        return parser;
+    }
 
     /**
      * Set CommodityPageParser(s).

@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     最高售价： <span class="highestPrice">￥${highPrice}</span>
-                    发现时间： <span class="releaseDate">${commodity.onShelfTime}</span>
+                    发现时间： <span class="releaseDate">${commodity.discoverTime}</span>
                 </div>
                 <div class="trend">
                     <div class="text">
@@ -104,7 +104,7 @@
         </div>
         <div class="share">
             <div class="foundTime">
-                发现时间：<span id="foundTime">${commodity.onShelfTime}</span>
+                发现时间：<span id="foundTime">${commodity.discoverTime}</span>
             </div>
             <div class="links">
                 告诉小伙伴：

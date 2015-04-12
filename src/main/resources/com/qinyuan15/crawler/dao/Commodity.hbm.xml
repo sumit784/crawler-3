@@ -12,7 +12,7 @@
         <property name="url"/>
         <property name="buyUrl" column="buy_url"/>
         <property name="price"/>
-        <property name="onShelfTime" column="on_shelf_time"/>
+        <property name="discoverTime" column="discover_time"/>
         <property name="active"/>
         <property name="branchId" column="branch_id"/>
         <property name="serialNumber" column="serial_number"/>

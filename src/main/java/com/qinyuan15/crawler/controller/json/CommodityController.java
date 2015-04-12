@@ -47,7 +47,7 @@ public class CommodityController extends ImageController {
             CommodityJson commodityJson = new CommodityJson();
             commodityJson.name = commodity.getName();
             commodityJson.url = commodity.getUrl();
-            commodityJson.onShelfTime = commodity.getOnShelfTime();
+            commodityJson.discoverTime = commodity.getDiscoverTime();
             commodityJson.onShelf = isOnShelf(commodity);
 
             List<CommodityPicture> commodityPictures = new CommodityPictureDao().getInstances(id);
@@ -72,7 +72,7 @@ public class CommodityController extends ImageController {
         public String name;
         public String url;
         public List<String> pictures;
-        public String onShelfTime;
+        public String discoverTime;
         public boolean onShelf;
     }
 }

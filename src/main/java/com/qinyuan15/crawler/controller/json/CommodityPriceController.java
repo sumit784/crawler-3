@@ -26,7 +26,7 @@ public class CommodityPriceController extends BaseController {
                          @RequestParam(value = "endTime", required = false) String endTime) {
 
         if (startTime == null) {
-            startTime = DateUtils.threeMonthAgo().toString();
+            startTime = DateUtils.threeMonthsAgo().toString();
         }
         if (endTime == null) {
             endTime = DateUtils.now().toString();

@@ -6,7 +6,7 @@
 
     <import resource="application-page-parser.xml"/>
     <import resource="application-image.xml"/>
-    <bean class="com.qinyuan15.crawler.core.crawler.PriceHistoryCrawler" init-method="init">
+    <bean class="com.qinyuan15.crawler.core.crawler.CommodityCrawler" init-method="init">
         <!-- run each 30 second for each thread -->
         <property name="interval" value="30000"/>
         <property name="threadSize" value="5"/>

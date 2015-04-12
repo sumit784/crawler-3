@@ -40,7 +40,7 @@ function initSnapshot($scope, $http) {
             loadSnapshot($scope, $http);
         }
     };
-    $scope.orderField = 'onShelfTime';
+    $scope.orderField = 'discoverTime';
     $scope.orderType = 'desc';
     $scope.pageNumer = 0;
     loadSnapshot($scope, $http);

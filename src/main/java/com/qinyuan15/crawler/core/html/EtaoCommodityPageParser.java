@@ -33,6 +33,14 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
         this.httpClientPool = httpClientPool;
     }
 
+    @Override
+    public EtaoCommodityPageParser clone() {
+        EtaoCommodityPageParser parser = new EtaoCommodityPageParser();
+        parser.setHTML(this.html);
+        parser.setHttpClientPool(httpClientPool);
+        return parser;
+    }
+
     public String getName() {
         HtmlParser htmlParser = new HtmlParser(this.html);
         Elements nameElements = htmlParser.getElements("h1", "top-title");
