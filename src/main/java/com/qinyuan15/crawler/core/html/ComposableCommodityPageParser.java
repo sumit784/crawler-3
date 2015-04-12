@@ -20,7 +20,7 @@ public class ComposableCommodityPageParser extends AbstractCommodityPageParser {
     private Map<String, CommodityPageParser> parsers;
 
     @Override
-    public ComposableCommodityPageParser clone() {
+    public ComposableCommodityPageParser copy() {
         ComposableCommodityPageParser parser = new ComposableCommodityPageParser();
         parser.setHTML(this.html);
         parser.setWebUrl(this.webUrl);
@@ -28,7 +28,7 @@ public class ComposableCommodityPageParser extends AbstractCommodityPageParser {
         Map<String, CommodityPageParser> newParsers = new HashMap<>();
         if (this.parsers != null) {
             for (Map.Entry<String, CommodityPageParser> entry : this.parsers.entrySet()) {
-                newParsers.put(entry.getKey(), entry.getValue().clone());
+                newParsers.put(entry.getKey(), entry.getValue().copy());
             }
         }
         parser.setParsers(newParsers);

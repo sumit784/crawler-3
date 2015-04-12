@@ -20,7 +20,7 @@
             </div>
         </fieldset>
         <fieldset>
-            <legend>主页设置</legend>
+            <legend><a target="_blank" href="index.html">主页(index.html)</a>设置</legend>
             <div class="uploadImage">
                 <label>首页头部海报(url或上传图片)</label><br/>
                 <jsp:include page="admin-config-upload-image.jsp">
@@ -40,7 +40,7 @@
             </div>
         </fieldset>
         <fieldset>
-            <legend>商品列表页设置</legend>
+            <legend><a href="list.html" target="_blank">商品列表页(list.html)</a>设置</legend>
             <div class="uploadImage">
                 <label>名牌排行图片(url或上传图片)</label><br/>
                 <jsp:include page="admin-config-upload-image.jsp">
@@ -61,7 +61,7 @@
             </div>
         </fieldset>
         <fieldset class="textOnly">
-            <legend>管理员主页设置</legend>
+            <legend><a href="admin.html" target="_blank">管理员主页(admin.html)</a>设置</legend>
             <div>
                 <label>商品列表中每个分页的商品数量(0表示无限制)</label>
                 <input type="text" name="adminPaginationCommoditySize"
@@ -74,7 +74,7 @@
             </div>
         </fieldset>
         <fieldset class="textOnly">
-            <legend>商品编辑页设置</legend>
+            <legend><a href="admin-edit-commodity.html" target="_blank">商品编辑页(admin-edit-commodity.html)</a>设置</legend>
             <div>
                 <label>商品图片数量限制(0表示无限制)</label>
                 <input type="text" name="maxCommodityPictureSize"

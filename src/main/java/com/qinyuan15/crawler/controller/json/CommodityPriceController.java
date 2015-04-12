@@ -16,7 +16,7 @@ import java.util.TreeMap;
 /**
  * Query price information
  * Created by qinyuan on 15-1-22.
- */
+ *//*
 @Controller
 public class CommodityPriceController extends BaseController {
     @ResponseBody
@@ -55,4 +55,4 @@ public class CommodityPriceController extends BaseController {
         return toJson(commodityPriceJsonMap);
     }
 }
-
+*/

@@ -21,9 +21,15 @@ public class PriceRecordDao {
         private String startTime;
         private String endTime;
         private String grabDate;
+        private Double maxPrice;
 
         public Factory setCommodityId(Integer commodityId) {
             this.commodityId = commodityId;
+            return this;
+        }
+
+        public Factory setMaxPrice(Double maxPrice) {
+            this.maxPrice = maxPrice;
             return this;
         }
 
@@ -71,22 +77,28 @@ public class PriceRecordDao {
             if (grabDate != null) {
                 hql += " AND DATE(grab_time)='" + grabDate + "'";
             }
+            if (maxPrice != null && maxPrice > 0) {
+                hql += " AND price<" + maxPrice;
+            }
             hql += " GROUP BY commodityId,recordTime";
             return hql;
         }
 
         @SuppressWarnings("unchecked")
         public List<PriceRecord> getInstances() {
-            return HibernateUtils.getList(getHQL());
+            return HibernateUtils.getList(getHQL() + ASC_ORDER);
         }
 
+        private final static String DESC_ORDER = " ORDER BY recordTime DESC";
+        private final static String ASC_ORDER = " ORDER BY recordTime ASC";
+
         public PriceRecord getLastInstance() {
-            String hql = getHQL() + " ORDER BY recordTime DESC";
+            String hql = getHQL() + DESC_ORDER;
             return (PriceRecord) HibernateUtils.getFirstItem(hql);
         }
 
         public PriceRecord getFirstInstance() {
-            String hql = getHQL() + " ORDER BY recordTime ASC";
+            String hql = getHQL() + ASC_ORDER;
             return (PriceRecord) HibernateUtils.getFirstItem(hql);
         }
 

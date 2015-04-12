@@ -87,7 +87,7 @@ public class CommodityCrawler {
         public CrawlThread() {
             // commodityPageParser is not thread safe, we need to clone it here
             this.singleCommodityCrawler = new SingleCommodityCrawler(
-                    commodityPageParser.clone(), httpClientPool);
+                    commodityPageParser.copy(), httpClientPool);
         }
 
         @Override

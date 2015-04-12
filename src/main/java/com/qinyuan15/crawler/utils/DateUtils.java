@@ -98,4 +98,8 @@ public class DateUtils {
     public static String adjustDateStringFromDB(String dateString) {
         return dateString == null ? null : dateString.replaceAll("\\.\\d*$", "");
     }
+
+    public static String getDatePart(String dateTime) {
+        return dateTime == null ? null : dateTime.replaceAll("\\s.*$", "");
+    }
 }

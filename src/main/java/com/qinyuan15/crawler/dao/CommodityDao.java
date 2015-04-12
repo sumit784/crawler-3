@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by qinyuan on 15-1-14.
  */
 public class CommodityDao {
+    private final static double LOW_PRICE_DEVIATION = 1.0;
 
     public Commodity getInstance(int id) {
         List<Commodity> commodities = factory().setId(id).getInstances();
@@ -99,14 +101,14 @@ public class CommodityDao {
             return;
         }
 
-        String startTime = DateUtils.threeMonthsAgo().toString();
-        String endTime = DateUtils.nowString();
-        Double lowPrice = CommodityPriceDao.range(id)
-                .setStartTime(startTime).setEndTime(endTime).getMin();
-        Double currentPrice = new CommodityPriceDao().getCurrentPrice(id);
-        double deviation = 1.0;
-
-        updateInLowPrice(id, currentPrice - lowPrice < deviation);
+        CommodityPriceDao commodityPriceDao = new CommodityPriceDao();
+        Double lowPrice = commodityPriceDao.getMinPriceInThreeMonth(id);
+        Double currentPrice = commodityPriceDao.getCurrentPrice(id);
+        if (lowPrice == null || currentPrice == null) {
+            updateInLowPrice(id, false);
+        } else {
+            updateInLowPrice(id, currentPrice - lowPrice < LOW_PRICE_DEVIATION);
+        }
     }
 
     private void updateInLowPrice(List<Commodity> commodities) {
@@ -124,14 +126,50 @@ public class CommodityDao {
     }
 
     public void updateDiscoverTime(int id) {
-        PriceRecord firstPriceRecord = new PriceRecordDao().getFirstInstance(id);
-        if (firstPriceRecord == null) {
+        Double lowPrice = new CommodityPriceDao().getMinPriceInThreeMonth(id);
+        if (lowPrice == null) {
             return;
         }
 
+        List<PriceRecord> priceRecords = PriceRecordDao.factory()
+                .setCommodityId(id)
+                .setStartTime(DateUtils.threeMonthsAgo().toString())
+                .setEndTime(DateUtils.nowString())
+                .getInstances();
+        int lastInLowIndex = getLastInLowIndex(priceRecords, lowPrice);
+        if (lastInLowIndex < 0) {
+            return;
+        }
+
+        int lastNotInLowIndex = getLastNotInLowIndex(
+                priceRecords.subList(0, lastInLowIndex), lowPrice);
+        if (lastNotInLowIndex >= 0) {
+            updateDiscoverTime(id, priceRecords.get(lastNotInLowIndex + 1).getRecordTime());
+        }
+    }
+
+    public void updateDiscoverTime(int id, Date recordTime) {
         Commodity commodity = getInstance(id);
-        commodity.setDiscoverTime(firstPriceRecord.getRecordTime().toString());
+        commodity.setDiscoverTime(DateUtils.toLongString(recordTime));
         HibernateUtils.update(commodity);
+    }
+
+    private int getLastNotInLowIndex(List<PriceRecord> priceRecords, double lowPrice) {
+        for (int i = priceRecords.size() - 1; i >= 0; i--) {
+            if (priceRecords.get(i).getPrice() - lowPrice >= LOW_PRICE_DEVIATION) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int getLastInLowIndex(List<PriceRecord> priceRecords, double lowPrice) {
+        for (int i = priceRecords.size() - 1; i >= 0; i--) {
+            if (priceRecords.get(i).getPrice() - lowPrice < LOW_PRICE_DEVIATION) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static Factory factory() {

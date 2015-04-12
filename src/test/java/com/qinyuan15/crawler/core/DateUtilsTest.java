@@ -39,8 +39,8 @@ public class DateUtilsTest {
     }
 
     @Test
-    public void testToLongString() throws  Exception {
-        Date date= DateUtils.newDate("2012-12-12");
+    public void testToLongString() throws Exception {
+        Date date = DateUtils.newDate("2012-12-12");
         assertThat(DateUtils.toLongString(date)).isEqualTo("2012-12-12 00:00:00");
     }
 
@@ -70,5 +70,10 @@ public class DateUtilsTest {
     public void testIsDateTime() throws Exception {
         assertThat(DateUtils.isDateTime("1012-01-01 12:13:40")).isTrue();
         assertThat(DateUtils.isDateTime("1012-01-01 12:13:404")).isFalse();
+    }
+
+    @Test
+    public void testGetDatePart() throws Exception {
+        assertThat(DateUtils.getDatePart("2012-12-12 10:10:10")).isEqualTo("2012-12-12");
     }
 }

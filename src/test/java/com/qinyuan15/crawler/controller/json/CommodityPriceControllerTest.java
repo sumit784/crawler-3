@@ -1,12 +1,12 @@
 package com.qinyuan15.crawler.controller.json;
 
-import com.qinyuan15.crawler.controller.json.CommodityPriceController;
+//import com.qinyuan15.crawler.controller.json.CommodityPriceController;
 import org.junit.Test;
 
 /**
  * Test CommodityPriceController
  * Created by qinyuan on 15-1-22.
- */
+ *//*
 public class CommodityPriceControllerTest {
     private CommodityPriceController controller = new CommodityPriceController();
 
@@ -19,4 +19,4 @@ public class CommodityPriceControllerTest {
     public void testGetHigh() throws Exception {
         System.out.println(controller.getHigh(null, null, null));
     }
-}
+}*/

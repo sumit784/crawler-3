@@ -108,7 +108,7 @@ public class Commodity extends PersistObject {
     }
 
     public String getDiscoverTime() {
-        return DateUtils.adjustDateStringFromDB(discoverTime);
+        return DateUtils.getDatePart(discoverTime);
     }
 
     public Boolean getActive() {

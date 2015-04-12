@@ -117,6 +117,7 @@ public class CommodityDaoTest {
 
     @Test
     public void testUpdateDiscoverTime() throws Exception {
+        //new CommodityDao().updateDiscoverTime(56);
         //new CommodityDao().updateOnShelfTime(6);
     }
 

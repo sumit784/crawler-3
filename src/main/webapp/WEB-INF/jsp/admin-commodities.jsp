@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="description">
-                <a htarget="_blank" ref="admin-edit-commodity.html?id=${commodity.id}"
+                <a target="_blank" href="admin-edit-commodity.html?id=${commodity.id}"
                    class="noLineAnchor limit-size" data-options="limit:25">${commodity.name}</a>
             </div>
             <div class="action">

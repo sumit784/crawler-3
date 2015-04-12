@@ -31,5 +31,5 @@ public interface CommodityPageParser {
 
     boolean isExpire();
 
-    CommodityPageParser clone();
+    CommodityPageParser copy();
 }

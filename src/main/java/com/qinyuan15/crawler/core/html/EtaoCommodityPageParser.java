@@ -34,7 +34,7 @@ public class EtaoCommodityPageParser extends AbstractCommodityPageParser {
     }
 
     @Override
-    public EtaoCommodityPageParser clone() {
+    public EtaoCommodityPageParser copy() {
         EtaoCommodityPageParser parser = new EtaoCommodityPageParser();
         parser.setHTML(this.html);
         parser.setHttpClientPool(httpClientPool);

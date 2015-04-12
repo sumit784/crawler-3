@@ -125,12 +125,17 @@ class SingleCommodityCrawler {
     }
 
     private void savePriceRecord(Date date, Double price, int commodityId) {
-        if (!PriceRecordDao.factory().setCommodityId(commodityId)
-                .setRecordTime(date).hasInstance()) {
-            PriceRecord record = new PriceRecord();
+        PriceRecord record = PriceRecordDao.factory().setCommodityId(commodityId)
+                .setRecordTime(date).getFirstInstance();
+        if (record != null) {
+            record.setPrice(price);
+            record.setGrabTime(DateUtils.now());
+            HibernateUtils.update(record);
+        } else {
+            record = new PriceRecord();
+            record.setCommodityId(commodityId);
             record.setRecordTime(date);
             record.setPrice(price);
-            record.setCommodityId(commodityId);
             record.setGrabTime(DateUtils.now());
             HibernateUtils.save(record);
         }

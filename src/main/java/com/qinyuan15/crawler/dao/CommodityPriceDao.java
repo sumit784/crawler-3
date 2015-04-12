@@ -62,9 +62,9 @@ public class CommodityPriceDao {
     }
 
     public Double getMinPriceInThreeMonth(Integer commodityId) {
-        String startTime = DateUtils.threeMonthsAgo().toString();
         return CommodityPriceDao.range(commodityId)
-                .setStartTime(startTime)
+                .setStartTime(DateUtils.threeMonthsAgo().toString())
+                .setEndTime(DateUtils.nowString())
                 .getMin();
     }
 
