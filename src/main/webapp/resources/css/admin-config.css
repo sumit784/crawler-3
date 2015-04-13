@@ -40,6 +40,6 @@ fieldset.textOnly input {
     width: 30px;
 }
 
-#footLink > div {
-    padding-left: 10px;
+#footLink > table, #footLink > div {
+    margin-left: 10px;
 }

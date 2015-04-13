@@ -17,19 +17,4 @@
         <input type="text" name="link"/>
     </div>
     <%@include file="admin-form-submit.jsp" %>
-    <%--
-    <div class="button">
-        <button id="addPosterSubmit" type="submit" class="btn btn-primary"
-                ng-click="validatePosterInput($event)">
-            添加
-        </button>
-        <button id="editPosterSubmit" type="submit" class="btn btn-success"
-                ng-click="validatePosterInput($event)">
-            修改
-        </button>
-        <button ng-click="cancelPosterInput()" type="button" class="btn btn-default">
-            取消
-        </button>
-    </div>
-    --%>
 </form>

@@ -4,9 +4,18 @@ package com.qinyuan15.crawler.dao;
  * Persist Object of AppConfigFootLink
  * Created by qinyuan on 15-4-13.
  */
-public class AppConfigFootLink extends PersistObject {
+public class AppConfigFootLink extends PersistObject implements Ranking {
     private String text;
     private String link;
+    private Integer ranking;
+
+    public Integer getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Integer ranking) {
+        this.ranking = ranking;
+    }
 
     public String getText() {
         return text;

@@ -21,7 +21,7 @@
         </fieldset>
         <div class="split"></div>
         <fieldset id="footLink">
-            <legend>页尾设置</legend>
+            <legend>页尾链接设置</legend>
             <%--
             <div class="link">
                 <div class="item" ng-repeat="footLink in footLinks">
@@ -52,6 +52,16 @@
                     <td>${footLink.id}</td>
                     <td>${footLink.text}</td>
                     <td>${footLink.link}</td>
+                    <td>
+                        <jsp:include page="widget-edit-delete.jsp">
+                            <jsp:param name="editAction" value="editFootLink($index)"/>
+                            <jsp:param name="deleteAction" value="deleteFootLink($index)"/>
+                        </jsp:include>
+                        <jsp:include page="widget-ranking.jsp">
+                            <jsp:param name="rankUpAction" value="rankUpFootLink($index)"/>
+                            <jsp:param name="rankDownAction" value="rankDownFootLink($index)"/>
+                        </jsp:include>
+                    </td>
                 </c:forEach>
                 </tbody>
             </table>
