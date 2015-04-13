@@ -91,7 +91,7 @@
             return this;
         },
         validate: function () {
-            return validateTextInput(this.get$Text(), '显示内容不能为空')
+            return validateTextInput(this.get$Text(), '显示文字不能为空')
                 && validateTextInput(this.get$Link(), '目标链接不能为空');
         }
     });
@@ -107,6 +107,21 @@
             var text = $.trim($tr.find('td.text').text());
             var link = $.trim($tr.find('td.link').text());
             footLinkInput.setValue(id, text, link).toEditModeAndShow();
+        };
+        $scope.rankUpFootLink = function (event) {
+            $.post('app-config-foot-link-rank-up', {
+                id: getTableRowIdByImgElement(event.target)
+            }, normalSubmitCallback);
+        };
+        $scope.rankDownFootLink = function (event) {
+            $.post('app-config-category-rank-down', {
+                id: getTableRowIdByImgElement(event.target)
+            }, normalSubmitCallback);
+        };
+        $scope.deleteFootLink = function (event) {
+            $.post('admin-category-rank-down', {
+                id: getTableRowIdByImgElement(event.target)
+            }, normalSubmitCallback);
         };
     });
 })();

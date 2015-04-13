@@ -12,6 +12,11 @@ import java.util.List;
 public class AppConfigFootLinkDao {
     private final static Logger LOGGER = LoggerFactory.getLogger(AppConfigFootLink.class);
 
+    public String getTextById(Integer id) {
+        AppConfigFootLink footLink = getInstance(id);
+        return footLink == null ? null : footLink.getText();
+    }
+
     public AppConfigFootLink getInstance(Integer id) {
         return HibernateUtils.get(AppConfigFootLink.class, id);
     }
@@ -24,9 +29,9 @@ public class AppConfigFootLinkDao {
         HibernateUtils.deleteAll(AppConfigFootLink.class);
     }
 
-    public Integer add(String path, String link) {
+    public Integer add(String text, String link) {
         AppConfigFootLink footLink = new AppConfigFootLink();
-        footLink.setText(path);
+        footLink.setText(text);
         footLink.setLink(link);
         return new RankingDao().add(footLink);
     }

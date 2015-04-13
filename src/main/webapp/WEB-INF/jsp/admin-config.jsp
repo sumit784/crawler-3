@@ -135,11 +135,11 @@
             </button>
         </div>
     </form>
-    <form class="fixedForm" id="footLinkForm" method="post" action="admin-config-foot-link-add-update">
+    <form class="fixedForm" id="footLinkForm" method="post" action="app-config-foot-link-add-update">
         <input type="hidden" name="id"/>
 
         <div>
-            <label>显示内容</label>
+            <label>显示文字</label>
             <span class="required">*</span>
             <br/>
             <input type="text" name="text"/>

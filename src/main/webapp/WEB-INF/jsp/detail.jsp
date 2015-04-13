@@ -47,7 +47,7 @@
                 </div>
                 <div>
                     最高售价： <span class="highestPrice">￥${highPrice}</span>
-                    发现时间： <span class="releaseDate">${commodity.discoverTime}</span>
+                    上架时间： <span class="releaseDate">${commodity.onShelfTime}</span>
                 </div>
                 <div class="trend">
                     <div class="text">

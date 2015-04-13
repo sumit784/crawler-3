@@ -138,4 +138,13 @@ public class Commodity extends PersistObject {
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
+
+    public String getOnShelfTime() {
+        PriceRecord firstPriceRecord = new PriceRecordDao().getFirstInstance(getId());
+        if (firstPriceRecord == null) {
+            return null;
+        }
+
+        return firstPriceRecord.getRecordTime().toString();
+    }
 }
