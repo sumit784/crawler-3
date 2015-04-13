@@ -10,5 +10,6 @@
         </id>
         <property name="text"/>
         <property name="link"/>
+        <property name="ranking"/>
     </class>
 </hibernate-mapping>

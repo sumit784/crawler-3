@@ -22,46 +22,32 @@
         <div class="split"></div>
         <fieldset id="footLink">
             <legend>页尾链接设置</legend>
-            <%--
-            <div class="link">
-                <div class="item" ng-repeat="footLink in footLinks">
-                    显示内容
-                    <input type="text" name="footLinkText" value="{{footLink.text}}"/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    目标链接
-                    <input type="text" name="footLinkLink" value="{{footLink.link}}"/>
-                    <jsp:include page="widget-delete.jsp">
-                        <jsp:param name="deleteAction" value="deleteFootLink"/>
-                    </jsp:include>
-                    <jsp:include page="widget-ranking.jsp">
-                        <jsp:param name="upAction" value="rankUpFootLink($event)"/>
-                        <jsp:param name="downAction" value="rankDownFootLink($event)"/>
-                    </jsp:include>
-                </div>
-            </div>
-            --%>
             <table class="normal">
                 <thead>
-                <th>序号</th>
-                <th>显示内容</th>
-                <th>目标链接</th>
-                <th></th>
+                <tr>
+                    <th>序号</th>
+                    <th>显示内容</th>
+                    <th>目标链接</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="footLink" items="${footLinks}">
-                    <td>${footLink.id}</td>
-                    <td>${footLink.text}</td>
-                    <td>${footLink.link}</td>
-                    <td>
-                        <jsp:include page="widget-edit-delete.jsp">
-                            <jsp:param name="editAction" value="editFootLink($index)"/>
-                            <jsp:param name="deleteAction" value="deleteFootLink($index)"/>
-                        </jsp:include>
-                        <jsp:include page="widget-ranking.jsp">
-                            <jsp:param name="rankUpAction" value="rankUpFootLink($index)"/>
-                            <jsp:param name="rankDownAction" value="rankDownFootLink($index)"/>
-                        </jsp:include>
-                    </td>
+                <c:forEach var="footLink" items="${footLinks}" varStatus="status">
+                    <tr id="footLink_${footLink.id}">
+                        <td class="index">${status.index+1}</td>
+                        <td class="text">${footLink.text}</td>
+                        <td class="link">${footLink.link}</td>
+                        <td class="action">
+                            <jsp:include page="widget-edit-delete.jsp">
+                                <jsp:param name="editAction" value="editFootLink($event)"/>
+                                <jsp:param name="deleteAction" value="deleteFootLink($event)"/>
+                            </jsp:include>
+                            <jsp:include page="widget-ranking.jsp">
+                                <jsp:param name="rankUpAction" value="rankUpFootLink($event)"/>
+                                <jsp:param name="rankDownAction" value="rankDownFootLink($event)"/>
+                            </jsp:include>
+                        </td>
+                    </tr>
                 </c:forEach>
                 </tbody>
             </table>

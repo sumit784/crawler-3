@@ -76,65 +76,37 @@
     };
     input.get$GlobalBanner().focusOrSelect();
 
-    var footLinkInput = {
+    var footLinkInput = buildInput({
         $form: $('#footLinkForm'),
-        get$Id: function () {
-            return this.$form.find('input[name=id]');
-        },
-        get$CategoryId: function () {
-            return this.$form.find('input[name=categoryId]');
-        },
-        get$AddSubmit: function () {
-            return $('#addSubmit');
-        },
-        get$EditSubmit: function () {
-            return $('#editSubmit');
-        },
-        get$Url: function () {
-            return this.$form.find('input[name=poster]');
+        get$Text: function () {
+            return this.$form.find('input[name=text]');
         },
         get$Link: function () {
             return this.$form.find('input[name=link]');
         },
-        get$UploadFile: function () {
-            return this.$form.find('input[name=posterFile]');
-        },
-        show: function (id, categoryId, imageUrl, link) {
+        setValue: function (id, text, link) {
             this.get$Id().val(id);
-            this.get$CategoryId().val(categoryId);
-            this.get$Url().val(imageUrl);
+            this.get$Text().val(text);
             this.get$Link().val(link);
-            this.get$UploadFile().val(null);
-            transparentBackground.show();
-            this.$form.show();
-            this.get$Url().focusOrSelect();
-        },
-        hide: function () {
-            this.$form.hide();
-            transparentBackground.hide();
+            return this;
         },
         validate: function () {
-            if (this.get$Url().val() == '' && this.get$UploadFile().val() == '') {
-                alert('图片未设置');
-                this.get$Url().focusOrSelect();
-                return false;
-            } else {
-                return true;
-            }
+            return validateTextInput(this.get$Text(), '显示内容不能为空')
+                && validateTextInput(this.get$Link(), '目标链接不能为空');
         }
-    };
+    });
 
-    angularUtils.controller(function ($scope, $http) {
+    angularUtils.controller(function ($scope) {
         $scope.validateConfigInput = buildNormalValidationCallback(input);
         $scope.addFootLink = function () {
-            $scope.footLinks.push({
-                'text': '',
-                'link': ''
-            });
+            footLinkInput.toAddModeAndShow();
         };
-        //$('#footLinkForm').show();
-        $http.get('json/footLink.json').success(function (data) {
-            $scope.footLinks = data;
-        });
+        $scope.editFootLink = function (event) {
+            var $tr = getParent($(event.target), 'tr');
+            var id = $tr.parseIntegerInId();
+            var text = $.trim($tr.find('td.text').text());
+            var link = $.trim($tr.find('td.link').text());
+            footLinkInput.setValue(id, text, link).toEditModeAndShow();
+        };
     });
 })();

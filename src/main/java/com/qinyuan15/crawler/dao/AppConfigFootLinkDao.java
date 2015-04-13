@@ -17,19 +17,18 @@ public class AppConfigFootLinkDao {
     }
 
     public List<AppConfigFootLink> getInstances() {
-        return HibernateUtils.getList(AppConfigFootLink.class);
+        return new RankingDao().getInstances(AppConfigFootLink.class);
     }
 
     public void clear() {
         HibernateUtils.deleteAll(AppConfigFootLink.class);
     }
 
-    public void add(String path, String link) {
-        AppConfigFootLink image = new AppConfigFootLink();
-        image.setId(HibernateUtils.getMaxId(AppConfigFootLink.class) + 1);
-        image.setText(path);
-        image.setLink(link);
-        HibernateUtils.save(image);
+    public Integer add(String path, String link) {
+        AppConfigFootLink footLink = new AppConfigFootLink();
+        footLink.setText(path);
+        footLink.setLink(link);
+        return new RankingDao().add(footLink);
     }
 
     public void edit(Integer id, String text, String link) {
@@ -41,6 +40,14 @@ public class AppConfigFootLinkDao {
             image.setLink(link);
             HibernateUtils.update(image);
         }
+    }
+
+    public void rankUp(int id) {
+        new RankingDao().rankUp(AppConfigFootLink.class, id);
+    }
+
+    public void rankDown(int id) {
+        new RankingDao().rankDown(AppConfigFootLink.class, id);
     }
 
     public void delete(Integer id) {
