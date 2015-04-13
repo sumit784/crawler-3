@@ -56,7 +56,7 @@
                 $scope.shoppes = [];
                 $scope.$apply();
             }
-        }, true);
+        });
         input.get$Name().keyup(function () {
             var name = $(this).val();
             if (name != '') {
@@ -71,7 +71,6 @@
             }
         });
 
-        $scope.validateInput = buildNormalValidationCallback(input);
         $scope.editBranch = function (event) {
             var $tr = getParent($(event.target), 'tr');
             var id = $tr.parseIntegerInId();
@@ -85,7 +84,7 @@
             var slogan = $tr.find('td.slogan').text();
 
             input.get$Id().val(id);
-            input.get$Name().val(name).focusOrSelect();
+            input.get$Name().val(name);
             input.get$FirstLetter().val(firstLetter);
             input.get$ParentId().val(parentId);
             input.get$Logo().val(logo);

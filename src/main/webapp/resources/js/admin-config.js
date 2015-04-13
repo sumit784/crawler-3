@@ -76,7 +76,65 @@
     };
     input.get$GlobalBanner().focusOrSelect();
 
-    angularUtils.controller(function ($scope) {
+    var footLinkInput = {
+        $form: $('#footLinkForm'),
+        get$Id: function () {
+            return this.$form.find('input[name=id]');
+        },
+        get$CategoryId: function () {
+            return this.$form.find('input[name=categoryId]');
+        },
+        get$AddSubmit: function () {
+            return $('#addSubmit');
+        },
+        get$EditSubmit: function () {
+            return $('#editSubmit');
+        },
+        get$Url: function () {
+            return this.$form.find('input[name=poster]');
+        },
+        get$Link: function () {
+            return this.$form.find('input[name=link]');
+        },
+        get$UploadFile: function () {
+            return this.$form.find('input[name=posterFile]');
+        },
+        show: function (id, categoryId, imageUrl, link) {
+            this.get$Id().val(id);
+            this.get$CategoryId().val(categoryId);
+            this.get$Url().val(imageUrl);
+            this.get$Link().val(link);
+            this.get$UploadFile().val(null);
+            transparentBackground.show();
+            this.$form.show();
+            this.get$Url().focusOrSelect();
+        },
+        hide: function () {
+            this.$form.hide();
+            transparentBackground.hide();
+        },
+        validate: function () {
+            if (this.get$Url().val() == '' && this.get$UploadFile().val() == '') {
+                alert('图片未设置');
+                this.get$Url().focusOrSelect();
+                return false;
+            } else {
+                return true;
+            }
+        }
+    };
+
+    angularUtils.controller(function ($scope, $http) {
         $scope.validateConfigInput = buildNormalValidationCallback(input);
+        $scope.addFootLink = function () {
+            $scope.footLinks.push({
+                'text': '',
+                'link': ''
+            });
+        };
+        //$('#footLinkForm').show();
+        $http.get('json/footLink.json').success(function (data) {
+            $scope.footLinks = data;
+        });
     });
 })();

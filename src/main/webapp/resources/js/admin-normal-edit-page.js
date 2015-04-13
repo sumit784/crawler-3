@@ -36,44 +36,85 @@ function removeTableRow(elementInTableRowRow) {
     }, 500);
 }
 
-function buildInput(attrs, disableAjax) {
+function buildInput(attrs) {
     attrs.get$AddSubmit = function () {
-        return $('#addSubmit');
+        return this.$form.find('button.add');
     };
     attrs.get$EditSubmit = function () {
-        return $('#editSubmit');
+        return this.$form.find('button.edit');
     };
     attrs.get$EditCancel = function () {
-        return $('#editCancel');
+        return this.$form.find('button.cancel');
     };
     attrs.get$Id = function () {
         return this.$form.find('input[name=id]');
     };
-    if (!disableAjax) {
+    if (attrs.$form.attr('enctype') != 'multipart/form-data') {
         attrs.$form.ajaxForm(normalSubmitCallback);
     }
+    attrs.isFixed = function () {
+        return attrs.$form.hasClass('fixedForm');
+    };
+    if (attrs.isFixed()) {
+        attrs.get$EditCancel().text('取消');
+    }
     attrs.toEditMode = function () {
-        this.get$AddSubmit().attr('disabled', true);
-        this.get$EditSubmit().attr('disabled', false);
+        this.get$AddSubmit().attr({'disabled': true, 'type': 'button'}).show();
+        this.get$EditSubmit().attr({'disabled': false, 'type': 'submit'}).show();
         this.get$EditCancel().attr('disabled', false);
-        scrollTop(this.$form);
+        if (this.isFixed()) {
+            this.get$AddSubmit().hide();
+        } else {
+            scrollTop(this.$form);
+        }
+        return this.focus();
+    };
+    attrs.toEditModeAndShow = function () {
+        return this.show().toEditMode();
+    };
+    attrs.show = function () {
+        if (this.isFixed()) {
+            transparentBackground.show();
+            this.$form.show();
+        }
         return this;
     };
     attrs.focus = function () {
-        this.$form.find('input[type=text]').eq(0).focus();
+        this.$form.find('input[type=text]').eq(0).focusOrSelect();
+        return this;
+    };
+    attrs.toAddMode = function () {
+        this.$form[0].reset();
+        this.get$Id().val(null);
+        this.get$AddSubmit().attr({'disabled': false, 'type': 'submit'}).show();
+        this.get$EditSubmit().attr({'disabled': true, 'type': 'button'}).show();
+        if (this.isFixed()) {
+            this.get$EditSubmit().hide();
+            this.get$EditCancel().attr('disabled', false);
+        } else {
+            this.get$EditCancel().attr('disabled', true);
+        }
+        return this.focus();
+    };
+    attrs.toAddModeAndShow = function () {
+        return this.show().toAddMode();
+    };
+    attrs.hide = function () {
+        if (this.isFixed()) {
+            this.$form.hide();
+            transparentBackground.hide();
+        }
         return this;
     };
     attrs.get$EditCancel().click(function () {
-        attrs.$form[0].reset();
-        attrs.focus();
-        attrs.get$Id().val(null);
-        attrs.get$AddSubmit().attr('disabled', false);
-        attrs.get$EditSubmit().attr('disabled', true);
-        attrs.get$EditCancel().attr('disabled', true);
+        attrs.toAddMode();
         if (attrs['afterEditCancel']) {
             attrs['afterEditCancel']();
         }
+        attrs.hide();
     });
+    attrs.get$AddSubmit().click(buildNormalValidationCallback(attrs));
+    attrs.get$EditSubmit().click(buildNormalValidationCallback(attrs));
     return attrs;
 }
 

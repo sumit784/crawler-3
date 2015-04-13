@@ -39,3 +39,7 @@ fieldset.textOnly > div {
 fieldset.textOnly input {
     width: 30px;
 }
+
+#footLink > div {
+    padding-left: 10px;
+}

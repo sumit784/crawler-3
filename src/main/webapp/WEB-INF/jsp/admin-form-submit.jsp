@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="button">
-    <button id="addSubmit" type="submit" class="btn btn-success"
-            ng-click="validateInput($event)">
+    <button type="submit" class="btn btn-success add">
         添加
     </button>
-    <button id="editSubmit" type="submit" class="btn btn-primary" disabled
-            ng-click="validateInput($event)">
+    <button type="button" class="btn btn-primary edit" disabled>
         修改
     </button>
-    <button id="editCancel" type="button" class="btn btn-default" disabled>
+    <button type="button" class="btn btn-default cancel" disabled>
         取消修改
     </button>
 </div>

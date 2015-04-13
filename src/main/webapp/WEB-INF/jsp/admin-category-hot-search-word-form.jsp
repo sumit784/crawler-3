@@ -9,6 +9,8 @@
         &nbsp;&nbsp;
         <input type="checkbox" name="hot"/>热点词
     </div>
+    <%@include file="admin-form-submit.jsp"%>
+    <%--
     <div>
         <button id="addSearchWordSubmit" type="submit" class="btn btn-success"
                 ng-click="validateSearchWordInput($event)">
@@ -22,4 +24,5 @@
             取消
         </button>
     </div>
+    --%>
 </form>

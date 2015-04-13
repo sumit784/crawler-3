@@ -21,14 +21,9 @@ public class AppConfigDetailImageDao {
         return HibernateUtils.get(AppConfigDetailImage.class, id);
     }
 
-    private int getMaxId() {
-        Integer id = (Integer) HibernateUtils.getFirstItem("SELECT MAX(id) FROM AppConfigDetailImage");
-        return id == null || id < 0 ? 0 : id;
-    }
-
     public void add(String path, String link) {
         AppConfigDetailImage image = new AppConfigDetailImage();
-        image.setId(getMaxId() + 1);
+        image.setId(HibernateUtils.getMaxId(AppConfigDetailImage.class) + 1);
         image.setPath(path);
         image.setLink(link);
         HibernateUtils.save(image);

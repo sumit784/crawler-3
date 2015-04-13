@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.dao;
 
+import com.qinyuan15.crawler.utils.IntegerUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -94,6 +95,10 @@ public class HibernateUtils {
                 adjustWhereClause(whereClause);
         session.createQuery(hql).executeUpdate();
         HibernateUtils.commit(session);
+    }
+
+    public static void deleteAll(Class<?> clazz) {
+        delete(clazz, "1=1");
     }
 
     private static String adjustWhereClause(String whereClause) {
@@ -198,5 +203,10 @@ public class HibernateUtils {
         List list = getList("SELECT COUNT(*) FROM " + className + " " +
                 adjustWhereClause(whereCondition));
         return (Long) list.get(0);
+    }
+
+    public static int getMaxId(Class<?> clazz) {
+        Integer id = (Integer) HibernateUtils.getFirstItem("SELECT MAX(id) FROM " + clazz.getSimpleName());
+        return IntegerUtils.isPositive(id) ? id : 0;
     }
 }

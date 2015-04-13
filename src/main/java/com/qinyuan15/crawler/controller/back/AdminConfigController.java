@@ -4,6 +4,7 @@ import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.config.LinkAdapter;
 import com.qinyuan15.crawler.dao.AppConfig;
 import com.qinyuan15.crawler.dao.AppConfigDao;
+import com.qinyuan15.crawler.dao.AppConfigFootLinkDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ public class AdminConfigController extends ImageController {
 
     @RequestMapping("/admin-config")
     public String index(ModelMap model) {
+        model.addAttribute("footLinks", new AppConfigFootLinkDao().getInstances());
         addCssAndJs("admin-normal-edit-page");
         addHeadJs("image-adjust");
 

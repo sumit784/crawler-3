@@ -20,6 +20,47 @@
             </div>
         </fieldset>
         <div class="split"></div>
+        <fieldset id="footLink">
+            <legend>页尾设置</legend>
+            <%--
+            <div class="link">
+                <div class="item" ng-repeat="footLink in footLinks">
+                    显示内容
+                    <input type="text" name="footLinkText" value="{{footLink.text}}"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    目标链接
+                    <input type="text" name="footLinkLink" value="{{footLink.link}}"/>
+                    <jsp:include page="widget-delete.jsp">
+                        <jsp:param name="deleteAction" value="deleteFootLink"/>
+                    </jsp:include>
+                    <jsp:include page="widget-ranking.jsp">
+                        <jsp:param name="upAction" value="rankUpFootLink($event)"/>
+                        <jsp:param name="downAction" value="rankDownFootLink($event)"/>
+                    </jsp:include>
+                </div>
+            </div>
+            --%>
+            <table class="normal">
+                <thead>
+                <th>序号</th>
+                <th>显示内容</th>
+                <th>目标链接</th>
+                <th></th>
+                </thead>
+                <tbody>
+                <c:forEach var="footLink" items="${footLinks}">
+                    <td>${footLink.id}</td>
+                    <td>${footLink.text}</td>
+                    <td>${footLink.link}</td>
+                </c:forEach>
+                </tbody>
+            </table>
+            <div class="add">
+                <img ng-click="addFootLink()" class="link" title="添加"
+                     src="resources/css/images/add.png">
+            </div>
+        </fieldset>
+        <div class="split"></div>
         <fieldset>
             <legend><a target="_blank" href="index.html">主页(index.html)</a>设置</legend>
             <div class="uploadImage">
@@ -97,6 +138,23 @@
                 提交修改
             </button>
         </div>
+    </form>
+    <form class="fixedForm" id="footLinkForm" method="post" action="admin-config-foot-link-add-update">
+        <input type="hidden" name="id"/>
+
+        <div>
+            <label>显示内容</label>
+            <span class="required">*</span>
+            <br/>
+            <input type="text" name="text"/>
+        </div>
+        <div>
+            <label>目标链接</label>
+            <span class="required">*</span>
+            <br/>
+            <input type="text" name="link"/>
+        </div>
+        <%@include file="admin-form-submit.jsp" %>
     </form>
 </div>
 <%@include file="footer.jsp" %>

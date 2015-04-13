@@ -13,11 +13,8 @@
         }
     });
 
-    var searchWordInput = {
+    var searchWordInput = buildInput({
         $form: $('#searchWordForm'),
-        get$Id: function () {
-            return this.$form.find('input[name=id]');
-        },
         get$CategoryId: function () {
             return this.$form.find('input[name=categoryId]');
         },
@@ -27,13 +24,7 @@
         get$Hot: function () {
             return this.$form.find('input[name=hot]');
         },
-        get$AddSubmit: function () {
-            return $('#addSearchWordSubmit');
-        },
-        get$EditSubmit: function () {
-            return $('#editSearchWordSubmit');
-        },
-        show: function (id, categoryId, content, hot) {
+        setValue: function (id, categoryId, content, hot) {
             this.get$Id().val(id);
             this.get$CategoryId().val(categoryId);
             this.get$Content().val(content);
@@ -42,27 +33,17 @@
             } else {
                 this.get$Hot().attr('checked', null);
             }
-            transparentBackground.show();
-            this.$form.show();
-            this.get$Content().focusOrSelect();
-        },
-        hide: function () {
-            this.$form.hide();
-            transparentBackground.hide();
+            return this;
         },
         validate: function () {
             return validateTextInput(this.get$Content(), '搜索关键词不能为空');
         }
-    };
-    searchWordInput.$form.ajaxForm(normalSubmitCallback);
+    });
 
-    var branchInput = {
+    var branchInput = buildInput({
         $form: $('#branchForm'),
         get$CategoryId: function () {
             return this.$form.find('input[name=categoryId]');
-        },
-        get$AddSubmit: function () {
-            return $('#addBranchSubmit');
         },
         get$BranchLogos: function () {
             return this.$form.find('img.branch-logo');
@@ -87,12 +68,7 @@
                 this._insertInput($(target).parent(), $target.dataOptions()['id']);
             }
         },
-        /*showBranchGroup: function (index) {
-         this.$form.find('div.branchGroupLetter > div').removeClass('selected')
-         .eq(index).addClass('selected');
-         this.$form.find('div.branchGroup').hide().eq(index).show();
-         },*/
-        show: function (categoryId, excludeBranchIds) {
+        setValue: function (categoryId, excludeBranchIds) {
             this.get$CategoryId().val(categoryId);
             var self = this;
             this.get$BranchLogos().each(function () {
@@ -106,12 +82,7 @@
                 }
                 self._removeInput($branchDiv);
             });
-            transparentBackground.show();
-            this.$form.show();
-        },
-        hide: function () {
-            this.$form.hide();
-            transparentBackground.hide();
+            return this;
         },
         validate: function () {
             if (this._get$BranchIds().size() == 0) {
@@ -121,8 +92,7 @@
                 return true;
             }
         }
-    };
-    branchInput.$form.ajaxForm(normalSubmitCallback);
+    });
 
     var posterInput = {
         $form: $('#posterForm'),
@@ -171,11 +141,9 @@
             }
         }
     };
-    //posterInput.$form.ajaxForm(normalSubmitCallback);
 
     angularUtils.controller(function ($scope) {
         // actions about category
-        $scope.validateInput = buildNormalValidationCallback(input);
         $scope.deleteCategory = function (event) {
             var target = event.target;
             var id = getTableRowIdByImgElement(target);
@@ -224,10 +192,6 @@
         };
 
         // actions about search word
-        $scope.validateSearchWordInput = buildNormalValidationCallback(searchWordInput);
-        $scope.cancelSearchWordInput = function () {
-            searchWordInput.hide();
-        };
         $scope.deleteSearchWord = function (event) {
             var target = event.target;
             $.post('admin-hot-search-word-delete', {
@@ -238,21 +202,15 @@
         };
         $scope.addSearchWord = function (event) {
             var categoryId = getTableRowIdByImgElement(event.target);
-            searchWordInput.get$EditSubmit().hide();
-            searchWordInput.get$AddSubmit().show();
-            searchWordInput.show(-1, categoryId, '', false);
+            searchWordInput.toAddModeAndShow().get$CategoryId().val(categoryId);
         };
         $scope.editSearchWord = function (event) {
-            var $this = $(event.target);
-            var $tr = getParent($this, 'tr');
+            var $tr = getParent($(event.target), 'tr');
             var id = $tr.parseIntegerInId();
             var content = $.trim($tr.find('td.content').text());
             var hot = $tr.find('td.content span').hasClass('hot');
             var categoryId = getParent($tr, 'tr').parseIntegerInId();
-
-            searchWordInput.get$EditSubmit().show();
-            searchWordInput.get$AddSubmit().hide();
-            searchWordInput.show(id, categoryId, content, hot);
+            searchWordInput.setValue(id, categoryId, content, hot).toEditModeAndShow();
         };
         $scope.rankUpSearchWord = function (event) {
             var target = event.target;
@@ -272,7 +230,6 @@
         };
 
         // actions about branches
-        $scope.validateBranchInput = buildNormalValidationCallback(branchInput);
         $scope.addBranch = function (event) {
             var $tr = getParent($(event.target), 'tr');
             var categoryId = $tr.parseIntegerInId();
@@ -280,7 +237,7 @@
             $tr.find('td.branch tr').each(function () {
                 branchIds.push($(this).parseIntegerInId());
             });
-            branchInput.show(categoryId, branchIds);
+            branchInput.setValue(categoryId, branchIds).toAddModeAndShow();
         };
         $scope.deleteBranch = function (event) {
             var target = event.target;

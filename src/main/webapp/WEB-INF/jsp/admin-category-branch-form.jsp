@@ -5,7 +5,7 @@
     <div class="branchGroupLetter">
         <c:forEach var="branchGroup" items="${branchGroups}" varStatus="status">
             <div id="letter_${status.index}" ng-mouseover="showBranchGroup($event)"
-                <c:if test="${status.index==0}">class="selected"</c:if>>${branchGroup.letter}</div>
+                 <c:if test="${status.index==0}">class="selected"</c:if>>${branchGroup.letter}</div>
         </c:forEach>
     </div>
     <c:forEach var="branchGroup" items="${branchGroups}" varStatus="status">
@@ -19,6 +19,8 @@
             </c:forEach>
         </div>
     </c:forEach>
+    <%@include file="admin-form-submit.jsp" %>
+    <%--
     <div>
         <button id="addBranchSubmit" type="submit" class="btn btn-success"
                 ng-click="validateBranchInput($event)">
@@ -28,4 +30,5 @@
             取消
         </button>
     </div>
+    --%>
 </form>

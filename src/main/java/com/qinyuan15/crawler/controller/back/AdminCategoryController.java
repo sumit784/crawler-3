@@ -8,6 +8,7 @@ import com.qinyuan15.crawler.dao.CategoryDao;
 import com.qinyuan15.crawler.dao.HibernateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,6 +51,10 @@ public class AdminCategoryController extends ImageController {
     public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
                                          @RequestParam(value = "name", required = true) String name,
                                          @RequestParam(value = "parentId", required = false) Integer parentId) {
+        if (!StringUtils.hasText(name)) {
+            return createFailResult("名称不能为空！");
+        }
+
         if (!isPositive(parentId)) {
             parentId = null;
         }
