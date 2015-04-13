@@ -9,13 +9,7 @@
             return this.$form.find('select[name=parentId]');
         },
         validate: function () {
-            if ($.trim(this.get$Name().val()) == '') {
-                alert('名称不能为空');
-                this.get$Name().focusOrSelect();
-                return false;
-            } else {
-                return true;
-            }
+            return validateTextInput(this.get$Name(), '名称不能为空');
         }
     });
 
@@ -57,13 +51,7 @@
             transparentBackground.hide();
         },
         validate: function () {
-            if ($.trim(this.get$Content().val()) == '') {
-                alert('搜索关键词不能为空');
-                this.get$Content().focusOrSelect();
-                return false;
-            } else {
-                return true;
-            }
+            return validateTextInput(this.get$Content(), '搜索关键词不能为空');
         }
     };
     searchWordInput.$form.ajaxForm(normalSubmitCallback);

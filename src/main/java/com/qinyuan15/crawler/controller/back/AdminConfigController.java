@@ -7,6 +7,7 @@ import com.qinyuan15.crawler.dao.AppConfigDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,11 +24,11 @@ public class AdminConfigController extends ImageController {
     private final static String SAVE_PATH_PREFIX = "mall/config/images/";
 
     @RequestMapping("/admin-config")
-    public String index() {
+    public String index(ModelMap model) {
         addCssAndJs("admin-normal-edit-page");
         addHeadJs("image-adjust");
 
-        setTitle("系统配置");
+        setTitle("系统设置");
         return ADMIN_CONFIG;
     }
 

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.qinyuan15.crawler.dao">
+    <class name="SeoKeyword" table="seo_keyword">
+        <id name="id" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="url"/>
+        <property name="word"/>
+    </class>
+</hibernate-mapping>

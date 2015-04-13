@@ -38,9 +38,6 @@
         get$NoFoundImageFile: function () {
             return this.$form.find('input[name=noFoundImageFile]');
         },
-        get$EditSubmit: function () {
-            return $('#editImageSubmit');
-        },
         validate: function () {
             if ($.trim(this.get$GlobalBanner().val()) == '' &&
                 $.trim(this.get$GlobalBannerFile().val()) == '') {
@@ -78,7 +75,8 @@
         }
     };
     input.get$GlobalBanner().focusOrSelect();
+
     angularUtils.controller(function ($scope) {
-        $scope.validateInput = buildNormalValidationCallback(input);
+        $scope.validateConfigInput = buildNormalValidationCallback(input);
     });
 })();

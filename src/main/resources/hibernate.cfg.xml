@@ -23,6 +23,7 @@
         <mapping resource="com/qinyuan15/crawler/dao/AppConfig.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/AppConfigDetailImage.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/IndexLogo.hbm.xml"/>
+        <mapping resource="com/qinyuan15/crawler/dao/SeoKeyword.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/User.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/UserLog.hbm.xml"/>
         <mapping resource="com/qinyuan15/crawler/dao/Shoppe.hbm.xml"/>

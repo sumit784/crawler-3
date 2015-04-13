@@ -1,0 +1,27 @@
+div.content > div.keyword table {
+    float: left;
+}
+
+div.content > div.keyword table col.url {
+    width: 120px;
+}
+
+div.content > div.keyword table col.word {
+    width: 400px;
+}
+
+div.content > div.keyword table col.action {
+    width: 50px;
+}
+
+div.content > div.keyword table input {
+    width: 380px;
+}
+
+div.content > div.keyword form {
+    float: right;
+}
+
+div.content > div.keyword form div {
+    margin: 20px;
+}

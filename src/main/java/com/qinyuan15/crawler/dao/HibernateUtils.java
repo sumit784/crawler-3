@@ -109,7 +109,7 @@ public class HibernateUtils {
         }
     }
 
-    public static void delete(Class clazz, Integer id) {
+    public static void delete(Class<?> clazz, Integer id) {
         Session session = HibernateUtils.getSession();
         try {
             Object object = session.get(clazz, id);

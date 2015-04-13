@@ -26,7 +26,8 @@
         <div class="index-logo"><a target="_blank" href="admin-index-logo.html">主页管理&gt;&gt;</a></div>
         <div class="detail"><a target="_blank" href="admin-detail.html">详情页管理&gt;&gt;</a></div>
         <div class="user"><a target="_blank" href="admin-user.html">用户管理&gt;&gt;</a></div>
-        <div class="config"><a target="_blank" href="admin-config.html">系统配置&gt;&gt;</a></div>
+        <div class="config"><a target="_blank" href="admin-config.html">系统设置&gt;&gt;</a></div>
+        <div class="seo"><a target="_blank" href="admin-seo.html">SEO设置&gt;&gt;</a></div>
     </security:authorize>
 </div>
 <div class="split"></div>

@@ -31,19 +31,8 @@
                 return this.$form.find('textarea[name=slogan]');
             },
             validate: function () {
-                function isEmpty($input) {
-                    var empty = ($.trim($input.val()) == '');
-                    if (empty) {
-                        $input.focusOrSelect();
-                    }
-                    return empty;
-                }
-
-                if (isEmpty(this.get$Name())) {
-                    alert('名称未设置');
-                    return false
-                } else if (isEmpty(this.get$FirstLetter())) {
-                    alert('首字母未设置');
+                if (!validateTextInput(this.get$Name(), '名称未设置')
+                    || !validateTextInput(this.get$FirstLetter(), '首字母未设置')) {
                     return false;
                 }
 

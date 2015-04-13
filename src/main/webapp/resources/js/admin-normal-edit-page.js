@@ -77,16 +77,23 @@ function buildInput(attrs, disableAjax) {
     return attrs;
 }
 
+function validateTextInput($input, info) {
+    if ($.trim($input.val()) == '') {
+        alert(info);
+        $input.focusOrSelect();
+        return false;
+    } else {
+        return true;
+    }
+}
+
 (function () {
-    $('form').each(function () {
-        var index = 0;
-        $(this).find('input').each(function () {
-            var $this = $(this);
-            var type = $this.attr('type');
-            if ((type == 'text' || type == 'password' ) && !$this.attr('tabindex')) {
-                $this.attr('tabindex', ++index);
-            }
-        });
+    var index = 0;
+    $('input[type=text],input[type=password],button').each(function () {
+        var $this = $(this);
+        if (!$this.attr('tabindex')) {
+            $this.attr('tabindex', ++index);
+        }
     });
     JSUtils.recordScrollStatus();
 })();

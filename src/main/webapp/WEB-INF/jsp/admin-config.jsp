@@ -19,6 +19,7 @@
                 </jsp:include>
             </div>
         </fieldset>
+        <div class="split"></div>
         <fieldset>
             <legend><a target="_blank" href="index.html">主页(index.html)</a>设置</legend>
             <div class="uploadImage">
@@ -36,9 +37,11 @@
                 </jsp:include>
                 <br/>
                 <label>目标链接: </label>
-                <input style="width:150px;" type="text" name="indexFootPosterLink" value="${appConfig.indexFootPosterLink}"/>
+                <input style="width:150px;" type="text" name="indexFootPosterLink"
+                       value="${appConfig.indexFootPosterLink}"/>
             </div>
         </fieldset>
+        <div class="split"></div>
         <fieldset>
             <legend><a href="list.html" target="_blank">商品列表页(list.html)</a>设置</legend>
             <div class="uploadImage">
@@ -60,6 +63,7 @@
                 <textarea name="noFoundText" cols="32" rows="4">${appConfig.noFoundText}</textarea>
             </div>
         </fieldset>
+        <div class="split"></div>
         <fieldset class="textOnly">
             <legend><a href="admin.html" target="_blank">管理员主页(admin.html)</a>设置</legend>
             <div>
@@ -73,6 +77,7 @@
                        value="${appConfig.adminPaginationButtonSize}"/>
             </div>
         </fieldset>
+        <div class="split"></div>
         <fieldset class="textOnly">
             <legend><a href="admin-edit-commodity.html" target="_blank">商品编辑页(admin-edit-commodity.html)</a>设置</legend>
             <div>
@@ -86,11 +91,12 @@
                        value="${appConfig.maxCommodityDetailPictureSize}"/>
             </div>
         </fieldset>
-
-        <button id="editSubmit" type="submit" class="btn btn-primary"
-                ng-click="validateInput($event)">
-            修改
-        </button>
+        <div class="split"></div>
+        <div class="button">
+            <button type="submit" class="btn btn-primary" ng-click="validateConfigInput($event)">
+                提交修改
+            </button>
+        </div>
     </form>
 </div>
 <%@include file="footer.jsp" %>
