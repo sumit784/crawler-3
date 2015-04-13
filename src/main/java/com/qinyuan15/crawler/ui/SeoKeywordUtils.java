@@ -15,16 +15,13 @@ public class SeoKeywordUtils {
     private SeoKeywordUtils() {
     }
 
-    public static String getKeyword(HttpServletRequest request) {
+    public static SeoKeyword getMatchSeoKeyword(HttpServletRequest request) {
         String uri = request.getRequestURI();
 
         List<SeoKeyword> seoKeywords = getMatchSeoKeywords(uri);
-        if (seoKeywords.size() == 0) {
-            return "";
-        } else {
-            return getLongestUrlKeyword(seoKeywords).getWord();
-        }
+        return seoKeywords.size() == 0 ? null : seoKeywords.get(0);
     }
+
 
     private static SeoKeyword getLongestUrlKeyword(List<SeoKeyword> keywords) {
         SeoKeyword result = null;

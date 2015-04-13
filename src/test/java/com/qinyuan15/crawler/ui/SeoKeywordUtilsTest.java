@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.ui;
 
+import com.qinyuan15.crawler.dao.SeoKeyword;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,11 @@ public class SeoKeywordUtilsTest {
         String testPage = "list?id=7";
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(request.getRequestURI()).thenReturn(testPage);
-        System.out.println(SeoKeywordUtils.getKeyword(request));
+        SeoKeyword seoKeyword = SeoKeywordUtils.getMatchSeoKeyword(request);
+        if (seoKeyword != null) {
+            System.out.println(seoKeyword.getUrl());
+            System.out.println(seoKeyword.getWord());
+            System.out.println(seoKeyword.getDescription());
+        }
     }
 }

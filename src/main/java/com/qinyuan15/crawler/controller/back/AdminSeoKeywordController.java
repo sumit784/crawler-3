@@ -4,6 +4,7 @@ import com.qinyuan15.crawler.controller.BaseController;
 import com.qinyuan15.crawler.dao.SeoKeywordDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,16 +33,22 @@ public class AdminSeoKeywordController extends BaseController {
     @RequestMapping(value = "/admin-seo-keyword-add-update", method = RequestMethod.POST)
     public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
                                          @RequestParam(value = "url", required = true) String url,
-                                         @RequestParam(value = "word", required = true) String word) {
+                                         @RequestParam(value = "word", required = true) String word,
+                                         @RequestParam(value = "description", required = true) String description) {
+
+        if (!StringUtils.hasText(url)) {
+            return createFailResult("链接未设置！");
+        }
+
         if (isPositive(id)) {
-            dao.update(id, url, word);
-            logAction("将'%s'链接的SEO关键词更新为'%s'", url, word);
+            dao.update(id, url, word, description);
+            logAction("更新'%s'链接的SEO关键词和描述", url);
         } else {
             if (dao.hasInstance(url)) {
-                return createFailResult("'" + url + "'这一链接的SEO关键词已经被添加，不能重复添加！");
+                return createFailResult("'" + url + "'这一SEO链接已经被添加，不能重复添加！");
             }
-            dao.add(url, word);
-            logAction("为'%s'链接添加了SEO关键词'%s'", url, word);
+            dao.add(url, word, description);
+            logAction("添加了SEO链接'%s'", url);
         }
 
         return SUCCESS;

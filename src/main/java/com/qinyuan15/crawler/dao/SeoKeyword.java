@@ -7,6 +7,7 @@ package com.qinyuan15.crawler.dao;
 public class SeoKeyword extends PersistObject {
     private String url;
     private String word;
+    private String description;
 
     public String getUrl() {
         return url;
@@ -22,5 +23,13 @@ public class SeoKeyword extends PersistObject {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

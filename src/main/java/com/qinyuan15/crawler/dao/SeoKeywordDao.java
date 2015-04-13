@@ -26,17 +26,21 @@ public class SeoKeywordDao {
         HibernateUtils.delete(SeoKeyword.class, id);
     }
 
-    public void add(String url, String word) {
-        SeoKeyword seoKeyword = new SeoKeyword();
-        seoKeyword.setUrl(url);
-        seoKeyword.setWord(word);
-        HibernateUtils.save(seoKeyword);
+    public void add(String url, String word, String description) {
+        HibernateUtils.save(setAttrs(new SeoKeyword(), url, word, description));
     }
 
-    public void update(Integer id, String url, String word) {
+    public void update(Integer id, String url, String word, String description) {
         SeoKeyword seoKeyword = getInstance(id);
+        if (seoKeyword != null) {
+            HibernateUtils.update(setAttrs(seoKeyword, url, word, description));
+        }
+    }
+
+    private SeoKeyword setAttrs(SeoKeyword seoKeyword, String url, String word, String description) {
         seoKeyword.setUrl(url);
         seoKeyword.setWord(word);
-        HibernateUtils.update(seoKeyword);
+        seoKeyword.setDescription(description);
+        return seoKeyword;
     }
 }

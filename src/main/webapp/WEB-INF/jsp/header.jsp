@@ -1,8 +1,10 @@
 <%@ page import="com.qinyuan15.crawler.dao.AppConfig" %>
+<%@ page import="com.qinyuan15.crawler.dao.SeoKeyword" %>
 <%@ page import="com.qinyuan15.crawler.ui.RequestUtils" %>
 <%@ page import="com.qinyuan15.crawler.ui.SeoKeywordUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="taglib.jsp" %>
+<%SeoKeyword seoKeyword = SeoKeywordUtils.getMatchSeoKeyword(request);%>
 <!DOCTYPE html>
 <html>
 <head lang="zh-ch">
@@ -10,8 +12,9 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="keywords" content="<%=SeoKeywordUtils.getKeyword(request)%>"/>
     <title>${title}</title>
+    <meta name="keywords" content="<%=seoKeyword==null?"":seoKeyword.getWord()%>">
+    <meta name="description" content="<%=seoKeyword==null?"":seoKeyword.getDescription()%>">
     <link href="resources/js/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<%=RequestUtils.getCss("common")%>">
     <c:forEach var="css" items="${moreCss}">

@@ -89,7 +89,7 @@ function validateTextInput($input, info) {
 
 (function () {
     var index = 0;
-    $('input[type=text],input[type=password],button').each(function () {
+    $('input[type=text],input[type=password],button,textarea').each(function () {
         var $this = $(this);
         if (!$this.attr('tabindex')) {
             $this.attr('tabindex', ++index);

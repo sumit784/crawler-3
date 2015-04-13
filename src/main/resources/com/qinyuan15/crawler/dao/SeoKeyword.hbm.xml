@@ -10,5 +10,6 @@
         </id>
         <property name="url"/>
         <property name="word"/>
+        <property name="description"/>
     </class>
 </hibernate-mapping>
