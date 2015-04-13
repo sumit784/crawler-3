@@ -20,15 +20,4 @@
         </div>
     </c:forEach>
     <%@include file="admin-form-submit.jsp" %>
-    <%--
-    <div>
-        <button id="addBranchSubmit" type="submit" class="btn btn-success"
-                ng-click="validateBranchInput($event)">
-            添加
-        </button>
-        <button ng-click="cancelBranchInput()" type="button" class="btn btn-default">
-            取消
-        </button>
-    </div>
-    --%>
 </form>

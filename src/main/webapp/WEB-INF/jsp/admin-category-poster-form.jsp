@@ -16,6 +16,8 @@
         <label>目标链接</label><br/>
         <input type="text" name="link"/>
     </div>
+    <%@include file="admin-form-submit.jsp" %>
+    <%--
     <div class="button">
         <button id="addPosterSubmit" type="submit" class="btn btn-primary"
                 ng-click="validatePosterInput($event)">
@@ -29,4 +31,5 @@
             取消
         </button>
     </div>
+    --%>
 </form>

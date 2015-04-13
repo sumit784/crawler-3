@@ -94,19 +94,10 @@
         }
     });
 
-    var posterInput = {
+    var posterInput = buildInput({
         $form: $('#posterForm'),
-        get$Id: function () {
-            return this.$form.find('input[name=id]');
-        },
         get$CategoryId: function () {
             return this.$form.find('input[name=categoryId]');
-        },
-        get$AddSubmit: function () {
-            return $('#addPosterSubmit');
-        },
-        get$EditSubmit: function () {
-            return $('#editPosterSubmit');
         },
         get$Url: function () {
             return this.$form.find('input[name=poster]');
@@ -117,19 +108,13 @@
         get$UploadFile: function () {
             return this.$form.find('input[name=posterFile]');
         },
-        show: function (id, categoryId, imageUrl, link) {
+        setValue: function (id, categoryId, imageUrl, link) {
             this.get$Id().val(id);
             this.get$CategoryId().val(categoryId);
             this.get$Url().val(imageUrl);
             this.get$Link().val(link);
             this.get$UploadFile().val(null);
-            transparentBackground.show();
-            this.$form.show();
-            this.get$Url().focusOrSelect();
-        },
-        hide: function () {
-            this.$form.hide();
-            transparentBackground.hide();
+            return this;
         },
         validate: function () {
             if (this.get$Url().val() == '' && this.get$UploadFile().val() == '') {
@@ -140,7 +125,7 @@
                 return true;
             }
         }
-    };
+    });
 
     angularUtils.controller(function ($scope) {
         // actions about category
@@ -289,9 +274,8 @@
         // actions about poster
         $scope.validatePosterInput = buildNormalValidationCallback(posterInput);
         $scope.addPoster = function (event) {
-            posterInput.get$AddSubmit().show();
-            posterInput.get$EditSubmit().hide();
-            posterInput.show(0, getTableRowIdByImgElement(event.target), '', '');
+            var categoryId = getTableRowIdByImgElement(event.target);
+            posterInput.toAddModeAndShow().get$CategoryId().val(categoryId);
         };
         $scope.editPoster = function (event) {
             var $this = $(event.target);
@@ -301,9 +285,7 @@
             var link = $tr.find('a.link').attr('href');
             var categoryId = getParent($tr, 'tr').parseIntegerInId();
 
-            posterInput.get$AddSubmit().hide();
-            posterInput.get$EditSubmit().show();
-            posterInput.show(id, categoryId, imageUrl, link);
+            posterInput.setValue(id, categoryId, imageUrl, link).toEditModeAndShow();
         };
         $scope.deletePoster = function (event) {
             var target = event.target;
