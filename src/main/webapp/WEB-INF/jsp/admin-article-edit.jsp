@@ -4,9 +4,6 @@
     <form id="mainForm" method="post" action="admin-article-edit-update"
           enctype="multipart/form-data">
         <input type="hidden" name="id"/>
-        <!--
-        <textarea class="ckeditor" name="detailText"></textarea>
-        -->
         <textarea id="articleContent" name="articleContent"></textarea>
 
         <div class="button">

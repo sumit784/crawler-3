@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core.share;
+package com.qinyuan15.crawler.core.config.share;
 
 /**
  * Class about link of sharing commodity

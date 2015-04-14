@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.core.share;
+package com.qinyuan15.crawler.core.config.share;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.qinyuan15.crawler.controller.front;
 
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.image.ThumbnailBuilder;
-import com.qinyuan15.crawler.core.share.ShareLinks;
+import com.qinyuan15.crawler.core.config.share.ShareLinks;
 import com.qinyuan15.crawler.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
