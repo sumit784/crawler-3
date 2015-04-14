@@ -36,24 +36,30 @@
                     <tr id="footLink_${footLink.id}">
                         <td class="index">${status.index+1}</td>
                         <td class="text">${footLink.text}</td>
-                        <td class="link">${footLink.link}</td>
+                        <td class="link"><a href="${footLink.link}" target="_blank">
+                                ${footLink.link}
+                        </a></td>
                         <td class="action">
                             <jsp:include page="widget-edit-delete.jsp">
                                 <jsp:param name="editAction" value="editFootLink($event)"/>
                                 <jsp:param name="deleteAction" value="deleteFootLink($event)"/>
                             </jsp:include>
                             <jsp:include page="widget-ranking.jsp">
-                                <jsp:param name="rankUpAction" value="rankUpFootLink($event)"/>
-                                <jsp:param name="rankDownAction" value="rankDownFootLink($event)"/>
+                                <jsp:param name="upAction" value="rankUpFootLink($event)"/>
+                                <jsp:param name="downAction" value="rankDownFootLink($event)"/>
                             </jsp:include>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-            <div class="add">
-                <img ng-click="addFootLink()" class="link" title="添加"
-                     src="resources/css/images/add.png">
+            <div>
+                <button type="button" class="btn btn-success" ng-click="addFootLink()">
+                    添加
+                </button>
+                <button type="button" class="btn btn-default" ng-click="resetFootLink()">
+                    恢复初始设置
+                </button>
             </div>
         </fieldset>
         <div class="split"></div>
@@ -135,7 +141,7 @@
             </button>
         </div>
     </form>
-    <form class="fixedForm" id="footLinkForm" method="post" action="app-config-foot-link-add-update">
+    <form class="fixedForm" id="footLinkForm" method="post" action="admin-foot-link-add-update">
         <input type="hidden" name="id"/>
 
         <div>

@@ -1,8 +1,11 @@
 package com.qinyuan15.crawler.controller.back;
 
 import com.qinyuan15.crawler.controller.ImageController;
+import com.qinyuan15.crawler.core.config.DefaultAppConfigFootLinks;
 import com.qinyuan15.crawler.core.config.LinkAdapter;
+import com.qinyuan15.crawler.dao.AppConfigFootLink;
 import com.qinyuan15.crawler.dao.AppConfigFootLinkDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +21,13 @@ import java.util.Map;
  */
 @Controller
 public class AdminFootLinkController extends ImageController {
-    //private final static Logger LOGGER = LoggerFactory.getLogger(AdminFootLinkController.class);
-    AppConfigFootLinkDao dao = new AppConfigFootLinkDao();
+    private AppConfigFootLinkDao dao = new AppConfigFootLinkDao();
+
+    @Autowired
+    private DefaultAppConfigFootLinks defaultAppConfigFootLinks;
 
     @ResponseBody
-    @RequestMapping(value = "/app-config-foot-link-add-update", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin-foot-link-add-update", method = RequestMethod.POST)
     public Map<String, Object> addUpdate(@RequestParam(value = "id", required = false) Integer id,
                                          @RequestParam(value = "text", required = true) String text,
                                          @RequestParam(value = "link", required = true) String link) {
@@ -48,7 +53,18 @@ public class AdminFootLinkController extends ImageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/app-config-foot-link-delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin-foot-link-reset", method = RequestMethod.POST)
+    public Map<String, Object> reset() {
+        dao.clear();
+        for (AppConfigFootLink footLink : defaultAppConfigFootLinks.getFootLinks()) {
+            dao.add(footLink.getText(), footLink.getLink());
+            logAction("将页尾链接恢复为默认值");
+        }
+        return SUCCESS;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin-foot-link-delete", method = RequestMethod.POST)
     public Map<String, Object> delete(@RequestParam(value = "id", required = true) Integer id) {
         if (isPositive(id)) {
             logAction("删除页尾链接'%s'", dao.getTextById(id));
@@ -58,7 +74,7 @@ public class AdminFootLinkController extends ImageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/app-config-foot-link-rank-up", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin-foot-link-rank-up", method = RequestMethod.POST)
     public Map<String, Object> rankUp(@RequestParam(value = "id", required = true) Integer id) {
         if (isPositive(id)) {
             logAction("上移页尾链接'%s'的排序", dao.getTextById(id));
@@ -68,7 +84,7 @@ public class AdminFootLinkController extends ImageController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/app-config-foot-link-rank-down", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin-foot-link-rank-down", method = RequestMethod.POST)
     public Map<String, Object> rankDown(@RequestParam(value = "id", required = true) Integer id) {
         if (isPositive(id)) {
             logAction("下移页尾链接'%s'的排序", dao.getTextById(id));

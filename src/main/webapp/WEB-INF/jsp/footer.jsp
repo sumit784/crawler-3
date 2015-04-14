@@ -8,11 +8,10 @@
         违法和不良信息举报电话：4006910007
     </div>
     <div class="links">
-        <a href="company-info.html?tab=1" target="_blank" class="blueFont">关于我们</a>
-        <a href="company-info.html?tab=2" target="_blank" class="blueFont">联系我们</a>
-        <a href="company-info.html?tab=3" target="_blank" class="blueFont">免责声明</a>
-        <a href="company-info.html?tab=4" target="_blank" class="blueFont">友情链接</a>
-        <a href="branch.html" target="_blank" class="blueFont">品牌大全</a>
+        <jsp:useBean id="footLinkDao" class="com.qinyuan15.crawler.dao.AppConfigFootLinkDao"/>
+        <c:forEach var="footLink" items="${footLinkDao.instances}">
+            <a href="${footLink.link}" target="_blank" class="blueFont">${footLink.text}</a>
+        </c:forEach>
     </div>
 </div>
 </div>

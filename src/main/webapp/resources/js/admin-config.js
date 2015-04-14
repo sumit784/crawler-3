@@ -101,6 +101,11 @@
         $scope.addFootLink = function () {
             footLinkInput.toAddModeAndShow();
         };
+        $scope.resetFootLink = function () {
+            if (confirm("确定恢复初始设置？")) {
+                $.post('admin-foot-link-reset', {}, normalSubmitCallback);
+            }
+        };
         $scope.editFootLink = function (event) {
             var $tr = getParent($(event.target), 'tr');
             var id = $tr.parseIntegerInId();
@@ -109,17 +114,17 @@
             footLinkInput.setValue(id, text, link).toEditModeAndShow();
         };
         $scope.rankUpFootLink = function (event) {
-            $.post('app-config-foot-link-rank-up', {
+            $.post('admin-foot-link-rank-up', {
                 id: getTableRowIdByImgElement(event.target)
             }, normalSubmitCallback);
         };
         $scope.rankDownFootLink = function (event) {
-            $.post('app-config-category-rank-down', {
+            $.post('admin-foot-link-rank-down', {
                 id: getTableRowIdByImgElement(event.target)
             }, normalSubmitCallback);
         };
         $scope.deleteFootLink = function (event) {
-            $.post('admin-category-rank-down', {
+            $.post('admin-foot-link-delete', {
                 id: getTableRowIdByImgElement(event.target)
             }, normalSubmitCallback);
         };

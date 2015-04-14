@@ -43,3 +43,6 @@ fieldset.textOnly input {
 #footLink > table, #footLink > div {
     margin-left: 10px;
 }
+#footLink > table{
+    margin-bottom: 10px;
+}
