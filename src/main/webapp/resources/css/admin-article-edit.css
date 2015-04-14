@@ -1,0 +1,9 @@
+div.content > div.boxShadow {
+    background-color: #ffffff;
+    overflow: hidden;
+    margin-bottom: 80px;
+}
+div.content > div.boxShadow div.button {
+    text-align: center;
+    margin: 10px 0 15px;
+}
