@@ -15,6 +15,6 @@ public class ArticleUtils {
             return null;
         }
 
-        return content.split("\n")[0].trim();
+        return content.split("\n")[0].replaceAll("<.*?>", "").trim();
     }
 }

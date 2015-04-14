@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.controller.back;
+package com.qinyuan15.crawler.controller.admin;
 
 import com.google.common.collect.Lists;
 import com.qinyuan15.crawler.controller.BaseController;

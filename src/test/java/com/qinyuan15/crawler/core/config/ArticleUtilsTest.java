@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ArticleUtilsTest {
     @Test
     public void testGetTitle() throws Exception {
-        String article = "HelloWorld\nAAAAAAAAAAAAAAAAAAAA";
+        String article = "<p style='color:#fff;'>HelloWorld</p>\n<div>AAAAAAAAAAAAAAAAAAAA</div>";
         assertThat(ArticleUtils.getTitle(article)).isEqualTo("HelloWorld");
     }
 }

@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.controller.back;
+package com.qinyuan15.crawler.controller.admin;
 
 import org.junit.Test;
 import org.springframework.ui.ModelMap;

@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.controller.back;
+package com.qinyuan15.crawler.controller.admin;
 
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.config.ArticleUtils;
@@ -20,15 +20,23 @@ import java.util.Map;
 public class AdminArticleController extends ImageController {
     private ArticleDao dao = new ArticleDao();
 
+    @RequestMapping("/admin-article-list")
+    public String list(ModelMap model) {
+        model.addAttribute("articles", dao.getInstances());
+        setTitle("文章列表");
+        addCssAndJs("admin-normal-edit-page");
+        return "admin-article-list";
+    }
+
     @RequestMapping("/admin-article-edit")
-    public String index(ModelMap model,
-                        @RequestParam(value = "id", required = false) Integer id) {
+    public String edit(ModelMap model, @RequestParam(value = "id", required = false) Integer id) {
         if (isPositive(id)) {
-            model.addAttribute(dao.getInstance(id));
+            model.addAttribute("article", dao.getInstance(id));
         }
 
+        addCss("article-common");
         addJs("lib/ckeditor/ckeditor");
-        setTitle("文章编辑");
+        setTitle("编辑文章");
         return "admin-article-edit";
     }
 
@@ -45,7 +53,7 @@ public class AdminArticleController extends ImageController {
             logAction("添加文章'%s'", ArticleUtils.getTitle(content));
         }
 
-        return "admin-article-list";
+        return redirect("admin-article-list.html");
     }
 
 

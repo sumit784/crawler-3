@@ -1,4 +1,4 @@
-package com.qinyuan15.crawler.controller.back;
+package com.qinyuan15.crawler.controller.admin;
 
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.dao.CommodityCrawlLogDao;
