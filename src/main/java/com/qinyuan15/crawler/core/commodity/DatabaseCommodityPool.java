@@ -17,6 +17,12 @@ public class DatabaseCommodityPool implements CommodityPool {
     private final static int PAGE_SIZE = 100;
     private int pointer = 0;
     private List<Commodity> commodities;
+    private boolean randomOrder = true;
+
+    public DatabaseCommodityPool setRandomOrder(boolean randomOrder) {
+        this.randomOrder = randomOrder;
+        return this;
+    }
 
     @Override
     public synchronized Commodity next() {
@@ -27,8 +33,14 @@ public class DatabaseCommodityPool implements CommodityPool {
         }
 
         if (pointer % PAGE_SIZE == 0) {
+            String whereClause = "active=true ";
+            if (this.randomOrder) {
+                whereClause += "ORDER BY rand()";
+            } else {
+                whereClause += "ORDER BY id DESC";
+            }
             this.commodities = HibernateUtils.getList(Commodity.class,
-                    "active=true ORDER BY id DESC", pointer, PAGE_SIZE);
+                    whereClause, pointer, PAGE_SIZE);
         }
 
         int index = pointer % PAGE_SIZE;

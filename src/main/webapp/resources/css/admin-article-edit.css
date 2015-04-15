@@ -9,13 +9,24 @@ div.content > div.boxShadow div.button {
     padding: 10px 0 15px;
 }
 
+#editDiv {
+    padding: 10px;
+}
+
+#editDiv div.backgroundColor {
+    position: absolute;
+    right: 30px;
+    bottom: 25px;
+    margin-left: 100px;
+}
+
+#editDiv div.backgroundColor input {
+    width: 80px;
+}
+
 #viewDiv {
     display: none;
     overflow: hidden;
-}
-
-#mainForm {
-    padding: 10px;
 }
 
 #viewDiv div.button {

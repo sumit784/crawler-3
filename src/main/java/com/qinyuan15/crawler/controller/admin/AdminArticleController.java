@@ -36,6 +36,7 @@ public class AdminArticleController extends ImageController {
 
         addCss("article-common");
         addJs("lib/ckeditor/ckeditor");
+        addJs("lib/jscolor/jscolor");
         setTitle("编辑文章");
         return "admin-article-edit";
     }

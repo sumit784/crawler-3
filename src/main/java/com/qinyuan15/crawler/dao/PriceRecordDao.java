@@ -128,6 +128,10 @@ public class PriceRecordDao {
                 .hasInstance();
     }
 
+    public void deleteByCommodityId(int commodityId) {
+        HibernateUtils.delete(PriceRecord.class, "commodityId=" + commodityId);
+    }
+
     public PriceRecord getLastInstance(int commodityId) {
         return factory().setCommodityId(commodityId).getLastInstance();
     }

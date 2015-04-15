@@ -3,6 +3,17 @@
 <div class="boxShadow">
     <form id="mainForm" method="post" action="admin-config-update" enctype="multipart/form-data">
         <fieldset>
+            <legend>网站图标设置</legend>
+            <div class="uploadImage">
+                <label>浏览器标题栏显示的图标(url或上传图片)</label><br/>
+                <jsp:include page="admin-config-upload-image.jsp">
+                    <jsp:param name="id" value="favicon"/>
+                    <jsp:param name="value" value="${appConfig.favicon}"/>
+                </jsp:include>
+            </div>
+        </fieldset>
+        <div class="split"></div>
+        <fieldset>
             <legend>页头设置</legend>
             <div class="uploadImage">
                 <label>页头横幅(url或上传图片)</label><br/>

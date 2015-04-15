@@ -22,6 +22,7 @@ public class AppConfigAdapter {
         appConfig.setIndexFootPoster(pictureUrlConverter.pathToUrl(appConfig.getIndexFootPoster()));
         appConfig.setBranchRankImage(pictureUrlConverter.pathToUrl(appConfig.getBranchRankImage()));
         appConfig.setNoFoundImage(pictureUrlConverter.pathToUrl(appConfig.getNoFoundImage()));
+        appConfig.setFavicon(pictureUrlConverter.pathToUrl(appConfig.getFavicon()));
 
         for (AppConfigDetailImage image : appConfig.getDetailImages()) {
             image.setPath(pictureUrlConverter.pathToUrl(image.getPath()));

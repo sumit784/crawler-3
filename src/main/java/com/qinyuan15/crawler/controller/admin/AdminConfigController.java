@@ -2,6 +2,7 @@ package com.qinyuan15.crawler.controller.admin;
 
 import com.qinyuan15.crawler.controller.ImageController;
 import com.qinyuan15.crawler.core.config.LinkAdapter;
+import com.qinyuan15.crawler.core.image.ImageCompressor;
 import com.qinyuan15.crawler.dao.AppConfig;
 import com.qinyuan15.crawler.dao.AppConfigDao;
 import com.qinyuan15.crawler.dao.AppConfigFootLinkDao;
@@ -53,7 +54,9 @@ public class AdminConfigController extends ImageController {
             @RequestParam(value = "adminPaginationCommoditySize", required = true) Integer adminPaginationCommoditySize,
             @RequestParam(value = "adminPaginationButtonSize", required = true) Integer adminPaginationButtonSize,
             @RequestParam(value = "maxCommodityPictureSize", required = true) Integer maxCommodityPictureSize,
-            @RequestParam(value = "maxCommodityDetailPictureSize", required = true) Integer maxCommodityDetailPictureSize) {
+            @RequestParam(value = "maxCommodityDetailPictureSize", required = true) Integer maxCommodityDetailPictureSize,
+            @RequestParam(value = "favicon", required = true) String favicon,
+            @RequestParam(value = "faviconFile", required = false) MultipartFile faviconFile) {
         String globalBannerPath;
         try {
             globalBannerPath = getSavePath(globalBanner, globalBannerFile, SAVE_PATH_PREFIX);
@@ -108,6 +111,16 @@ public class AdminConfigController extends ImageController {
             return redirect(addErrorInfoParameter(ADMIN_CONFIG, "无对应商品时显示的图片处理失败!"));
         }
 
+        String faviconPath;
+        try {
+            faviconPath = getSavePath(favicon, faviconFile, SAVE_PATH_PREFIX);
+            new ImageCompressor(faviconPath).compress(faviconPath, 16, 16);
+        } catch (Exception e) {
+            LOGGER.error("fail to deal with favicon, favicon:{}, faviconFile:{}, error:{}",
+                    favicon, faviconFile, e);
+            return redirect(addErrorInfoParameter(ADMIN_CONFIG, "浏览器标显示的图片处理失败!"));
+        }
+
         if (!isPositive(adminPaginationButtonSize)) {
             adminPaginationButtonSize = 0;
         }
@@ -153,6 +166,11 @@ public class AdminConfigController extends ImageController {
         if (isDifferent(appConfig.getNoFoundImage(), noFoundImagePath)) {
             appConfig.setNoFoundImage(noFoundImagePath);
             logAction("将无对应商品时显示的图片修改为'%s'", pictureUrlConverter.pathToUrl(noFoundImagePath));
+        }
+
+        if (isDifferent(appConfig.getFavicon(), faviconPath)) {
+            appConfig.setFavicon(faviconPath);
+            logAction("将浏览器标题显示的图标修改为'%s'", pictureUrlConverter.pathToUrl(faviconPath));
         }
 
         if (isDifferent(appConfig.getNoFoundText(), noFoundText)) {

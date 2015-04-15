@@ -22,5 +22,6 @@
         <property name="maxCommodityPictureSize" column="max_commodity_picture_size"/>
         <property name="maxCommodityDetailPictureSize" column="max_commodity_detail_picture_size"/>
         <property name="relatedCommoditySize" column="related_commodity_size"/>
+        <property name="favicon"/>
     </class>
 </hibernate-mapping>

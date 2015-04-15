@@ -7,8 +7,9 @@ import com.qinyuan15.crawler.core.config.ArticleUtils;
  * Created by qinyuan on 15-4-13.
  */
 public class Article extends PersistObject {
+    public final static String DEFAULT_BACKGROUND_COLOR = "#FFFFFF";
     private String content;
-    private String backgroundColor;
+    private String backgroundColor = DEFAULT_BACKGROUND_COLOR;
 
     public String getContent() {
         return content;
@@ -23,6 +24,9 @@ public class Article extends PersistObject {
     }
 
     public void setBackgroundColor(String backgroundColor) {
+        if (backgroundColor != null && backgroundColor.length() == 6) {
+            backgroundColor = '#' + backgroundColor;
+        }
         this.backgroundColor = backgroundColor;
     }
 

@@ -58,6 +58,7 @@ public class CommodityDao {
 
     public void delete(int id) {
         HibernateUtils.delete(Commodity.class, id);
+        new PriceRecordDao().deleteByCommodityId(id);
     }
 
     public void deactivate(int id) {
@@ -96,7 +97,7 @@ public class CommodityDao {
     }
 
     public void updateInLowPrice(int id) {
-        if (!new PriceRecordDao().hasInstanceInThreeDay(id)) {
+        if (!new PriceRecordDao().hasInstanceToday(id)) {
             updateInLowPrice(id, false);
             return;
         }

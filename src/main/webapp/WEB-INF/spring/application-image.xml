@@ -38,8 +38,9 @@
                 <value>AppConfig.indexHeadPoster</value>
                 <value>AppConfig.indexFootPoster</value>
                 <value>AppConfig.branchRankImage</value>
+                <value>AppConfig.favicon</value>
                 <value>AppConfig.noFoundImage</value>
-                <value>AppConfigDetailImage.link</value>
+                <value>AppConfigDetailImage.path</value>
             </list>
         </property>
     </bean>

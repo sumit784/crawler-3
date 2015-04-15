@@ -15,6 +15,8 @@
     <title>${title}</title>
     <meta name="keywords" content="<%=seoKeyword==null?"":seoKeyword.getWord()%>">
     <meta name="description" content="<%=seoKeyword==null?"":seoKeyword.getDescription()%>">
+    <link rel="icon" href="${appConfig.favicon}" type="image/x-icon" />
+    <link rel="shortcut icon" href="${appConfig.favicon}" type="image/x-icon" />
     <link href="resources/js/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<%=RequestUtils.getCss("common")%>">
     <c:forEach var="css" items="${moreCss}">

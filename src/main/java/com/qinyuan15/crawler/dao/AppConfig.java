@@ -28,6 +28,15 @@ public class AppConfig extends PersistObject {
     private Integer maxCommodityDetailPictureSize;
     private Integer relatedCommoditySize;
     private List<AppConfigDetailImage> detailImages;
+    private String favicon;
+
+    public String getFavicon() {
+        return favicon;
+    }
+
+    public void setFavicon(String favicon) {
+        this.favicon = favicon;
+    }
 
     public Integer getRelatedCommoditySize() {
         return relatedCommoditySize;
