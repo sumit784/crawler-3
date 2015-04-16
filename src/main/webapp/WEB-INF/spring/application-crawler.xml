@@ -13,8 +13,8 @@
         <property name="httpClientPool" ref="httpClientPool"/>
         <property name="commodityPool" ref="commodityPool"/>
         <property name="commodityPageParser" ref="webPageParser"/>
-        <property name="startHour" value="10"/>
-        <property name="endHour" value="18"/>
+        <property name="startHour" value="${startHourt}"/>
+        <property name="endHour" value="${endHourt}"/>
     </bean>
 
 </beans>

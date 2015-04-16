@@ -8,15 +8,12 @@
            http://www.springframework.org/schema/task/spring-task.xsd">
 
     <bean id="imageDownloader" class="com.qinyuan15.crawler.core.image.ImageDownloader">
-        <constructor-arg value="/var/www/html/images"/>
+        <constructor-arg value="${imageDir}"/>
         <property name="useRandomSaveName" value="true"/>
     </bean>
     <bean id="pictureUrlConverter" class="com.qinyuan15.crawler.core.image.PictureUrlConverter">
-        <!--
-        <property name="urlPrefix" value="http://127.0.0.1/images"/>
-        -->
-        <property name="urlPrefix" value="http://qinyuan/images"/>
-        <property name="pathPrefix" value="/var/www/html/images"/>
+        <property name="urlPrefix" value="${urlPrefix}"/>
+        <property name="pathPrefix" value="${imageDir}"/>
         <property name="otherPathPrefixes">
             <list>
                 <value>/var/ftp</value>
@@ -46,12 +43,12 @@
     </bean>
 
     <bean id="imageCleaner" class="com.qinyuan15.crawler.core.image.RedundantImageCleaner">
-        <property name="debugMode" value="true"/>
-        <property name="baseDir" value="/var/www/html/images"/>
+        <property name="debugMode" value="${debug}"/>
+        <property name="baseDir" value="${imageDir}"/>
         <property name="redundantImageValidator" ref="redundantImageValidator"/>
     </bean>
     <task:scheduled-tasks>
-        <task:scheduled ref="imageCleaner" method="clean" cron="0 0 0 * * ?"/>
+        <task:scheduled ref="imageCleaner" method="clean" cron="0 * * * * ?"/>
     </task:scheduled-tasks>
 
 </beans>

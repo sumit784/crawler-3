@@ -57,18 +57,20 @@ class SingleCommodityCrawler {
                 return;
             }
 
-            if (!updatePriceHistory(commodityPageParser, commodityId)) {
+            if (updatePriceHistory(commodityPageParser, commodityId)) {
+                commodityDao.updateDiscoverTime(commodityId);
+                commodityDao.updatePrice(commodityId);
+                LOGGER.info("save price history of {}", url);
+            } else {
                 LOGGER.info("can not get priceHistory from url {}, html contents: {}",
                         url, html);
                 client.feedbackRejection();
-            } else {
-                LOGGER.info("save price history of {}", url);
             }
 
             updateSales(commodityPageParser, commodity);
 
             // TODO comment out this someday
-            updateOtherCommodityInfo(commodity.getId());
+            //updateOtherCommodityInfo(commodity.getId());
         } catch (Exception e) {
             LOGGER.error("fail to fetch price history of {}: {}", url, e);
             crawlLogDao.logFail(commodityId, "未知错误");
@@ -118,11 +120,11 @@ class SingleCommodityCrawler {
         }
     }
 
-    private void updateOtherCommodityInfo(Integer commodityId) {
+    /*private void updateOtherCommodityInfo(Integer commodityId) {
         commodityDao.updateDiscoverTime(commodityId);
         commodityDao.updatePrice(commodityId);
         commodityDao.updateInLowPrice(commodityId);
-    }
+    }*/
 
     private void savePriceRecord(Date date, Double price, int commodityId) {
         PriceRecord record = PriceRecordDao.factory().setCommodityId(commodityId)

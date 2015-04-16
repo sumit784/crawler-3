@@ -24,6 +24,7 @@ for f in `find -name '*.js'`; do
 done
 
 compress js/lib/linecharts/linecharts.js
+compress js/lib/jscolor/jscolor.js
 compress js/lib/jsutils.js
 compress js/lib/ie-patch.js
 compress js/lib/jquery.cookie.js

@@ -4,6 +4,7 @@ import com.qinyuan15.crawler.core.commodity.CommodityPool;
 import com.qinyuan15.crawler.core.html.ComposableCommodityPageParser;
 import com.qinyuan15.crawler.core.http.HttpClientPool;
 import com.qinyuan15.crawler.dao.Commodity;
+import com.qinyuan15.crawler.dao.CommodityDao;
 import com.qinyuan15.crawler.dao.PriceRecordDao;
 import com.qinyuan15.crawler.utils.DateUtils;
 import org.slf4j.Logger;
@@ -106,13 +107,13 @@ public class CommodityCrawler {
                     LOGGER.error("Thread fail to sleep: {}", e);
                 }
 
-                if (inCrawlTime()) {
-                    Commodity commodity = null;
-                    try {
-                        commodity = commodityPool.next();
-                        if (commodity == null) {
-                            commodityPool.reset();
-                        } else {
+                Commodity commodity = null;
+                try {
+                    commodity = commodityPool.next();
+                    if (commodity == null) {
+                        commodityPool.reset();
+                    } else {
+                        if (inCrawlTime()) {
                             if (dao.hasInstanceToday(commodity.getId())) {
                                 LOGGER.info("Today's price of commodity {} already save, just skip it",
                                         commodity.getName());
@@ -120,12 +121,13 @@ public class CommodityCrawler {
                                 this.singleCommodityCrawler.save(commodity);
                             }
                         }
-                    } catch (Exception e) {
-                        String commodityInfo = commodity == null ?
-                                null : commodity.getName() + "(" + commodity.getUrl() + ")";
-                        LOGGER.error("fail to grub commodity '{}': {}",
-                                commodityInfo, e);
+                        new CommodityDao().updateInLowPrice(commodity.getId());
                     }
+                } catch (Exception e) {
+                    String commodityInfo = commodity == null ?
+                            null : commodity.getName() + "(" + commodity.getUrl() + ")";
+                    LOGGER.error("fail to grub commodity '{}': {}",
+                            commodityInfo, e);
                 }
             }
         }
