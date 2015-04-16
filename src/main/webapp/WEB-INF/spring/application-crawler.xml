@@ -15,6 +15,7 @@
         <property name="commodityPageParser" ref="webPageParser"/>
         <property name="startHour" value="${startHourt}"/>
         <property name="endHour" value="${endHourt}"/>
+        <property name="debugMode" value="${debug}"/>
     </bean>
 
 </beans>

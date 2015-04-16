@@ -3,8 +3,6 @@ package com.qinyuan15.crawler.core.image;
 import com.qinyuan15.crawler.lib.TestFileUtils;
 import org.junit.Test;
 
-import java.io.File;
-
 /**
  * Test ImageCompressor
  * Created by qinyuan on 15-3-9.

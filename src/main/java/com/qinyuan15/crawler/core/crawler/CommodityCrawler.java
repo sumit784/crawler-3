@@ -27,6 +27,7 @@ public class CommodityCrawler {
     private ComposableCommodityPageParser commodityPageParser;
     private int startHour = -1;
     private int endHour = -1;
+    private boolean debugMode;
 
     public void init() {
         for (int i = 0; i < this.threadSize; i++) {
@@ -47,6 +48,10 @@ public class CommodityCrawler {
 
     public void setEndHour(int endHour) {
         this.endHour = endHour;
+    }
+
+    public void setDebugMode(boolean debugMode) {
+        this.debugMode = debugMode;
     }
 
     public void setHttpClientPool(HttpClientPool httpClientPool) {
@@ -110,6 +115,10 @@ public class CommodityCrawler {
                 Commodity commodity = null;
                 try {
                     commodity = commodityPool.next();
+                    if (debugMode) {
+                        LOGGER.info("deal with commodity {}", commodity.getName());
+                    }
+
                     if (commodity == null) {
                         commodityPool.reset();
                     } else {

@@ -1,5 +1,6 @@
 package com.qinyuan15.crawler.core.image;
 
+import com.qinyuan15.crawler.utils.CommandUtils;
 import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
@@ -43,6 +44,19 @@ public class ImageCompressor {
             height = getHeight();
         }
 
+        if (CommandUtils.run("which convert").getKey().equals(0)) {
+            compressByImageMagick(targetPath, width, height);
+        } else {
+            compressByScalr(targetPath, width, height);
+        }
+    }
+
+    private void compressByImageMagick(String targetPath, int width, int height) {
+        String cmd = "convert -resize " + width + "x" + height + " " + this.sourcePath + " " + targetPath;
+        CommandUtils.run(cmd);
+    }
+
+    private void compressByScalr(String targetPath, int width, int height) {
         try {
             File targetFile = new File(targetPath);
             BufferedImage targetImage = Scalr.resize(sourceImage, Scalr.Method.QUALITY,

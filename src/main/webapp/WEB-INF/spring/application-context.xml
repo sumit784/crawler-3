@@ -12,9 +12,7 @@
 
     <import resource="application-security.xml"/>
     <import resource="application-proxy.xml"/>
-    <!--
     <import resource="application-crawler.xml"/>
-    -->
     <import resource="application-delay-load.xml"/>
     <import resource="application-default.xml"/>
     <import resource="application-image.xml"/>
